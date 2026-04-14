@@ -22,10 +22,11 @@ public class ParcoursCardController {
     @FXML private Label locationLabel;
     @FXML private Label distanceLabel;
     @FXML private Label dateLabel;
-    @FXML private Label pubCountLabel; // Bind to new publications label
+    @FXML private Label pubCountLabel;
     @FXML private ImageView imageView;
     @FXML private Button btnDelete;
     @FXML private Button btnEdit;
+    @FXML private Button btnView; // New button added here
 
     private final ParcoursDeSanteServices ps = new ParcoursDeSanteServices();
 
@@ -36,18 +37,15 @@ public class ParcoursCardController {
         locationLabel.setText(p.getLocalisation_parcours());
         distanceLabel.setText(p.getDistance_parcours() + " km");
 
-        // Format and show the "Time Ago" date
         if (dateLabel != null) {
             String formattedDate = formatTimeAgo(p.getDate_creation());
             dateLabel.setText(formattedDate);
         }
 
-
         if (pubCountLabel != null) {
             int count = (p.getPublications() != null) ? p.getPublications().size() : 0;
             pubCountLabel.setText(count + " Publications");
         }
-
 
         String path = p.getImage_parcours();
         if (path != null && !path.trim().isEmpty()) {
@@ -57,10 +55,9 @@ public class ParcoursCardController {
                     imageView.setImage(new Image(file.toURI().toString(), true));
                 }
             } catch (Exception e) {
-
+                // Ignore image errors silently
             }
         }
-
 
         if (btnDelete != null) {
             btnDelete.setOnAction(event -> {
@@ -72,7 +69,6 @@ public class ParcoursCardController {
                 }
             });
         }
-
 
         if (btnEdit != null) {
             btnEdit.setOnAction(event -> {
@@ -90,8 +86,24 @@ public class ParcoursCardController {
                 }
             });
         }
-    }
 
+        if (btnView != null) {
+            btnView.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPublications.fxml"));
+                    Parent root = loader.load();
+
+                    AfficherPublicationsController controller = loader.getController();
+                    controller.initData(p); // Pass the trail to the next view
+
+                    btnView.getScene().setRoot(root);
+                } catch (IOException e) {
+                    System.err.println("Erreur lors de l'ouverture des publications : " + e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
 
     private String formatTimeAgo(String dateString) {
         if (dateString == null || dateString.isEmpty()) return "Date inconnue";

@@ -89,4 +89,28 @@ public class PublicationServices implements ICrud<publication_parcours> {
         }
         return publicationList;
     }
+
+    public List<publication_parcours> afficherParParcours(int parcoursId) throws SQLException {
+        List<publication_parcours> list = new ArrayList<>();
+        String sql = "SELECT * FROM publication_parcours WHERE parcours_de_sante_id = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, parcoursId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            publication_parcours pub = new publication_parcours();
+            pub.setId(rs.getInt("id"));
+            pub.setImage_publication(rs.getString("image_publication"));
+            pub.setAmbiance(rs.getInt("ambiance"));
+            pub.setSecurite(rs.getInt("securite"));
+            pub.setDate_publication(rs.getString("date_publication"));
+            pub.setText_publication(rs.getString("text_publication"));
+            pub.setExperience(rs.getString("experience"));
+            pub.setType_publication(rs.getString("type_publication"));
+            pub.setParcours_de_sante_id(rs.getInt("parcours_de_sante_id"));
+            list.add(pub);
+        }
+        return list;
+    }
 }
