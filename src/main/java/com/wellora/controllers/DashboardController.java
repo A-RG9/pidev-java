@@ -3,7 +3,9 @@ package com.wellora.controllers;
 import javafx.scene.control.TextFormatter;
 import java.util.function.UnaryOperator;
 import com.wellora.dao.FoodLogDAO;
+import com.wellora.dao.NutritionGoalDAO; // Ajouté
 import com.wellora.models.FoodLog;
+import com.wellora.models.NutritionGoal; // Ajouté
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,7 +36,14 @@ public class DashboardController {
     @FXML private TableColumn<FoodLog, Integer> colCalories;
     @FXML private TableColumn<FoodLog, Double> colProteines, colGlucides, colLipides;
 
+    @FXML private Label lblDailyGoalName;
+    @FXML private Label lblDailyGoalCalories;
+    @FXML private Label lblDailyGoalWeight;
+
     private final FoodLogDAO dao = new FoodLogDAO();
+    private final NutritionGoalDAO goalDao = new NutritionGoalDAO();
+
+    // Une seule déclaration pour l'ID utilisateur
     private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
     private ObservableList<FoodLog> foodLogsList = FXCollections.observableArrayList();
 
@@ -61,18 +70,46 @@ public class DashboardController {
         });
         btnSupprimer.setOnAction(e -> deleteSelectedLog());
 
+        // On charge l'objectif du jour ICI !
+        loadDailyGoal();
         refreshData();
     }
 
     private void refreshData() {
+        // 1. Récupérer ce que l'utilisateur a consommé
         double[] totals = dao.getDailyTotals(currentUserUuid, LocalDate.now());
-        lblCalories.setText(String.format("%.0f / 2000", totals[0]));
+
+        // 2. Récupérer l'objectif du jour pour afficher la valeur cible
+        NutritionGoal dailyGoal = goalDao.getDailyGoalByUser(currentUserUuid);
+        int targetCalories = 2000; // valeur par défaut
+
+        if (dailyGoal != null && dailyGoal.getCaloriesTarget() > 0) {
+            targetCalories = dailyGoal.getCaloriesTarget();
+        }
+
+        // 3. Mettre à jour les labels des cartes
+        lblCalories.setText(String.format("%.0f / %d", totals[0], targetCalories));
         lblProteines.setText(String.format("%.0fg / 120g", totals[1]));
         lblGlucides.setText(String.format("%.0fg / 200g", totals[2]));
         lblLipides.setText(String.format("%.0fg / 65g", totals[3]));
 
+        // 4. Mettre à jour la table des repas
         List<FoodLog> logs = dao.getFoodLogsByDate(currentUserUuid, LocalDate.now());
         foodLogsList.setAll(logs);
+    }
+
+    private void loadDailyGoal() {
+        NutritionGoal dailyGoal = goalDao.getDailyGoalByUser(currentUserUuid);
+
+        if (dailyGoal != null) {
+            lblDailyGoalName.setText("🎯 " + dailyGoal.getName());
+            lblDailyGoalCalories.setText("Calories : " + dailyGoal.getCaloriesTarget() + " kcal");
+            lblDailyGoalWeight.setText("Poids cible : " + dailyGoal.getWeightTarget() + " kg");
+        } else {
+            lblDailyGoalName.setText("Aucun objectif pour aujourd'hui");
+            lblDailyGoalCalories.setText("Calories : -");
+            lblDailyGoalWeight.setText("Poids cible : -");
+        }
     }
 
     private void openFoodDialog(FoodLog existingLog) {
@@ -93,31 +130,26 @@ public class DashboardController {
         TextField lipField = new TextField();
 
         // --- DEBUT CONTROLE DE SAISIE ---
-
-        // Filtre pour n'accepter que des nombres entiers (pour les calories)
         UnaryOperator<TextFormatter.Change> intFilter = change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("\\d*")) { // Autorise uniquement les chiffres (0-9)
-                return change;
-            }
-            return null; // Rejette la modification si ce n'est pas un chiffre
-        };
-
-        // Filtre pour n'accepter que des nombres décimaux (pour les macros : protéines, etc.)
-        UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d*\\.?\\d*")) { // Autorise les chiffres et un seul point (.)
+            if (newText.matches("\\d*")) {
                 return change;
             }
             return null;
         };
 
-        // Appliquer les filtres aux champs de texte
+        UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*\\.?\\d*")) {
+                return change;
+            }
+            return null;
+        };
+
         calField.setTextFormatter(new TextFormatter<>(intFilter));
         protField.setTextFormatter(new TextFormatter<>(doubleFilter));
         glucField.setTextFormatter(new TextFormatter<>(doubleFilter));
         lipField.setTextFormatter(new TextFormatter<>(doubleFilter));
-
         // --- FIN CONTROLE DE SAISIE ---
 
         ComboBox<String> mealBox = new ComboBox<>();
@@ -143,7 +175,6 @@ public class DashboardController {
         final Button btOk = (Button) dialog.getDialogPane().lookupButton(btnValider);
         btOk.addEventFilter(javafx.event.ActionEvent.ACTION, event -> {
             try {
-                // Vérifier si les champs sont vides avant de parser
                 if (calField.getText().isEmpty() || protField.getText().isEmpty() ||
                         glucField.getText().isEmpty() || lipField.getText().isEmpty()) {
                     new Alert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs.").showAndWait();
@@ -210,6 +241,11 @@ public class DashboardController {
 
     @FXML public void navToDashboard(ActionEvent event) { System.out.println("Nav Dashboard..."); }
     @FXML public void navToJournal(ActionEvent event) { switchScene(event, "Journal.fxml"); }
+    @FXML public void navToObjectifs(ActionEvent event) { switchScene(event, "Objectif.fxml"); }
+    @FXML
+    public void navToPlanificateur(ActionEvent event) {
+        switchScene(event, "Planificateur.fxml");
+    }
 
     private void switchScene(ActionEvent event, String fxmlFile) {
         try {

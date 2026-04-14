@@ -104,4 +104,13 @@ public class JournalController {
             btnThemeToggle.setText("🌙 Mode Sombre");
         }
     }
+
+    @FXML
+    public void navToObjectifs(ActionEvent event) {
+        switchScene(event, "Objectif.fxml");
+    }
+    @FXML
+    public void navToPlanificateur(ActionEvent event) {
+        switchScene(event, "Planificateur.fxml");
+    }
 }
