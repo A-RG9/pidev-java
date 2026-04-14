@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.FontWeight?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" 
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.wellora.javafx.controller.MainController"
+           prefWidth="1200" 
+           prefHeight="800"
+           styleClass="root">
+
+    <!-- ========== TOP HEADER ========== -->
+    <top>
+        <HBox styleClass="header-bar" alignment="CENTER_LEFT" prefHeight="60">
+            <padding>
+                <Insets top="0" right="30" bottom="0" left="30"/>
+            </padding>
+            
+            <!-- App Logo & Title -->
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Label text="🌿" styleClass="app-logo"/>
+                <Label text="Wellora Health" styleClass="app-title"/>
+            </HBox>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <!-- User Info -->
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="👤" styleClass="user-avatar"/>
+                <Label text="User" styleClass="user-name"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ========== LEFT SIDEBAR ========== -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240">
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
+            
+            <!-- Navigation Menu -->
+            <VBox spacing="8" styleClass="nav-menu">
+                <Label text="MENU" styleClass="menu-header"/>
+                
+                <Button text="🏠  Home" 
+                        styleClass="nav-button" 
+                        onAction="#showHomepage"
+                        fx:id="btnHome"/>
+                
+                <Button text="📊  Dashboard" 
+                        styleClass="nav-button" 
+                        onAction="#showDashboard"
+                        fx:id="btnDashboard"/>
+                
+                <Separator styleClass="menu-separator"/>
+                
+                <Label text="MANAGE" styleClass="menu-header"/>
+                
+                <Button text="📒  Health Journals" 
+                        styleClass="nav-button" 
+                        onAction="#showHealthJournals"
+                        fx:id="btnJournals"/>
+                
+                <Button text="📝  Health Entries" 
+                        styleClass="nav-button" 
+                        onAction="#showHealthEntries"
+                        fx:id="btnEntries"/>
+                
+                <Button text="🤒  Symptoms" 
+                        styleClass="nav-button" 
+                        onAction="#showSymptoms"
+                        fx:id="btnSymptoms"
+                        visible="false" managed="false"/>
+            </VBox>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            
+            <!-- Logout Section -->
+            <VBox spacing="10">
+                <Separator styleClass="menu-separator"/>
+                <Button text="🚪  Logout" 
+                        styleClass="nav-button logout" 
+                        onAction="#logout"/>
+            </VBox>
+            
+            <!-- Version -->
+            <Label text="v1.0" styleClass="version-label">
+                <VBox.margin>
+                    <Insets top="15" left="0" bottom="0" right="0"/>
+                </VBox.margin>
+            </Label>
+        </VBox>
+    </left>
+
+    <!-- ========== CENTER CONTENT (Dynamic) ========== -->
+    <center>
+        <VBox fx:id="contentArea" styleClass="content-area">
+            <!-- Dynamic content will be loaded here -->
+        </VBox>
+    </center>
+
+</BorderPane>
