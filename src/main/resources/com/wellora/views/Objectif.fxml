@@ -34,8 +34,8 @@
                         <Button text="Dashboard" styleClass="sub-nav-button" onAction="#navToDashboard" maxWidth="Infinity"/>
                         <Button text="Journal Alimentaire" styleClass="sub-nav-button" onAction="#navToJournal" maxWidth="Infinity"/>
                         <Button text="Planificateur" styleClass="sub-nav-button" onAction="#navToPlanificateur" maxWidth="Infinity"/>
-                        <Button text="Recettes" styleClass="sub-nav-button" maxWidth="Infinity"/>
                         <Button text="Objectifs" styleClass="sub-nav-button, active-text" onAction="#navToObjectifs" maxWidth="Infinity"/>
+                        <Button text="Analyse (Progrès)" styleClass="sub-nav-button" onAction="#navToAnalyse" maxWidth="Infinity"/>
                     </VBox>
                 </VBox>
             </ScrollPane>

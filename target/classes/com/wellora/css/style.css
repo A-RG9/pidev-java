@@ -425,3 +425,43 @@
     -fx-text-fill: #11151c;
     -fx-font-weight: bold;
 }
+
+/* ======================================================= */
+/* ====== ADAPTATION DU GRAPHIQUE POUR LE MODE SOMBRE ==== */
+/* ======================================================= */
+
+/* 1. Le fond de la zone de dessin du graphique */
+.dark-mode .chart-plot-background {
+    -fx-background-color: #1f2937; /* Couleur sombre pour le fond de la carte */
+}
+
+/* 2. Les textes des axes (les nombres et les jours) */
+.dark-mode .axis {
+    -fx-tick-label-fill: #e5e7eb; /* Gris très clair */
+}
+
+/* 3. Les titres des axes ("Jours", "Calories (kcal)") */
+.dark-mode .axis-label {
+    -fx-text-fill: #e5e7eb; /* Gris très clair */
+}
+
+/* 4. Les lignes de la grille (horizontales et verticales) */
+.dark-mode .chart-vertical-grid-lines,
+.dark-mode .chart-horizontal-grid-lines {
+    -fx-stroke: #374151; /* Lignes subtiles pour séparer les valeurs */
+}
+
+/* 5. Les marques de graduation sur les axes */
+.dark-mode .axis-tick-mark {
+    -fx-stroke: #9ca3af;
+}
+
+/* --- OPTIONNEL : Changer les couleurs des barres en Mode Sombre --- */
+/* Série 1 (Objectifs) */
+.dark-mode .default-color0.chart-bar {
+    -fx-bar-fill: #00E6A4;
+}
+/* Série 2 (Consommé) */
+.dark-mode .default-color1.chart-bar {
+    -fx-bar-fill: #FFB020;
+}

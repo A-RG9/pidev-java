@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.function.UnaryOperator;
+import com.wellora.utils.ThemeManager;
 
 public class ObjectifController {
 
@@ -35,8 +36,20 @@ public class ObjectifController {
     private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
     private ObservableList<NutritionGoal> objectifsList = FXCollections.observableArrayList();
 
+    @FXML public void navToAnalyse(ActionEvent event) { switchScene(event, "Analyse.fxml"); }
     @FXML
     public void initialize() {
+        if (ThemeManager.isDarkMode) {
+            btnThemeToggle.setSelected(true);
+            btnThemeToggle.setText("☀️ Mode Clair");
+            if (!rootPane.getStyleClass().contains("light-theme")) {
+                rootPane.getStyleClass().add("light-theme");
+            }
+        } else {
+            btnThemeToggle.setSelected(false);
+            btnThemeToggle.setText("🌙 Mode Sombre");
+            rootPane.getStyleClass().remove("light-theme");
+        }
         colNom.setCellValueFactory(new PropertyValueFactory<>("name"));
         colType.setCellValueFactory(new PropertyValueFactory<>("goalType"));
         colCalories.setCellValueFactory(new PropertyValueFactory<>("caloriesTarget"));
@@ -226,12 +239,15 @@ public class ObjectifController {
 
     @FXML
     public void toggleTheme() {
-        if (btnThemeToggle.isSelected()) {
-            rootPane.getStyleClass().add("light-theme");
+        ThemeManager.isDarkMode = btnThemeToggle.isSelected();
+        if (ThemeManager.isDarkMode) {
             btnThemeToggle.setText("☀️ Mode Clair");
+            if (!rootPane.getStyleClass().contains("light-theme")) {
+                rootPane.getStyleClass().add("light-theme");
+            }
         } else {
-            rootPane.getStyleClass().remove("light-theme");
             btnThemeToggle.setText("🌙 Mode Sombre");
+            rootPane.getStyleClass().remove("light-theme");
         }
     }
 

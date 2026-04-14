@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import com.wellora.utils.ThemeManager;
 import javafx.scene.layout.BorderPane;
 
 public class JournalController {
@@ -37,6 +38,17 @@ public class JournalController {
 
     @FXML
     public void initialize() {
+        if (ThemeManager.isDarkMode) {
+            btnThemeToggle.setSelected(true);
+            btnThemeToggle.setText("☀️ Mode Clair");
+            if (!rootPane.getStyleClass().contains("light-theme")) {
+                rootPane.getStyleClass().add("light-theme");
+            }
+        } else {
+            btnThemeToggle.setSelected(false);
+            btnThemeToggle.setText("🌙 Mode Sombre");
+            rootPane.getStyleClass().remove("light-theme");
+        }
         // Lier les colonnes
         colRepas.setCellValueFactory(new PropertyValueFactory<>("mealType"));
         colCalories.setCellValueFactory(new PropertyValueFactory<>("totalCalories"));
@@ -96,12 +108,15 @@ public class JournalController {
     }
     @FXML
     public void toggleTheme() {
-        if (btnThemeToggle.isSelected()) {
-            rootPane.getStyleClass().add("light-theme");
+        ThemeManager.isDarkMode = btnThemeToggle.isSelected();
+        if (ThemeManager.isDarkMode) {
             btnThemeToggle.setText("☀️ Mode Clair");
+            if (!rootPane.getStyleClass().contains("light-theme")) {
+                rootPane.getStyleClass().add("light-theme");
+            }
         } else {
-            rootPane.getStyleClass().remove("light-theme");
             btnThemeToggle.setText("🌙 Mode Sombre");
+            rootPane.getStyleClass().remove("light-theme");
         }
     }
 
@@ -113,4 +128,6 @@ public class JournalController {
     public void navToPlanificateur(ActionEvent event) {
         switchScene(event, "Planificateur.fxml");
     }
+
+    @FXML public void navToAnalyse(ActionEvent event) { switchScene(event, "Analyse.fxml"); }
 }

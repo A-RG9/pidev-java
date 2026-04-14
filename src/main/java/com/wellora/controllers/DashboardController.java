@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import com.wellora.utils.ThemeManager;
+import com.wellora.utils.ThemeManager;
 
 // CONTROLLER LAYER: Manages user interaction, UI updates, and talks to the DAO
 public class DashboardController {
@@ -49,6 +51,17 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
+        if (ThemeManager.isDarkMode) {
+            btnThemeToggle.setSelected(true);
+            btnThemeToggle.setText("☀️ Mode Clair");
+            if (!rootPane.getStyleClass().contains("light-theme")) {
+                rootPane.getStyleClass().add("light-theme");
+            }
+        } else {
+            btnThemeToggle.setSelected(false);
+            btnThemeToggle.setText("🌙 Mode Sombre");
+            rootPane.getStyleClass().remove("light-theme");
+        }
         colRepas.setCellValueFactory(new PropertyValueFactory<>("mealType"));
         colCalories.setCellValueFactory(new PropertyValueFactory<>("totalCalories"));
         colProteines.setCellValueFactory(new PropertyValueFactory<>("totalProtein"));
@@ -246,6 +259,7 @@ public class DashboardController {
     public void navToPlanificateur(ActionEvent event) {
         switchScene(event, "Planificateur.fxml");
     }
+    @FXML public void navToAnalyse(ActionEvent event) { switchScene(event, "Analyse.fxml"); }
 
     private void switchScene(ActionEvent event, String fxmlFile) {
         try {
@@ -264,12 +278,15 @@ public class DashboardController {
 
     @FXML
     public void toggleTheme() {
-        if (btnThemeToggle.isSelected()) {
-            rootPane.getStyleClass().add("light-theme");
+        ThemeManager.isDarkMode = btnThemeToggle.isSelected();
+        if (ThemeManager.isDarkMode) {
             btnThemeToggle.setText("☀️ Mode Clair");
+            if (!rootPane.getStyleClass().contains("light-theme")) {
+                rootPane.getStyleClass().add("light-theme");
+            }
         } else {
-            rootPane.getStyleClass().remove("light-theme");
             btnThemeToggle.setText("🌙 Mode Sombre");
+            rootPane.getStyleClass().remove("light-theme");
         }
     }
 }

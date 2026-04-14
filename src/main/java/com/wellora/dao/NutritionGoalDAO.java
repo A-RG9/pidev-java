@@ -4,6 +4,7 @@ import com.wellora.models.NutritionGoal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class NutritionGoalDAO {
 
@@ -125,5 +126,56 @@ public class NutritionGoalDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public NutritionGoal getGoalByDate(String userId, LocalDate targetDate) {
+        NutritionGoal goal = null;
+
+        // La colonne s'appelle target_date dans votre BDD
+        String query = "SELECT * FROM nutrition_goals WHERE user_id = ? AND DATE(target_date) = ? ORDER BY id DESC LIMIT 1";
+
+        // On utilise la MEME méthode de connexion que dans vos autres fonctions
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, userId);
+            stmt.setDate(2, java.sql.Date.valueOf(targetDate));
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("target_date");
+                java.time.LocalDate tDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+
+                String name = rs.getString("name");
+                if (name == null || name.trim().isEmpty()) {
+                    name = "Objectif sans nom";
+                }
+
+                String type = rs.getString("goal_type");
+                if (type == null) {
+                    type = "Général";
+                }
+
+                // On utilise le même constructeur que dans getDailyGoalByUser
+                goal = new NutritionGoal(
+                        rs.getInt("id"),
+                        rs.getString("user_id"),
+                        name,
+                        type,
+                        rs.getInt("calories_target"),
+                        rs.getDouble("weight_target"),
+                        tDate
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Si aucun objectif spécifique n'est trouvé pour cette date, on prend l'objectif du jour
+        if (goal == null) {
+            return getDailyGoalByUser(userId);
+        }
+
+        return goal;
     }
 } // <-- FIN DE LA CLASSE ICI
