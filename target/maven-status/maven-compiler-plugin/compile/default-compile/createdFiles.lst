@@ -1,0 +1,5 @@
+com\wellora\controllers\DashboardController.class
+com\wellora\models\FoodLog.class
+com\wellora\controllers\JournalController.class
+com\wellora\dao\FoodLogDAO.class
+com\wellora\Main.class

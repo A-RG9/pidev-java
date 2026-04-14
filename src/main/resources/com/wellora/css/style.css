@@ -1,0 +1,427 @@
+
+/* VIEW LAYER: Styling */
+.root {
+    -fx-background-color: #121418;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ================== SIDEBAR ================== */
+.sidebar {
+    -fx-background-color: #11151c; /* Background très sombre */
+    -fx-padding: 20 15 20 15;
+}
+
+/* Logo */
+.logo-container {
+    -fx-padding: 0 0 20 5;
+}
+.logo-icon {
+    -fx-background-color: #00E6A4; /* Vert émeraude/Teal */
+    -fx-text-fill: white;
+    -fx-padding: 5 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+}
+.logo-text {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Carte Utilisateur */
+.user-card {
+    -fx-background-color: #1a202c; /* Légèrement plus clair que le fond */
+    -fx-padding: 12 15;
+    -fx-background-radius: 10;
+    -fx-margin: 0 0 15 0;
+}
+.user-avatar {
+    -fx-background-color: #00E6A4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-min-width: 38px;
+    -fx-min-height: 38px;
+    -fx-background-radius: 50%; /* Rend le fond rond */
+}
+.user-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+.user-email {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 11px;
+}
+
+/* Menu principal (Santé, Nutrition) */
+.nav-category {
+    -fx-padding: 10 10;
+    -fx-cursor: hand;
+}
+.nav-category .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+.nav-category .nav-icon {
+    -fx-padding: 0 15 0 0;
+}
+.nav-category:hover .label {
+    -fx-text-fill: white;
+}
+
+/* Sous-menus (Dashboard, etc.) */
+.sub-menu {
+    -fx-padding: 0 0 10 45; /* Indentation vers la droite */
+}
+.sub-nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+.sub-nav-button:hover {
+    -fx-text-fill: white;
+}
+.sub-nav-button.active-text {
+    -fx-text-fill: #00E6A4; /* Le texte devient vert pour la page active */
+    -fx-font-weight: bold;
+}
+.sub-nav-button.active-text:hover {
+    -fx-text-fill: #00E6A4;
+}
+
+/* Barre de défilement (Scrollbar invisible mais fonctionnelle) */
+.sidebar-scroll {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #11151c;
+}
+.sidebar-scroll .viewport {
+    -fx-background-color: transparent;
+}
+.sidebar-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 5;
+}
+.sidebar-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #2A2F3D;
+    -fx-background-radius: 5;
+}
+
+/* Actions du bas (Réduire, Profil, Déconnexion) */
+.bottom-actions {
+    -fx-padding: 15 0 0 0;
+}
+.action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+.action-button:hover {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.logout-button {
+    -fx-text-fill: #FF6B6B; /* Rouge doux */
+}
+.logout-button:hover {
+    -fx-text-fill: #FF6B6B;
+    -fx-background-color: rgba(255, 107, 107, 0.1);
+}
+
+.sidebar-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 20 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 15 12 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+}
+
+.nav-button.active {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.card {
+    -fx-background-color: #1C2026;
+    -fx-background-radius: 15;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+.card-title {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+
+.card-value {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.primary-button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #00A690;
+}
+
+.secondary-button {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #3B4252;
+}
+
+.danger-button {
+    -fx-background-color: #E63946;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #D62828;
+}
+
+/* =========================================
+   TableView Styling for Better Visibility (LATEST UPDATES)
+   ========================================= */
+
+.table-view {
+    -fx-background-color: #1C2026;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px; 
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2A2F3D;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 5 0 5 0; 
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #9CA3AF; 
+    -fx-font-weight: bold;
+    -fx-font-size: 16px; 
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #2A2F3D transparent;
+    -fx-cell-size: 45px; 
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #21252C; 
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #00BFA5; 
+}
+
+.table-cell {
+    -fx-text-fill: #F3F4F6; 
+    -fx-alignment: CENTER_LEFT; 
+    -fx-padding: 0 0 0 15px; 
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: white; 
+    -fx-font-weight: bold; 
+}
+
+
+/* =========================================
+   Typography & Toggle Button Base
+   ========================================= */
+.main-title { -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; }
+.main-subtitle { -fx-text-fill: #9CA3AF; -fx-font-size: 14px; }
+.section-title { -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; }
+
+.theme-toggle {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.theme-toggle:selected {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+
+/* =========================================
+   LIGHT THEME OVERRIDES
+   ========================================= */
+.light-theme {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .logo-text {
+    -fx-text-fill: #111827; /* Dark gray/black for light mode */
+}
+.light-theme .sidebar {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 0);
+}
+.light-theme .sidebar-title { -fx-text-fill: #111827; }
+.light-theme .sidebar-subtitle { -fx-text-fill: #6B7280; }
+.light-theme .nav-button { -fx-text-fill: #4B5563; }
+.light-theme .nav-button:hover { -fx-background-color: #F3F4F6; -fx-text-fill: #111827; }
+.light-theme .nav-button.active { -fx-background-color: #00BFA5; -fx-text-fill: white; }
+
+.light-theme .card {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+.light-theme .card-value { -fx-text-fill: #111827; }
+.light-theme .card-title { -fx-text-fill: #6B7280; }
+
+.light-theme .main-title { -fx-text-fill: #111827; }
+.light-theme .main-subtitle { -fx-text-fill: #6B7280; }
+.light-theme .section-title { -fx-text-fill: #111827; }
+
+.light-theme .secondary-button {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+.light-theme .secondary-button:hover { -fx-background-color: #D1D5DB; }
+
+.light-theme .table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E5E7EB;
+}
+.light-theme .table-view .column-header-background {
+    -fx-background-color: #F9FAFB;
+}
+.light-theme .table-view .column-header .label {
+    -fx-text-fill: #4B5563;
+}
+.light-theme .table-row-cell {
+    -fx-border-color: transparent transparent #E5E7EB transparent;
+}
+.light-theme .table-row-cell:odd {
+    -fx-background-color: #F9FAFB;
+}
+.light-theme .table-cell {
+    -fx-text-fill: #111827;
+}
+.light-theme .table-row-cell:selected {
+    -fx-background-color: #00BFA5;
+}
+.light-theme .table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
+/* Sub-menu buttons in Light Theme */
+.light-theme .sub-nav-button {
+    -fx-text-fill: #4B5563; /* Dark gray */
+}
+
+.light-theme .sub-nav-button:hover {
+    -fx-background-color: #F3F4F6; -fx-text-fill: #111827; /* Very light gray background on hover */
+}
+
+.light-theme .sub-nav-button.active-text {
+    -fx-background-color: #00BFA5; -fx-text-fill: white;
+}
+
+.light-theme .sub-nav-button.active-text:hover {
+    -fx-text-fill: #F3F4F6;
+}
+
+/* ================== DATEPICKER CUSTOMIZATION ================== */
+.date-picker-custom {
+    -fx-background-color: transparent;
+}
+.date-picker-custom > .text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-padding: 8 12;
+    -fx-background-radius: 8 0 0 8;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 8 0 0 8;
+}
+.date-picker-custom > .arrow-button {
+    -fx-background-color: #1a202c;
+    -fx-background-radius: 0 8 8 0;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 0 8 8 0;
+    -fx-padding: 8 12;
+    -fx-cursor: hand;
+}
+.date-picker-custom > .arrow-button:hover {
+    -fx-background-color: #2A2F3D;
+}
+.date-picker-custom > .arrow-button > .arrow {
+    -fx-background-color: #00E6A4;
+}
+
+/* DatePicker Popup Calendar */
+.date-picker-popup {
+    -fx-background-color: #11151c;
+    -fx-border-color: #2A2F3D;
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #1a202c;
+}
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #9CA3AF;
+}
+.date-picker-popup .day-cell {
+    -fx-background-color: #11151c;
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #2A2F3D;
+}
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #00E6A4;
+    -fx-text-fill: #11151c;
+    -fx-font-weight: bold;
+}
