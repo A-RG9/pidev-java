@@ -1,0 +1,14 @@
+org\example\controllers\GoalCardController.class
+org\example\dao\GoalDaoImpl.class
+org\example\controllers\GoalController$UserItem.class
+org\example\utils\Database.class
+org\example\Main.class
+org\example\controllers\ExerciseCardController.class
+org\example\dao\IGoalDao.class
+org\example\models\Goal.class
+org\example\controllers\GoalController.class
+org\example\Launcher.class
+org\example\controllers\ExerciseLibraryController.class
+org\example\controllers\MainController.class
+org\example\dao\ExerciseDAO.class
+org\example\models\Exercise.class

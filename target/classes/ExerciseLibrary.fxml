@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:id="mainStackPane" fx:controller="org.example.controllers.ExerciseLibraryController"
+           prefHeight="800.0" prefWidth="1100.0" styleClass="main-bg">
+
+    <BorderPane>
+        <top>
+            <HBox spacing="20" style="-fx-padding: 20;" alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Exercise Library" styleClass="text-header" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                    <Label text="Browse exercises with video demonstrations" styleClass="text-secondary" style="-fx-font-size: 12;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <TextField fx:id="searchField" promptText="Search exercises..." styleClass="text-field" prefWidth="250"/>
+                <ComboBox fx:id="sortComboBox" prefWidth="150" />
+                <Button text="+ Nouvel Exercice" onAction="#openAddForm" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+            </HBox>
+        </top>
+
+        <left>
+            <VBox spacing="15" prefWidth="220" styleClass="sidebar" style="-fx-padding: 20;">
+                <Label text="Categories" styleClass="text-section" style="-fx-font-weight: bold;"/>
+                <Button text="All Categories" onAction="#filterAll" styleClass="menu-btn" maxWidth="Infinity"/>
+                <Button text="Strength" onAction="#filterByStrength" styleClass="menu-btn" maxWidth="Infinity"/>
+                <Button text="Cardio" onAction="#filterByCardio" styleClass="menu-btn" maxWidth="Infinity"/>
+
+                <Separator opacity="0.1" />
+
+                <Label text="Difficulty" styleClass="text-section" style="-fx-font-weight: bold;"/>
+                <CheckBox text="Beginner" styleClass="text-secondary"/>
+                <CheckBox text="Intermediate" styleClass="text-secondary" selected="true"/>
+                <CheckBox text="Advanced" styleClass="text-secondary"/>
+            </VBox>
+        </left>
+
+        <center>
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" style="-fx-padding: 20;" />
+            </ScrollPane>
+        </center>
+    </BorderPane>
+
+    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.85);">
+        <VBox spacing="15" maxWidth="500" styleClass="form-card" style="-fx-padding: 30; -fx-background-radius: 15; -fx-border-width: 1;">
+            <Label text="Détails de l'exercice" styleClass="text-header" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="txtTitle" promptText="Nom de l'exercice" styleClass="text-field"/>
+            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="80" styleClass="text-area" wrapText="true"/>
+            <TextField fx:id="txtVideoUrl" promptText="URL Vidéo (YouTube)" styleClass="text-field"/>
+
+            <HBox spacing="10">
+                <ComboBox fx:id="comboCategory" promptText="Catégorie" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <ComboBox fx:id="comboDifficulty" promptText="Difficulté" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            </HBox>
+
+            <TextField fx:id="txtDuration" promptText="Durée (min)" styleClass="text-field"/>
+
+            <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
+                <Button text="Annuler" onAction="#closeForm" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-border-color: #ef4444; -fx-border-radius: 5; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</StackPane>

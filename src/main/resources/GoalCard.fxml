@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.GoalCardController" spacing="10" prefWidth="320" styleClass="card-bg">
+
+    <HBox alignment="CENTER_LEFT">
+        <Label fx:id="lblStatus" text="en cours" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-padding: 3 10; -fx-background-radius: 10; -fx-font-size: 11px;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lblCategory" text="fitness" styleClass="text-secondary"/>
+    </HBox>
+
+    <Text fx:id="txtTitle" text="Titre de l'objectif" styleClass="text-primary" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <Text fx:id="txtDescription" text="Description de l'objectif" styleClass="text-secondary"/>
+
+    <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+        <Label text="Progression :" styleClass="text-secondary"/>
+        <Label fx:id="lblProgress" text="20%" style="-fx-text-fill: #14b8a6; -fx-font-weight: bold;"/>
+    </HBox>
+    <ProgressBar fx:id="progressBar" progress="0.2" prefWidth="280" style="-fx-accent: #14b8a6;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 15 0 0 0;">
+        <VBox>
+            <Label text="Patient" styleClass="text-secondary" style="-fx-font-size: 10px;"/>
+            <Label fx:id="lblPatient" text="patient123" styleClass="text-primary"/>
+        </VBox>
+        <VBox>
+            <Label text="Échéance" styleClass="text-secondary" style="-fx-font-size: 10px;"/>
+            <Label fx:id="lblEndDate" text="2026-04-01" styleClass="text-primary"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="btnEdit" text="Modifier" style="-fx-background-color: transparent; -fx-border-color: #3b82f6; -fx-text-fill: #3b82f6; -fx-border-radius: 5; -fx-cursor: hand;"/>
+        <Button fx:id="btnDelete" text="Supprimer" style="-fx-background-color: transparent; -fx-border-color: #ef4444; -fx-text-fill: #ef4444; -fx-border-radius: 5; -fx-cursor: hand;"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,114 @@
+/* =========================================
+   1. VARIABLES MODE CLAIR (Syntaxe JavaFX)
+   ========================================= */
+.root {
+    -bg-main: #f4f7f6;       /* Fond général clair */
+    -bg-sidebar: #ffffff;    /* Sidebar blanche */
+    -bg-card: #ffffff;       /* Cartes blanches */
+    -text-primary: #1e293b;  /* Texte foncé */
+    -text-secondary: #64748b;/* Texte gris */
+    -border-color: #e2e8f0;  /* Bordures claires */
+    -accent: #14b8a6;        /* Turquoise WellCare */
+    -profile-bg: #f8fafc;    /* Fond du profil clair */
+    -hover-bg: #f1f5f9;      /* Survol menu clair */
+}
+
+/* =========================================
+   2. VARIABLES MODE SOMBRE
+   ========================================= */
+.dark-theme {
+    -bg-main: #020617;
+    -bg-sidebar: #0f172a;
+    -bg-card: #1e293b;
+    -text-primary: #f8fafc;
+    -text-secondary: #94a3b8;
+    -border-color: #1e293b;
+    -profile-bg: #1e293b;
+    -hover-bg: #334155;
+}
+
+/* =========================================
+   3. APPLICATION DES STYLES
+   ========================================= */
+.main-container { -fx-background-color: -bg-main; }
+
+.sidebar {
+    -fx-background-color: -bg-sidebar;
+    -fx-border-color: -border-color;
+    -fx-border-width: 0 1 0 0;
+}
+
+/* Textes */
+.text-primary { -fx-text-fill: -text-primary; -fx-fill: -text-primary; }
+.text-secondary { -fx-text-fill: -text-secondary; -fx-fill: -text-secondary; }
+.logo-text { -fx-text-fill: -accent; -fx-font-size: 22px; -fx-font-weight: bold; }
+
+/* Profil Utilisateur */
+.user-profile {
+    -fx-background-color: -profile-bg;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+}
+.user-avatar {
+    -fx-background-color: -accent;
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+    -fx-font-weight: bold;
+}
+
+/* Les Boutons */
+.menu-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent;
+    -fx-text-fill: -text-secondary;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-padding: 10 15;
+}
+.menu-btn:hover {
+    -fx-background-color: -hover-bg;
+    -fx-text-fill: -accent;
+}
+
+/* Cartes (Pour votre Dashboard) */
+.card-bg {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 12;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 12;
+    -fx-padding: 20;
+}
+/* Application des variables sur les composants */
+.main-container { -fx-background-color: -bg-main; }
+
+.sidebar {
+    -fx-background-color: -bg-sidebar;
+    -fx-border-color: -border-color;
+    -fx-border-width: 0 1 0 0;
+}
+
+.label { -fx-text-fill: -text-primary; }
+.text-secondary { -fx-text-fill: -text-secondary; }
+
+.user-profile {
+    -fx-background-color: -profile-bg;
+    -fx-background-radius: 10;
+}
+
+.menu-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: -text-secondary;
+}
+
+.menu-btn:hover {
+    -fx-background-color: -hover-bg;
+    -fx-text-fill: -accent;
+}
+
+.card-bg {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 12;
+    -fx-border-color: -border-color;
+}
