@@ -17,18 +17,21 @@ public class PublicationServices implements ICrud<publication_parcours> {
     @Override
     public void ajouter(publication_parcours p) throws SQLException {
         String sql = "INSERT INTO `publication_parcours`(`image_publication`, `ambiance`, `securite`, `date_publication`, `text_publication`, `experience`, `type_publication`, `parcours_de_sante_id`) " +
-                "VALUES ('" + p.getImage_publication() + "'," +
-                p.getAmbiance() + "," +
-                p.getSecurite() + ",'" +
-                p.getDate_publication() + "','" +
-                p.getText_publication() + "','" +
-                p.getExperience() + "','" +
-                p.getType_publication() + "'," +
-                p.getParcours_de_sante_id() + ")";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Statement statement = con.createStatement();
-        statement.executeUpdate(sql);
-        System.out.println("Publication ajoutée avec succes!");
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setString(1, p.getImage_publication());
+            pstmt.setInt(2, p.getAmbiance());
+            pstmt.setInt(3, p.getSecurite());
+            pstmt.setString(4, p.getDate_publication().toString());
+            pstmt.setString(5, p.getText_publication());
+            pstmt.setString(6, p.getExperience());
+            pstmt.setString(7, p.getType_publication());
+            pstmt.setInt(8, p.getParcours_de_sante_id());
+            pstmt.executeUpdate();
+            System.out.println("Publication ajoutée avec succès !");
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 package services;
 
 import entities.parcours_de_sante;
-import entities.publication_parcours; // Make sure you have this import
+import entities.publication_parcours;
 import utils.MyDataBase;
 
 import java.sql.*;
@@ -18,11 +18,20 @@ public class ParcoursDeSanteServices implements ICrud<parcours_de_sante> {
     @Override
     public void ajouter(parcours_de_sante p) throws SQLException {
         String sql = "INSERT INTO `parcours_de_sante`(`nom_parcours`, `localisation_parcours`, `latitude_parcours`, `longitude_parcours`, `distance_parcours`, `date_creation`, `image_parcours`) " +
-                "VALUES ('" + p.getNom_parcours() + "','" + p.getLocalisation_parcours() + "'," + p.getLatitude_parcours() + "," + p.getLongitude_parcours() + "," + p.getDistance_parcours() + ",'" + p.getDate_creation() + "','" + p.getImage_parcours() + "')";
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        Statement statement = con.createStatement();
-        statement.executeUpdate(sql);
-        System.out.println("Parcours ajouté avec succes!");
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setString(1, p.getNom_parcours());
+            pstmt.setString(2, p.getLocalisation_parcours());
+            pstmt.setDouble(3, p.getLatitude_parcours());
+            pstmt.setDouble(4, p.getLongitude_parcours());
+            pstmt.setDouble(5, p.getDistance_parcours());
+            pstmt.setString(6, p.getDate_creation().toString());
+            pstmt.setString(7, p.getImage_parcours());
+            pstmt.executeUpdate();
+            System.out.println("Parcours ajouté avec succès !");
+        }
     }
 
     @Override

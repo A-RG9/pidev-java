@@ -15,13 +15,19 @@ public class CommentaireServices implements ICrud<commentaire_publication> {
 
     @Override
     public void ajouter(commentaire_publication c) throws SQLException {
-
         String sql = "INSERT INTO `commentaire_publication`(`commentaire`, `date_commentaire`, `publication_parcours_id`) " +
-                "VALUES ('" + c.getCommentaire() + "','" + c.getDate_commentaire() + "'," + c.getPublication_parcours_id() + ")";
+                "VALUES (?, ?, ?)";
 
-        Statement st = con.createStatement();
-        st.executeUpdate(sql);
-        System.out.println("Commentaire ajouté avec succès!");
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, c.getCommentaire());
+
+            pstmt.setString(2, c.getDate_commentaire().toString());
+
+            pstmt.setInt(3, c.getPublication_parcours_id());
+
+            pstmt.executeUpdate();
+            System.out.println("Commentaire ajouté avec succès!");
+        }
     }
 
     @Override
