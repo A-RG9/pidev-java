@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class AfficherPublicationsController {
 
@@ -84,22 +85,18 @@ public class AfficherPublicationsController {
             }
 
             for (publication_parcours pub : list) {
-
                 VBox card = new VBox(15);
                 card.setStyle("-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 2);");
                 card.setMaxWidth(800);
 
-
                 HBox header = new HBox(10);
                 header.setAlignment(Pos.CENTER_LEFT);
-
 
                 StackPane avatar = new StackPane();
                 Circle circle = new Circle(20, javafx.scene.paint.Color.web("#009688"));
                 Label initials = new Label("UT");
                 initials.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;");
                 avatar.getChildren().addAll(circle, initials);
-
 
                 VBox userInfo = new VBox(2);
                 Label userName = new Label("Utilisateur");
@@ -111,7 +108,6 @@ public class AfficherPublicationsController {
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-
                 Button btnEditCard = new Button("📝");
                 btnEditCard.setStyle("-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 14;");
                 Button btnDeleteCard = new Button("🗑");
@@ -119,16 +115,26 @@ public class AfficherPublicationsController {
 
 
                 btnDeleteCard.setOnAction(e -> {
-                    try {
-                        pubService.supprimer(pub.getId());
-                        loadPublications();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation de suppression");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Êtes-vous sûr de vouloir supprimer cette publication ?");
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        try {
+                            pubService.supprimer(pub.getId());
+                            loadPublications();
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 });
 
-                header.getChildren().addAll(avatar, userInfo, spacer, btnEditCard, btnDeleteCard);
 
+                btnEditCard.setOnAction(e -> goToModifierPublication(pub));
+
+                header.getChildren().addAll(avatar, userInfo, spacer, btnEditCard, btnDeleteCard);
 
                 HBox badgesRow = new HBox(15);
                 badgesRow.setAlignment(Pos.CENTER_LEFT);
@@ -139,20 +145,35 @@ public class AfficherPublicationsController {
                 Label secLbl = new Label("🛡 " + pub.getSecurite() + "/5 safety");
                 secLbl.setStyle("-fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-font-size: 13;");
 
-                Label expLbl = new Label("☹ " + pub.getExperience());
+                String expValue = pub.getExperience() != null ? pub.getExperience() : "Unknown";
+                String expColor = "#7f8c8d";
+                String expIcon = "•";
 
-                expLbl.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 13;");
+                if (expValue.equalsIgnoreCase("Excellent")) {
+                    expColor = "#3498db";
+                    expIcon = "🌟";
+                } else if (expValue.equalsIgnoreCase("Good") || expValue.equalsIgnoreCase("Bien")) {
+                    expColor = "#2ecc71";
+                    expIcon = "🙂";
+                } else if (expValue.equalsIgnoreCase("Average") || expValue.equalsIgnoreCase("Moyen")) {
+                    expColor = "#f39c12";
+                    expIcon = "😐";
+                } else if (expValue.equalsIgnoreCase("Poor") || expValue.equalsIgnoreCase("Bad") || expValue.equalsIgnoreCase("Mauvais")) {
+                    expColor = "#e74c3c";
+                    expIcon = "☹";
+                }
+
+                Label expLbl = new Label(expIcon + " " + expValue);
+                expLbl.setStyle("-fx-text-fill: " + expColor + "; -fx-font-weight: bold; -fx-font-size: 13;");
 
                 Label typeBadge = new Label(pub.getType_publication());
                 typeBadge.setStyle("-fx-background-color: #ecf0f1; -fx-text-fill: #7f8c8d; -fx-padding: 3 8 3 8; -fx-background-radius: 10; -fx-font-size: 12;");
 
                 badgesRow.getChildren().addAll(ambLbl, secLbl, expLbl, typeBadge);
 
-
                 Label textContent = new Label(pub.getText_publication());
                 textContent.setStyle("-fx-text-fill: #2d3436; -fx-font-size: 14;");
                 textContent.setWrapText(true);
-
 
                 ImageView imageView = new ImageView();
                 if (pub.getImage_publication() != null && !pub.getImage_publication().isEmpty()) {
@@ -163,13 +184,11 @@ public class AfficherPublicationsController {
                             imageView.setImage(image);
                             imageView.setFitWidth(750);
                             imageView.setPreserveRatio(true);
-
                         }
                     } catch (Exception e) {
                         System.out.println("Image non trouvée : " + pub.getImage_publication());
                     }
                 }
-
 
                 HBox footer = new HBox(5);
                 footer.setAlignment(Pos.CENTER_LEFT);
@@ -180,14 +199,10 @@ public class AfficherPublicationsController {
                 commentsLbl.setStyle("-fx-text-fill: #95a5a6; -fx-font-size: 13; -fx-cursor: hand;");
                 footer.getChildren().add(commentsLbl);
 
-
                 card.getChildren().addAll(header, badgesRow, textContent);
-
-
                 if (imageView.getImage() != null) {
                     card.getChildren().add(imageView);
                 }
-
                 card.getChildren().add(footer);
 
                 publicationsContainer.getChildren().add(card);
@@ -201,7 +216,6 @@ public class AfficherPublicationsController {
     private String formatTimeAgo(String dateString) {
         if (dateString == null || dateString.isEmpty()) return "Date inconnue";
         try {
-
             LocalDate creationDate = LocalDate.parse(dateString.split(" ")[0], DateTimeFormatter.ISO_LOCAL_DATE);
             LocalDate today = LocalDate.now();
             Period period = Period.between(creationDate, today);
@@ -223,6 +237,22 @@ public class AfficherPublicationsController {
 
             AjouterPublicationController controller = loader.getController();
             controller.initData(currentParcours);
+
+            btnBackToTrails.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // --- NEW METHOD FOR NAVIGATING TO MODIFY PAGE ---
+    private void goToModifierPublication(publication_parcours pubToEdit) {
+        if (currentParcours == null) return;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierPublication.fxml"));
+            Parent root = loader.load();
+
+            ModifierPublicationController controller = loader.getController();
+            controller.initData(currentParcours, pubToEdit);
 
             btnBackToTrails.getScene().setRoot(root);
         } catch (IOException e) {

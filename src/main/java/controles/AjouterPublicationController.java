@@ -33,9 +33,9 @@ public class AjouterPublicationController {
 
     @FXML
     public void initialize() {
-        // Initialize Combo Boxes
-        experienceCombo.getItems().addAll("Excellent", "Good", "Average", "Poor");
-        typeCombo.getItems().addAll("Review", "Update", "Warning", "Question");
+
+        experienceCombo.getItems().addAll("Bad", "Good", "Excellent");
+        typeCombo.getItems().addAll("Review", "Event");
 
         btnCancel.setOnAction(e -> goBackToPublications());
 
@@ -64,7 +64,7 @@ public class AjouterPublicationController {
 
     private void savePublication() {
         try {
-            // Basic Validation
+
             if (pubTextArea.getText().trim().isEmpty() || datePicker.getValue() == null ||
                     experienceCombo.getValue() == null || typeCombo.getValue() == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Veuillez remplir tous les champs obligatoires.");
