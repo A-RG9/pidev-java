@@ -8,7 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import services.ParcoursDeSanteServices;
-
+import org.controlsfx.control.RangeSlider;
+import javafx.scene.control.Label;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -23,19 +24,23 @@ public class AfficherParcoursController {
 
     @FXML private TextField searchName;
     @FXML private TextField searchLocation;
-    @FXML private Slider distanceSlider;
-    @FXML private Slider pubSlider;
+
+    @FXML private RangeSlider distanceRange;
+    @FXML private RangeSlider publicationsRange;
+
+    @FXML private Label lblMinDistance;
+    @FXML private Label lblMaxDistance;
+    @FXML private Label lblMinPubs;
+    @FXML private Label lblMaxPubs;
+
     @FXML private Button btnSearch;
     @FXML private Button btnReset;
-    @FXML private Label distanceValueLabel;
-    @FXML private Label pubValueLabel;
 
     @FXML private ComboBox<String> sortCombo;
     @FXML private Button btnSortAsc;
     @FXML private Button btnSortDesc;
 
     private final ParcoursDeSanteServices service = new ParcoursDeSanteServices();
-
 
     private boolean isAscending = false;
 
@@ -51,11 +56,9 @@ public class AfficherParcoursController {
             sortCombo.setOnAction(e -> applyFilters());
         }
 
-
         if (btnSortAsc != null && btnSortDesc != null) {
             btnSortAsc.setOnAction(e -> setSortDirection(true));
             btnSortDesc.setOnAction(e -> setSortDirection(false));
-            // Apply initial styling
             setSortDirection(isAscending);
         }
 
@@ -78,11 +81,15 @@ public class AfficherParcoursController {
             btnReset.setOnAction(event -> {
                 searchName.clear();
                 searchLocation.clear();
-                distanceSlider.setValue(20.0);
-                pubSlider.setValue(200.0);
-                if (distanceValueLabel != null) distanceValueLabel.setText("20.0 km");
-                if (pubValueLabel != null) pubValueLabel.setText("200");
 
+                if (distanceRange != null) {
+                    distanceRange.setLowValue(0.0);
+                    distanceRange.setHighValue(20.0);
+                }
+                if (publicationsRange != null) {
+                    publicationsRange.setLowValue(0.0);
+                    publicationsRange.setHighValue(200.0);
+                }
 
                 if (sortCombo != null) sortCombo.setValue("Date de création");
                 setSortDirection(false);
@@ -91,25 +98,30 @@ public class AfficherParcoursController {
             });
         }
 
-        if (distanceSlider != null) {
-            distanceSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (distanceValueLabel != null) {
-                    distanceValueLabel.setText(String.format("%.1f km", newVal.doubleValue()));
-                }
+        if (distanceRange != null) {
+            distanceRange.lowValueProperty().addListener((obs, oldVal, newVal) -> {
+                if (lblMinDistance != null) lblMinDistance.setText(String.format("%.1f km", newVal.doubleValue()));
+                applyFilters();
+            });
+
+            distanceRange.highValueProperty().addListener((obs, oldVal, newVal) -> {
+                if (lblMaxDistance != null) lblMaxDistance.setText(String.format("%.1f km", newVal.doubleValue()));
                 applyFilters();
             });
         }
 
-        if (pubSlider != null) {
-            pubSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (pubValueLabel != null) {
-                    pubValueLabel.setText(String.valueOf(newVal.intValue()));
-                }
+        if (publicationsRange != null) {
+            publicationsRange.lowValueProperty().addListener((obs, oldVal, newVal) -> {
+                if (lblMinPubs != null) lblMinPubs.setText(String.valueOf(newVal.intValue()));
+                applyFilters();
+            });
+
+            publicationsRange.highValueProperty().addListener((obs, oldVal, newVal) -> {
+                if (lblMaxPubs != null) lblMaxPubs.setText(String.valueOf(newVal.intValue()));
                 applyFilters();
             });
         }
     }
-
 
     private void setSortDirection(boolean ascending) {
         this.isAscending = ascending;
@@ -127,13 +139,11 @@ public class AfficherParcoursController {
             }
         }
 
-
         applyFilters();
     }
 
     public void loadData() {
         try {
-
             applyFilters();
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,11 +155,13 @@ public class AfficherParcoursController {
             String nameQuery = searchName.getText() != null ? searchName.getText().trim().toLowerCase() : "";
             String locationQuery = searchLocation.getText() != null ? searchLocation.getText().trim().toLowerCase() : "";
 
-            double maxDistance = distanceSlider != null ? distanceSlider.getValue() : 20.0;
-            double maxPubs = pubSlider != null ? pubSlider.getValue() : 200.0;
+            double minDistance = distanceRange != null ? distanceRange.getLowValue() : 0.0;
+            double maxDistance = distanceRange != null ? distanceRange.getHighValue() : 20.0;
+
+            int minPubs = publicationsRange != null ? (int) publicationsRange.getLowValue() : 0;
+            int maxPubs = publicationsRange != null ? (int) publicationsRange.getHighValue() : 200;
 
             List<parcours_de_sante> allData = service.afficher();
-
 
             List<parcours_de_sante> filteredList = allData.stream()
                     .filter(p -> {
@@ -158,15 +170,15 @@ public class AfficherParcoursController {
 
                         boolean matchesName = nom.contains(nameQuery);
                         boolean matchesLoc = loc.contains(locationQuery);
-                        boolean matchesDistance = p.getDistance_parcours() <= maxDistance;
+
+                        boolean matchesDistance = p.getDistance_parcours() >= minDistance && p.getDistance_parcours() <= maxDistance;
 
                         int pubCount = (p.getPublications() != null) ? p.getPublications().size() : 0;
-                        boolean matchesPubs = pubCount <= maxPubs;
+                        boolean matchesPubs = pubCount >= minPubs && pubCount <= maxPubs;
 
                         return matchesName && matchesLoc && matchesDistance && matchesPubs;
                     })
                     .collect(Collectors.toList());
-
 
             Comparator<parcours_de_sante> comparator = (p1, p2) -> 0;
             String sortCriteria = sortCombo != null ? sortCombo.getValue() : "Date de création";
@@ -189,7 +201,6 @@ public class AfficherParcoursController {
                 }
             }
 
-
             if (!isAscending) {
                 comparator = comparator.reversed();
             }
@@ -205,7 +216,7 @@ public class AfficherParcoursController {
 
     private void updateUI(List<parcours_de_sante> list) {
         if (countLabel != null) {
-            countLabel.setText(list.size() + " parcours available");
+            countLabel.setText(list.size() + " Health Trail available");
         }
 
         cardsContainer.getChildren().clear();

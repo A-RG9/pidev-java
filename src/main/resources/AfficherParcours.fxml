@@ -1,90 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import org.controlsfx.control.RangeSlider?>
 
-<HBox prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.AfficherParcoursController">
+<VBox prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.AfficherParcoursController">
     <children>
-        <VBox prefWidth="300.0" spacing="15.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 0);">
-            <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
-            <children>
 
-                <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <Label style="-fx-text-fill: #00a693; -fx-font-size: 16;" text="▼" />
-                    <Label style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2d3436;" text="Filters" />
-                </HBox>
-
-                <VBox spacing="5.0" style="-fx-padding: 10 0 10 0;">
-                    <Label style="-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-font-size: 12;" text="✨ AI TRAIL CHAT" />
-                    <Label wrapText="true" style="-fx-text-fill: #636e72; -fx-font-size: 11;" text="Click the chat icon at the bottom-right to open AI recommendations." />
-                </VBox>
-
-                <VBox spacing="5.0">
-                    <Label text="Parcours Name" style="-fx-text-fill: #636e72; -fx-font-size: 12;" />
-                    <TextField fx:id="searchName" prefHeight="35.0" promptText="Search by name..." style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-background-radius: 5;" />
-                </VBox>
-
-                <VBox spacing="5.0">
-                    <Label text="Location" style="-fx-text-fill: #636e72; -fx-font-size: 12;" />
-                    <TextField fx:id="searchLocation" prefHeight="35.0" promptText="Search by location..." style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-background-radius: 5;" />
-                </VBox>
-
-                <VBox spacing="5.0">
-                    <Label text="Distance (km)" style="-fx-text-fill: #636e72; -fx-font-size: 12;" />
-                    <Slider fx:id="distanceSlider" max="20.0" value="20.0" style="-fx-accent: #00a693;" />
-                    <HBox alignment="CENTER_LEFT">
-                        <Label text="0 km" style="-fx-text-fill: #b2bec3; -fx-font-size: 11;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="distanceValueLabel" text="20.0 km" style="-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-font-size: 12;" />
-                    </HBox>
-                </VBox>
-
-                <VBox spacing="5.0">
-                    <Label text="Number of Publications" style="-fx-text-fill: #636e72; -fx-font-size: 12;" />
-                    <Slider fx:id="pubSlider" max="200.0" value="200.0" style="-fx-accent: #00a693;" />
-                    <HBox alignment="CENTER_LEFT">
-                        <Label text="0" style="-fx-text-fill: #b2bec3; -fx-font-size: 11;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="pubValueLabel" text="200" style="-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-font-size: 12;" />
-                    </HBox>
-                </VBox>
-
-                <Region VBox.vgrow="ALWAYS" />
-
-                <HBox spacing="10.0">
-                    <Button fx:id="btnSearch" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Search" />
-                    <Button fx:id="btnReset" prefHeight="40.0" prefWidth="45.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #2d3436; -fx-font-weight: bold;" text="↻" />
-                </HBox>
-            </children>
-        </VBox>
-
-        <VBox HBox.hgrow="ALWAYS" spacing="20.0">
-            <padding><Insets bottom="30.0" left="30.0" right="30.0" top="30.0" /></padding>
+        <VBox spacing="5.0" style="-fx-background-color: #042b4d; -fx-padding: 20 40 20 40;">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <children>
-                        <Label fx:id="countLabel" style="-fx-font-size: 16; -fx-text-fill: #636e72;" text="0 parcours available" />
-                        <Region HBox.hgrow="ALWAYS" />
-
-                        <Button prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
-                        <Button prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" text="≣" />
-
-                        <ComboBox fx:id="sortCombo" prefHeight="40.0" prefWidth="130.0" promptText="Date de création" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
-
-                        <Button fx:id="btnSortAsc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-cursor: hand;" text="↑" />
-                        <Button fx:id="btnSortDesc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="↓" />
-                        <Button fx:id="btnAdd" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 18; -fx-cursor: hand;" text="+" />
+                        <Label style="-fx-text-fill: white; -fx-font-size: 24;" text="📍" />
+                        <Label style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="Discover Health Trails" />
                     </children>
                 </HBox>
-
-                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
-                    <content>
-                        <FlowPane fx:id="cardsContainer" hgap="25.0" vgap="25.0">
-                            <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
-                        </FlowPane>
-                    </content>
-                </ScrollPane>
+                <Label style="-fx-text-fill: #d1d8e0; -fx-font-size: 14;" text="Find the perfect health-focused route for your wellness journey" />
             </children>
         </VBox>
+
+        <HBox style="-fx-background-color: #f4f6f8;" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox prefWidth="320.0" minWidth="320.0" spacing="20.0" style="-fx-background-color: white; -fx-padding: 30 20 30 20; -fx-border-color: transparent #e1e8ed transparent transparent; -fx-border-width: 1;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <children>
+                                <Label style="-fx-text-fill: #00a693; -fx-font-size: 16;" text="▼" />
+                                <Label style="-fx-font-weight: bold; -fx-font-size: 22; -fx-text-fill: #1e272e;" text="Filters" />
+                            </children>
+                        </HBox>
+
+                        <VBox spacing="8.0" style="-fx-padding: 10 0 10 0;">
+                            <children>
+                                <Label style="-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-font-size: 13;" text="✨ AI TRAIL CHAT" />
+                                <Label style="-fx-text-fill: #808e9b; -fx-font-size: 12;" text="Click the chat icon at the bottom-right to open AI recommendations." wrapText="true" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label style="-fx-text-fill: #808e9b; -fx-font-size: 14;" text="Parcours Name" />
+                                <TextField fx:id="searchName" promptText="Search by name..." style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-padding: 10;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label style="-fx-text-fill: #808e9b; -fx-font-size: 14;" text="Location" />
+                                <TextField fx:id="searchLocation" promptText="Search by location..." style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-padding: 10;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8.0" style="-fx-padding: 10 0 0 0;">
+                            <children>
+                                <Label style="-fx-text-fill: #808e9b; -fx-font-size: 14;" text="Distance (km)" />
+                                <RangeSlider fx:id="distanceRange" max="20.0" min="0.0" lowValue="0.0" highValue="20.0" />
+                                <HBox>
+                                    <children>
+                                        <Label fx:id="lblMinDistance" style="-fx-text-fill: #b2bec3; -fx-font-size: 12;" text="0 km" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMaxDistance" style="-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-font-size: 13;" text="20.0 km" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8.0" style="-fx-padding: 10 0 0 0;">
+                            <children>
+                                <Label style="-fx-text-fill: #808e9b; -fx-font-size: 14;" text="Number of Publications" />
+                                <RangeSlider fx:id="publicationsRange" max="200.0" min="0.0" lowValue="0.0" highValue="200.0" />
+                                <HBox>
+                                    <children>
+                                        <Label fx:id="lblMinPubs" style="-fx-text-fill: #b2bec3; -fx-font-size: 12;" text="0" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMaxPubs" style="-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-font-size: 13;" text="200" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <Region VBox.vgrow="ALWAYS" />
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <Button fx:id="btnSearch" maxWidth="Infinity" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;" text="Search" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="btnReset" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-text-fill: #2f3640; -fx-cursor: hand;" text="↻" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-padding: 30 40 20 40;">
+                            <children>
+                                <Label fx:id="countLabel" style="-fx-font-size: 18; -fx-text-fill: #485460;" text="4 parcours available" />
+
+                                <Region HBox.hgrow="ALWAYS" />
+
+                                <Button prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6;" />
+                                <Button prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-font-weight: bold; -fx-text-fill: #485460;" text="=" />
+
+                                <ComboBox fx:id="sortCombo" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6;" />
+
+                                <Button fx:id="btnSortAsc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-cursor: hand;" text="↑" />
+                                <Button fx:id="btnSortDesc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;" text="↓" />
+
+                                <Button fx:id="btnAdd" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold; -fx-font-size: 16; -fx-cursor: hand;" text="+" />
+                            </children>
+                        </HBox>
+
+                        <ScrollPane fitToWidth="true" style="-fx-background: #f4f6f8; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                            <content>
+                                <FlowPane fx:id="cardsContainer" hgap="30.0" style="-fx-padding: 0 40 40 40;" vgap="30.0" />
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
     </children>
-</HBox>
+</VBox>

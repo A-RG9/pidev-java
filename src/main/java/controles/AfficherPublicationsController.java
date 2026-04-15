@@ -22,6 +22,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AfficherPublicationsController {
 
@@ -51,6 +52,30 @@ public class AfficherPublicationsController {
         if (btnAddPublication != null) {
             btnAddPublication.setOnAction(e -> goToAjouterPublication());
         }
+
+
+        if (comboExperience != null) {
+            comboExperience.getItems().clear();
+            comboExperience.getItems().addAll("All experiences", "Bad", "Good", "Excellent");
+            comboExperience.setValue("All experiences");
+            comboExperience.setOnAction(e -> loadPublications());
+        }
+
+
+        if (comboType != null) {
+            comboType.getItems().clear();
+            comboType.getItems().addAll("All types", "Review", "Event");
+            comboType.setValue("All types");
+            comboType.setOnAction(e -> loadPublications());
+        }
+
+
+        if (comboSort != null) {
+            comboSort.getItems().clear();
+            comboSort.getItems().addAll("Newest pub", "Oldest pub");
+            comboSort.setValue("Newest pub");
+            comboSort.setOnAction(e -> loadPublications());
+        }
     }
 
     public void initData(parcours_de_sante p) {
@@ -64,7 +89,44 @@ public class AfficherPublicationsController {
     private void loadPublications() {
         publicationsContainer.getChildren().clear();
         try {
+
             List<publication_parcours> list = pubService.afficherParParcours(currentParcours.getId());
+
+
+            if (comboExperience != null && comboExperience.getValue() != null) {
+                String selectedExp = comboExperience.getValue();
+                if (!selectedExp.equals("All experiences")) {
+                    list = list.stream()
+                            .filter(pub -> pub.getExperience() != null && pub.getExperience().equalsIgnoreCase(selectedExp))
+                            .collect(Collectors.toList());
+                }
+            }
+
+
+            if (comboType != null && comboType.getValue() != null) {
+                String selectedType = comboType.getValue();
+                if (!selectedType.equals("All types")) {
+                    list = list.stream()
+                            .filter(pub -> pub.getType_publication() != null && pub.getType_publication().equalsIgnoreCase(selectedType))
+                            .collect(Collectors.toList());
+                }
+            }
+
+
+            if (comboSort != null && comboSort.getValue() != null) {
+                String sortChoice = comboSort.getValue();
+                list.sort((pub1, pub2) -> {
+                    LocalDate date1 = parseDateSafely(pub1.getDate_publication());
+                    LocalDate date2 = parseDateSafely(pub2.getDate_publication());
+
+                    if (sortChoice.equals("Oldest pub")) {
+                        return date1.compareTo(date2); // Ascending order
+                    } else {
+                        return date2.compareTo(date1); // Descending order (Newest first)
+                    }
+                });
+            }
+
 
             if (list.isEmpty()) {
                 VBox emptyStateBox = new VBox(15);
@@ -72,14 +134,19 @@ public class AfficherPublicationsController {
                 emptyStateBox.setStyle("-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 50; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);");
                 emptyStateBox.setMinHeight(200);
 
-                Label emptyLabel = new Label("No publications found.");
+                Label emptyLabel = new Label("No publications found for this filter combination.");
                 emptyLabel.setStyle("-fx-font-size: 14; -fx-text-fill: #636e72;");
 
-                Button btnCreateFirst = new Button("+ Create the first publication");
-                btnCreateFirst.setStyle("-fx-background-color: #009688; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;");
-                btnCreateFirst.setOnAction(e -> goToAjouterPublication());
+                Button btnClearFilters = new Button("Clear Filters");
+                btnClearFilters.setStyle("-fx-background-color: #009688; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;");
+                btnClearFilters.setOnAction(e -> {
+                    if (comboExperience != null) comboExperience.setValue("All experiences");
+                    if (comboType != null) comboType.setValue("All types");
+                    if (comboSort != null) comboSort.setValue("Newest pub");
+                    loadPublications();
+                });
 
-                emptyStateBox.getChildren().addAll(emptyLabel, btnCreateFirst);
+                emptyStateBox.getChildren().addAll(emptyLabel, btnClearFilters);
                 publicationsContainer.getChildren().add(emptyStateBox);
                 return;
             }
@@ -113,7 +180,6 @@ public class AfficherPublicationsController {
                 Button btnDeleteCard = new Button("🗑");
                 btnDeleteCard.setStyle("-fx-background-color: transparent; -fx-text-fill: #e74c3c; -fx-cursor: hand; -fx-font-size: 14;");
 
-
                 btnDeleteCard.setOnAction(e -> {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation de suppression");
@@ -130,7 +196,6 @@ public class AfficherPublicationsController {
                         }
                     }
                 });
-
 
                 btnEditCard.setOnAction(e -> goToModifierPublication(pub));
 
@@ -213,6 +278,17 @@ public class AfficherPublicationsController {
         }
     }
 
+    private LocalDate parseDateSafely(String dateString) {
+        if (dateString == null || dateString.trim().isEmpty()) {
+            return LocalDate.MIN;
+        }
+        try {
+            return LocalDate.parse(dateString.split(" ")[0], DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (Exception e) {
+            return LocalDate.MIN;
+        }
+    }
+
     private String formatTimeAgo(String dateString) {
         if (dateString == null || dateString.isEmpty()) return "Date inconnue";
         try {
@@ -244,7 +320,6 @@ public class AfficherPublicationsController {
         }
     }
 
-    // --- NEW METHOD FOR NAVIGATING TO MODIFY PAGE ---
     private void goToModifierPublication(publication_parcours pubToEdit) {
         if (currentParcours == null) return;
         try {

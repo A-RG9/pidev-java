@@ -55,7 +55,7 @@ public class ParcoursCardController {
                     imageView.setImage(new Image(file.toURI().toString(), true));
                 }
             } catch (Exception e) {
-                // Ignore image errors silently
+
             }
         }
 
@@ -94,7 +94,7 @@ public class ParcoursCardController {
                     Parent root = loader.load();
 
                     AfficherPublicationsController controller = loader.getController();
-                    controller.initData(p); // Pass the trail to the next view
+                    controller.initData(p);
 
                     btnView.getScene().setRoot(root);
                 } catch (IOException e) {
