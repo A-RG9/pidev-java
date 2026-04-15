@@ -124,3 +124,19 @@
 .main-bg { -fx-background-color: -fx-primary-bg; }
 .card-bg { -fx-background-color: -fx-secondary-bg; }
 .title-text { -fx-text-fill: -fx-text-main; }
+.button {
+    -fx-cursor: hand;
+}
+
+/* Style pour le bouton Ajouter Daily Plan */
+.btn-primary {
+    -fx-background-color: #0D9488;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0F766E;
+}

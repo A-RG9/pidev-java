@@ -66,7 +66,11 @@ public class MainController {
         // Si vous avez une page spécifique pour la liste de tous les plans
         loadPage("/AllPlans.fxml");
     }
-
+    @FXML
+    private void loadWorkoutPlanner() {
+        // Cette méthode charge la page du calendrier que nous venons de créer
+        loadPage("/WorkoutPlanner.fxml");
+    }
     // Méthode utilitaire robuste
     private void loadPage(String fxmlPath) {
         try {
