@@ -15,17 +15,16 @@
             <HBox styleClass="user-profile" spacing="12" alignment="CENTER_LEFT">
                 <Label text="TT" styleClass="user-avatar" style="-fx-min-width: 36; -fx-min-height: 36; -fx-alignment: center;"/>
                 <VBox alignment="CENTER_LEFT">
-                    <Label text="Test User" styleClass="text-primary" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-                    <Label text="test@wellora.com" styleClass="text-secondary" style="-fx-font-size: 11px;"/>
+                    <Label text="Test User" styleClass="user-name" style="-fx-font-size: 14px;"/>
+                    <Label text="test@wellora.com" styleClass="user-email"/>
                 </VBox>
             </HBox>
 
             <Label text="Fitness" styleClass="text-secondary" style="-fx-font-size: 14px; -fx-padding: 15 0 5 10;"/>
 
-
             <Button text="Dashboard" onAction="#loadFitnessDashboard" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Goals" onAction="#loadGoals" styleClass="menu-btn" maxWidth="Infinity"/>
-            <Button text="Planificateur"  onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Planificateur" onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="All plans" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Exercise Library" onAction="#loadExerciseLibrary" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Mon Coach" styleClass="menu-btn" maxWidth="Infinity"/>
@@ -40,7 +39,7 @@
     </left>
 
     <center>
-        <StackPane fx:id="contentArea">
+        <StackPane fx:id="contentArea" styleClass="content-area">
         </StackPane>
     </center>
 

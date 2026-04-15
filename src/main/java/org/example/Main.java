@@ -10,16 +10,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // ⚠️ LE CHANGEMENT EST ICI : On charge Main.fxml (la Sidebar) en premier !
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
+        // 1. Load the main layout
+        Parent root = FXMLLoader.load(getClass().getResource("/Main.fxml"));
 
-        Parent root = loader.load();
+        // 2. Create the Scene EXACTLY ONCE
+        Scene scene = new Scene(root);
 
-        primaryStage.setTitle("WellCare - Dashboard");
-        // On agrandit un peu la fenêtre pour laisser la place à la Sidebar
-        primaryStage.setScene(new Scene(root, 1280, 800));
+        // 3. Load the default dark theme CSS
+        String cssPath = getClass().getResource("/dark.css").toExternalForm();
+        scene.getStylesheets().add(cssPath);
+
+        // 4. Show the window
+        primaryStage.setTitle("WellCare");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 
     public static void main(String[] args) {
         launch(args);

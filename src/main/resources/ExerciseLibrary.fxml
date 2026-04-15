@@ -23,14 +23,14 @@
 
         <left>
             <VBox spacing="15" prefWidth="220" styleClass="sidebar" style="-fx-padding: 20;">
-                <Label text="Categories" styleClass="text-section" style="-fx-font-weight: bold;"/>
+                <Label text="Categories" styleClass="text-primary" style="-fx-font-weight: bold;"/>
                 <Button text="All Categories" onAction="#filterAll" styleClass="menu-btn" maxWidth="Infinity"/>
                 <Button text="Strength" onAction="#filterByStrength" styleClass="menu-btn" maxWidth="Infinity"/>
                 <Button text="Cardio" onAction="#filterByCardio" styleClass="menu-btn" maxWidth="Infinity"/>
 
                 <Separator opacity="0.1" />
 
-                <Label text="Difficulty" styleClass="text-section" style="-fx-font-weight: bold;"/>
+                <Label text="Difficulty" styleClass="text-primary" style="-fx-font-weight: bold;"/>
                 <CheckBox fx:id="checkBeginner" text="Beginner" styleClass="text-secondary"/>
                 <CheckBox fx:id="checkIntermediate" text="Intermediate" styleClass="text-secondary"/>
                 <CheckBox fx:id="checkAdvanced" text="Advanced" styleClass="text-secondary"/>
@@ -45,29 +45,30 @@
     </BorderPane>
 
     <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.7);">
-        <VBox spacing="15" maxWidth="450" styleClass="card-bg" style="-fx-padding: 30; -fx-background-color: #1e293b; -fx-background-radius: 15;">
-            <Label text="Détails de l'exercice" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        <VBox spacing="15" maxWidth="450" styleClass="card-bg" style="-fx-padding: 30; -fx-background-radius: 15;">
 
-            <TextField fx:id="txtTitle" promptText="Nom de l'exercice" />
-            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="100" wrapText="true"/>
-            <TextField fx:id="txtVideoUrl" promptText="Lien Vidéo (YouTube ou Local)" />
+            <Label text="Détails de l'exercice" styleClass="text-primary" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="txtTitle" promptText="Nom de l'exercice" styleClass="text-field" />
+            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="100" wrapText="true" styleClass="text-area" />
+            <TextField fx:id="txtVideoUrl" promptText="Lien Vidéo (YouTube ou Local)" styleClass="text-field" />
 
             <HBox spacing="10">
                 <VBox HBox.hgrow="ALWAYS" spacing="5">
-                    <Label text="Catégorie" style="-fx-text-fill: #94a3b8;"/>
-                    <ComboBox fx:id="comboCategory" maxWidth="Infinity" />
+                    <Label text="Catégorie" styleClass="text-secondary"/>
+                    <ComboBox fx:id="comboCategory" maxWidth="Infinity" styleClass="combo-box" />
                 </VBox>
                 <VBox HBox.hgrow="ALWAYS" spacing="5">
-                    <Label text="Difficulté" style="-fx-text-fill: #94a3b8;"/>
-                    <ComboBox fx:id="comboDifficulty" maxWidth="Infinity" />
+                    <Label text="Difficulté" styleClass="text-secondary"/>
+                    <ComboBox fx:id="comboDifficulty" maxWidth="Infinity" styleClass="combo-box" />
                 </VBox>
             </HBox>
 
-            <TextField fx:id="txtDuration" promptText="Durée (min)" />
+            <TextField fx:id="txtDuration" promptText="Durée (min)" styleClass="text-field" />
 
             <HBox spacing="15" alignment="CENTER_RIGHT">
-                <Button text="Annuler" onAction="#closeForm" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-border-color: #ef4444; -fx-border-radius: 5;"/>
-                <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                <Button text="Annuler" onAction="#closeForm" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-border-color: #ef4444; -fx-border-radius: 5; -fx-cursor: hand;"/>
+                <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
             </HBox>
         </VBox>
     </VBox>

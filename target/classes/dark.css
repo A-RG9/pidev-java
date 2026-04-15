@@ -1,28 +1,27 @@
-/* Sidebar (plus foncée en mode sombre) */
-.sidebar { -fx-background-color: #0f172a; -fx-padding: 20; }
-.logo-text { -fx-text-fill: #14b8a6; -fx-font-size: 24px; -fx-font-weight: bold; }
-.user-profile { -fx-background-color: #1e293b; -fx-padding: 10; -fx-background-radius: 8; }
-.user-avatar { -fx-background-color: #14b8a6; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 50; }
-.user-name { -fx-text-fill: white; -fx-font-weight: bold; }
-.user-email { -fx-text-fill: #64748b; -fx-font-size: 11px; }
-
-.menu-btn { -fx-background-color: transparent; -fx-text-fill: #64748b; -fx-alignment: CENTER_LEFT; -fx-pref-width: 200; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 10 0 10 20; }
-.menu-btn:hover { -fx-text-fill: #14b8a6; -fx-background-color: #1e293b; -fx-background-radius: 5;}
-.theme-btn { -fx-background-color: transparent; -fx-border-color: #14b8a6; -fx-border-radius: 5; -fx-text-fill: #14b8a6; -fx-cursor: hand; }
-
-/* Zone de contenu principale sombre */
-.content-area { -fx-background-color: #1e293b; }
-.label { -fx-text-fill: #f8fafc; } /* Les textes de l'application deviennent blancs */
-.text-field, .combo-box, .text-area { -fx-background-color: #334155; -fx-text-fill: white; }
 .root {
-    /* Couleurs Mode Sombre */
-    -bg-main: #020617;
-    -bg-sidebar: #0f172a;
+    -bg-main: #0f172a;
+    -bg-sidebar: #020617;
     -bg-card: #1e293b;
-    -text-primary: #f8fafc;
+    -text-primary: #ffffff;
     -text-secondary: #94a3b8;
-    -border-color: #1e293b;
     -accent: #14b8a6;
-    -profile-bg: #1e293b;
+    -border-color: #334155;
     -hover-bg: #334155;
 }
+
+/* Backgrounds */
+.main-container, .main-bg, .content-area { -fx-background-color: -bg-main; }
+.sidebar { -fx-background-color: -bg-sidebar; -fx-border-color: -border-color; -fx-border-width: 0 1 0 0; }
+.card-bg { -fx-background-color: -bg-card; -fx-background-radius: 10; -fx-border-color: -border-color; -fx-border-radius: 10; }
+.user-profile { -fx-background-color: -bg-card; -fx-background-radius: 8; -fx-padding: 10; }
+
+/* Texts */
+.text-primary, .label, .title-text { -fx-text-fill: -text-primary; }
+.text-secondary { -fx-text-fill: -text-secondary; }
+.logo-text { -fx-text-fill: -accent; -fx-font-size: 24px; -fx-font-weight: bold; }
+
+/* Inputs & Buttons */
+.text-field, .combo-box, .text-area, .date-picker { -fx-background-color: -bg-card; -fx-text-fill: -text-primary; -fx-border-color: -border-color; -fx-border-radius: 5;}
+.menu-btn { -fx-background-color: transparent; -fx-text-fill: -text-secondary; -fx-alignment: CENTER_LEFT; -fx-padding: 10 20; -fx-cursor: hand; }
+.menu-btn:hover { -fx-background-color: -hover-bg; -fx-text-fill: -accent; }
+.theme-btn { -fx-background-color: transparent; -fx-border-color: -border-color; -fx-text-fill: -accent; -fx-cursor: hand; }
