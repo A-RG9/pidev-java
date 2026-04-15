@@ -44,11 +44,11 @@
 
     <!-- Summary Cards -->
     <HBox spacing="20" alignment="CENTER">
-        <!-- Total Journals Card -->
+        <!-- Health Score Card -->
         <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
-            <Label text="📒" styleClass="stat-icon"/>
-            <Label text="Journaux" styleClass="stat-label"/>
-            <Label fx:id="journalCountLabel" text="0" styleClass="stat-value"/>
+            <Label text="💯" styleClass="stat-icon"/>
+            <Label text="Score Santé" styleClass="stat-label"/>
+            <Label fx:id="healthScoreLabel" text="0" styleClass="stat-value"/>
         </VBox>
 
         <!-- Total Entries Card -->
@@ -136,6 +136,18 @@
             <PieChart fx:id="symptomPieChart" styleClass="chart"/>
         </VBox>
     </GridPane>
+
+    <!-- Alert Section -->
+    <VBox fx:id="alertContainer" visible="false" spacing="5">
+        <Label fx:id="alertTitle" text="⚠️ Alerte" styleClass="section-label"/>
+        <Label fx:id="alertMessage" text="" styleClass="form-label"/>
+    </VBox>
+
+    <!-- Recommendations Section -->
+    <VBox fx:id="recommendationsContainer" visible="false" spacing="5">
+        <Label text="💡 Recommandations" styleClass="section-label"/>
+        <VBox fx:id="recommendationsList" spacing="3"/>
+    </VBox>
 
     <!-- Refresh Button -->
     <HBox spacing="15" alignment="CENTER">

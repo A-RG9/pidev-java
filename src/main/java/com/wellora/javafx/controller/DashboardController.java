@@ -11,6 +11,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +54,22 @@ public class DashboardController {
     private ComboBox<Healthjournal> journalComboBox;
 
     @FXML
-    private Label journalCountLabel;
+    private Label healthScoreLabel;
+
+    @FXML
+    private VBox alertContainer;
+
+    @FXML
+    private Label alertTitle;
+
+    @FXML
+    private Label alertMessage;
+
+    @FXML
+    private VBox recommendationsContainer;
+
+    @FXML
+    private VBox recommendationsList;
 
     @FXML
     private Label entryCountLabel;
@@ -159,9 +175,72 @@ public class DashboardController {
             loadSymptomPieChart();
             loadWeightTrendChart();
             loadGlycemiaTrendChart();
+            loadAlertsAndRecommendations();
         } catch (Exception e) {
             e.printStackTrace();
             showError("Erreur lors du chargement des données: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Load alerts and recommendations based on health data
+     */
+    private void loadAlertsAndRecommendations() {
+        try {
+            // Get data
+            double avgGlycemia = 0, avgSleep = 0, avgWeight = 0, avgTension = 0;
+            int symptomCount = 0;
+            int journalId = (selectedJournal != null) ? selectedJournal.getId() : 0;
+            
+            if (journalId > 0) {
+                avgGlycemia = entryDAO.getAverageGlycemiaByJournal(journalId);
+                avgSleep = entryDAO.getAverageSleepByJournal(journalId);
+                avgWeight = entryDAO.getAverageWeightByJournal(journalId);
+                avgTension = entryDAO.getAverageTensionByJournal(journalId);
+                symptomCount = symptomDAO.getCountByJournal(journalId);
+            } else {
+                avgGlycemia = entryDAO.getAverageGlycemia();
+                avgSleep = entryDAO.getAverageSleep();
+                avgWeight = entryDAO.getAverageWeight();
+                avgTension = entryDAO.getAverageTension();
+                symptomCount = symptomDAO.getCount();
+            }
+            
+            // Check alerts
+            StringBuilder alerts = new StringBuilder();
+            if (avgGlycemia > 1.2) alerts.append("Glycémie élevée! ");
+            else if (avgGlycemia > 0 && avgGlycemia < 0.6) alerts.append("Glycémie basse! ");
+            if (avgSleep < 6) alerts.append("Sommeil insuffisant! ");
+            else if (avgSleep > 10) alerts.append("Sommeil excessif! ");
+            if (avgWeight > 120) alerts.append("Poids élevé! ");
+            else if (avgWeight > 0 && avgWeight < 40) alerts.append("Poids bas! ");
+            if (symptomCount > 2) alerts.append("Plusieurs symptômes! ");
+            
+            if (alerts.length() > 0) {
+                alertContainer.setVisible(true);
+                alertMessage.setText(alerts.toString().trim());
+            } else {
+                alertContainer.setVisible(false);
+            }
+            
+            // Build recommendations
+            recommendationsList.getChildren().clear();
+            java.util.List<String> tips = new java.util.ArrayList<>();
+            if (avgGlycemia == 0 || avgGlycemia > 1.0) tips.add("Surveillez votre glycémie régulièrement");
+            if (avgSleep < 7) tips.add("Visez 7-9h de sommeil par nuit");
+            if (avgWeight > 100) tips.add("Envisagez une perte de poids");
+            if (symptomCount > 0) tips.add("Notez vos symptômes quotidiennement");
+            if (tips.isEmpty()) tips.add("Continuez vos bonnes habitudes!");
+            
+            for (String tip : tips) {
+                Label tipLabel = new Label("• " + tip);
+                tipLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #475569;");
+                recommendationsList.getChildren().add(tipLabel);
+            }
+            
+            recommendationsContainer.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -170,11 +249,11 @@ public class DashboardController {
      */
     private void loadStatistics() {
         try {
-            int journalCount = journalDAO.getCount();
             int entryCount;
             int symptomCount;
             double avgWeight;
             double avgSleep;
+            double healthScore = 0;
             
             if (selectedJournal != null) {
                 // Filter by selected journal
@@ -182,15 +261,19 @@ public class DashboardController {
                 symptomCount = symptomDAO.getCountByJournal(selectedJournal.getId());
                 avgWeight = entryDAO.getAverageWeightByJournal(selectedJournal.getId());
                 avgSleep = entryDAO.getAverageSleepByJournal(selectedJournal.getId());
+                // Calculate health score
+                healthScore = calculateHealthScore(selectedJournal.getId(), symptomCount);
             } else {
                 // All journals
                 entryCount = entryDAO.getCount();
                 symptomCount = symptomDAO.getCount();
                 avgWeight = entryDAO.getAverageWeight();
                 avgSleep = entryDAO.getAverageSleep();
+                // Calculate health score
+                healthScore = calculateHealthScore(0, symptomCount);
             }
 
-            journalCountLabel.setText(String.valueOf(journalCount));
+            healthScoreLabel.setText(String.valueOf((int) healthScore));
             entryCountLabel.setText(String.valueOf(entryCount));
             symptomCountLabel.setText(String.valueOf(symptomCount));
             avgWeightLabel.setText(String.format("%.1f kg", avgWeight));
@@ -198,6 +281,88 @@ public class DashboardController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Calculate health score based on metrics
+     * Score from 0-100: Based on glycemia, sleep, weight, tension, symptoms
+     */
+    private double calculateHealthScore(int journalId, int symptomCount) {
+        double score = 0;
+        
+        try {
+            // Get average values
+            double avgGlycemia;
+            double avgSleep;
+            double avgWeight;
+            double avgTension;
+            
+            if (journalId > 0) {
+                avgGlycemia = entryDAO.getAverageGlycemiaByJournal(journalId);
+                avgSleep = entryDAO.getAverageSleepByJournal(journalId);
+                avgWeight = entryDAO.getAverageWeightByJournal(journalId);
+                avgTension = entryDAO.getAverageTensionByJournal(journalId);
+            } else {
+                avgGlycemia = entryDAO.getAverageGlycemia();
+                avgSleep = entryDAO.getAverageSleep();
+                avgWeight = entryDAO.getAverageWeight();
+                avgTension = entryDAO.getAverageTension();
+            }
+            
+            // Glycemia score (25 max): Ideal 0.7-1.0 g/L
+            if (avgGlycemia > 0) {
+                if (avgGlycemia >= 0.7 && avgGlycemia <= 1.0) {
+                    score += 25;
+                } else if (avgGlycemia >= 0.6 && avgGlycemia < 0.7) {
+                    score += 15;
+                } else if (avgGlycemia > 1.0 && avgGlycemia <= 1.2) {
+                    score += 15;
+                } else if (avgGlycemia < 0.5 || avgGlycemia > 1.3) {
+                    score += 0;
+                }
+            }
+            
+            // Sleep score (25 max): Ideal 7-9 hours
+            if (avgSleep > 0) {
+                if (avgSleep >= 7 && avgSleep <= 9) {
+                    score += 25;
+                } else if (avgSleep >= 6 && avgSleep < 7) {
+                    score += 15;
+                } else if (avgSleep > 9 && avgSleep <= 10) {
+                    score += 15;
+                } else if (avgSleep < 5 || avgSleep > 11) {
+                    score += 0;
+                }
+            }
+            
+            // Weight score (20 max): Ideal between 40-100 kg
+            if (avgWeight > 0) {
+                if (avgWeight >= 40 && avgWeight <= 100) {
+                    score += 20;
+                } else if (avgWeight > 100 && avgWeight <= 120) {
+                    score += 10;
+                } else if (avgWeight < 40) {
+                    score += 10;
+                }
+            }
+            
+            // Tension score (20 max): Ideal 80-120
+            if (avgTension > 0) {
+                if (avgTension >= 80 && avgTension <= 120) {
+                    score += 20;
+                } else if (avgTension < 80) {
+                    score += 10;
+                }
+            }
+            
+            // Symptoms penalty (-5 per symptom, max -10)
+            score -= Math.min(symptomCount * 5, 10);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return Math.max(0, Math.min(100, score));
     }
 
     /**

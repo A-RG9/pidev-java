@@ -405,6 +405,56 @@ public class HealthentryDAO {
         return 0;
     }
 
+    /** Get average glycemia */
+    public double getAverageGlycemia() throws SQLException {
+        String sql = "SELECT AVG(glycemie) FROM healthentry WHERE glycemie > 0";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
+        }
+        return 0;
+    }
+
+    /** Get average glycemia for a specific journal */
+    public double getAverageGlycemiaByJournal(int journalId) throws SQLException {
+        String sql = "SELECT AVG(glycemie) FROM healthentry WHERE journal_id = ? AND glycemie > 0";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, journalId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
+        }
+        return 0;
+    }
+
+    /** Get average tension */
+    public double getAverageTension() throws SQLException {
+        String sql = "SELECT AVG(tension) FROM healthentry WHERE tension > 0";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
+        }
+        return 0;
+    }
+
+    /** Get average tension for a specific journal */
+    public double getAverageTensionByJournal(int journalId) throws SQLException {
+        String sql = "SELECT AVG(tension) FROM healthentry WHERE journal_id = ? AND tension > 0";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, journalId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
+        }
+        return 0;
+    }
+
     /** Get entries by month for a specific journal */
     public List<long[]> getEntriesByMonthByJournal(int months, int journalId) throws SQLException {
         String sql = "SELECT YEAR(date) as year, MONTH(date) as month, COUNT(*) as count " +
