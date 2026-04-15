@@ -4,6 +4,8 @@ import com.wellora.dao.FoodLogDAO;
 import com.wellora.models.FoodLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +19,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import com.wellora.utils.ThemeManager;
-import javafx.scene.layout.BorderPane;
 
 public class JournalController {
 
@@ -27,6 +29,11 @@ public class JournalController {
     @FXML private ToggleButton btnThemeToggle;
     @FXML private DatePicker datePicker;
     @FXML private Label lblCalories, lblProteines, lblGlucides, lblLipides;
+
+    // Filtres
+    @FXML private ComboBox<String> comboMealFilter;
+    @FXML private ComboBox<String> comboSortCalories;
+
     @FXML private TableView<FoodLog> tableHistorique;
     @FXML private TableColumn<FoodLog, String> colRepas;
     @FXML private TableColumn<FoodLog, Integer> colCalories;
@@ -49,6 +56,7 @@ public class JournalController {
             btnThemeToggle.setText("🌙 Mode Sombre");
             rootPane.getStyleClass().remove("light-theme");
         }
+
         // Lier les colonnes
         colRepas.setCellValueFactory(new PropertyValueFactory<>("mealType"));
         colCalories.setCellValueFactory(new PropertyValueFactory<>("totalCalories"));
@@ -56,7 +64,8 @@ public class JournalController {
         colGlucides.setCellValueFactory(new PropertyValueFactory<>("totalCarbs"));
         colLipides.setCellValueFactory(new PropertyValueFactory<>("totalFats"));
 
-        tableHistorique.setItems(foodLogsList);
+        // Configuration des filtres et du tri
+        setupFiltersAndSorting();
 
         // Configurer le DatePicker par défaut sur aujourd'hui
         datePicker.setValue(LocalDate.now());
@@ -70,6 +79,37 @@ public class JournalController {
 
         // Charger les données initiales
         loadHistoryForDate(LocalDate.now());
+    }
+
+    private void setupFiltersAndSorting() {
+        // Initialiser les choix du filtre
+        comboMealFilter.setItems(FXCollections.observableArrayList(
+                "Tous les repas", "BREAKFAST", "LUNCH", "DINNER", "SNACK"
+        ));
+        comboMealFilter.setValue("Tous les repas");
+
+        // Créer une liste filtrée
+        FilteredList<FoodLog> filteredData = new FilteredList<>(foodLogsList, b -> true);
+
+        // Action quand on change le type de repas
+        comboMealFilter.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(foodLog -> {
+                if (newValue == null || newValue.equals("Tous les repas")) {
+                    return true; // Affiche tout
+                }
+                return foodLog.getMealType().equalsIgnoreCase(newValue); // Filtre par type
+            });
+        });
+
+        // Créer une liste triée
+        SortedList<FoodLog> sortedData = new SortedList<>(filteredData);
+
+        // --- RETOUR DE L'ANCIEN TRI (Clic sur les colonnes) ---
+        // On attache le tri de la liste directement au tableau
+        sortedData.comparatorProperty().bind(tableHistorique.comparatorProperty());
+
+        // Appliquer les données au tableau
+        tableHistorique.setItems(sortedData);
     }
 
     private void loadHistoryForDate(LocalDate date) {
@@ -106,6 +146,7 @@ public class JournalController {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void toggleTheme() {
         ThemeManager.isDarkMode = btnThemeToggle.isSelected();
@@ -124,10 +165,14 @@ public class JournalController {
     public void navToObjectifs(ActionEvent event) {
         switchScene(event, "Objectif.fxml");
     }
+
     @FXML
     public void navToPlanificateur(ActionEvent event) {
         switchScene(event, "Planificateur.fxml");
     }
 
-    @FXML public void navToAnalyse(ActionEvent event) { switchScene(event, "Analyse.fxml"); }
+    @FXML
+    public void navToAnalyse(ActionEvent event) {
+        switchScene(event, "Analyse.fxml");
+    }
 }

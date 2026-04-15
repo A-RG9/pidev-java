@@ -84,7 +84,15 @@
             </HBox>
 
             <VBox spacing="10" VBox.vgrow="ALWAYS">
-                <Label text="Repas de la journée" styleClass="section-title"/>
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label text="Repas de la journée" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <Label text="Filtre :" style="-fx-font-weight: bold; -fx-text-fill: gray;" />
+                    <ComboBox fx:id="comboMealFilter" prefWidth="150" promptText="Type de repas" styleClass="card" />
+
+
+                </HBox>
 
                 <TableView fx:id="tableHistorique" VBox.vgrow="ALWAYS">
                     <columns>

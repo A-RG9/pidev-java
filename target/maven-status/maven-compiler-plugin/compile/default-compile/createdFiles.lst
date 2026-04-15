@@ -7,6 +7,7 @@ com\wellora\controllers\AnalyseController.class
 com\wellora\models\FoodLog.class
 com\wellora\utils\ThemeManager.class
 com\wellora\models\NutritionGoal.class
+com\wellora\controllers\PlanificateurController$1.class
 com\wellora\dao\FoodLogDAO.class
 com\wellora\controllers\ObjectifController.class
 com\wellora\Main.class

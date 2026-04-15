@@ -2,10 +2,11 @@ package com.wellora.controllers;
 
 import javafx.scene.control.TextFormatter;
 import java.util.function.UnaryOperator;
+import java.util.Optional; // Ajouté pour les alertes
 import com.wellora.dao.FoodLogDAO;
-import com.wellora.dao.NutritionGoalDAO; // Ajouté
+import com.wellora.dao.NutritionGoalDAO;
 import com.wellora.models.FoodLog;
-import com.wellora.models.NutritionGoal; // Ajouté
+import com.wellora.models.NutritionGoal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,14 +17,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.geometry.Insets;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import com.wellora.utils.ThemeManager;
 import com.wellora.utils.ThemeManager;
 
 // CONTROLLER LAYER: Manages user interaction, UI updates, and talks to the DAO
@@ -83,30 +83,24 @@ public class DashboardController {
         });
         btnSupprimer.setOnAction(e -> deleteSelectedLog());
 
-        // On charge l'objectif du jour ICI !
         loadDailyGoal();
         refreshData();
     }
 
     private void refreshData() {
-        // 1. Récupérer ce que l'utilisateur a consommé
         double[] totals = dao.getDailyTotals(currentUserUuid, LocalDate.now());
-
-        // 2. Récupérer l'objectif du jour pour afficher la valeur cible
         NutritionGoal dailyGoal = goalDao.getDailyGoalByUser(currentUserUuid);
-        int targetCalories = 2000; // valeur par défaut
+        int targetCalories = 2000;
 
         if (dailyGoal != null && dailyGoal.getCaloriesTarget() > 0) {
             targetCalories = dailyGoal.getCaloriesTarget();
         }
 
-        // 3. Mettre à jour les labels des cartes
         lblCalories.setText(String.format("%.0f / %d", totals[0], targetCalories));
         lblProteines.setText(String.format("%.0fg / 120g", totals[1]));
         lblGlucides.setText(String.format("%.0fg / 200g", totals[2]));
         lblLipides.setText(String.format("%.0fg / 65g", totals[3]));
 
-        // 4. Mettre à jour la table des repas
         List<FoodLog> logs = dao.getFoodLogsByDate(currentUserUuid, LocalDate.now());
         foodLogsList.setAll(logs);
     }
@@ -129,45 +123,58 @@ public class DashboardController {
         boolean isEdit = (existingLog != null);
         Dialog<FoodLog> dialog = new Dialog<>();
         dialog.setTitle(isEdit ? "Modifier Repas" : "Ajout Rapide");
-        dialog.setHeaderText("Entrez les valeurs nutritionnelles");
+
+        // Supprime l'en-tête par défaut
+        dialog.setHeaderText(null);
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        try {
+            dialogPane.getStylesheets().add(getClass().getResource("/com/wellora/css/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("card");
+
+            if (ThemeManager.isDarkMode) {
+                dialogPane.getStyleClass().add("light-theme");
+                dialogPane.setStyle("-fx-background-color: #FFFFFF; -fx-font-family: 'Segoe UI', sans-serif;");
+            } else {
+                dialogPane.setStyle("-fx-background-color: #1F2937; -fx-font-family: 'Segoe UI', sans-serif;");
+            }
+        } catch (Exception e) {
+            System.out.println("CSS non trouvé pour le dialogue.");
+        }
 
         ButtonType btnValider = new ButtonType(isEdit ? "Enregistrer" : "Ajouter", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnValider, ButtonType.CANCEL);
+        dialogPane.getButtonTypes().addAll(btnValider, ButtonType.CANCEL);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10); grid.setVgap(10);
+        // Styliser les boutons du dialogue
+        Button btOk = (Button) dialogPane.lookupButton(btnValider);
+        btOk.getStyleClass().add("primary-button");
 
-        TextField calField = new TextField();
-        TextField protField = new TextField();
-        TextField glucField = new TextField();
-        TextField lipField = new TextField();
+        Button btCancel = (Button) dialogPane.lookupButton(ButtonType.CANCEL);
+        btCancel.getStyleClass().add("secondary-button");
 
-        // --- DEBUT CONTROLE DE SAISIE ---
-        UnaryOperator<TextFormatter.Change> intFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d*")) {
-                return change;
-            }
-            return null;
-        };
+        // --- CRÉATION DES CHAMPS ---
+        TextField calField = new TextField(); calField.setPromptText("Ex: 450");
+        TextField protField = new TextField(); protField.setPromptText("Ex: 30.5");
+        TextField glucField = new TextField(); glucField.setPromptText("Ex: 45.0");
+        TextField lipField = new TextField(); lipField.setPromptText("Ex: 15.2");
 
-        UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d*\\.?\\d*")) {
-                return change;
-            }
-            return null;
-        };
+        String fieldStyle = "-fx-padding: 8; -fx-background-radius: 5;";
+        calField.setStyle(fieldStyle); protField.setStyle(fieldStyle);
+        glucField.setStyle(fieldStyle); lipField.setStyle(fieldStyle);
+
+        UnaryOperator<TextFormatter.Change> intFilter = change -> change.getControlNewText().matches("\\d*") ? change : null;
+        UnaryOperator<TextFormatter.Change> doubleFilter = change -> change.getControlNewText().matches("\\d*\\.?\\d*") ? change : null;
 
         calField.setTextFormatter(new TextFormatter<>(intFilter));
         protField.setTextFormatter(new TextFormatter<>(doubleFilter));
         glucField.setTextFormatter(new TextFormatter<>(doubleFilter));
         lipField.setTextFormatter(new TextFormatter<>(doubleFilter));
-        // --- FIN CONTROLE DE SAISIE ---
 
         ComboBox<String> mealBox = new ComboBox<>();
         mealBox.getItems().addAll("BREAKFAST", "LUNCH", "DINNER", "SNACK");
         mealBox.setValue("SNACK");
+        mealBox.setMaxWidth(Double.MAX_VALUE);
+        mealBox.setStyle(fieldStyle);
 
         if (isEdit) {
             mealBox.setValue(existingLog.getMealType());
@@ -177,20 +184,41 @@ public class DashboardController {
             lipField.setText(String.valueOf(existingLog.getTotalFats()));
         }
 
-        grid.add(new Label("Type:"), 0, 0); grid.add(mealBox, 1, 0);
-        grid.add(new Label("Calories:"), 0, 1); grid.add(calField, 1, 1);
-        grid.add(new Label("Protéines (g):"), 0, 2); grid.add(protField, 1, 2);
-        grid.add(new Label("Glucides (g):"), 0, 3); grid.add(glucField, 1, 3);
-        grid.add(new Label("Lipides (g):"), 0, 4); grid.add(lipField, 1, 4);
+        // --- STRUCTURE DE LAYOUT ---
+        Label titleLabel = new Label(isEdit ? "✏️ Modifier le repas" : "🥗 Ajouter un nouveau repas");
+        titleLabel.getStyleClass().add("main-title");
+        titleLabel.setStyle("-fx-font-size: 18px;");
 
-        dialog.getDialogPane().setContent(grid);
+        // Label pour les erreurs de saisie
+        Label errorLabel = new Label();
+        errorLabel.setStyle("-fx-text-fill: #EF4444; -fx-font-size: 13px; -fx-font-weight: bold;");
+        errorLabel.setWrapText(true);
 
-        final Button btOk = (Button) dialog.getDialogPane().lookupButton(btnValider);
+        VBox mealGroup = new VBox(5, new Label("🍽️ Type de Repas"), mealBox);
+        VBox calGroup = new VBox(5, new Label("🔥 Calories (kcal)"), calField);
+        VBox protGroup = new VBox(5, new Label("🥩 Protéines (g)"), protField);
+        VBox glucGroup = new VBox(5, new Label("🍞 Glucides (g)"), glucField);
+        VBox lipGroup = new VBox(5, new Label("🥑 Lipides (g)"), lipField);
+
+        HBox macrosBox = new HBox(15, protGroup, glucGroup);
+        HBox.setHgrow(protGroup, Priority.ALWAYS);
+        HBox.setHgrow(glucGroup, Priority.ALWAYS);
+
+        VBox contentContainer = new VBox(15);
+        contentContainer.setStyle("-fx-background-color: transparent;");
+        contentContainer.setPadding(new Insets(20, 30, 10, 30));
+        contentContainer.getChildren().addAll(titleLabel, errorLabel, mealGroup, calGroup, macrosBox, lipGroup);
+
+        dialogPane.setContent(contentContainer);
+
+        // --- VALIDATION AU CLIC ---
         btOk.addEventFilter(javafx.event.ActionEvent.ACTION, event -> {
+            errorLabel.setText(""); // Réinitialise l'erreur
+
             try {
                 if (calField.getText().isEmpty() || protField.getText().isEmpty() ||
                         glucField.getText().isEmpty() || lipField.getText().isEmpty()) {
-                    new Alert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs.").showAndWait();
+                    errorLabel.setText("❌ Veuillez remplir tous les champs.");
                     event.consume();
                     return;
                 }
@@ -201,11 +229,11 @@ public class DashboardController {
                 double lip = Double.parseDouble(lipField.getText().trim());
 
                 if (cal < 0 || prot < 0 || gluc < 0 || lip < 0) {
-                    new Alert(Alert.AlertType.ERROR, "Valeurs négatives interdites.").showAndWait();
+                    errorLabel.setText("❌ Les valeurs ne peuvent pas être négatives.");
                     event.consume();
                 }
             } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR, "Veuillez entrer des nombres valides.").showAndWait();
+                errorLabel.setText("❌ Veuillez entrer des nombres valides.");
                 event.consume();
             }
         });
@@ -231,7 +259,7 @@ public class DashboardController {
             if (success) {
                 refreshData();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Erreur BDD.").showAndWait();
+                showCustomAlert(Alert.AlertType.ERROR, "Erreur", "Erreur de base de données.");
             }
         });
     }
@@ -240,16 +268,59 @@ public class DashboardController {
         FoodLog selected = tableRepas.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Supprimer ce repas ?", ButtonType.YES, ButtonType.NO);
-        confirm.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.YES) {
-                if (dao.deleteFoodLog(selected.getId())) {
-                    refreshData();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Erreur lors de la suppression.").showAndWait();
+        showCustomAlert(Alert.AlertType.CONFIRMATION, "Confirmation", "Voulez-vous vraiment supprimer ce repas ?", ButtonType.YES, ButtonType.NO)
+                .ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        if (dao.deleteFoodLog(selected.getId())) {
+                            refreshData();
+                        } else {
+                            showCustomAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la suppression.");
+                        }
+                    }
+                });
+    }
+
+    // --- MÉTHODE POUR CRÉER DES ALERTES MODERNES ---
+    private Optional<ButtonType> showCustomAlert(Alert.AlertType type, String title, String message, ButtonType... buttonTypes) {
+        Alert alert;
+        if (buttonTypes.length > 0) {
+            alert = new Alert(type, message, buttonTypes);
+        } else {
+            alert = new Alert(type, message);
+        }
+
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        try {
+            dialogPane.getStylesheets().add(getClass().getResource("/com/wellora/css/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("card");
+
+            if (ThemeManager.isDarkMode) {
+                dialogPane.getStyleClass().add("light-theme");
+                dialogPane.setStyle("-fx-background-color: #FFFFFF; -fx-font-family: 'Segoe UI', sans-serif;");
+            } else {
+                dialogPane.setStyle("-fx-background-color: #1F2937; -fx-font-family: 'Segoe UI', sans-serif;");
+                javafx.scene.Node content = dialogPane.lookup(".content.label");
+                if (content != null) content.setStyle("-fx-text-fill: white;");
+            }
+        } catch (Exception e) {
+            System.out.println("CSS non trouvé pour l'alerte.");
+        }
+
+        for (ButtonType btnType : dialogPane.getButtonTypes()) {
+            Button btn = (Button) dialogPane.lookupButton(btnType);
+            if (btn != null) {
+                if (btnType == ButtonType.OK || btnType == ButtonType.YES) {
+                    btn.getStyleClass().add("primary-button");
+                } else if (btnType == ButtonType.NO || btnType == ButtonType.CANCEL) {
+                    btn.getStyleClass().add("secondary-button");
                 }
             }
-        });
+        }
+
+        return alert.showAndWait();
     }
 
     @FXML public void navToDashboard(ActionEvent event) { System.out.println("Nav Dashboard..."); }
