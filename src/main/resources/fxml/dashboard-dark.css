@@ -78,6 +78,276 @@
     -fx-background-color: #161B22;
     -fx-border-color: #30363D;
     -fx-border-width: 1;
+}
+
+.dark-theme .stat-card:hover {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .stat-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #58A6FF;
+}
+
+/* ========== SECTION TITLES ========== */
+.dark-theme .section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .header-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .section-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .welcome-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .welcome-subtitle {
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== SECTION TITLES ========== */
+.dark-theme .section-title {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .header-label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .section-label {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== BUTTONS ========== */
+.dark-theme .button-primary {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .button-primary:hover {
+    -fx-background-color: #2EA043;
+}
+
+.dark-theme .button-secondary {
+    -fx-background-color: #21262D;
+    -fx-text-fill: #C9D1D9;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .button-secondary:hover {
+    -fx-background-color: #30363D;
+    -fx-border-color: #58A6FF;
+    -fx-text-fill: #58A6FF;
+}
+
+/* ========== CHARTS ========== */
+.dark-theme .chart-container {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+}
+
+.dark-theme .chart-title {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .chart-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .chart-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .axis-label {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== JOURNAL SELECTOR ========== */
+.dark-theme .journal-selector-label {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .dashboard-combo {
+    -fx-background-color: #21262D;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .dashboard-combo:hover {
+    -fx-border-color: #58A6FF;
+}
+
+/* ========== ALERTS & RECOMMENDATIONS ========== */
+.dark-theme .alert-card {
+    -fx-background-color: #21262D;
+    -fx-border-color: #F85149;
+}
+
+.dark-theme .alert-title {
+    -fx-text-fill: #F85149;
+}
+
+.dark-theme .alert-message {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .recommendations-container {
+    -fx-background-color: #161B22;
+    -fx-border-color: #238636;
+}
+
+.dark-theme .section-title {
+    -fx-text-fill: #3FB950;
+}
+
+.dark-theme .section-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .section-icon {
+    -fx-text-fill: #3FB950;
+}
+}
+}
+
+.dark-theme .stat-card:hover {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .stat-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-value {
+    -fx-text-fill: #58A6FF;
+}
+
+/* ========== SECTION TITLES ========== */
+.dark-theme .section-title {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .header-label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .section-label {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== BUTTONS ========== */
+.dark-theme .button-primary {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .button-primary:hover {
+    -fx-background-color: #2EA043;
+}
+
+.dark-theme .button-secondary {
+    -fx-background-color: #21262D;
+    -fx-text-fill: #C9D1D9;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .button-secondary:hover {
+    -fx-background-color: #30363D;
+    -fx-border-color: #58A6FF;
+    -fx-text-fill: #58A6FF;
+}
+
+/* ========== CHARTS ========== */
+.dark-theme .chart-container {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+}
+
+.dark-theme .chart-title {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .chart-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .chart-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .axis-label {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== JOURNAL SELECTOR ========== */
+.dark-theme .journal-selector-label {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .dashboard-combo {
+    -fx-background-color: #21262D;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .dashboard-combo:hover {
+    -fx-border-color: #58A6FF;
+}
+
+/* ========== ALERTS & RECOMMENDATIONS ========== */
+.dark-theme .alert-card {
+    -fx-background-color: #21262D;
+    -fx-border-color: #F85149;
+}
+
+.dark-theme .alert-title {
+    -fx-text-fill: #F85149;
+}
+
+.dark-theme .alert-message {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .recommendations-container {
+    -fx-background-color: #161B22;
+    -fx-border-color: #238636;
+}
+
+.dark-theme .section-title {
+    -fx-text-fill: #3FB950;
+}
+
+.dark-theme .section-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .section-icon {
+    -fx-text-fill: #3FB950;
+};
     -fx-border-radius: 15;
 }
 
@@ -309,7 +579,7 @@
 }
 
 /* ========== HBOX/VBOX containers ========== */
-.dark-theme .hbox, 
+.dark-theme .hbox,
 .dark-theme .vbox {
     -fx-background-color: transparent;
 }

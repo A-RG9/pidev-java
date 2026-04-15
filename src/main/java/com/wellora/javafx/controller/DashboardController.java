@@ -31,16 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * DashboardController — handles the analytics dashboard view
- * 
- * Displays:
- * - Summary statistics (count of journals, entries, symptoms)
- * - Average weight and sleep data
- * - Bar chart: monthly entries (last 12 months)
- * - Pie chart: symptom type distribution
- * - Line charts: weight and glycemia trends
- */
+
 public class DashboardController {
 
     private MainController mainController;

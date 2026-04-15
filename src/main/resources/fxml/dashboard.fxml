@@ -37,8 +37,8 @@
     
     <!-- Journal Selector -->
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="📒 Journal: " styleClass="section-label"/>
-        <ComboBox fx:id="journalComboBox" onAction="#onJournalSelected" prefWidth="250"/>
+        <Label text="📒 Journal: " styleClass="journal-selector-label"/>
+        <ComboBox fx:id="journalComboBox" onAction="#onJournalSelected" prefWidth="250" styleClass="dashboard-combo"/>
         <Button text="🔄" styleClass="button, button-secondary" onAction="#refreshDashboard"/>
     </HBox>
 
@@ -92,61 +92,103 @@
         </rowConstraints>
 
         <!-- Sleep Trend Line Chart -->
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="10" styleClass="chart-container">
-            <Label text="Évolution du Sommeil" styleClass="chart-title"/>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5" styleClass="chart-container">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="😴" styleClass="chart-icon"/>
+                <Label text="Évolution du Sommeil" styleClass="chart-title"/>
+            </HBox>
+            <Label text="Heures de sommeil par jour" styleClass="chart-subtitle"/>
             <LineChart fx:id="sleepLineChart" styleClass="chart">
                 <xAxis>
                     <CategoryAxis label="Date" styleClass="axis-label"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Heures de sommeil" styleClass="axis-label"/>
+                    <NumberAxis label="Heures" styleClass="axis-label"/>
                 </yAxis>
             </LineChart>
         </VBox>
 
         <!-- Weight Trend Line Chart -->
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="10" styleClass="chart-container">
-            <Label text="Évolution du Poids" styleClass="chart-title"/>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5" styleClass="chart-container">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="⚖️" styleClass="chart-icon"/>
+                <Label text="Évolution du Poids" styleClass="chart-title"/>
+            </HBox>
+            <Label text="Poids en kilogrammes" styleClass="chart-subtitle"/>
             <LineChart fx:id="weightLineChart" styleClass="chart">
                 <xAxis>
                     <CategoryAxis label="Date" styleClass="axis-label"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Poids (kg)" styleClass="axis-label"/>
+                    <NumberAxis label="Kg" styleClass="axis-label"/>
                 </yAxis>
             </LineChart>
         </VBox>
 
         <!-- Glycemia Trend Line Chart -->
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10" styleClass="chart-container">
-            <Label text="Évolution de la Glycémie" styleClass="chart-title"/>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5" styleClass="chart-container">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="🩸" styleClass="chart-icon"/>
+                <Label text="Évolution de la Glycémie" styleClass="chart-title"/>
+            </HBox>
+            <Label text="Niveau de glycémie en g/L" styleClass="chart-subtitle"/>
             <LineChart fx:id="glycemiaLineChart" styleClass="chart">
                 <xAxis>
                     <CategoryAxis label="Date" styleClass="axis-label"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Glycémie (g/L)" styleClass="axis-label"/>
+                    <NumberAxis label="g/L" styleClass="axis-label"/>
                 </yAxis>
             </LineChart>
         </VBox>
 
         <!-- Symptoms Distribution Pie Chart -->
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="10" styleClass="chart-container">
-            <Label text="Distribution des Symptômes" styleClass="chart-title"/>
-            <PieChart fx:id="symptomPieChart" styleClass="chart"/>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5" styleClass="chart-container">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="🤒" styleClass="chart-icon"/>
+                <Label text="Distribution des Symptômes" styleClass="chart-title"/>
+            </HBox>
+            <Label text="Répartition par type de symptôme" styleClass="chart-subtitle"/>
+            <PieChart fx:id="symptomPieChart" styleClass="pie-chart"/>
         </VBox>
     </GridPane>
 
-    <!-- Alert Section -->
-    <VBox fx:id="alertContainer" visible="false" spacing="5">
-        <Label fx:id="alertTitle" text="⚠️ Alerte" styleClass="section-label"/>
-        <Label fx:id="alertMessage" text="" styleClass="form-label"/>
-    </VBox>
+    <VBox fx:id="alertContainer"
+          visible="false"
+          spacing="10"
+          styleClass="alert-card">
 
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="⚠️" styleClass="alert-icon"/>
+            <Label fx:id="alertTitle" text="Alerte" styleClass="alert-title"/>
+        </HBox>
+
+        <Label fx:id="alertMessage"
+               wrapText="true"
+               styleClass="alert-message"/>
+    </VBox>
     <!-- Recommendations Section -->
-    <VBox fx:id="recommendationsContainer" visible="false" spacing="5">
-        <Label text="💡 Recommandations" styleClass="section-label"/>
-        <VBox fx:id="recommendationsList" spacing="3"/>
+    <VBox fx:id="recommendationsContainer"
+          visible="false"
+          spacing="12"
+          styleClass="recommendations-container">
+
+        <!-- Header -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="💡" styleClass="section-icon"/>
+            <Label text="Recommandations"
+                   styleClass="section-title"/>
+        </HBox>
+
+        <!-- Subtitle -->
+        <Label text="Conseils personnalisés basés sur vos données de santé"
+               styleClass="section-subtitle"
+               wrapText="true"/>
+
+        <!-- Content list -->
+        <VBox fx:id="recommendationsList"
+              spacing="10"
+              styleClass="recommendations-list"/>
     </VBox>
 
     <!-- Refresh Button -->
