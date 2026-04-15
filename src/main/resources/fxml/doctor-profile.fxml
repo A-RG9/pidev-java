@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.DoctorProfileController"
+      fx:id="rootPane"
+      stylesheets="@../css/styles.css"
+      style="-fx-background-color: #f9fafb;">
+
+    <!-- LEFT SIDEBAR -->
+    <VBox fx:id="sidebar" minWidth="280" maxWidth="280" 
+          style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 1 0 0;">
+        
+        <!-- Logo Section -->
+        <HBox spacing="12" style="-fx-padding: 20 20 20 20;">
+            <StackPane minWidth="36" minHeight="36" 
+                       style="-fx-background-color: #00A790; -fx-background-radius: 8;">
+                <Label text="W" 
+                       style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+            </StackPane>
+            <Label text="WellCare" 
+                   style="-fx-font-family: 'Segoe UI'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+        </HBox>
+        
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+        
+        <!-- User Profile Section -->
+        <VBox style="-fx-padding: 0 16 16 16; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="12" 
+                  style="-fx-background-color: #f9fafb; -fx-padding: 12; -fx-background-radius: 8;">
+                <StackPane minWidth="40" minHeight="40" 
+                           style="-fx-background-color: #00A790; -fx-background-radius: 20;">
+                    <Label text="CM" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+                <VBox spacing="2">
+                    <Label text="CHAHAD MAALOUL" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                    <Label text="chahad.maaloul@esprit.tn" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-text-fill: #6b7280;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        
+        <!-- Espace Patient Section -->
+        <VBox spacing="4" style="-fx-padding: 12 20 16 20;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="ESPACE PATIENT" 
+                       style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
+                <StackPane minWidth="20" minHeight="20" 
+                           style="-fx-background-color: #00A790; -fx-background-radius: 10;">
+                    <Label text="8" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+            </HBox>
+        </VBox>
+        
+        <!-- Navigation Menu -->
+        <VBox spacing="1" style="-fx-padding: 0 8 20 8;" VBox.vgrow="ALWAYS">
+            
+            <!-- Tableau de bord -->
+            <Button text="Tableau de bord" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            
+            <!-- Rendez-vous Section -->
+            <VBox>
+                <Button text="Rendez-vous" 
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+                
+                <!-- Submenu -->
+                <VBox fx:id="submenuContainer" spacing="1">
+                    <padding>
+                        <Insets left="24" top="4"/>
+                    </padding>
+                    <Button text="   Mes Rendez-vous" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Trouver un Médecin" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Profil Médecin" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Prendre RDV" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Santé Section -->
+            <VBox spacing="1">
+                <Button text="Santé"
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+
+                <!-- Submenu for Santé -->
+                <VBox fx:id="santeSubmenu" spacing="1">
+                    <padding>
+                        <Insets left="24" top="4"/>
+                    </padding>
+                    <Button text="   Notes Cliniques"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Mes Ordonnances"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx:font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Résultats de Laboratoire"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Nutrition Section -->
+            <VBox>
+                <Button text="Nutrition" 
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            </VBox>
+            
+            <!-- Fitness Section -->
+            <VBox>
+                <Button text="Fitness" 
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            </VBox>
+            
+        </VBox>
+        
+        <!-- Sidebar Footer -->
+        <VBox style="-fx-padding: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
+            
+            <!-- Profile Link -->
+            <Button text="Mon Profil" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            
+            <!-- Settings -->
+            <Button text="Paramètres" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            
+            <!-- Logout -->
+            <Button text="Déconnexion" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #dc2626; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+        </VBox>
+    </VBox>
+    
+    <!-- RIGHT SIDE - Doctor Profile Content -->
+    <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
+        
+        <VBox style="-fx-background-color: #f9fafb;">
+
+        <!-- Doctor Header Banner with Gradient Background -->
+        <VBox style="-fx-background-color: #00A790; -fx-padding: 32;" spacing="0">
+            <HBox spacing="24" alignment="TOP_LEFT">
+
+                <!-- Doctor Photo -->
+                <VBox alignment="TOP_CENTER">
+                    <StackPane minWidth="128" minHeight="128" maxWidth="128" maxHeight="128"
+                               style="-fx-background-color: white; -fx-border-width: 4; -fx-border-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);">
+                        <Label text="F" style="-fx-font-family: 'Arial'; -fx-font-size: 64; -fx-text-fill: #00A790;"/>
+                    </StackPane>
+                    <StackPane style="-fx-background-color: #22c55e; -fx-background-radius: 50; -fx-translate-x: 120; -fx-translate-y: -20;">
+                        <Label text="V" style="-fx-font-family: 'Arial'; -fx-font-size: 12; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </StackPane>
+                </VBox>
+
+                <!-- Doctor Info -->
+                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                    <Text fx:id="doctorName" text="Dr. Mohamed Ben Ali"
+                          style="-fx-font-size: 28; -fx-font-weight: bold; -fx-fill: white;"/>
+                    <Text fx:id="doctorSpecialty" text="Cardiology"
+                          style="-fx-font-size: 18; -fx-fill: #c4e0df;"/>
+
+                    <!-- Rating and Experience -->
+                    <HBox spacing="16" style="-fx-padding: 12 0 0 0;">
+                        <HBox spacing="4" alignment="CENTER_LEFT">
+                            <Label text="*" style="-fx-font-size: 14; -fx-text-fill: #fbbf24;"/>
+                            <Text text="4.5" style="-fx-font-size: 14; -fx-fill: white; -fx-font-weight: bold;"/>
+                            <Text text="(10 reviews)" style="-fx-font-size: 14; -fx-fill: #c4e0df;"/>
+                        </HBox>
+                        <Text text="|" style="-fx-font-size: 14; -fx-fill: #c4e0df;"/>
+                        <HBox spacing="4" alignment="CENTER_LEFT">
+                            <Text fx:id="experienceText" text="15 years experience" style="-fx-font-size: 14; -fx-fill: white;"/>
+                        </HBox>
+                        <Text text="|" style="-fx-font-size: 14; -fx-fill: #c4e0df;"/>
+                        <HBox spacing="4" alignment="CENTER_LEFT">
+                            <Text fx:id="locationText" text="Tunis" style="-fx-font-size: 14; -fx-fill: white;"/>
+                        </HBox>
+                    </HBox>
+
+                    <!-- Languages -->
+                    <HBox spacing="8" style="-fx-padding: 12 0 0 0;">
+                        <Label text="Arabic" style="-fx-padding: 4 12; -fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-background-radius: 20; -fx-font-size: 12;"/>
+                        <Label text="French" style="-fx-padding: 4 12; -fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-background-radius: 20; -fx-font-size: 12;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Quick Actions and Price -->
+                <VBox spacing="8" alignment="TOP_RIGHT">
+                    <Text fx:id="priceText" text="120 TND"
+                          style="-fx-font-size: 36; -fx-font-weight: bold; -fx-fill: white;"/>
+                    <Text text="per consultation" style="-fx-font-size: 12; -fx-fill: #c4e0df;"/>
+                    <HBox spacing="8">
+                        <Button fx:id="favoriteBtn" style="-fx-padding: 12; -fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 12; -fx-text-fill: white; -fx-font-size: 20; -fx-cursor: hand;"
+                                onAction="#toggleFavorite" text="L"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Main Content Area -->
+        <HBox spacing="24" style="-fx-padding: 32;" HBox.hgrow="ALWAYS">
+
+            <!-- Left Column - Info (66% width) -->
+            <VBox spacing="16" HBox.hgrow="ALWAYS">
+
+                <!-- About Section -->
+                <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="I" style="-fx-text-fill: #00A790; -fx-font-size: 18;"/>
+                        <Text text="About" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                    </HBox>
+                    <Text fx:id="aboutText" text="Dr. Mohamed Ben Ali is a dedicated cardiologist with 15 years of experience..."
+                          wrappingWidth="600" style="-fx-font-size: 14; -fx-fill: #4b5563;"/>
+
+                    <!-- Education Grid -->
+                    <GridPane hgap="16" vgap="16" style="-fx-padding: 16 0 0 0;">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+
+                        <HBox spacing="12" GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="E" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Education" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text fx:id="educationText" text="Medical Degree - University of Tunis" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="0" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="C" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Certifications" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text fx:id="certificationsText" text="Board Certified in Cardiology" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="12" GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="H" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Hospital Affiliations" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text fx:id="hospitalText" text="Local Hospital" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="A" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Awards" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text fx:id="awardsText" text="Excellence in Healthcare" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+                    </GridPane>
+                </VBox>
+
+                <!-- Specializations -->
+                <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="S" style="-fx-text-fill: #00A790; -fx-font-size: 18;"/>
+                        <Text text="Specializations" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                    </HBox>
+                    <FlowPane fx:id="specializationsFlow" hgap="8" vgap="8" prefWrapLength="600"/>
+                </VBox>
+
+                <!-- Services and Fees -->
+                <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="M" style="-fx-text-fill: #00A790; -fx-font-size: 18;"/>
+                        <Text text="Services and Fees" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                    </HBox>
+
+                    <VBox spacing="12">
+                        <!-- In-Person Service -->
+                        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-background-color: #f3f4f6; -fx-padding: 16; -fx-background-radius: 8;">
+                            <HBox spacing="12" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                    <Label text="P" style="-fx-text-fill: #00A790;"/>
+                                </StackPane>
+                                <VBox spacing="2">
+                                    <Text text="In-Person Consultation" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                    <Text text="45 minutes at clinic" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                                </VBox>
+                            </HBox>
+                            <Text text="120 TND" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-fill: #00A790;"/>
+                        </HBox>
+
+                        <!-- Phone Service -->
+                        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-background-color: #f3f4f6; -fx-padding: 16; -fx-background-radius: 8;">
+                            <HBox spacing="12" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                    <Label text="T" style="-fx-text-fill: #00A790;"/>
+                                </StackPane>
+                                <VBox spacing="2">
+                                    <Text text="Phone Consultation" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                    <Text text="20 minutes call" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                                </VBox>
+                            </HBox>
+                            <Text text="70 TND" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-fill: #00A790;"/>
+                        </HBox>
+
+                        <!-- Follow-up Service -->
+                        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-background-color: #f3f4f6; -fx-padding: 16; -fx-background-radius: 8;">
+                            <HBox spacing="12" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                    <Label text="F" style="-fx-text-fill: #00A790;"/>
+                                </StackPane>
+                                <VBox spacing="2">
+                                    <Text text="Follow-up Visit" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                    <Text text="20 minutes" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                                </VBox>
+                            </HBox>
+                            <Text text="80 TND" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-fill: #00A790;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+            
+            <!-- Right Column - Booking (33% width) -->
+            <VBox spacing="16" minWidth="320" maxWidth="380">
+
+                <!-- Quick Book Card -->
+                <VBox spacing="16" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+                    <Text text="Book Appointment" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+
+                    <!-- Consultation Type -->
+                    <VBox spacing="8">
+                        <Text text="Consultation Type" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #374151;"/>
+                        <HBox spacing="8">
+                            <Button fx:id="inPersonBtn" text="In-Person"
+                                    style="-fx-background-color: #eff6ff; -fx-border-color: #2563eb; -fx-text-fill: #2563eb; -fx-padding: 12 16; -fx-background-radius: 8;"
+                                    onAction="#selectInPerson" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="phoneBtn" text="Phone"
+                                    style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-text-fill: #374151; -fx-padding: 12 16; -fx-background-radius: 8;"
+                                    onAction="#selectPhone" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Date Selection -->
+                    <VBox spacing="8">
+                        <Text text="Select Date" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #374151;"/>
+                        <FlowPane fx:id="datesFlow" hgap="8" vgap="8" prefWrapLength="320"/>
+                    </VBox>
+
+                    <!-- Time Slots -->
+                    <VBox spacing="8">
+                        <Text text="Available Times" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #374151;"/>
+                        <FlowPane fx:id="timesFlow" hgap="8" vgap="8" prefWrapLength="320"/>
+                    </VBox>
+
+                    <!-- Price Summary -->
+                    <VBox spacing="8" style="-fx-padding: 16 0; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 1 0;">
+                        <HBox spacing="8">
+                            <Text text="Consultation Fee:" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Text fx:id="consultationFee" text="120 TND" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                        </HBox>
+                        <HBox spacing="8">
+                            <Text text="Platform Fee:" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Text text="5 TND" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                        </HBox>
+                        <HBox spacing="8" style="-fx-padding: 8 0 0 0;">
+                            <Text text="Total:" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Text fx:id="totalFee" text="125 TND" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #00A790;"/>
+                        </HBox>
+                    </VBox>
+
+                    <Button text="Book Now"
+                            style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-padding: 12 16; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"
+                            onAction="#bookAppointment"/>
+                    <Text text="Free cancellation up to 24 hours before" style="-fx-font-size: 10; -fx-fill: #6b7280; -fx-text-alignment: center;"/>
+                </VBox>
+
+                <!-- Clinic Info Card -->
+                <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+                    <Text text="Clinic Information" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+
+                    <VBox spacing="12">
+                        <!-- Address -->
+                        <HBox spacing="12" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="L" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Address" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text fx:id="addressText" text="Tunis, Tunisia" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Working Hours -->
+                        <HBox spacing="12" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="W" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Working Hours" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text text="Mon - Fri: 9:00 AM - 6:00 PM" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                                <Text text="Sat: 9:00 AM - 1:00 PM" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Contact -->
+                        <HBox spacing="12" alignment="TOP_LEFT">
+                            <StackPane minWidth="40" minHeight="40" style="-fx-background-color: #eff6ff; -fx-background-radius: 8;">
+                                <Label text="X" style="-fx-text-fill: #00A790;"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Text text="Contact" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text fx:id="phoneText" text="+216 71 123 456" style="-fx-font-size: 12; -fx-fill: #6b7280;"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Insurance Card -->
+                <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+                    <Text text="Accepted Insurance" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                    <FlowPane hgap="8" vgap="8">
+                        <Label text="CNAM" style="-fx-padding: 6 12; -fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-background-radius: 4; -fx-font-size: 12;"/>
+                        <Label text="COMAR" style="-fx-padding: 6 12; -fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-background-radius: 4; -fx-font-size: 12;"/>
+                        <Label text="STAR" style="-fx-padding: 6 12; -fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-background-radius: 4; -fx-font-size: 12;"/>
+                        <Label text="GAT" style="-fx-padding: 6 12; -fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-background-radius: 4; -fx-font-size: 12;"/>
+                        <Label text="BH" style="-fx-padding: 6 12; -fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-background-radius: 4; -fx-font-size: 12;"/>
+                    </FlowPane>
+                </VBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</ScrollPane>
+</HBox>
+

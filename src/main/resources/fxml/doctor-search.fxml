@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="org.example.controller.DoctorSearchController"
+      fx:id="rootPane"
+      style="-fx-background-color: #f9fafb;">
+
+    <!-- LEFT SIDEBAR -->
+    <VBox fx:id="sidebar" minWidth="280" maxWidth="280" 
+          style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 1 0 0;">
+        
+        <!-- Logo Section -->
+        <HBox spacing="12" style="-fx-padding: 20 20 20 20;">
+            <StackPane minWidth="36" minHeight="36" 
+                       style="-fx-background-color: #00A790; -fx-background-radius: 8;">
+                <Label text="W" 
+                       style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+            </StackPane>
+            <Label text="WellCare" 
+                   style="-fx-font-family: 'Segoe UI'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+        </HBox>
+        
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+        
+        <!-- User Profile Section -->
+        <VBox style="-fx-padding: 0 16 16 16; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="12" 
+                  style="-fx-background-color: #f9fafb; -fx-padding: 12; -fx-background-radius: 8;">
+                <StackPane minWidth="40" minHeight="40" 
+                           style="-fx-background-color: #00A790; -fx-background-radius: 20;">
+                    <Label text="CM" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+                <VBox spacing="2">
+                    <Label text="CHAHAD MAALOUL" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                    <Label text="chahad.maaloul@esprit.tn" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-text-fill: #6b7280;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        
+        <!-- Espace Patient Section -->
+        <VBox spacing="4" style="-fx-padding: 12 20 16 20;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="ESPACE PATIENT" 
+                       style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
+                <StackPane minWidth="20" minHeight="20" 
+                           style="-fx-background-color: #00A790; -fx-background-radius: 10;">
+                    <Label text="8" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+            </HBox>
+        </VBox>
+        
+        <!-- Navigation Menu -->
+        <VBox spacing="1" style="-fx-padding: 0 8 20 8;" VBox.vgrow="ALWAYS">
+            
+            <!-- Tableau de bord -->
+            <Button text="Tableau de bord" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            
+            <!-- Rendez-vous Section -->
+            <VBox>
+                <Button text="Rendez-vous" 
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+                
+                <!-- Submenu -->
+                <VBox fx:id="submenuContainer" spacing="1">
+                    <padding>
+                        <Insets left="24" top="4"/>
+                    </padding>
+                    <Button text="   Mes Rendez-vous" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Trouver un Médecin" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Profil Médecin" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Prendre RDV" 
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Santé Section -->
+            <VBox>
+                <Button text="Santé"
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+                <!-- Submenu for Santé -->
+                <VBox fx:id="santeSubmenu" spacing="1">
+                    <padding>
+                        <Insets left="24" top="4"/>
+                    </padding>
+                    <Button text="   Notes Cliniques"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Mes Ordonnances"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Résultats de Laboratoire"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Nutrition Section -->
+            <VBox>
+                <Button text="Nutrition" 
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            </VBox>
+            
+            <!-- Fitness Section -->
+            <VBox>
+                <Button text="Fitness" 
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            </VBox>
+            
+        </VBox>
+        
+        <!-- Sidebar Footer -->
+        <VBox style="-fx-padding: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
+            
+            <!-- Profile Link -->
+            <Button text="Mon Profil" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            
+            <!-- Settings -->
+            <Button text="Paramètres" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            
+            <!-- Logout -->
+            <Button text="Déconnexion" 
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #dc2626; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+        </VBox>
+    </VBox>
+    
+    <!-- RIGHT SIDE - Search Content -->
+    <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
+        <VBox spacing="0" style="-fx-padding: 32 48 48 48;">
+
+            <!-- Header -->
+            <VBox style="-fx-background-color: linear-gradient(to bottom right, #00A790, #008B74); -fx-padding: 32;" spacing="16">
+                <Label text="Find the Right Healthcare Professional" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;" alignment="CENTER"/>
+                <Label text="Book appointments with top-rated doctors, specialists, and healthcare providers" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #e0f2f1;" alignment="CENTER"/>
+                <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16;" spacing="12" maxWidth="900" alignment="CENTER">
+                    <HBox spacing="12">
+                        <TextField fx:id="searchField" promptText="Search by specialty, doctor name..." style="-fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #e0e0e0;" HBox.hgrow="ALWAYS"/>
+                        <ComboBox fx:id="locationChoice" promptText="All Locations" style="-fx-padding: 8;" prefWidth="140"/>
+                        <ComboBox fx:id="availabilityChoice" promptText="Any Time" style="-fx-padding: 8;" prefWidth="140"/>
+                        <Button text="Search" onAction="#searchDoctors" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-padding: 12 24; -fx-background-radius: 8;" prefWidth="100"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- Main Content -->
+            <HBox spacing="24" style="-fx-padding: 32;" HBox.hgrow="ALWAYS">
+                <VBox spacing="16" prefWidth="300">
+                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12;" spacing="16" VBox.vgrow="ALWAYS">
+                        <HBox spacing="12">
+                            <Label text="Filters" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="Reset" onAction="#resetFilters" style="-fx-background-color: transparent; -fx-text-fill: #00A790;"/>
+                        </HBox>
+                        <VBox spacing="8">
+                            <Label text="Specialty" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                            <ScrollPane style="-fx-background: transparent;">
+                                <VBox fx:id="specialtyFilters" spacing="6"/>
+                            </ScrollPane>
+                        </VBox>
+                        <VBox spacing="8">
+                            <Label text="Consultation Type" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                            <CheckBox fx:id="inPersonCheck" text="In-Person" onAction="#applyFilters"/>
+                            <CheckBox fx:id="phoneCheck" text="Phone Call" onAction="#applyFilters"/>
+                        </VBox>
+                        <VBox spacing="8">
+                            <HBox><Label text="Max Price:" style="-fx-font-size: 12px; -fx-font-weight: bold;"/><Region HBox.hgrow="ALWAYS"/><Label fx:id="priceLabel" text="500 TND" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/></HBox>
+                            <Slider fx:id="priceSlider" min="20" max="500" value="500"/>
+                        </VBox>
+                        <VBox spacing="8">
+                            <Label text="Languages" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                            <CheckBox fx:id="arabicCheck" text="Arabic" onAction="#applyFilters"/>
+                            <CheckBox fx:id="frenchCheck" text="French" onAction="#applyFilters"/>
+                            <CheckBox fx:id="englishCheck" text="English" onAction="#applyFilters"/>
+                        </VBox>
+                        <VBox spacing="8">
+                            <Label text="Doctor Gender" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                            <HBox spacing="6">
+                                <RadioButton fx:id="rating4" text="Any" onAction="#filterGenderAny"/>
+                                <RadioButton fx:id="rating3" text="Male" onAction="#filterGenderMale"/>
+                                <RadioButton fx:id="rating2" text="Female" onAction="#filterGenderFemale"/>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </VBox>
+                <VBox spacing="16" HBox.hgrow="ALWAYS">
+                    <HBox spacing="16" alignment="CENTER_LEFT">
+                        <VBox spacing="4">
+                            <Label fx:id="resultsCount" text="0 Doctors Available" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <Label text="Showing results for your search" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <HBox spacing="12" alignment="CENTER_RIGHT">
+                            <Button text="List" onAction="#switchToList" style="-fx-background-color: white; -fx-text-fill: #00A790; -fx-border-color: #e0e0e0; -fx-padding: 8 12; -fx-background-radius: 6;"/>
+                            <Button text="Map" onAction="#switchToMap" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-padding: 8 12; -fx-background-radius: 6;"/>
+                            <ComboBox fx:id="sortChoice" style="-fx-padding: 6;" prefWidth="180"/>
+                        </HBox>
+                    </HBox>
+                    <HBox fx:id="loadingPane" alignment="CENTER" style="-fx-padding: 40;" visible="false"><ProgressIndicator style="-fx-progress-color: #00A790;"/></HBox>
+                    <VBox fx:id="noResultsPane" alignment="CENTER" spacing="12" style="-fx-padding: 40; -fx-background-color: white; -fx-background-radius: 12;" visible="false">
+                        <Label text="No doctors found" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Label text="Try adjusting your filters" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                        <Button text="Clear All Filters" onAction="#resetFilters" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-padding: 10 24; -fx-background-radius: 6;"/>
+                    </VBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background: transparent;" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="doctorList" spacing="12"/>
+                    </ScrollPane>
+                    <HBox fx:id="paginationPane" spacing="12" alignment="CENTER" style="-fx-padding: 16;">
+                        <Button text="&lt; Previous" onAction="#previousPage" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-padding: 8 16; -fx-background-radius: 6;"/>
+                        <Label fx:id="pageInfo" text="Page 1" style="-fx-font-size: 13px;"/>
+                        <Button text="Next >" onAction="#nextPage" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-padding: 8 16; -fx-background-radius: 6;"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+        </VBox>
+    </ScrollPane>
+</HBox>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.Node?>
+
+<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.PrescriptionsController"
+      style="-fx-background-color: #f9fafb;">
+
+    <!-- LEFT SIDEBAR -->
+    <VBox minWidth="280" maxWidth="280"
+          style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 1 0 0;">
+        
+        <!-- Logo Section -->
+        <HBox spacing="12" style="-fx-padding: 20 20 20 20;">
+            <StackPane minWidth="36" minHeight="36" 
+                       style="-fx-background-color: #00A790; -fx-background-radius: 8;">
+                <Label text="W" 
+                       style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+            </StackPane>
+            <Label text="WellCare" 
+                   style="-fx-font-family: 'Segoe UI'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+        </HBox>
+        
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+        
+        <!-- User Profile Section -->
+        <VBox style="-fx-padding: 0 16 16 16; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="12" 
+                  style="-fx-background-color: #f9fafb; -fx-padding: 12; -fx-background-radius: 8;">
+                <StackPane minWidth="40" minHeight="40" 
+                           style="-fx-background-color: #00A790; -fx-background-radius: 20;">
+                    <Label text="CM" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+                <VBox spacing="2">
+                    <Label text="CHAHAD MAALOUL" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                    <Label text="chahad.maaloul@esprit.tn" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-text-fill: #6b7280;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        
+        <!-- Espace Patient Section -->
+        <VBox spacing="4" style="-fx-padding: 12 20 16 20;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="ESPACE PATIENT" 
+                       style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
+                <StackPane minWidth="20" minHeight="20" 
+                           style="-fx-background-color: #00A790; -fx-background-radius: 10;">
+                    <Label text="8" 
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+            </HBox>
+        </VBox>
+
+        <!-- Navigation Menu -->
+        <VBox spacing="1" style="-fx-padding: 0 8 20 8;" VBox.vgrow="ALWAYS">
+
+            <!-- Tableau de bord -->
+            <Button text="Tableau de bord"
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+
+            <!-- Rendez-vous Section -->
+            <VBox>
+                <Button text="Rendez-vous"
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+
+                <!-- Submenu -->
+                <VBox fx:id="submenuContainer" spacing="1">
+                    <padding>
+                        <Insets left="24" top="4"/>
+                    </padding>
+                    <Button text="   Mes Rendez-vous"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Trouver un Médecin"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Profil Médecin"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Prendre RDV"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                </VBox>
+            </VBox>
+
+            <!-- Santé Section -->
+            <VBox>
+                <Button text="Santé"
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+
+                <!-- Submenu for Santé -->
+                <VBox fx:id="santeSubmenuContainer" spacing="1">
+                    <padding>
+                        <Insets left="24" top="4"/>
+                    </padding>
+                    <Button text="   Notes Cliniques"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Mes Ordonnances"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                    <Button text="   Résultats de Laboratoire"
+                            onAction="#handleMenuClick"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                </VBox>
+            </VBox>
+
+            <!-- Nutrition Section -->
+            <VBox>
+                <Button text="Nutrition"
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            </VBox>
+
+            <!-- Fitness Section -->
+            <VBox>
+                <Button text="Fitness"
+                        onAction="#toggleSubmenu"
+                        style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- Sidebar Footer -->
+        <VBox style="-fx-padding: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
+
+            <!-- Profile Link -->
+            <Button text="Mon Profil"
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+
+            <!-- Settings -->
+            <Button text="Paramètres"
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+
+            <!-- Logout -->
+            <Button text="Déconnexion"
+                    onAction="#handleMenuClick"
+                    style="-fx-background-color: transparent; -fx-text-fill: #dc2626; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+        </VBox>
+    </VBox>
+    
+    <!-- RIGHT SIDE - Prescriptions Content -->
+    <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
+        <VBox spacing="24" style="-fx-padding: 32 48 48 48;">
+
+            <!-- Page Header -->
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <StackPane minWidth="48" minHeight="48" 
+                           style="-fx-background-color: #dbeafe; -fx-background-radius: 12;">
+                    <Label text="&#xf5a3;" styleClass="fas"
+                           style="-fx-font-size: 20px; -fx-text-fill: #3b82f6;"/>
+                </StackPane>
+                <VBox spacing="4">
+                    <Text text="Ordonnances" 
+                          style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #111827;"/>
+                    <Text text="Vos médicaments et traitements en cours" 
+                          style="-fx-font-size: 14px; -fx-fill: #6b7280;"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Prescriptions Cards Container -->
+            <VBox fx:id="prescriptionsCardsContainer" spacing="16"/>
+            
+        </VBox>
+    </ScrollPane>
+</HBox>

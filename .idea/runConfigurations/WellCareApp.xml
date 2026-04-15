@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WellCareApp" type="Application" factoryName="Application">
+    <module name="wellora" />
+    <option name="MAIN_CLASS_NAME" value="org.example.WellCareApp" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="JDK" value="C:\Users\marie\.jdks\jbr-17.0.14" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
