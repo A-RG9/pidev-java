@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.LoginController"
+      styleClass="root" alignment="CENTER" spacing="20.0" prefWidth="1000.0" prefHeight="700.0">
+
+    <!-- Main Container -->
+    <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="ALWAYS">
+
+        <!-- Logo and Title Section -->
+        <VBox alignment="CENTER" spacing="10.0">
+            <Text text="⚕️ WellCare" styleClass="welcome-title"/>
+            <Text text="Healthcare Management System" styleClass="welcome-subtitle"/>
+            <Text text="Sign in to access your healthcare dashboard" style="-fx-font-size: 16px; -fx-text-fill: #6c757d;"/>
+        </VBox>
+
+        <!-- Login Card -->
+        <VBox styleClass="card" alignment="CENTER" spacing="25.0" prefWidth="400.0" prefHeight="450.0">
+
+            <!-- Card Header -->
+            <VBox styleClass="card-header" alignment="CENTER">
+                <Text text="Welcome Back" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            </VBox>
+
+            <!-- Login Form -->
+            <VBox styleClass="card-body" alignment="TOP_CENTER" spacing="20.0" prefWidth="350.0">
+
+                <!-- Email Field -->
+                <VBox spacing="8.0">
+                    <Label text="Email Address" styleClass="form-label"/>
+                    <TextField fx:id="emailField" promptText="Enter your email" styleClass="form-control" prefWidth="350.0"/>
+                    <Label fx:id="emailErrorLabel" styleClass="error-label" visible="false" managed="false"/>
+                </VBox>
+
+                <!-- Password Field -->
+                <VBox spacing="8.0">
+                    <Label text="Password" styleClass="form-label"/>
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="form-control" prefWidth="350.0"/>
+                    <Label fx:id="passwordErrorLabel" styleClass="error-label" visible="false" managed="false"/>
+                </VBox>
+
+                <!-- Remember Me and Forgot Password -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <CheckBox fx:id="rememberMeCheckBox" text="Remember me" style="-fx-font-size: 13px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Hyperlink fx:id="forgotPasswordLink" text="Forgot password?" style="-fx-font-size: 13px;"/>
+                </HBox>
+
+                <!-- Login Button -->
+                <VBox spacing="10.0">
+                    <Button fx:id="loginButton" text="Sign In" styleClass="btn-primary" prefWidth="350.0" prefHeight="45.0"/>
+                    <HBox fx:id="loadingBox" alignment="CENTER" spacing="10.0" visible="false" managed="false">
+                        <ProgressIndicator prefWidth="20.0" prefHeight="20.0"/>
+                        <Label text="Signing in..." style="-fx-font-size: 13px;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Error Message -->
+                <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false" wrapText="true" maxWidth="350.0"/>
+
+                <!-- Register Links -->
+                <VBox alignment="CENTER" spacing="15.0">
+                    <Text text="Don't have an account?" style="-fx-font-size: 14px; -fx-text-fill: #6c757d;"/>
+                    <VBox alignment="CENTER" spacing="8.0">
+                        <Hyperlink fx:id="registerPatientLink" text="Create Patient Account" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                        <Text text="or" style="-fx-font-size: 12px; -fx-text-fill: #adb5bd;"/>
+                        <Hyperlink fx:id="registerProfessionalLink" text="Create Professional Account" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </VBox>
+
+            </VBox>
+        </VBox>
+
+        <!-- Footer -->
+        <HBox styleClass="footer" alignment="CENTER">
+            <Text text="© 2024 WellCare Healthcare Management System" style="-fx-font-size: 12px; -fx-text-fill: #6c757d;"/>
+        </HBox>
+
+    </VBox>
+</VBox>

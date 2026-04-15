@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.admin.ProfessionalManagementController">
+    <children>
+        <!-- Header -->
+        <HBox styleClass="header-section" VBox.vgrow="NEVER">
+            <children>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label styleClass="page-title" text="👨‍⚕️ Professional Management" />
+                        <Label styleClass="page-subtitle" text="Manage healthcare professionals and their credentials" />
+                    </children>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+        </HBox>
+
+        <!-- Filters and Search -->
+        <HBox styleClass="filter-section" spacing="15.0" VBox.vgrow="NEVER">
+            <children>
+                <TextField fx:id="searchField" promptText="🔍 Search professionals..." HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </TextField>
+                <ComboBox fx:id="roleFilter" promptText="Filter by Role" prefWidth="150.0" />
+                <ComboBox fx:id="statusFilter" promptText="Filter by Status" prefWidth="150.0" />
+                <ComboBox fx:id="specialtyFilter" promptText="Filter by Specialty" prefWidth="180.0" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="15.0" />
+            </VBox.margin>
+        </HBox>
+
+        <!-- Statistics Cards -->
+        <HBox spacing="20.0" VBox.vgrow="NEVER">
+            <children>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="stat-number" fx:id="totalProfessionalsLabel" text="0" />
+                        <Label styleClass="stat-label" text="Total Professionals" />
+                    </children>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="stat-number" fx:id="verifiedProfessionalsLabel" text="0" />
+                        <Label styleClass="stat-label" text="Verified" />
+                    </children>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="stat-number" fx:id="pendingVerificationLabel" text="0" />
+                        <Label styleClass="stat-label" text="Pending Verification" />
+                    </children>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="stat-number" fx:id="activeProfessionalsLabel" text="0" />
+                        <Label styleClass="stat-label" text="Active" />
+                    </children>
+                </VBox>
+            </children>
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+        </HBox>
+
+        <!-- Professionals Table -->
+        <VBox VBox.vgrow="ALWAYS">
+            <children>
+                <TableView fx:id="professionalsTable" VBox.vgrow="ALWAYS">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="checkboxColumn" text="✔️" prefWidth="40.0" resizable="false" />
+                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="150.0" />
+                        <TableColumn fx:id="emailColumn" text="Email" prefWidth="200.0" />
+                        <TableColumn fx:id="roleSpecialtyColumn" text="Role &amp; Specialty" prefWidth="200.0" />
+                        <TableColumn fx:id="licenseColumn" text="License" prefWidth="120.0" />
+                        <TableColumn fx:id="experienceColumn" text="Exp (yrs)" prefWidth="80.0" />
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="120.0" />
+                        <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="300.0" />
+                    </columns>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </TableView>
+            </children>
+        </VBox>
+
+        <!-- Action Buttons -->
+        <HBox spacing="10.0" alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
+            <children>
+                <Label styleClass="text-muted" text="Bulk Actions:" HBox.hgrow="ALWAYS" />
+                <Button fx:id="verifySelectedBtn" styleClass="btn, btn-success" text="✅ Verify Selected" disable="true" />
+                <Button fx:id="rejectSelectedBtn" styleClass="btn, btn-danger" text="❌ Reject Selected" disable="true" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="backToDashboardBtn" styleClass="btn, btn-secondary" text="⬅️ Back to Dashboard" />
+            </children>
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </HBox>
+    </children>
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+    </padding>
+</VBox>

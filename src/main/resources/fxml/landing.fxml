@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="rootPane" styleClass="root"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.wellcare.ui.LandingController">
+
+    <!-- Top Navigation Bar -->
+    <top>
+       <VBox styleClass="navbar">
+          <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="20.0" styleClass="navbar-content">
+             <HBox alignment="CENTER_LEFT" spacing="15.0" HBox.hgrow="ALWAYS">
+                <Label styleClass="icon" text="??" />
+                <Label styleClass="navbar-brand" text="WellCare Connect" />
+             </HBox>
+             <HBox alignment="CENTER_RIGHT" spacing="30.0">
+                <Button fx:id="homeBtn" mnemonicParsing="false" onAction="#handleHome" styleClass="nav-link" text="Accueil" />
+                <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#handleLogin" styleClass="nav-link" text="Connexion" />
+                <Button fx:id="registerBtn" mnemonicParsing="false" onAction="#handleRegister" styleClass="nav-link" text="Inscription" />
+                <Button fx:id="professionalBtn" mnemonicParsing="false" onAction="#handleProfessional" styleClass="btn-outline" text="Professionnel" />
+                <ToggleButton fx:id="themeToggle" mnemonicParsing="false" onAction="#toggleTheme" styleClass="theme-toggle">
+                   <graphic>
+                      <Label fx:id="themeIcon" styleClass="icon" text="??" />
+                   </graphic>
+                </ToggleButton>
+             </HBox>
+          </HBox>
+       </VBox>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+       <ScrollPane fx:id="mainScrollPane" fitToWidth="true" pannable="true" styleClass="main-content" vbarPolicy="AS_NEEDED">
+          <VBox spacing="80.0" styleClass="content-container" BorderPane.alignment="CENTER">
+
+             <!-- Hero Section -->
+             <VBox styleClass="hero-section" VBox.vgrow="ALWAYS">
+                <VBox alignment="CENTER" spacing="40.0" styleClass="hero-content" VBox.vgrow="ALWAYS">
+                   <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="ALWAYS">
+                      <VBox spacing="20.0" alignment="CENTER">
+                         <Label styleClass="hero-title" text="Votre santé, connectée." />
+                         <Label styleClass="hero-subtitle" text="Simple, sécurisée, moderne." />
+                         <Label styleClass="hero-description" text="Gérez vos dossiers médicaux, prenez rendez-vous et consultez vos professionnels de santé en toute simplicité avec WellCare Connect." wrapText="true" />
+                      </VBox>
+                      <HBox spacing="20.0" alignment="CENTER">
+                         <Button fx:id="startPatientBtn" mnemonicParsing="false" onAction="#handleStartPatient" styleClass="btn-primary" text="Commencer maintenant" />
+                         <Button fx:id="startProfessionalBtn" mnemonicParsing="false" onAction="#handleStartProfessional" styleClass="btn-secondary" text="Espace professionnel" />
+                      </HBox>
+                      <Hyperlink fx:id="loginLink" onAction="#handleLoginLink" styleClass="hero-link" text="Déjà un compte ? Se connecter" />
+                   </VBox>
+
+                   <!-- Weather Widget -->
+                   <VBox styleClass="weather-widget" alignment="CENTER">
+                      <HBox alignment="CENTER" spacing="15.0">
+                         <Label styleClass="icon" text="??" />
+                         <VBox spacing="5.0">
+                            <Label styleClass="weather-temp" text="23°C" />
+                            <Label styleClass="weather-location" text="Tunis, Tunisie" />
+                         </VBox>
+                      </HBox>
+                   </VBox>
+                </VBox>
+             </VBox>
+
+             <!-- Features Section -->
+             <VBox spacing="60.0" styleClass="features-section">
+                <VBox alignment="CENTER" spacing="20.0">
+                   <Label styleClass="section-title" text="Pourquoi choisir WellCare Connect ?" />
+                   <Label styleClass="section-subtitle" text="Une plateforme complète pour votre suivi médical" />
+                </VBox>
+                <HBox alignment="CENTER" spacing="40.0" styleClass="features-grid">
+                   <VBox styleClass="feature-card" HBox.hgrow="ALWAYS">
+                      <VBox alignment="CENTER" spacing="25.0">
+                         <Label styleClass="icon" text="??" />
+                         <VBox alignment="CENTER" spacing="15.0">
+                            <Label styleClass="feature-title" text="Dossiers médicaux centralisés" />
+                            <Label styleClass="feature-description" text="Tous vos documents médicaux accessibles en un clic. Historique complet, sécurisé et confidentiel." wrapText="true" />
+                         </VBox>
+                      </VBox>
+                   </VBox>
+                   <VBox styleClass="feature-card" HBox.hgrow="ALWAYS">
+                      <VBox alignment="CENTER" spacing="25.0">
+                         <Label styleClass="icon" text="??" />
+                         <VBox alignment="CENTER" spacing="15.0">
+                            <Label styleClass="feature-title" text="Rendez-vous simplifiés" />
+                            <Label styleClass="feature-description" text="Prenez et gérez vos rendez-vous médicaux en ligne. Notifications automatiques et rappels." wrapText="true" />
+                         </VBox>
+                      </VBox>
+                   </VBox>
+                   <VBox styleClass="feature-card" HBox.hgrow="ALWAYS">
+                      <VBox alignment="CENTER" spacing="25.0">
+                         <Label styleClass="icon" text="??" />
+                         <VBox alignment="CENTER" spacing="15.0">
+                            <Label styleClass="feature-title" text="Téléconsultation intégrée" />
+                            <Label styleClass="feature-description" text="Consultez vos médecins à distance avec notre système de vidéoconférence sécurisé." wrapText="true" />
+                         </VBox>
+                      </VBox>
+                   </VBox>
+                </HBox>
+             </VBox>
+
+             <!-- Stats Section -->
+             <VBox styleClass="stats-section">
+                <HBox alignment="CENTER" spacing="80.0" styleClass="stats-grid">
+                   <VBox styleClass="stat-item" alignment="CENTER" HBox.hgrow="ALWAYS">
+                      <Label fx:id="stat1Label" styleClass="stat-number" text="0" />
+                      <Label styleClass="stat-label" text="Patients actifs" />
+                   </VBox>
+                   <VBox styleClass="stat-item" alignment="CENTER" HBox.hgrow="ALWAYS">
+                      <Label fx:id="stat2Label" styleClass="stat-number" text="0" />
+                      <Label styleClass="stat-label" text="Médecins partenaires" />
+                   </VBox>
+                   <VBox styleClass="stat-item" alignment="CENTER" HBox.hgrow="ALWAYS">
+                      <Label fx:id="stat3Label" styleClass="stat-number" text="0" />
+                      <Label styleClass="stat-label" text="Satisfaction client" />
+                   </VBox>
+                   <VBox styleClass="stat-item" alignment="CENTER" HBox.hgrow="ALWAYS">
+                      <Label fx:id="stat4Label" styleClass="stat-number" text="0" />
+                      <Label styleClass="stat-label" text="Support disponible" />
+                   </VBox>
+                </HBox>
+             </VBox>
+
+             <!-- Testimonials Section -->
+             <VBox spacing="60.0" styleClass="testimonials-section">
+                <VBox alignment="CENTER" spacing="20.0">
+                   <Label styleClass="section-title" text="Témoignages de nos utilisateurs" />
+                   <Label styleClass="section-subtitle" text="Découvrez ce que disent nos patients et professionnels de santé" />
+                </VBox>
+                <HBox alignment="CENTER" spacing="40.0" styleClass="testimonials-grid">
+                   <VBox styleClass="testimonial-card" HBox.hgrow="ALWAYS">
+                      <VBox spacing="30.0">
+                         <HBox alignment="CENTER" spacing="2.0">
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                         </HBox>
+                         <Label styleClass="testimonial-text" text="WellCare Connect a complètement transformé ma façon de gérer ma santé. L'interface est intuitive, les fonctionnalités complètes, et le support réactif. Je recommande vivement !" wrapText="true" />
+                         <HBox alignment="CENTER_LEFT" spacing="20.0">
+                            <Label styleClass="icon" text="?????" />
+                            <VBox spacing="8.0">
+                               <Label styleClass="testimonial-name" text="Dr. Sarah Martin" />
+                               <Label styleClass="testimonial-role" text="Médecin généraliste" />
+                            </VBox>
+                         </HBox>
+                      </VBox>
+                   </VBox>
+                   <VBox styleClass="testimonial-card" HBox.hgrow="ALWAYS">
+                      <VBox spacing="30.0">
+                         <HBox alignment="CENTER" spacing="2.0">
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                            <Label styleClass="icon" text="?" />
+                         </HBox>
+                         <Label styleClass="testimonial-text" text="En tant que patient, j'apprécie la simplicité d'accès à mes dossiers médicaux et la facilité de prise de rendez-vous. WellCare Connect rend les soins de santé modernes et accessibles." wrapText="true" />
+                         <HBox alignment="CENTER_LEFT" spacing="20.0">
+                            <Label styleClass="icon" text="??" />
+                            <VBox spacing="8.0">
+                               <Label styleClass="testimonial-name" text="Ahmed Ben Salah" />
+                               <Label styleClass="testimonial-role" text="Patient" />
+                            </VBox>
+                         </HBox>
+                      </VBox>
+                   </VBox>
+                </HBox>
+             </VBox>
+
+             <!-- CTA Section -->
+             <VBox styleClass="cta-section">
+                <VBox alignment="CENTER" spacing="30.0">
+                   <Label styleClass="cta-title" text="Prêt à prendre soin de votre santé différemment ?" />
+                   <Label styleClass="cta-subtitle" text="Rejoignez des milliers d'utilisateurs qui font déjà confiance à WellCare Connect" wrapText="true" />
+                   <HBox spacing="20.0" alignment="CENTER">
+                      <Button fx:id="ctaPatientBtn" onAction="#handleStartPatient" styleClass="btn-primary" text="S'inscrire en tant que patient" />
+                      <Button fx:id="ctaProBtn" onAction="#handleStartProfessional" styleClass="btn-outline" text="Devenir partenaire" />
+                   </HBox>
+                </VBox>
+             </VBox>
+
+          </VBox>
+       </ScrollPane>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+       <GridPane styleClass="footer" hgap="80.0" vgap="15.0">
+          <columnConstraints>
+             <ColumnConstraints percentWidth="25" />
+             <ColumnConstraints percentWidth="25" />
+             <ColumnConstraints percentWidth="25" />
+             <ColumnConstraints percentWidth="25" />
+          </columnConstraints>
+          <VBox GridPane.columnIndex="0" spacing="20.0">
+             <Label styleClass="footer-brand" text="WellCare Connect" />
+             <Label styleClass="footer-description" text="Votre plateforme de santé connectée. Simplifiez votre suivi médical avec nos outils modernes et sécurisés." wrapText="true" />
+             <HBox spacing="15.0">
+                <Label styleClass="social-icon" text="??" />
+                <Label styleClass="social-icon" text="??" />
+                <Label styleClass="social-icon" text="??" />
+             </HBox>
+          </VBox>
+          <VBox GridPane.columnIndex="1" spacing="15.0">
+             <Label styleClass="footer-title" text="Plateforme" />
+             <VBox spacing="8.0">
+                <Hyperlink styleClass="footer-link" text="Fonctionnalités" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Sécurité" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Confidentialité" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Support" onAction="#showComingSoon" />
+             </VBox>
+          </VBox>
+          <VBox GridPane.columnIndex="2" spacing="15.0">
+             <Label styleClass="footer-title" text="Professionnels" />
+             <VBox spacing="8.0">
+                <Hyperlink fx:id="footerProfessionalLink" onAction="#handleProfessional" styleClass="footer-link" text="Espace médecins" />
+                <Hyperlink styleClass="footer-link" text="Intégration API" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Documentation" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Tarifs" onAction="#showComingSoon" />
+             </VBox>
+          </VBox>
+          <VBox GridPane.columnIndex="3" spacing="15.0">
+             <Label styleClass="footer-title" text="Entreprise" />
+             <VBox spacing="8.0">
+                <Hyperlink styleClass="footer-link" text="À propos" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Carrières" onAction="#showComingSoon" />
+                <Hyperlink styleClass="footer-link" text="Connexion" onAction="#handleLogin" />
+                <Hyperlink styleClass="footer-link" text="Inscription" onAction="#handleRegister" />
+             </VBox>
+          </VBox>
+          <Label GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4" styleClass="footer-copyright" text="© 2024 WellCare Connect. Tous droits réservés. | Société de santé numérique | Projet PIDEV" />
+       </GridPane>
+    </bottom>
+
+</BorderPane>
