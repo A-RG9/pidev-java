@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
@@ -10,7 +9,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.FontWeight?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" 
            xmlns:fx="http://javafx.com/fxml/1"
@@ -44,69 +42,133 @@
 
     <!-- ========== LEFT SIDEBAR ========== -->
     <left>
-        <VBox styleClass="sidebar" prefWidth="240">
-            <padding>
-                <Insets top="20" right="15" bottom="20" left="15"/>
-            </padding>
-            
+        <VBox styleClass="sidebar">
+
+            <!-- Logo & User Section (Top) -->
+            <VBox spacing="0">
+                <!-- Logo -->
+                <VBox styleClass="logo-container" spacing="5">
+                    <padding>
+                        <Insets top="15" right="10" bottom="15" left="15"/>
+                    </padding>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="W" styleClass="logo-icon"/>
+                        <Label text="Wellora" styleClass="logo-text"/>
+                    </HBox>
+                </VBox>
+
+                <!-- User Card -->
+                <VBox styleClass="user-card" spacing="8">
+                    <padding>
+                        <Insets top="12" right="15" bottom="12" left="15"/>
+                    </padding>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <VBox styleClass="user-avatar" alignment="CENTER" prefWidth="38" prefHeight="38">
+                            <Label text="KS" styleClass="avatar-text"/>
+                        </VBox>
+                        <VBox spacing="2">
+                            <Label text="Khalil Sassi" styleClass="user-name"/>
+                            <Label text="khalil@example.com" styleClass="user-email"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- Separator -->
+            <Separator styleClass="menu-separator"/>
+
             <!-- Navigation Menu -->
             <VBox spacing="8" styleClass="nav-menu">
-                <Label text="MENU" styleClass="menu-header"/>
-                
-                <Button text="🏠  Home" 
-                        styleClass="nav-button" 
-                        onAction="#showHomepage"
-                        fx:id="btnHome"/>
-                
-                <Button text="📊  Dashboard" 
-                        styleClass="nav-button" 
-                        onAction="#showDashboard"
-                        fx:id="btnDashboard"/>
-                
-                <Separator styleClass="menu-separator"/>
-                
-                <Label text="MANAGE" styleClass="menu-header"/>
-                
-                <Button text="📒  Health Journals" 
-                        styleClass="nav-button" 
-                        onAction="#showHealthJournals"
-                        fx:id="btnJournals"/>
-                
-                <Button text="📝  Health Entries" 
-                        styleClass="nav-button" 
-                        onAction="#showHealthEntries"
-                        fx:id="btnEntries"/>
-                
-                <Button text="🤒  Symptoms" 
-                        styleClass="nav-button" 
-                        onAction="#showSymptoms"
-                        fx:id="btnSymptoms"
-                        visible="false" managed="false"/>
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <!-- MENU Section -->
+                <VBox spacing="5">
+                    <Label text="MENU" styleClass="nav-category"/>
+
+                    <!-- Home -->
+                    <VBox styleClass="sub-menu">
+                        <Button text="🏠  Home"
+                                styleClass="sub-nav-button"
+                                onAction="#showHomepage"
+                                fx:id="btnHome"/>
+                    </VBox>
+
+                    <!-- Dashboard -->
+                    <VBox styleClass="sub-menu">
+                        <Button text="📊  Dashboard"
+                                styleClass="sub-nav-button"
+                                onAction="#showDashboard"
+                                fx:id="btnDashboard"/>
+                    </VBox>
+                </VBox>
+
+                <Separator styleClass="menu-separator-thin"/>
+
+                <!-- MANAGE Section -->
+                <VBox spacing="5">
+                    <Label text="MANAGE" styleClass="nav-category"/>
+
+                    <!-- Health Journals -->
+                    <VBox styleClass="sub-menu">
+                        <Button text="📒  Health Journals"
+                                styleClass="sub-nav-button"
+                                onAction="#showHealthJournals"
+                                fx:id="btnJournals"/>
+                    </VBox>
+
+                    <!-- Health Entries -->
+                    <VBox styleClass="sub-menu">
+                        <Button text="📝  Health Entries"
+                                styleClass="sub-nav-button"
+                                onAction="#showHealthEntries"
+                                fx:id="btnEntries"/>
+                    </VBox>
+
+                    <!-- Symptoms (hidden) -->
+                    <VBox styleClass="sub-menu">
+                        <Button text="🤒  Symptoms"
+                                styleClass="sub-nav-button"
+                                onAction="#showSymptoms"
+                                fx:id="btnSymptoms"
+                                visible="false" managed="false"/>
+                    </VBox>
+                </VBox>
             </VBox>
-            
+
+            <!-- Bottom Actions -->
             <Region VBox.vgrow="ALWAYS"/>
-            
-            <!-- Logout Section -->
-            <VBox spacing="10">
-                <Separator styleClass="menu-separator"/>
-                <Button text="🚪  Logout" 
-                        styleClass="nav-button logout" 
-                        onAction="#logout"/>
+
+            <VBox styleClass="bottom-actions" spacing="5">
+                <padding>
+                    <Insets top="15" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Button text="🎨  Theme"
+                        styleClass="action-button"
+                        onAction="#toggleTheme"
+                        fx:id="btnTheme"/>
+
+                <Button text="🚪  Logout"
+                        styleClass="action-button logout-button"
+                        onAction="#logout"
+                        fx:id="btnLogout"/>
             </VBox>
-            
+
             <!-- Version -->
             <Label text="v1.0" styleClass="version-label">
                 <VBox.margin>
-                    <Insets top="15" left="0" bottom="0" right="0"/>
+                    <Insets top="5" left="15" bottom="15" right="0"/>
                 </VBox.margin>
             </Label>
         </VBox>
     </left>
 
-    <!-- ========== CENTER CONTENT (Dynamic) ========== -->
+    <!-- ========== CENTER CONTENT ========== -->
     <center>
         <VBox fx:id="contentArea" styleClass="content-area">
-            <!-- Dynamic content will be loaded here -->
+            <!-- Dynamic content loaded here -->
         </VBox>
     </center>
 

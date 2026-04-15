@@ -325,7 +325,7 @@ public class DashboardController {
             mainController.showHomepage();
         }
     }
-    
+
     /**
      * Set reference to main controller for navigation
      */

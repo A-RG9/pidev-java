@@ -1,0 +1,391 @@
+/* ==========================================================================
+   Wellora Health - Dark Mode CSS (Enhanced)
+   Using parent-child selectors that work with JavaFX
+   ========================================================================== */
+
+/* ========== ROOT & BASE ========== */
+.dark-theme {
+    -fx-background-color: #0D1117;
+}
+
+/* ========== HEADER BAR ========== */
+.dark-theme .header-bar {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 0 0 1 0;
+}
+
+.dark-theme .header-bar .app-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .header-bar .user-name {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== SIDEBAR ========== */
+.dark-theme .sidebar {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .sidebar .menu-header {
+    -fx-text-fill: #6E7681;
+}
+
+.dark-theme .sidebar .menu-separator {
+    -fx-background-color: #30363D;
+}
+
+.dark-theme .sidebar .nav-button {
+    -fx-text-fill: #C9D1D9;
+}
+
+.dark-theme .sidebar .nav-button:hover {
+    -fx-text-fill: #58A6FF;
+    -fx-background-color: rgba(88, 166, 255, 0.1);
+}
+
+.dark-theme .sidebar .nav-button.active {
+    -fx-text-fill: #58A6FF;
+    -fx-background-color: rgba(88, 166, 255, 0.15);
+}
+
+.dark-theme .sidebar .nav-button.logout {
+    -fx-text-fill: #F85149;
+}
+
+.dark-theme .sidebar .nav-button.logout:hover {
+    -fx-text-fill: #FF7B72;
+    -fx-background-color: rgba(248, 81, 73, 0.1);
+}
+
+.dark-theme .sidebar .version-label {
+    -fx-text-fill: #6E7681;
+}
+
+/* ========== CONTENT AREA ========== */
+.dark-theme .content-area {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme .main-content {
+    -fx-background-color: transparent;
+}
+
+/* ========== STAT CARDS ========== */
+.dark-theme .stat-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+}
+
+.dark-theme .stat-card:hover {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .stat-card .stat-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-card .stat-value {
+    -fx-text-fill: #F0F6FC;
+}
+
+/* ========== SECTION TITLES ========== */
+.dark-theme .section-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .header-label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .welcome-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .welcome-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== BUTTONS ========== */
+.dark-theme .action-button {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .action-button:hover {
+    -fx-background-color: #2EA043;
+}
+
+.dark-theme .button-primary {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .button-primary:hover {
+    -fx-background-color: #2EA043;
+}
+
+.dark-theme .button-bordered {
+    -fx-background-color: transparent;
+    -fx-text-fill: #58A6FF;
+    -fx-border-color: #58A6FF;
+    -fx-border-width: 1;
+}
+
+.dark-theme .button-bordered:hover {
+    -fx-background-color: rgba(88, 166, 255, 0.15);
+}
+
+.dark-theme .button-secondary {
+    -fx-background-color: #21262D;
+    -fx-text-fill: #C9D1D9;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .button-secondary:hover {
+    -fx-background-color: #30363D;
+}
+
+/* ========== FORMS ========== */
+.dark-theme .form-label {
+    -fx-text-fill: #C9D1D9;
+}
+
+.dark-theme .form-field {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .form-field:focused {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .form-field:hover {
+    -fx-border-color: #8B949E;
+}
+
+/* ========== TABLES ========== */
+.dark-theme .table-view {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+}
+
+.dark-theme .table-view .column-header {
+    -fx-background-color: #21262D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .table-view .column-header-background {
+    -fx-background-color: #21262D;
+}
+
+.dark-theme .table-view .column-header .label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .table-view .table-cell {
+    -fx-text-fill: #C9D1D9;
+}
+
+.dark-theme .table-row-cell:odd {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme .table-row-cell {
+    -fx-background-color: #161B22;
+    -fx-border-color: transparent transparent #21262D transparent;
+}
+
+.dark-theme .table-row-cell:hover {
+    -fx-background-color: #21262D;
+}
+
+.dark-theme .table-row-cell:selected {
+    -fx-background-color: rgba(88, 166, 255, 0.2);
+}
+
+/* ========== CHARTS ========== */
+.dark-theme .chart-container {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+}
+
+.dark-theme .chart-container .chart-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .chart {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme .chart .axis {
+    -fx-tick-label-fill: #8B949E;
+}
+
+.dark-theme .chart .axis-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .chart .chart-plot-background {
+    -fx-background-color: #0D1117;
+}
+
+/* ========== COMBO BOX ========== */
+.dark-theme .combo-box {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .combo-box:hover {
+    -fx-border-color: #8B949E;
+}
+
+.dark-theme .combo-box:focused {
+    -fx-border-color: #58A6FF;
+}
+
+/* ========== SCROLL BAR ========== */
+.dark-theme .scroll-bar .thumb {
+    -fx-background-color: #484F58;
+}
+
+.dark-theme .scroll-bar .thumb:hover {
+    -fx-background-color: #6E7681;
+}
+
+/* ========== PLACEHOLDER ========== */
+.dark-theme .chart-placeholder {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+}
+
+.dark-theme .placeholder-icon {
+    -fx-text-fill: #484F58;
+}
+
+.dark-theme .placeholder-text {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== TEXT FIELD ========== */
+.dark-theme .text-field {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .text-field:focused {
+    -fx-border-color: #58A6FF;
+}
+
+/* ========== DATE PICKER ========== */
+.dark-theme .date-picker {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .date-picker:focused {
+    -fx-border-color: #58A6FF;
+}
+
+/* ========== SEPARATOR ========== */
+.dark-theme .separator {
+    -fx-background-color: #30363D;
+}
+
+/* ========== LABELS ========== */
+.dark-theme .label {
+    -fx-text-fill: #C9D1D9;
+}
+
+/* ========== HBOX/VBOX containers ========== */
+.dark-theme .hbox, 
+.dark-theme .vbox {
+    -fx-background-color: transparent;
+}
+
+/* ========== BorderPane parts ========== */
+.dark-theme BorderPane {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme BorderPane .top {
+    -fx-background-color: #161B22;
+}
+
+.dark-theme BorderPane .left {
+    -fx-background-color: #161B22;
+}
+
+.dark-theme BorderPane .center {
+    -fx-background-color: #0D1117;
+}
+
+/* ========== SCROLL PANE ========== */
+.dark-theme ScrollPane {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme ScrollPane .viewport {
+    -fx-background-color: #0D1117;
+}
+
+/* ========== GRID PANE ========== */
+.dark-theme GridPane {
+    -fx-background-color: transparent;
+}
+
+/* ========== DASHBOARD SPECIFIC ========== */
+.dark-theme .header-label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .section-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-icon {
+    -fx-font-size: 28px;
+}
+
+/* ========== User Card ========== */
+.dark-theme .user-card {
+    -fx-background-color: #21262D;
+}
+
+.dark-theme .user-card .user-name {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .user-card .user-email {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== Logo ========== */
+.dark-theme .logo-container .logo-text {
+    -fx-text-fill: #F0F6FC;
+}
+
+/* ========== App Title in header ========== */
+.dark-theme .app-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+/* ========== Welcome/Page Headers ========== */
+.dark-theme .page-header {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .card-header {
+    -fx-text-fill: #F0F6FC;
+}
