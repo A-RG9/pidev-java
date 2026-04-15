@@ -1,0 +1,32 @@
+/* Sidebar toujours sombre comme sur votre design WellCare */
+/* Sidebar blanche avec une très légère ligne grise pour la séparer du contenu */
+.sidebar { -fx-background-color: #ffffff; -fx-padding: 20; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 0 0; }
+.logo-text { -fx-text-fill: #14b8a6; -fx-font-size: 24px; -fx-font-weight: bold; }
+
+/* Profil Utilisateur (Fond gris très clair, texte foncé) */
+.user-profile { -fx-background-color: #f8fafc; -fx-padding: 10; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;}
+.user-avatar { -fx-background-color: #14b8a6; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 50; }
+.user-name { -fx-text-fill: #0f172a; -fx-font-weight: bold; } /* Texte noir/bleu très foncé */
+.user-email { -fx-text-fill: #64748b; -fx-font-size: 11px; } /* Texte gris */
+
+/* Boutons du menu (Texte gris foncé, Hover gris très clair) */
+.menu-btn { -fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: CENTER_LEFT; -fx-pref-width: 200; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 10 0 10 20; }
+.menu-btn:hover { -fx-text-fill: #14b8a6; -fx-background-color: #f1f5f9; -fx-background-radius: 5;}
+
+/* Bouton Thème */
+.theme-btn { -fx-background-color: transparent; -fx-border-color: #cbd5e1; -fx-border-radius: 5; -fx-text-fill: #475569; -fx-cursor: hand; }
+
+/* Zone de contenu principale claire (gris très léger pour contraster avec la sidebar blanche) */
+.content-area { -fx-background-color: #f3f4f6; }
+.root {
+    /* Couleurs Mode Clair */
+    -bg-main: #f3f4f6;
+    -bg-sidebar: #ffffff;
+    -bg-card: #ffffff;
+    -text-primary: #0f172a;
+    -text-secondary: #64748b;
+    -border-color: #e2e8f0;
+    -accent: #14b8a6;
+    -profile-bg: #f8fafc;
+    -hover-bg: #f1f5f9;
+}

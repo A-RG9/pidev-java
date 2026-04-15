@@ -1,0 +1,66 @@
+/* Globals */
+.root {
+    -fx-base-color: #f8fafc;
+    -fx-background-color: #f8fafc;
+}
+
+/* Sidebar (Blanche avec séparation grise) */
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 1 0 0;
+}
+
+.logo-text {
+    -fx-text-fill: #14b8a6;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Profil Utilisateur (Clair) */
+.user-profile {
+    -fx-background-color: #f1f5f9;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+}
+.user-name { -fx-text-fill: #0f172a; -fx-font-weight: bold; }
+.user-email { -fx-text-fill: #64748b; }
+
+/* Menu Buttons (Mode Clair) */
+.menu-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #475569;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+.menu-btn:hover {
+    -fx-text-fill: #14b8a6;
+    -fx-background-color: #f8fafc;
+}
+
+/* Bibliothèque et Cartes */
+.content-area { -fx-background-color: #f1f5f9; }
+.card-bg {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+
+.text-primary { -fx-text-fill: #1e293b; }
+.text-secondary { -fx-text-fill: #64748b; }
+
+/* Formulaire (Clair) */
+.form-card {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e1;
+    -fx-background-radius: 15;
+}
+.text-field, .combo-box, .text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbd5e1;
+    -fx-text-fill: #0f172a;
+}

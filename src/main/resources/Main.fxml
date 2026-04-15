@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainRoot" styleClass="main-container" prefHeight="750.0" prefWidth="1100.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controllers.MainController">
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="260.0" spacing="15" style="-fx-padding: 25 20;">
+
+            <Label text="♡ WellCare" styleClass="logo-text" style="-fx-padding: 0 0 10 0;"/>
+
+            <HBox styleClass="user-profile" spacing="12" alignment="CENTER_LEFT">
+                <Label text="TT" styleClass="user-avatar" style="-fx-min-width: 36; -fx-min-height: 36; -fx-alignment: center;"/>
+                <VBox alignment="CENTER_LEFT">
+                    <Label text="Test User" styleClass="text-primary" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="test@wellora.com" styleClass="text-secondary" style="-fx-font-size: 11px;"/>
+                </VBox>
+            </HBox>
+
+            <Label text="Fitness" styleClass="text-secondary" style="-fx-font-size: 14px; -fx-padding: 15 0 5 10;"/>
+
+
+            <Button text="Dashboard" onAction="#loadFitnessDashboard" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Goals" onAction="#loadGoals" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Planificateur"  onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="All plans" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Exercise Library" onAction="#loadExerciseLibrary" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Mon Coach" styleClass="menu-btn" maxWidth="Infinity"/>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button fx:id="btnTheme" text="Changer Mode" onAction="#toggleTheme" styleClass="theme-btn" maxWidth="Infinity" style="-fx-margin: 10 0;"/>
+
+            <Button text="Mon Profil" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Déconnexion" styleClass="menu-btn" style="-fx-text-fill: #ef4444;" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea">
+        </StackPane>
+    </center>
+
+</BorderPane>
