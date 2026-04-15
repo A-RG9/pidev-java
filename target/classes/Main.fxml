@@ -24,8 +24,12 @@
 
             <Button text="Dashboard" onAction="#loadFitnessDashboard" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Goals" onAction="#loadGoals" styleClass="menu-btn" maxWidth="Infinity"/>
-            <Button text="Planificateur" onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
-            <Button text="All plans" styleClass="menu-btn" maxWidth="Infinity"/>
+
+            <Button text="All plans" styleClass="menu-btn" onAction="#loadDailyPlanEditor" maxWidth="Infinity"/>
+
+            <Button text="Planificateur" onAction="#loadworkoutplan" styleClass="menu-btn" maxWidth="Infinity"/>
+
+
             <Button text="Exercise Library" onAction="#loadExerciseLibrary" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Mon Coach" styleClass="menu-btn" maxWidth="Infinity"/>
 

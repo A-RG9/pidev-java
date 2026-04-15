@@ -5,70 +5,115 @@
 
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:id="mainStackPane" fx:controller="org.example.controllers.ExerciseLibraryController"
-           prefHeight="800.0" prefWidth="1100.0" styleClass="main-bg">
+           prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #F8FAFC;">
 
     <BorderPane>
         <top>
-            <HBox spacing="20" style="-fx-padding: 20;" alignment="CENTER_LEFT">
-                <VBox>
-                    <Label text="Exercise Library" styleClass="text-header" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
-                    <Label text="Browse exercises with video demonstrations" styleClass="text-secondary" style="-fx-font-size: 12;"/>
-                </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <TextField fx:id="searchField" promptText="Search exercises..." styleClass="text-field" prefWidth="250"/>
-                <ComboBox fx:id="sortComboBox" prefWidth="150" />
-                <Button text="+ Nouvel Exercice" onAction="#openAddForm" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
-            </HBox>
+            <VBox spacing="15" style="-fx-padding: 20 30 20 30; -fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+
+                <!-- Header -->
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <VBox>
+                        <Label text="💪 Exercise Library" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                        <Label text="Browse exercises with video demonstrations" style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="+ Nouvel Exercice" onAction="#openAddForm"
+                            style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25; -fx-cursor: hand; -fx-font-size: 14px;"/>
+                </HBox>
+
+                <!-- Barre de recherche et tri -->
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <TextField fx:id="searchField" promptText="🔍 Search exercises..." HBox.hgrow="ALWAYS"
+                               style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 10 15; -fx-font-size: 13px;"/>
+                    <ComboBox fx:id="sortComboBox" prefWidth="180"
+                              style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8 12;"/>
+                    <Label fx:id="lblResultCount" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                </HBox>
+            </VBox>
         </top>
 
         <left>
-            <VBox spacing="15" prefWidth="220" styleClass="sidebar" style="-fx-padding: 20;">
-                <Label text="Categories" styleClass="text-primary" style="-fx-font-weight: bold;"/>
-                <Button text="All Categories" onAction="#filterAll" styleClass="menu-btn" maxWidth="Infinity"/>
-                <Button text="Strength" onAction="#filterByStrength" styleClass="menu-btn" maxWidth="Infinity"/>
-                <Button text="Cardio" onAction="#filterByCardio" styleClass="menu-btn" maxWidth="Infinity"/>
+            <VBox spacing="15" prefWidth="240" style="-fx-padding: 25 20 25 20; -fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-width: 0 1 0 0;">
 
-                <Separator opacity="0.1" />
+                <Label text="📂 Categories" style="-fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-font-size: 14px;"/>
+                <VBox spacing="8">
+                    <Button text="All Categories" onAction="#filterAll" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <Button text="💪 Strength" onAction="#filterByStrength" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <Button text="🏃 Cardio" onAction="#filterByCardio" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <Button text="🧘 Yoga" onAction="#filterByYoga" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                </VBox>
 
-                <Label text="Difficulty" styleClass="text-primary" style="-fx-font-weight: bold;"/>
-                <CheckBox fx:id="checkBeginner" text="Beginner" styleClass="text-secondary"/>
-                <CheckBox fx:id="checkIntermediate" text="Intermediate" styleClass="text-secondary"/>
-                <CheckBox fx:id="checkAdvanced" text="Advanced" styleClass="text-secondary"/>
+                <Separator style="-fx-background-color: #E2E8F0;"/>
+
+                <Label text="⭐ Difficulty" style="-fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-font-size: 14px;"/>
+                <VBox spacing="8" style="-fx-padding: 5 0 0 10;">
+                    <CheckBox fx:id="checkBeginner" text="🌱 Beginner" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-cursor: hand;"/>
+                    <CheckBox fx:id="checkIntermediate" text="⚡ Intermediate" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-cursor: hand;"/>
+                    <CheckBox fx:id="checkAdvanced" text="🔥 Advanced" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-cursor: hand;"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <Button text="Reset Filters" onAction="#resetFilters"
+                        style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 16; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 12px;"/>
             </VBox>
         </left>
 
         <center>
             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
-                <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" style="-fx-padding: 20;" />
+                <FlowPane fx:id="cardsContainer" hgap="25" vgap="25" style="-fx-padding: 25;" />
             </ScrollPane>
         </center>
     </BorderPane>
 
-    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.7);">
-        <VBox spacing="15" maxWidth="450" styleClass="card-bg" style="-fx-padding: 30; -fx-background-radius: 15;">
+    <!-- Formulaire overlay -->
+    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.8);">
+        <VBox spacing="18" maxWidth="500" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 5);">
 
-            <Label text="Détails de l'exercice" styleClass="text-primary" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+            <Label text="✏️ Détails de l'exercice" style="-fx-font-size: 22px; -fx-text-fill: #1E293B; -fx-font-weight: bold;"/>
+            <Label text="Ajoutez ou modifiez un exercice" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
 
-            <TextField fx:id="txtTitle" promptText="Nom de l'exercice" styleClass="text-field" />
-            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="100" wrapText="true" styleClass="text-area" />
-            <TextField fx:id="txtVideoUrl" promptText="Lien Vidéo (YouTube ou Local)" styleClass="text-field" />
+            <Separator style="-fx-background-color: #E2E8F0;"/>
 
-            <HBox spacing="10">
-                <VBox HBox.hgrow="ALWAYS" spacing="5">
-                    <Label text="Catégorie" styleClass="text-secondary"/>
-                    <ComboBox fx:id="comboCategory" maxWidth="Infinity" styleClass="combo-box" />
+            <TextField fx:id="txtTitle" promptText="Nom de l'exercice *"
+                       style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+
+            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="100" wrapText="true"
+                      style="-fx-background-color: #F8FAFC; -fx-padding: 10; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+
+            <TextField fx:id="txtVideoUrl" promptText="🔗 Lien Vidéo (YouTube ou Local)"
+                       style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+
+            <HBox spacing="15">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Catégorie" style="-fx-text-fill: #475569; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+                    <ComboBox fx:id="comboCategory" maxWidth="Infinity"
+                              style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
                 </VBox>
-                <VBox HBox.hgrow="ALWAYS" spacing="5">
-                    <Label text="Difficulté" styleClass="text-secondary"/>
-                    <ComboBox fx:id="comboDifficulty" maxWidth="Infinity" styleClass="combo-box" />
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Difficulté" style="-fx-text-fill: #475569; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+                    <ComboBox fx:id="comboDifficulty" maxWidth="Infinity"
+                              style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
                 </VBox>
             </HBox>
 
-            <TextField fx:id="txtDuration" promptText="Durée (min)" styleClass="text-field" />
+            <TextField fx:id="txtDuration" promptText="⏱️ Durée (minutes)"
+                       style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+
+            <Label fx:id="lblError" textFill="#EF4444" visible="false" managed="false" style="-fx-font-size: 12px;"/>
+
+            <Separator style="-fx-background-color: #E2E8F0;"/>
 
             <HBox spacing="15" alignment="CENTER_RIGHT">
-                <Button text="Annuler" onAction="#closeForm" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-border-color: #ef4444; -fx-border-radius: 5; -fx-cursor: hand;"/>
-                <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                <Button text="Annuler" onAction="#closeForm"
+                        style="-fx-background-color: transparent; -fx-border-color: #EF4444; -fx-text-fill: #EF4444; -fx-border-radius: 25; -fx-padding: 8 25; -fx-cursor: hand; -fx-font-weight: bold;"/>
+                <Button text="Enregistrer" onAction="#handleSave"
+                        style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25; -fx-cursor: hand; -fx-font-size: 14px;"/>
             </HBox>
         </VBox>
     </VBox>

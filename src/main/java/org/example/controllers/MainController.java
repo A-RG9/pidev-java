@@ -47,42 +47,8 @@ public class MainController {
     @FXML private void loadDailyPlanEditor() { loadPage("/DailyPlanEditor.fxml"); }
     @FXML private void loadFitnessDashboard() { loadPage("/FitnessDashboard.fxml"); }
     @FXML private void loadAllPlans() { loadPage("/AllPlans.fxml"); }
+    @FXML private void loadworkoutplan() { loadPage("/WorkoutPlanner.fxml"); }
 
-<<<<<<< HEAD
-    @FXML
-    private void loadExerciseLibrary() {
-        loadPage("/ExerciseLibrary.fxml");
-    }
-
-    @FXML
-    private void loadGoals() {
-        loadPage("/Dashboard.fxml");
-    }
-
-    @FXML
-    private void loadDailyPlanEditor() {
-        // Cette méthode doit charger le fichier FXML que nous avons créé précédemment
-        loadPage("/DailyPlanEditor.fxml");
-    }
-    @FXML
-    private void loadFitnessDashboard() {
-        // Cette méthode charge la nouvelle page du Dashboard Fitness
-        loadPage("/FitnessDashboard.fxml");
-    }
-
-    @FXML
-    private void loadAllPlans() {
-        // Si vous avez une page spécifique pour la liste de tous les plans
-        loadPage("/AllPlans.fxml");
-    }
-    @FXML
-    private void loadWorkoutPlanner() {
-        // Cette méthode charge la page du calendrier que nous venons de créer
-        loadPage("/WorkoutPlanner.fxml");
-    }
-    // Méthode utilitaire robuste
-=======
->>>>>>> origin/fitness-chahd2
     private void loadPage(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
