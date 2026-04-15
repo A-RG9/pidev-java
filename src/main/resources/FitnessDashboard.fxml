@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #0f172a;" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.FitnessDashboardController">
+    <VBox spacing="25" style="-fx-padding: 30;">
+
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <VBox spacing="5">
+                <Label text="Fitness Dashboard" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label fx:id="lblDateHeader" text="Mercredi, 15 Avril 2026" style="-fx-text-fill: #94a3b8;"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <TextField fx:id="searchDashboard" promptText="Rechercher un objectif..."
+                       style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-prompt-text-fill: #64748b;
+                              -fx-background-radius: 8; -fx-border-color: #334155; -fx-border-radius: 8; -fx-pref-width: 250; -fx-padding: 8;"/>
+
+            <Button text="+ New Goal" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"/>
+        </HBox>
+
+        <HBox spacing="20">
+            <VBox fx:id="statProgress" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="statPlans" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="statMinutes" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="statTimeLeft" HBox.hgrow="ALWAYS" />
+        </HBox>
+
+        <VBox spacing="20" style="-fx-background-color: #334155; -fx-background-radius: 15; -fx-padding: 25; -fx-border-color: #475569; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label fx:id="lblGoalTitle" text="Chargement..." style="-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold;"/>
+                    <Label text="Atteignez vos objectifs de santé grâce à une nutrition équilibrée" style="-fx-text-fill: #cbd5e1; -fx-font-size: 13;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="View All Plans" style="-fx-background-color: rgba(20, 184, 166, 0.1); -fx-text-fill: #14b8a6; -fx-border-color: #14b8a6; -fx-border-radius: 5; -fx-cursor: hand;"/>
+            </HBox>
+
+            <ProgressBar fx:id="progressGoal" progress="0.45" maxWidth="Infinity" prefHeight="12" style="-fx-accent: #14b8a6;"/>
+
+            <HBox spacing="60">
+                <VBox spacing="5">
+                    <Label text="START DATE" style="-fx-text-fill: #94a3b8; -fx-font-size: 10; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblStartDate" text="--" style="-fx-text-fill: white; -fx-font-size: 14;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="END DATE" style="-fx-text-fill: #94a3b8; -fx-font-size: 10; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblEndDate" text="--" style="-fx-text-fill: white; -fx-font-size: 14;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="PLANS" style="-fx-text-fill: #94a3b8; -fx-font-size: 10; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblPlanCount" text="--" style="-fx-text-fill: white; -fx-font-size: 14;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

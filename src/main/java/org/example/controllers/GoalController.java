@@ -24,21 +24,34 @@ public class GoalController {
 
     private IGoalDao goalDao = new GoalDaoImpl();
 
-    @FXML private FlowPane cardsContainer;
-    @FXML private VBox formOverlay;
-    @FXML private Label lblError;
+    @FXML
+    private FlowPane cardsContainer;
+    @FXML
+    private VBox formOverlay;
+    @FXML
+    private Label lblError;
 
     // --- Champs du formulaire ---
-    @FXML private TextField txtTitle;
-    @FXML private TextArea txtDescription;
-    @FXML private ComboBox<String> comboCategory;
-    @FXML private ComboBox<String> comboStatus;
-    @FXML private ComboBox<String> comboDifficulty;
-    @FXML private ComboBox<UserItem> comboPatient;
-    @FXML private ComboBox<UserItem> comboCoach;
-    @FXML private DatePicker dateStart;
-    @FXML private DatePicker dateEnd;
-    @FXML private Slider sliderProgress;
+    @FXML
+    private TextField txtTitle;
+    @FXML
+    private TextArea txtDescription;
+    @FXML
+    private ComboBox<String> comboCategory;
+    @FXML
+    private ComboBox<String> comboStatus;
+    @FXML
+    private ComboBox<String> comboDifficulty;
+    @FXML
+    private ComboBox<UserItem> comboPatient;
+    @FXML
+    private ComboBox<UserItem> comboCoach;
+    @FXML
+    private DatePicker dateStart;
+    @FXML
+    private DatePicker dateEnd;
+    @FXML
+    private Slider sliderProgress;
 
     // Variables pour gérer la modification
     private boolean isEditMode = false;
@@ -68,7 +81,9 @@ public class GoalController {
             while (rs.next()) {
                 users.add(new UserItem(rs.getString("uuid"), rs.getString("email")));
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         comboPatient.setItems(users);
         comboCoach.setItems(users);
@@ -202,8 +217,25 @@ public class GoalController {
     public static class UserItem {
         private String uuid;
         private String email;
-        public UserItem(String uuid, String email) { this.uuid = uuid; this.email = email; }
-        public String getUuid() { return uuid; }
-        @Override public String toString() { return email; }
+
+        public UserItem(String uuid, String email) {
+            this.uuid = uuid;
+            this.email = email;
+        }
+
+        public String getUuid() {
+            return uuid;
+        }
+
+        @Override
+        public String toString() {
+            return email;
+        }
+    }
+
+    private void updateGlobalStats() {
+        List<Goal> goals = goalDao.getAllGoals();
+        long total = goals.size();
+        long completed = goals.stream().filter(g -> "Terminé".equals(g.getStatus())).count();
     }
 }

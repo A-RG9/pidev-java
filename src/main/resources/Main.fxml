@@ -22,8 +22,10 @@
 
             <Label text="Fitness" styleClass="text-secondary" style="-fx-font-size: 14px; -fx-padding: 15 0 5 10;"/>
 
-            <Button text="Dashboard" onAction="#loadGoals" styleClass="menu-btn" maxWidth="Infinity"/>
-            <Button text="Planificateur" styleClass="menu-btn" maxWidth="Infinity"/>
+
+            <Button text="Dashboard" onAction="#loadFitnessDashboard" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Goals" onAction="#loadGoals" styleClass="menu-btn" maxWidth="Infinity"/>
+            <Button text="Planificateur"  onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="All plans" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Exercise Library" onAction="#loadExerciseLibrary" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Mon Coach" styleClass="menu-btn" maxWidth="Infinity"/>

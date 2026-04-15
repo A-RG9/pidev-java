@@ -31,9 +31,9 @@
                 <Separator opacity="0.1" />
 
                 <Label text="Difficulty" styleClass="text-section" style="-fx-font-weight: bold;"/>
-                <CheckBox text="Beginner" styleClass="text-secondary"/>
-                <CheckBox text="Intermediate" styleClass="text-secondary" selected="true"/>
-                <CheckBox text="Advanced" styleClass="text-secondary"/>
+                <CheckBox fx:id="checkBeginner" text="Beginner" styleClass="text-secondary"/>
+                <CheckBox fx:id="checkIntermediate" text="Intermediate" styleClass="text-secondary"/>
+                <CheckBox fx:id="checkAdvanced" text="Advanced" styleClass="text-secondary"/>
             </VBox>
         </left>
 
@@ -44,24 +44,30 @@
         </center>
     </BorderPane>
 
-    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.85);">
-        <VBox spacing="15" maxWidth="500" styleClass="form-card" style="-fx-padding: 30; -fx-background-radius: 15; -fx-border-width: 1;">
-            <Label text="Détails de l'exercice" styleClass="text-header" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.7);">
+        <VBox spacing="15" maxWidth="450" styleClass="card-bg" style="-fx-padding: 30; -fx-background-color: #1e293b; -fx-background-radius: 15;">
+            <Label text="Détails de l'exercice" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <TextField fx:id="txtTitle" promptText="Nom de l'exercice" styleClass="text-field"/>
-            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="80" styleClass="text-area" wrapText="true"/>
-            <TextField fx:id="txtVideoUrl" promptText="URL Vidéo (YouTube)" styleClass="text-field"/>
+            <TextField fx:id="txtTitle" promptText="Nom de l'exercice" />
+            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="100" wrapText="true"/>
+            <TextField fx:id="txtVideoUrl" promptText="Lien Vidéo (YouTube ou Local)" />
 
             <HBox spacing="10">
-                <ComboBox fx:id="comboCategory" promptText="Catégorie" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                <ComboBox fx:id="comboDifficulty" promptText="Difficulté" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <VBox HBox.hgrow="ALWAYS" spacing="5">
+                    <Label text="Catégorie" style="-fx-text-fill: #94a3b8;"/>
+                    <ComboBox fx:id="comboCategory" maxWidth="Infinity" />
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="5">
+                    <Label text="Difficulté" style="-fx-text-fill: #94a3b8;"/>
+                    <ComboBox fx:id="comboDifficulty" maxWidth="Infinity" />
+                </VBox>
             </HBox>
 
-            <TextField fx:id="txtDuration" promptText="Durée (min)" styleClass="text-field"/>
+            <TextField fx:id="txtDuration" promptText="Durée (min)" />
 
-            <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
-                <Button text="Annuler" onAction="#closeForm" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-border-color: #ef4444; -fx-border-radius: 5; -fx-padding: 8 20; -fx-cursor: hand;"/>
-                <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Button text="Annuler" onAction="#closeForm" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-border-color: #ef4444; -fx-border-radius: 5;"/>
+                <Button text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
         </VBox>
     </VBox>

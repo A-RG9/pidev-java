@@ -1,6 +1,7 @@
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\Main.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\GoalController.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\MainController.java
+C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\dao\DailyPlanDAO.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\GoalCardController.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\models\Goal.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\models\Exercise.java
@@ -8,6 +9,9 @@ C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\exa
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\utils\Database.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\ExerciseCardController.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\ExerciseLibraryController.java
+C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\models\DailyPlan.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\Launcher.java
+C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\DailyPlanController.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\dao\GoalDaoImpl.java
 C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\dao\IGoalDao.java
+C:\Users\LENOVO\Downloads\wellora_project\wellora2\wellora\src\main\java\org\example\controllers\FitnessDashboardController.java

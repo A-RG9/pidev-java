@@ -9,28 +9,24 @@ import javafx.scene.layout.StackPane;
 
 public class MainController {
 
-    @FXML private StackPane contentArea; // Pour charger les pages
-    @FXML private Button btnTheme;       // Pour le toggle
+    @FXML private StackPane contentArea;
+    @FXML private Button btnTheme;
 
     private boolean isDarkMode = true;
 
     @FXML
     public void initialize() {
-        loadGoals(); // Charge le dashboard au début
+        loadGoals(); // Charge le dashboard par défaut
     }
 
     @FXML
     private void toggleTheme() {
-        // Sécurité : si le bouton n'est pas encore sur la scène
         if (btnTheme.getScene() == null) return;
 
         Scene scene = btnTheme.getScene();
         scene.getStylesheets().clear();
-
-        // 1. Charger la structure de base
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
-        // 2. Charger le mode
         if (isDarkMode) {
             scene.getStylesheets().add(getClass().getResource("/light.css").toExternalForm());
             btnTheme.setText("Mode Sombre 🌙");
@@ -42,6 +38,8 @@ public class MainController {
         }
     }
 
+    // --- NAVIGATION ---
+
     @FXML
     private void loadExerciseLibrary() {
         loadPage("/ExerciseLibrary.fxml");
@@ -52,14 +50,33 @@ public class MainController {
         loadPage("/Dashboard.fxml");
     }
 
-    // Méthode utilitaire pour éviter de répéter le code
+    @FXML
+    private void loadDailyPlanEditor() {
+        // Cette méthode doit charger le fichier FXML que nous avons créé précédemment
+        loadPage("/DailyPlanEditor.fxml");
+    }
+    @FXML
+    private void loadFitnessDashboard() {
+        // Cette méthode charge la nouvelle page du Dashboard Fitness
+        loadPage("/FitnessDashboard.fxml");
+    }
+
+    @FXML
+    private void loadAllPlans() {
+        // Si vous avez une page spécifique pour la liste de tous les plans
+        loadPage("/AllPlans.fxml");
+    }
+
+    // Méthode utilitaire robuste
     private void loadPage(String fxmlPath) {
         try {
-            Node view = FXMLLoader.load(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Node view = loader.load();
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
-            System.err.println("Erreur de chargement : " + fxmlPath);
+            System.err.println("Erreur de chargement du fichier FXML : " + fxmlPath);
             e.printStackTrace();
         }
     }
+
 }
