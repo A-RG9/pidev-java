@@ -67,11 +67,21 @@ public class FitnessDashboardController {
     }
 
     private void setupStatCard(VBox card, String title, String value, String color) {
-        card.setStyle("-fx-background-color: #1e293b; -fx-background-radius: 12; -fx-padding: 15; -fx-border-color: #334155;");
+        // Applique le fond adaptatif (clair/sombre)
+        if (!card.getStyleClass().contains("card-bg")) {
+            card.getStyleClass().add("card-bg");
+        }
+
+        // Applique la bordure colorée (bleu, vert, rouge, etc.)
+        card.setStyle("-fx-padding: 15; -fx-border-color: " + color + "; -fx-border-width: 1; -fx-border-radius: 10;");
+
         Label lblT = new Label(title);
-        lblT.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 10; -fx-font-weight: bold;");
+        lblT.getStyleClass().add("text-secondary");
+        lblT.setStyle("-fx-font-size: 10; -fx-font-weight: bold;");
+
         Label lblV = new Label(value);
         lblV.setStyle("-fx-text-fill: " + color + "; -fx-font-size: 22; -fx-font-weight: bold;");
+
         card.getChildren().addAll(lblT, lblV);
     }
 }

@@ -12,26 +12,29 @@ public class MainController {
     @FXML private StackPane contentArea;
     @FXML private Button btnTheme;
 
-    private boolean isDarkMode = true;
+    private boolean isDarkMode = true; // Default state
 
     @FXML
     public void initialize() {
-        loadGoals(); // Charge le dashboard par défaut
+        loadFitnessDashboard(); // Charge le dashboard par défaut
     }
 
     @FXML
     private void toggleTheme() {
+        // Obtenir la scène principale
         if (btnTheme.getScene() == null) return;
-
         Scene scene = btnTheme.getScene();
+
+        // Vider tous les styles actuels
         scene.getStylesheets().clear();
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         if (isDarkMode) {
+            // Passer au mode clair
             scene.getStylesheets().add(getClass().getResource("/light.css").toExternalForm());
             btnTheme.setText("Mode Sombre 🌙");
             isDarkMode = false;
         } else {
+            // Passer au mode sombre
             scene.getStylesheets().add(getClass().getResource("/dark.css").toExternalForm());
             btnTheme.setText("Mode Clair ☀️");
             isDarkMode = true;
@@ -39,7 +42,13 @@ public class MainController {
     }
 
     // --- NAVIGATION ---
+    @FXML private void loadExerciseLibrary() { loadPage("/ExerciseLibrary.fxml"); }
+    @FXML private void loadGoals() { loadPage("/Dashboard.fxml"); }
+    @FXML private void loadDailyPlanEditor() { loadPage("/DailyPlanEditor.fxml"); }
+    @FXML private void loadFitnessDashboard() { loadPage("/FitnessDashboard.fxml"); }
+    @FXML private void loadAllPlans() { loadPage("/AllPlans.fxml"); }
 
+<<<<<<< HEAD
     @FXML
     private void loadExerciseLibrary() {
         loadPage("/ExerciseLibrary.fxml");
@@ -72,15 +81,16 @@ public class MainController {
         loadPage("/WorkoutPlanner.fxml");
     }
     // Méthode utilitaire robuste
+=======
+>>>>>>> origin/fitness-chahd2
     private void loadPage(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Node view = loader.load();
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
-            System.err.println("Erreur de chargement du fichier FXML : " + fxmlPath);
+            System.err.println("Erreur chargement: " + fxmlPath);
             e.printStackTrace();
         }
     }
-
 }

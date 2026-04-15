@@ -24,13 +24,8 @@
 
             <Button text="Dashboard" onAction="#loadFitnessDashboard" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Goals" onAction="#loadGoals" styleClass="menu-btn" maxWidth="Infinity"/>
-<<<<<<< HEAD
-            <Button text="All plans"  onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
-            <Button text="Planificateur" styleClass="menu-btn" onAction="#loadWorkoutPlanner" maxWidth="Infinity"/>
-=======
             <Button text="Planificateur" onAction="#loadDailyPlanEditor" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="All plans" styleClass="menu-btn" maxWidth="Infinity"/>
->>>>>>> origin/fitness-chahd2
             <Button text="Exercise Library" onAction="#loadExerciseLibrary" styleClass="menu-btn" maxWidth="Infinity"/>
             <Button text="Mon Coach" styleClass="menu-btn" maxWidth="Infinity"/>
 
