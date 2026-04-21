@@ -421,6 +421,50 @@
     -fx-font-size: 16px;
 }
 
+/* ========== CALENDAR COLORS ========== */
+#calendar-cell {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+}
+
+#today-cell {
+    -fx-background-color: #dbeafe;
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-radius: 8;
+}
+
+#good-cell {
+    -fx-background-color: #dcfce7;
+    -fx-border-color: #22c55e;
+    -fx-background-radius: 8;
+}
+
+#medium-cell {
+    -fx-background-color: #fef3c7;
+    -fx-border-color: #f59e0b;
+    -fx-background-radius: 8;
+}
+
+#bad-cell {
+    -fx-background-color: #fee2e2;
+    -fx-border-color: #ef4444;
+    -fx-background-radius: 8;
+}
+
+.day-number {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+}
+
+.score-indicator {
+    -fx-font-size: 11;
+    -fx-text-fill: #64748b;
+}
+
 .card-title {
     -fx-font-size: 14px;
     -fx-font-weight: bold;

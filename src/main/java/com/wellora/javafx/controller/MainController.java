@@ -21,6 +21,7 @@ public class MainController {
     @FXML private Button btnJournals;
     @FXML private Button btnEntries;
     @FXML private Button btnSymptoms;
+    @FXML private Button btnCalendar;
     @FXML private Button btnTheme;
     @FXML private Button btnLogout;
 
@@ -104,6 +105,15 @@ public class MainController {
     public void showSymptoms() {
         setActiveButton(btnSymptoms);
         loadView("/fxml/symptom-list.fxml");
+    }
+
+    /**
+     * Show Calendar view
+     */
+    @FXML
+    public void showCalendar() {
+        setActiveButton(btnCalendar);
+        loadView("/fxml/calendar.fxml");
     }
 
     /**
@@ -242,6 +252,8 @@ public class MainController {
                 ((HealthentryListController) controller).setMainController(this);
             } else if (controller instanceof SymptomListController) {
                 ((SymptomListController) controller).setMainController(this);
+            } else if (controller instanceof CalendarController) {
+                ((CalendarController) controller).setMainController(this);
             }
 
         } catch (Exception e) {

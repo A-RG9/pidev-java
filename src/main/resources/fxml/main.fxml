@@ -134,6 +134,14 @@
                                 fx:id="btnSymptoms"
                                 visible="false" managed="false"/>
                     </VBox>
+
+                    <!-- Calendar -->
+                    <VBox styleClass="sub-menu">
+                        <Button text="📅  Calendar" 
+                                styleClass="sub-nav-button" 
+                                onAction="#showCalendar"
+                                fx:id="btnCalendar"/>
+                    </VBox>
                 </VBox>
             </VBox>
             

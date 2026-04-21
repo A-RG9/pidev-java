@@ -2,6 +2,7 @@ com\wellora\javafx\controller\HealthjournalController.class
 com\wellora\javafx\controller\HealthentryFormController.class
 com\wellora\javafx\WelloraApp.class
 com\wellora\javafx\controller\HealthjournalListController.class
+com\wellora\javafx\controller\CalendarController.class
 com\wellora\javafx\controller\HealthjournalFormController$1.class
 com\wellora\javafx\controller\SymptomFormController.class
 com\wellora\javafx\controller\HealthjournalFormController.class
