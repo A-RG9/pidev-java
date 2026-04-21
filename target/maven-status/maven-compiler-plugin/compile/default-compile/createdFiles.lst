@@ -2,13 +2,6 @@ com\wellora\javafx\controller\HealthjournalController.class
 com\wellora\javafx\controller\HealthentryFormController.class
 com\wellora\javafx\WelloraApp.class
 com\wellora\javafx\controller\HealthjournalListController.class
-com\wellora\javafx\controller\DashboardController$1.class
-com\wellora\javafx\controller\MainController.class
-com\wellora\javafx\controller\HealthentryListController.class
-com\wellora\javafx\controller\SymptomController.class
-com\wellora\javafx\controller\HomepageController.class
-com\wellora\javafx\controller\SymptomFormController$1.class
-com\wellora\javafx\controller\HealthentryListController$1.class
 com\wellora\javafx\controller\HealthjournalFormController$1.class
 com\wellora\javafx\controller\SymptomFormController.class
 com\wellora\javafx\controller\HealthjournalFormController.class
@@ -16,3 +9,11 @@ com\wellora\javafx\controller\DashboardController.class
 com\wellora\javafx\controller\SymptomListController.class
 com\wellora\javafx\controller\HealthentryFormController$1.class
 com\wellora\javafx\controller\HealthentryController.class
+com\wellora\services\ApiService.class
+com\wellora\javafx\controller\DashboardController$1.class
+com\wellora\javafx\controller\MainController.class
+com\wellora\javafx\controller\HealthentryListController.class
+com\wellora\javafx\controller\SymptomController.class
+com\wellora\javafx\controller\HomepageController.class
+com\wellora\javafx\controller\SymptomFormController$1.class
+com\wellora\javafx\controller\HealthentryListController$1.class

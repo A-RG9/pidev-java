@@ -79,6 +79,51 @@
             <Label fx:id="avgSleepLabel" text="-- h" styleClass="stat-value"/>
         </VBox>
     </HBox>
+    <HBox>
+        <!-- API Insights Section -->
+        <VBox spacing="15" styleClass="insight-card">
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="🧠" styleClass="section-icon"/>
+                <Label text="Insights and Motivation" styleClass="section-title"/>
+            </HBox>
+
+            <!-- Risk Level with background -->
+            <VBox spacing="5" styleClass="risk-box">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="⚠️" styleClass="section-icon"/>
+                    <Label text="Niveau de risque: " styleClass="chart-subtitle"/>
+                    <Label fx:id="riskLabel" text="--" styleClass="risk-level"/>
+                </HBox>
+            </VBox>
+
+            <!-- Quote Card -->
+            <VBox spacing="8" styleClass="quote-card">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="💬" styleClass="card-icon"/>
+                    <Label text="Citation du jour" styleClass="card-title"/>
+                </HBox>
+                <Label fx:id="quoteLabel"
+                       wrapText="true"
+                       styleClass="quote-text"/>
+            </VBox>
+
+            <!-- Advice Card -->
+            <VBox spacing="8" styleClass="advice-card">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="🩺" styleClass="card-icon"/>
+                    <Label text="Conseil personnalisé" styleClass="card-title"/>
+                </HBox>
+                <Label fx:id="apiAdviceLabel"
+                       wrapText="true"
+                       styleClass="advice-text"/>
+            </VBox>
+
+        </VBox>
+    </HBox>
+
+
+
 
     <!-- Charts Section -->
     <GridPane hgap="20" vgap="20">

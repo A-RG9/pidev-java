@@ -394,6 +394,52 @@
     -fx-padding: 0 0 10 0;
 }
 
+.risk-level {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.risk-box {
+    -fx-background-color: #FEF3C7;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+}
+
+.quote-card {
+    -fx-background-color: #EEF2FF;
+    -fx-padding: 15;
+    -fx-background-radius: 10;
+}
+
+.advice-card {
+    -fx-background-color: #ECFDF5;
+    -fx-padding: 15;
+    -fx-background-radius: 10;
+}
+
+.card-icon {
+    -fx-font-size: 16px;
+}
+
+.card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+}
+
+.quote-text {
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-fill: #3730A3;
+    -fx-wrap-length: 320;
+}
+
+.advice-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #065F46;
+    -fx-wrap-length: 320;
+}
+
 .chart {
     -fx-padding: 10;
     -fx-background-color: transparent;
