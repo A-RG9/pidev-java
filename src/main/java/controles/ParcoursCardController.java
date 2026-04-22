@@ -26,7 +26,7 @@ public class ParcoursCardController {
     @FXML private ImageView imageView;
     @FXML private Button btnDelete;
     @FXML private Button btnEdit;
-    @FXML private Button btnView; // New button added here
+    @FXML private Button btnView;
 
     private final ParcoursDeSanteServices ps = new ParcoursDeSanteServices();
 

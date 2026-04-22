@@ -103,8 +103,8 @@
 
                                 <ComboBox fx:id="sortCombo" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6;" />
 
-                                <Button fx:id="btnSortAsc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-cursor: hand;" text="↑" />
-                                <Button fx:id="btnSortDesc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;" text="↓" />
+                                <Button fx:id="btnSortAsc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-cursor: hand;" text= "↓" />
+                                <Button fx:id="btnSortDesc" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;" text="↑" />
 
                                 <Button fx:id="btnAdd" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold; -fx-font-size: 16; -fx-cursor: hand;" text="+" />
                             </children>

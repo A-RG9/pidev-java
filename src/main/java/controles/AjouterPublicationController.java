@@ -12,6 +12,7 @@ import services.PublicationServices;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class AjouterPublicationController {
 
@@ -33,6 +34,19 @@ public class AjouterPublicationController {
 
     @FXML
     public void initialize() {
+
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                if (date != null && !empty && date.isAfter(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #f0f0f0; -fx-text-fill: #b2bec3;");
+                }
+            }
+        });
 
         experienceCombo.getItems().addAll("Bad", "Good", "Excellent");
         typeCombo.getItems().addAll("Review", "Event");
@@ -77,6 +91,13 @@ public class AjouterPublicationController {
 
             if (ambiance < 1 || ambiance > 5 || safety < 1 || safety > 5) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "L'ambiance et la sécurité doivent être entre 1 et 5.");
+                alert.show();
+                return;
+            }
+
+
+            if (datePicker.getValue().isAfter(LocalDate.now())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "La date ne peut pas être dans le futur.");
                 alert.show();
                 return;
             }

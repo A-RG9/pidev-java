@@ -81,4 +81,23 @@ public class CommentaireServices implements ICrud<commentaire_publication> {
         }
         return list;
     }
+    public List<commentaire_publication> afficherParPublication(int publicationId) throws SQLException {
+        List<commentaire_publication> list = new ArrayList<>();
+        String sql = "SELECT * FROM commentaire_publication WHERE publication_parcours_id = ? ORDER BY date_commentaire ASC";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, publicationId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    commentaire_publication c = new commentaire_publication();
+                    c.setId(rs.getInt("id"));
+                    c.setCommentaire(rs.getString("commentaire"));
+                    c.setDate_commentaire(rs.getString("date_commentaire"));
+                    c.setPublication_parcours_id(rs.getInt("publication_parcours_id"));
+                    list.add(c);
+                }
+            }
+        }
+        return list;
+    }
 }
