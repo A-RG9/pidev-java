@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.sothawo.mapjfx.MapView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.AjouterParcoursDeSante">
+<AnchorPane prefHeight="850.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.AjouterParcoursDeSante">
     <children>
-        <ScrollPane fitToWidth="true" layoutX="50.0" layoutY="20.0" prefHeight="660.0" prefWidth="700.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
+        <ScrollPane fitToWidth="true" layoutX="50.0" layoutY="20.0" prefHeight="810.0" prefWidth="700.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
             <content>
                 <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                     <padding>
@@ -17,22 +18,30 @@
                         <TextField fx:id="nomField" prefHeight="40.0" promptText="Enter parcours name (at least 5 letters only)" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
 
                         <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Location" />
-                        <TextField fx:id="locationField" prefHeight="50.0" promptText="Enter address (e.g., 29, Avenue du Ghana...)" style="-fx-background-color: white; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+                        <TextField fx:id="locationField" prefHeight="40.0" promptText="Address will appear here automatically when you click the map" style="-fx-background-color: white; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Pick Location On Map" />
+                        <Label style="-fx-text-fill: #6c757d; -fx-font-size: 12;" text="Click anywhere on the map to set coordinates and location." />
+
+                        <VBox style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-padding: 2;">
+                            <children>
+                                <MapView fx:id="mapView" prefHeight="350.0" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                            </children>
+                        </VBox>
 
                         <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Coordinates" />
-
                         <HBox spacing="20.0">
                             <children>
                                 <VBox HBox.hgrow="ALWAYS">
                                     <children>
                                         <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Latitude" />
-                                        <TextField fx:id="latField" prefHeight="40.0" promptText="e.g. 36.8065" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+                                        <TextField fx:id="latField" prefHeight="40.0" promptText="Auto-filled" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
                                     </children>
                                 </VBox>
                                 <VBox HBox.hgrow="ALWAYS">
                                     <children>
                                         <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Longitude" />
-                                        <TextField fx:id="longField" prefHeight="40.0" promptText="e.g. 10.1815" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+                                        <TextField fx:id="longField" prefHeight="40.0" promptText="Auto-filled" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
                                     </children>
                                 </VBox>
                             </children>
@@ -45,9 +54,9 @@
                         <DatePicker fx:id="datePicker" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="jj/mm/aaaa" />
 
                         <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Parcours Image (JPG or PNG)" />
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5;">
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5;">
                             <children>
-                                <Button fx:id="btnChooseFile" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #212529; -fx-text-fill: white; -fx-background-radius: 4 0 0 4;" text="Choisir un fichier" />
+                                <Button fx:id="btnChooseFile" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: #212529; -fx-text-fill: white; -fx-background-radius: 4 0 0 4; -fx-cursor: hand;" text="Choisir un fichier" />
                                 <Label fx:id="fileLabel" text=" Aucun fichier n'a été sélectionné" textFill="#6c757d">
                                     <padding><Insets left="10.0" /></padding>
                                 </Label>
@@ -56,8 +65,8 @@
 
                         <HBox spacing="15.0">
                             <children>
-                                <Button fx:id="btnSave" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #0d9488; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Save" />
-                                <Button fx:id="btnCancel" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-text-fill: #6c757d; -fx-background-radius: 5;" text="Cancel" />
+                                <Button fx:id="btnSave" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #0d9488; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Save" />
+                                <Button fx:id="btnCancel" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-text-fill: #6c757d; -fx-background-radius: 5; -fx-cursor: hand;" text="Cancel" />
                             </children>
                             <padding><Insets top="10.0" /></padding>
                         </HBox>
