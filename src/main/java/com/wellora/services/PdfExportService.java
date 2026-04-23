@@ -3,17 +3,21 @@ package com.wellora.services;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
+import com.wellora.dao.HealthentryDAO;
 import com.wellora.model.Healthjournal;
 import com.wellora.model.Healthentry;
 import com.wellora.model.Symptom;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PdfExportService {
+
+    private final HealthentryDAO entryDAO = new HealthentryDAO();
 
     public void exportHealthReport(Healthjournal journal, String outputPath)
             throws IOException, DocumentException {
@@ -27,7 +31,14 @@ public class PdfExportService {
         document.open();
 
         try {
-            List<Healthentry> entries = journal.getEntriesByDateRange();
+            // Load entries from database
+            List<Healthentry> entries;
+            try {
+                entries = entryDAO.findByJournalId(journal.getId());
+            } catch (SQLException e) {
+                throw new IOException("Failed to load health entries from database", e);
+            }
+            journal.setEntries(entries);
 
             addTitleSection(document, journal);
             addSummarySection(document, entries);

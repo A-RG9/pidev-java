@@ -78,11 +78,25 @@ public class DashboardController {
     private void exportPdf() {
         if (selectedJournal != null) {
             try {
-                com.wellora.services.PdfExportService exportService = new com.wellora.services.PdfExportService();
-                String outputPath = "health_report_" + selectedJournal.getName().replaceAll("\\s+", "_") + ".pdf";
-                exportService.exportHealthReport(selectedJournal, outputPath);
-                alertMessage.setText("PDF exported successfully to: " + outputPath);
-                alertMessage.setStyle("-fx-text-fill: green;");
+                // Create file chooser for PDF export
+                javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+                fileChooser.setTitle("Export Health Report");
+                fileChooser.getExtensionFilters().add(
+                    new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+                );
+                fileChooser.setInitialFileName("health_report_" +
+                    selectedJournal.getName().replaceAll("\\s+", "_") + ".pdf");
+                
+                // Show save dialog
+                javafx.stage.Stage stage = (javafx.stage.Stage) alertContainer.getScene().getWindow();
+                java.io.File file = fileChooser.showSaveDialog(stage);
+                
+                if (file != null) {
+                    com.wellora.services.PdfExportService exportService = new com.wellora.services.PdfExportService();
+                    exportService.exportHealthReport(selectedJournal, file.getAbsolutePath());
+                    alertMessage.setText("PDF exported successfully to: " + file.getAbsolutePath());
+                    alertMessage.setStyle("-fx-text-fill: green;");
+                }
             } catch (Exception e) {
                 alertMessage.setText("Error exporting PDF: " + e.getMessage());
                 alertMessage.setStyle("-fx-text-fill: red;");
