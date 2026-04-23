@@ -38,7 +38,7 @@
             <Region VBox.vgrow="ALWAYS" prefHeight="10.0"/>
 
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 3);" text="i" />
+                <Button fx:id="btnInfo" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 3);" text="i" />
                 <Button fx:id="btnView" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #4361ee; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 3);" text="👁" />
             </HBox>
         </VBox>

@@ -27,6 +27,7 @@ public class ParcoursCardController {
     @FXML private Button btnDelete;
     @FXML private Button btnEdit;
     @FXML private Button btnView;
+    @FXML private Button btnInfo;
 
     private final ParcoursDeSanteServices ps = new ParcoursDeSanteServices();
 
@@ -100,6 +101,21 @@ public class ParcoursCardController {
                 } catch (IOException e) {
                     System.err.println("Erreur lors de l'ouverture des publications : " + e.getMessage());
                     e.printStackTrace();
+                }
+            });
+        }
+        if (btnInfo != null) {
+            btnInfo.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/DetailsParcours.fxml"));
+                    Parent root = loader.load();
+
+                    DetailsParcoursController controller = loader.getController();
+                    controller.initData(p);
+
+                    btnInfo.getScene().setRoot(root);
+                } catch (IOException e) {
+                    System.err.println("Erreur ouverture details: " + e.getMessage());
                 }
             });
         }
