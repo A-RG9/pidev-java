@@ -24,7 +24,7 @@
       fx:controller="com.wellora.javafx.controller.DashboardController"
       fitToWidth="true"
       styleClass="root">
-    
+     
 <VBox spacing="20" styleClass="root" prefWidth="1200">
 
     <!-- Header -->
@@ -32,98 +32,77 @@
         <Insets top="30" right="30" bottom="20" left="30"/>
     </padding>
     
-    <Label text="📊 Tableau de Bord - Analytiques" styleClass="header-label"/>
-    <Label text="Vue d'ensemble de vos données de santé" styleClass="section-label"/>
-    
+    <HBox spacing="20" alignment="CENTER_LEFT">
+        <Label text="Dashboard - Analytics" styleClass="header-label"/>
+        <Label text="Overview of your health data" styleClass="section-label"/>
+    </HBox>
+
     <!-- Journal Selector -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="📒 Journal: " styleClass="journal-selector-label"/>
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="journal-selector">
+        <Label text="Journal: " styleClass="journal-selector-label"/>
         <ComboBox fx:id="journalComboBox" onAction="#onJournalSelected" prefWidth="250" styleClass="dashboard-combo"/>
-        <Button text="🔄" styleClass="button, button-secondary" onAction="#refreshDashboard"/>
+        <Button text="Refresh" styleClass="button, button-secondary" onAction="#refreshDashboard"/>
+        <Button text="Export PDF" styleClass="button, button-primary" onAction="#exportPdf"/>
     </HBox>
 
     <!-- Summary Cards -->
     <HBox spacing="20" alignment="CENTER">
         <!-- Health Score Card -->
         <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
-            <Label text="💯" styleClass="stat-icon"/>
-            <Label text="Score Santé" styleClass="stat-label"/>
+            <Label text="Score" styleClass="stat-icon"/>
+            <Label text="Health Score" styleClass="stat-label"/>
             <Label fx:id="healthScoreLabel" text="0" styleClass="stat-value"/>
         </VBox>
 
         <!-- Total Entries Card -->
         <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
-            <Label text="🩺" styleClass="stat-icon"/>
-            <Label text="Entrées" styleClass="stat-label"/>
+            <Label text="Entries" styleClass="stat-icon"/>
+            <Label text="Entries" styleClass="stat-label"/>
             <Label fx:id="entryCountLabel" text="0" styleClass="stat-value"/>
         </VBox>
 
         <!-- Total Symptoms Card -->
         <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
-            <Label text="🤒" styleClass="stat-icon"/>
-            <Label text="Symptômes" styleClass="stat-label"/>
+            <Label text="Symptoms" styleClass="stat-icon"/>
+            <Label text="Symptoms" styleClass="stat-label"/>
             <Label fx:id="symptomCountLabel" text="0" styleClass="stat-value"/>
         </VBox>
 
         <!-- Average Weight Card -->
         <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
-            <Label text="⚖️" styleClass="stat-icon"/>
-            <Label text="Poids Moyen" styleClass="stat-label"/>
+            <Label text="Weight" styleClass="stat-icon"/>
+            <Label text="Avg Weight" styleClass="stat-label"/>
             <Label fx:id="avgWeightLabel" text="-- kg" styleClass="stat-value"/>
         </VBox>
 
         <!-- Average Sleep Card -->
         <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
-            <Label text="😴" styleClass="stat-icon"/>
-            <Label text="Sommeil Moyen" styleClass="stat-label"/>
+            <Label text="Sleep" styleClass="stat-icon"/>
+            <Label text="Avg Sleep" styleClass="stat-label"/>
             <Label fx:id="avgSleepLabel" text="-- h" styleClass="stat-value"/>
         </VBox>
     </HBox>
-    <HBox>
-        <!-- API Insights Section -->
-        <VBox spacing="15" styleClass="insight-card">
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="🧠" styleClass="section-icon"/>
-                <Label text="Insights and Motivation" styleClass="section-title"/>
+    <!-- Service Cards - Quote and Risk Level -->
+    <HBox spacing="20" alignment="CENTER" styleClass="service-cards">
+        <!-- Motivational Quote Card -->
+        <VBox spacing="10" styleClass="service-card" prefWidth="400">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="💡" styleClass="service-icon"/>
+                <Label text="Daily Motivation" styleClass="service-title"/>
             </HBox>
+            <Label fx:id="quoteLabel" text="Stay healthy and keep tracking your wellness journey!" styleClass="service-content" wrapText="true"/>
+        </VBox>
 
-            <!-- Risk Level with background -->
-            <VBox spacing="5" styleClass="risk-box">
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="⚠️" styleClass="section-icon"/>
-                    <Label text="Niveau de risque: " styleClass="chart-subtitle"/>
-                    <Label fx:id="riskLabel" text="--" styleClass="risk-level"/>
-                </HBox>
-            </VBox>
-
-            <!-- Quote Card -->
-            <VBox spacing="8" styleClass="quote-card">
-                <HBox spacing="8" alignment="CENTER_LEFT">
-                    <Label text="💬" styleClass="card-icon"/>
-                    <Label text="Citation du jour" styleClass="card-title"/>
-                </HBox>
-                <Label fx:id="quoteLabel"
-                       wrapText="true"
-                       styleClass="quote-text"/>
-            </VBox>
-
-            <!-- Advice Card -->
-            <VBox spacing="8" styleClass="advice-card">
-                <HBox spacing="8" alignment="CENTER_LEFT">
-                    <Label text="🩺" styleClass="card-icon"/>
-                    <Label text="Conseil personnalisé" styleClass="card-title"/>
-                </HBox>
-                <Label fx:id="apiAdviceLabel"
-                       wrapText="true"
-                       styleClass="advice-text"/>
-            </VBox>
-
+        <!-- Risk Level Card -->
+        <VBox spacing="10" styleClass="service-card" prefWidth="400">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="⚠️" styleClass="service-icon"/>
+                <Label text="Risk Assessment" styleClass="service-title"/>
+            </HBox>
+            <Label fx:id="riskLabel" text="Risk Level: Low" styleClass="service-content" wrapText="true"/>
         </VBox>
     </HBox>
-
-
-
 
     <!-- Charts Section -->
     <GridPane hgap="20" vgap="20">
@@ -139,16 +118,16 @@
         <!-- Sleep Trend Line Chart -->
         <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5" styleClass="chart-container">
             <HBox spacing="8" alignment="CENTER_LEFT">
-                <Label text="😴" styleClass="chart-icon"/>
-                <Label text="Évolution du Sommeil" styleClass="chart-title"/>
+                <Label text="Sleep" styleClass="chart-icon"/>
+                <Label text="Sleep Trend" styleClass="chart-title"/>
             </HBox>
-            <Label text="Heures de sommeil par jour" styleClass="chart-subtitle"/>
+            <Label text="Sleep hours per day" styleClass="chart-subtitle"/>
             <LineChart fx:id="sleepLineChart" styleClass="chart">
                 <xAxis>
                     <CategoryAxis label="Date" styleClass="axis-label"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Heures" styleClass="axis-label"/>
+                    <NumberAxis label="Hours" styleClass="axis-label"/>
                 </yAxis>
             </LineChart>
         </VBox>
@@ -156,10 +135,10 @@
         <!-- Weight Trend Line Chart -->
         <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5" styleClass="chart-container">
             <HBox spacing="8" alignment="CENTER_LEFT">
-                <Label text="⚖️" styleClass="chart-icon"/>
-                <Label text="Évolution du Poids" styleClass="chart-title"/>
+                <Label text="Weight" styleClass="chart-icon"/>
+                <Label text="Weight Trend" styleClass="chart-title"/>
             </HBox>
-            <Label text="Poids en kilogrammes" styleClass="chart-subtitle"/>
+            <Label text="Weight in kilograms" styleClass="chart-subtitle"/>
             <LineChart fx:id="weightLineChart" styleClass="chart">
                 <xAxis>
                     <CategoryAxis label="Date" styleClass="axis-label"/>
@@ -173,10 +152,10 @@
         <!-- Glycemia Trend Line Chart -->
         <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5" styleClass="chart-container">
             <HBox spacing="8" alignment="CENTER_LEFT">
-                <Label text="🩸" styleClass="chart-icon"/>
-                <Label text="Évolution de la Glycémie" styleClass="chart-title"/>
+                <Label text="Glycemia" styleClass="chart-icon"/>
+                <Label text="Glycemia Trend" styleClass="chart-title"/>
             </HBox>
-            <Label text="Niveau de glycémie en g/L" styleClass="chart-subtitle"/>
+            <Label text="Blood sugar level in g/L" styleClass="chart-subtitle"/>
             <LineChart fx:id="glycemiaLineChart" styleClass="chart">
                 <xAxis>
                     <CategoryAxis label="Date" styleClass="axis-label"/>
@@ -190,28 +169,30 @@
         <!-- Symptoms Distribution Pie Chart -->
         <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5" styleClass="chart-container">
             <HBox spacing="8" alignment="CENTER_LEFT">
-                <Label text="🤒" styleClass="chart-icon"/>
-                <Label text="Distribution des Symptômes" styleClass="chart-title"/>
+                <Label text="Symptoms" styleClass="chart-icon"/>
+                <Label text="Symptoms Distribution" styleClass="chart-title"/>
             </HBox>
-            <Label text="Répartition par type de symptôme" styleClass="chart-subtitle"/>
+            <Label text="Distribution by symptom type" styleClass="chart-subtitle"/>
             <PieChart fx:id="symptomPieChart" styleClass="pie-chart"/>
         </VBox>
     </GridPane>
 
+    <!-- Alerts and Recommendations -->
     <VBox fx:id="alertContainer"
           visible="false"
           spacing="10"
           styleClass="alert-card">
 
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="⚠️" styleClass="alert-icon"/>
-            <Label fx:id="alertTitle" text="Alerte" styleClass="alert-title"/>
+            <Label text="Alert" styleClass="alert-icon"/>
+            <Label fx:id="alertTitle" text="Alert" styleClass="alert-title"/>
         </HBox>
 
         <Label fx:id="alertMessage"
                wrapText="true"
                styleClass="alert-message"/>
     </VBox>
+
     <!-- Recommendations Section -->
     <VBox fx:id="recommendationsContainer"
           visible="false"
@@ -220,28 +201,29 @@
 
         <!-- Header -->
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="💡" styleClass="section-icon"/>
-            <Label text="Recommandations"
+            <Label text="Tips" styleClass="section-icon"/>
+            <Label text="Recommendations"
                    styleClass="section-title"/>
         </HBox>
 
         <!-- Subtitle -->
-        <Label text="Conseils personnalisés basés sur vos données de santé"
+        <Label text="Personalized tips based on your health data"
                styleClass="section-subtitle"
                wrapText="true"/>
 
         <!-- Content list -->
         <VBox fx:id="recommendationsList"
               spacing="10"
-              styleClass="recommendations-list"/>
+              styleClass="recommendations-list">
+        </VBox>
     </VBox>
 
     <!-- Refresh Button -->
     <HBox spacing="15" alignment="CENTER">
-        <Button text="🔄 Actualiser les Données" 
+        <Button text="Refresh Data" 
                 styleClass="button, button-success"
                 onAction="#refreshDashboard"/>
-        <Button text="← Retour au Menu Principal" 
+        <Button text="Back to Menu" 
                 styleClass="button, button-secondary"
                 onAction="#goBackToMain"/>
     </HBox>

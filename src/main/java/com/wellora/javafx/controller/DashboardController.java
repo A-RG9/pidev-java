@@ -12,10 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.util.StringConverter;
 
 import com.wellora.model.Healthjournal;
+import com.wellora.model.Healthentry;
 import com.wellora.dao.HealthjournalDAO;
 import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.SymptomDAO;
-import com.wellora.services.ApiService; // 🔥 NEW
+import com.wellora.model.Symptom;
+import com.wellora.services.ApiService;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -29,10 +31,10 @@ public class DashboardController {
     @FXML private ComboBox<Healthjournal> journalComboBox;
     @FXML private Label healthScoreLabel;
     @FXML private Label quoteLabel;
-    @FXML private Label apiAdviceLabel;
-    @FXML private Label riskLabel;             // 🔥 NEW - risk indicator
+    @FXML private Label riskLabel;
 
     @FXML private VBox alertContainer;
+    @FXML private Label alertTitle;
     @FXML private Label alertMessage;
 
     @FXML private VBox recommendationsContainer;
@@ -52,61 +54,57 @@ public class DashboardController {
     private final HealthentryDAO entryDAO = new HealthentryDAO();
     private final SymptomDAO symptomDAO = new SymptomDAO();
 
-    private final ApiService apiService = new ApiService(); // 🔥 NEW
-
     private Healthjournal selectedJournal;
-    private int currentHealthScore = 0; // 🔥 IMPORTANT
-
-    // =========================
-    // 🚀 SET MAIN CONTROLLER
-    // =========================
+    private final ApiService apiService = new ApiService();
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
-    // =========================
-    // 🚀 INITIALIZE
-    // =========================
     @FXML
     public void initialize() {
         loadJournalSelector();
         refreshDashboardData();
     }
 
-    // =========================
-    // 🔄 REFRESH (FXML)
-    // =========================
     @FXML
     public void refreshDashboard() {
         refreshDashboardData();
     }
 
+
+
     @FXML
-    private void goBackToMain() {
-        if (mainController != null) {
-            mainController.showHomepage();
+    private void exportPdf() {
+        if (selectedJournal != null) {
+            try {
+                com.wellora.services.PdfExportService exportService = new com.wellora.services.PdfExportService();
+                String outputPath = "health_report_" + selectedJournal.getName().replaceAll("\\s+", "_") + ".pdf";
+                exportService.exportHealthReport(selectedJournal, outputPath);
+                alertMessage.setText("PDF exported successfully to: " + outputPath);
+                alertMessage.setStyle("-fx-text-fill: green;");
+            } catch (Exception e) {
+                alertMessage.setText("Error exporting PDF: " + e.getMessage());
+                alertMessage.setStyle("-fx-text-fill: red;");
+                e.printStackTrace();
+            }
+        } else {
+            alertMessage.setText("Please select a journal first.");
+            alertMessage.setStyle("-fx-text-fill: orange;");
         }
     }
 
-    // =========================
-    // 🔄 MAIN REFRESH
-    // =========================
     public void refreshDashboardData() {
         try {
             loadStatistics();
             loadCharts();
             loadAlertsAndRecommendations();
-            loadApiData(); // 🔥 NEW
-
+            loadApiData();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // =========================
-    // 📊 STATISTICS + SCORE
-    // =========================
     private void loadStatistics() {
         try {
             int entryCount;
@@ -119,276 +117,318 @@ public class DashboardController {
                 symptomCount = symptomDAO.getCountByJournal(selectedJournal.getId());
                 avgWeight = entryDAO.getAverageWeightByJournal(selectedJournal.getId());
                 avgSleep = entryDAO.getAverageSleepByJournal(selectedJournal.getId());
-                currentHealthScore = (int) calculateHealthScore(selectedJournal.getId(), symptomCount);
             } else {
-                entryCount = entryDAO.getCount();
+                entryCount = entryDAO.getTotalCount();
                 symptomCount = symptomDAO.getCount();
-                avgWeight = entryDAO.getAverageWeight();
-                avgSleep = entryDAO.getAverageSleep();
-                currentHealthScore = (int) calculateHealthScore(0, symptomCount);
+                avgWeight = entryDAO.getOverallAverageWeight();
+                avgSleep = entryDAO.getOverallAverageSleep();
             }
 
-            healthScoreLabel.setText(String.valueOf(currentHealthScore));
-
-            // Color-code health score
-            if (currentHealthScore < 40) {
-                healthScoreLabel.setStyle("-fx-text-fill: #e74c3c;");
-            } else if (currentHealthScore < 70) {
-                healthScoreLabel.setStyle("-fx-text-fill: #f39c12;");
-            } else {
-                healthScoreLabel.setStyle("-fx-text-fill: #27ae60;");
-            }
             entryCountLabel.setText(String.valueOf(entryCount));
             symptomCountLabel.setText(String.valueOf(symptomCount));
             avgWeightLabel.setText(String.format("%.1f kg", avgWeight));
             avgSleepLabel.setText(String.format("%.1f h", avgSleep));
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // =========================
-    // 🌐 API INTEGRATION
-    // =========================
-    private void loadApiData() {
+    private void loadCharts() {
         try {
-            String quote = apiService.getQuote();
-            String advice = apiService.getHealthAdvice(currentHealthScore);
-            String riskLevel = apiService.getRiskLevel(currentHealthScore);
-            String riskDesc = apiService.getRiskDescription(currentHealthScore);
-
-            quoteLabel.setText(quote);
-            apiAdviceLabel.setText(advice);
-            riskLabel.setText(riskLevel);
-
-            // Set risk color based on level
-            if ("HIGH".equals(riskLevel)) {
-                riskLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;");
-            } else if ("MODERATE".equals(riskLevel)) {
-                riskLabel.setStyle("-fx-text-fill: #f39c12; -fx-font-weight: bold;");
-            } else if ("LOW".equals(riskLevel)) {
-                riskLabel.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+            if (selectedJournal != null) {
+                loadSleepChart(selectedJournal.getId());
+                loadWeightChart(selectedJournal.getId());
+                loadGlycemiaChart(selectedJournal.getId());
+                loadSymptomChart(selectedJournal.getId());
             } else {
-                riskLabel.setStyle("-fx-text-fill: #2ecc71; -fx-font-weight: bold;");
+                loadSleepChart(null);
+                loadWeightChart(null);
+                loadGlycemiaChart(null);
+                loadSymptomChart(null);
             }
-
-        } catch (Exception e) {
-            quoteLabel.setText("Restez positif et prenez soin de vous!");
-            apiAdviceLabel.setText("Maintenez un style de vie sain.");
-            riskLabel.setText("N/A");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    // =========================
-    // ⚠️ ALERTS + RECOMMENDATIONS
-    // =========================
+    private void loadSleepChart(Integer journalId) throws SQLException {
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Sleep Hours");
+        
+        List<Healthentry> entries = (journalId != null) 
+            ? entryDAO.findByJournalId(journalId) 
+            : entryDAO.findAll();
+        
+        // Sort by date and take last 30 entries
+        entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
+        int start = Math.max(0, entries.size() - 30);
+        
+        for (int i = start; i < entries.size(); i++) {
+            Healthentry entry = entries.get(i);
+            String dateStr = entry.getDate().format(DateTimeFormatter.ofPattern("MM-dd"));
+            series.getData().add(new XYChart.Data<>(dateStr, entry.getSommeil()));
+        }
+        
+        sleepLineChart.getData().clear();
+        sleepLineChart.getData().add(series);
+    }
+
+    private void loadWeightChart(Integer journalId) throws SQLException {
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Weight (kg)");
+        
+        List<Healthentry> entries = (journalId != null) 
+            ? entryDAO.findByJournalId(journalId) 
+            : entryDAO.findAll();
+        
+        entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
+        int start = Math.max(0, entries.size() - 30);
+        
+        for (int i = start; i < entries.size(); i++) {
+            Healthentry entry = entries.get(i);
+            String dateStr = entry.getDate().format(DateTimeFormatter.ofPattern("MM-dd"));
+            series.getData().add(new XYChart.Data<>(dateStr, entry.getPoids()));
+        }
+        
+        weightLineChart.getData().clear();
+        weightLineChart.getData().add(series);
+    }
+
+    private void loadGlycemiaChart(Integer journalId) throws SQLException {
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Glycemia (g/L)");
+        
+        List<Healthentry> entries = (journalId != null) 
+            ? entryDAO.findByJournalId(journalId) 
+            : entryDAO.findAll();
+        
+        entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
+        int start = Math.max(0, entries.size() - 30);
+        
+        for (int i = start; i < entries.size(); i++) {
+            Healthentry entry = entries.get(i);
+            String dateStr = entry.getDate().format(DateTimeFormatter.ofPattern("MM-dd"));
+            series.getData().add(new XYChart.Data<>(dateStr, entry.getGlycemie()));
+        }
+        
+        glycemiaLineChart.getData().clear();
+        glycemiaLineChart.getData().add(series);
+    }
+
+    private void loadSymptomChart(Integer journalId) throws SQLException {
+        symptomPieChart.getData().clear();
+        
+        List<Object[]> counts = (journalId != null)
+            ? symptomDAO.getCountByTypeByJournal(journalId)
+            : symptomDAO.getCountByType();
+        
+        for (Object[] item : counts) {
+            String type = (String) item[0];
+            Long count = (Long) item[1];
+            PieChart.Data slice = new PieChart.Data(type, count.doubleValue());
+            symptomPieChart.getData().add(slice);
+        }
+    }
+
     private void loadAlertsAndRecommendations() {
         try {
-            int symptomCount = (selectedJournal != null)
-                    ? symptomDAO.getCountByJournal(selectedJournal.getId())
-                    : symptomDAO.getCount();
-
-            if (symptomCount > 2) {
+            List<Healthentry> recentEntries = entryDAO.findAll();
+            recentEntries.sort((a, b) -> b.getDate().compareTo(a.getDate()));
+            
+            boolean hasAlerts = false;
+            StringBuilder alerts = new StringBuilder();
+            
+            for (int i = 0; i < Math.min(5, recentEntries.size()); i++) {
+                Healthentry entry = recentEntries.get(i);
+                
+                if (entry.getGlycemie() > 1.2) {
+                    hasAlerts = true;
+                    alerts.append("High blood sugar: ").append(String.format("%.2f", entry.getGlycemie())).append(" g/L on ").append(entry.getDate()).append("\n");
+                }
+                if (entry.getPoids() > 100) {
+                    hasAlerts = true;
+                    alerts.append("High weight: ").append(String.format("%.1f", entry.getPoids())).append(" kg on ").append(entry.getDate()).append("\n");
+                }
+                if (entry.getSommeil() < 5) {
+                    hasAlerts = true;
+                    alerts.append("Low sleep: ").append(entry.getSommeil()).append("h on ").append(entry.getDate()).append("\n");
+                }
+            }
+            
+            if (hasAlerts) {
                 alertContainer.setVisible(true);
-                alertMessage.setText("Plusieurs symptômes détectés !");
+                alertTitle.setText("Health Alerts");
+                alertMessage.setText(alerts.toString());
+                alertMessage.setStyle("-fx-text-fill: #d32f2f;");
             } else {
                 alertContainer.setVisible(false);
             }
-
-            recommendationsList.getChildren().clear();
-
-            if (currentHealthScore < 50) {
-                addRecommendation("Reposez-vous davantage");
-                addRecommendation("Hydratez-vous");
-            } else {
-                addRecommendation("Continuez vos bonnes habitudes");
-            }
-
+            
+            // Recommendations
             recommendationsContainer.setVisible(true);
-
-        } catch (Exception e) {
+            recommendationsList.getChildren().clear();
+            
+            if (recentEntries.size() > 0) {
+                Healthentry latest = recentEntries.get(0);
+                
+                if (latest.getSommeil() < 7) {
+                    addRecommendation("Try to get at least 7-8 hours of sleep for better health.");
+                }
+                if (latest.getPoids() > 85) {
+                    addRecommendation("Consider a balanced diet and regular exercise to maintain a healthy weight.");
+                }
+                if (latest.getGlycemie() > 1.0) {
+                    addRecommendation("Monitor your blood sugar levels and reduce sugar intake.");
+                }
+                
+                List<Symptom> recentSymptoms = symptomDAO.findByEntryId(latest.getId());
+                if (!recentSymptoms.isEmpty()) {
+                    addRecommendation("You have reported symptoms recently. Consider consulting a healthcare provider if they persist.");
+                }
+            }
+            
+            if (recommendationsList.getChildren().isEmpty()) {
+                addRecommendation("Keep up the good work! Your health metrics look good.");
+            }
+            
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void addRecommendation(String text) {
-        Label label = new Label("• " + text);
-        label.setStyle("-fx-font-size: 13px;");
-        recommendationsList.getChildren().add(label);
+        Label recLabel = new Label("• " + text);
+        recLabel.setWrapText(true);
+        recLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-size: 13px;");
+        recommendationsList.getChildren().add(recLabel);
     }
 
-    // =========================
-    // 📊 CHARTS
-    // =========================
-    private void loadCharts() {
-        loadSleepTrendChart();
-        loadSymptomPieChart();
-        loadWeightTrendChart();
-        loadGlycemiaTrendChart();
-    }
-
-    private void loadSleepTrendChart() {
-        sleepLineChart.getData().clear();
+    private void loadApiData() {
         try {
-            List<double[]> data = (selectedJournal != null)
-                    ? entryDAO.getSleepTrendByJournal(30, selectedJournal.getId())
-                    : entryDAO.getSleepTrend(30);
-
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-
-            for (double[] row : data) {
-                LocalDate date = LocalDate.ofEpochDay((long) row[0]);
-                series.getData().add(new XYChart.Data<>(date.format(formatter), row[1]));
+            // Calculate health score for the selected journal or overall
+            int healthScore = calculateHealthScore();
+            healthScoreLabel.setText(String.valueOf(healthScore));
+            
+            // Get motivational quote from API
+            String quote = apiService.getQuote();
+            if (quote != null && !quote.isEmpty()) {
+                quoteLabel.setText(quote);
+            } else {
+                quoteLabel.setText("Stay healthy and keep tracking your wellness journey!");
             }
-
-            sleepLineChart.getData().add(series);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            
+            // Get risk assessment based on calculated score
+            String risk = apiService.getRiskAssessment(healthScore);
+            if (risk != null && !risk.isEmpty()) {
+                riskLabel.setText(risk);
+            } else {
+                riskLabel.setText("Risk Level: Low");
+            }
+        } catch (Exception e) {
+            quoteLabel.setText("Stay healthy and keep tracking your wellness journey!");
+            riskLabel.setText("Risk Level: Low");
         }
     }
 
-    private void loadSymptomPieChart() {
-        symptomPieChart.getData().clear();
+    private int calculateHealthScore() {
         try {
-            List<Object[]> data = (selectedJournal != null)
-                    ? symptomDAO.getCountByTypeByJournal(selectedJournal.getId())
-                    : symptomDAO.getCountByType();
-
-            for (Object[] row : data) {
-                symptomPieChart.getData().add(
-                        new PieChart.Data((String) row[0], (Long) row[1])
-                );
+            List<Healthentry> entries;
+            if (selectedJournal != null) {
+                entries = entryDAO.findByJournalId(selectedJournal.getId());
+            } else {
+                entries = entryDAO.findAll();
             }
+            
+            if (entries == null || entries.isEmpty()) {
+                return 0;
+            }
+            
+            // Calculate average score across all entries
+            double totalScore = 0;
+            int count = 0;
+            
+            for (Healthentry entry : entries) {
+                int score = 100;
+                
+                // Weight penalty (same as CalendarController)
+                if (entry.getPoids() > 0) {
+                    if (entry.getPoids() < 40 || entry.getPoids() > 120) {
+                        score -= 20;
+                    } else if (entry.getPoids() < 50 || entry.getPoids() > 100) {
+                        score -= 10;
+                    }
+                }
+                
+                // Sleep penalty
+                if (entry.getSommeil() > 0) {
+                    if (entry.getSommeil() < 5 || entry.getSommeil() > 10) {
+                        score -= 15;
+                    } else if (entry.getSommeil() < 6 || entry.getSommeil() > 9) {
+                        score -= 10;
+                    }
+                }
+                
+                // Glycemia penalty
+                if (entry.getGlycemie() > 0) {
+                    if (entry.getGlycemie() > 1.4) {
+                        score -= 15;
+                    } else if (entry.getGlycemie() > 1.1) {
+                        score -= 10;
+                    }
+                }
+                
+                totalScore += Math.max(0, Math.min(100, score));
+                count++;
+            }
+            
+            return (int) Math.round(totalScore / count);
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 
-    private void loadWeightTrendChart() {
-        weightLineChart.getData().clear();
-        try {
-            List<double[]> data = (selectedJournal != null)
-                    ? entryDAO.getWeightTrendByJournal(30, selectedJournal.getId())
-                    : entryDAO.getWeightTrend(30);
-
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-
-            for (double[] row : data) {
-                LocalDate date = LocalDate.ofEpochDay((long) row[0]);
-                series.getData().add(new XYChart.Data<>(date.format(formatter), row[1]));
-            }
-
-            weightLineChart.getData().add(series);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void loadGlycemiaTrendChart() {
-        glycemiaLineChart.getData().clear();
-        try {
-            List<double[]> data = (selectedJournal != null)
-                    ? entryDAO.getGlycemiaTrendByJournal(30, selectedJournal.getId())
-                    : entryDAO.getGlycemiaTrend(30);
-
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-
-            for (double[] row : data) {
-                LocalDate date = LocalDate.ofEpochDay((long) row[0]);
-                series.getData().add(new XYChart.Data<>(date.format(formatter), row[1]));
-            }
-
-            glycemiaLineChart.getData().add(series);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // =========================
-    // 🧠 SCORE CALCULATION
-    // =========================
-    private double calculateHealthScore(int journalId, int symptomCount) {
-        double score = 100;
-
-        // Factor 1: Symptom count (max 30 points)
-        score -= Math.min(symptomCount * 5, 30);
-
-        // Factor 2: Weight evaluation (max 20 points)
-        try {
-            double avgWeight = (selectedJournal != null)
-                    ? entryDAO.getAverageWeightByJournal(selectedJournal.getId())
-                    : entryDAO.getAverageWeight();
-            if (avgWeight > 0) {
-                // Consider healthy weight range: 18.5-25 BMI equivalent
-                if (avgWeight < 40 || avgWeight > 120) score -= 20; // Abnormal weight
-                else if (avgWeight < 50 || avgWeight > 100) score -= 10; // Slightly off
-            }
-        } catch (Exception e) { /* ignore */ }
-
-        // Factor 3: Sleep evaluation (max 15 points)
-        try {
-            double avgSleep = (selectedJournal != null)
-                    ? entryDAO.getAverageSleepByJournal(selectedJournal.getId())
-                    : entryDAO.getAverageSleep();
-            if (avgSleep > 0) {
-                if (avgSleep < 5 || avgSleep > 10) score -= 15; // Too little or too much
-                else if (avgSleep < 6 || avgSleep > 9) score -= 10; // Insufficient
-            }
-        } catch (Exception e) { /* ignore */ }
-
-        // Factor 4: Glycemia evaluation (max 15 points)
-        try {
-            double avgGlycemia = (selectedJournal != null)
-                    ? entryDAO.getAverageGlycemiaByJournal(selectedJournal.getId())
-                    : entryDAO.getAverageGlycemia();
-            if (avgGlycemia > 0) {
-                if (avgGlycemia > 1.4) score -= 15; // High glycemia
-                else if (avgGlycemia > 1.1) score -= 10; // Pre-diabetic range
-            }
-        } catch (Exception e) { /* ignore */ }
-
-        return Math.max(0, Math.min(100, score));
-    }
-
-    // =========================
-    // 📋 JOURNAL SELECTOR
-    // =========================
     private void loadJournalSelector() {
         try {
-            List<Healthjournal> journals = journalDAO.findAll();
-            ObservableList<Healthjournal> items = FXCollections.observableArrayList(journals);
-
-            journalComboBox.setItems(items);
-
-            journalComboBox.setConverter(new StringConverter<>() {
+            ObservableList<Healthjournal> journals = FXCollections.observableArrayList(journalDAO.findAll());
+            journalComboBox.setItems(journals);
+            journalComboBox.setConverter(new StringConverter<Healthjournal>() {
                 @Override
-                public String toString(Healthjournal j) {
-                    return j != null ? j.getName() : "";
+                public String toString(Healthjournal journal) {
+                    return journal != null ? journal.getName() : "";
                 }
 
                 @Override
-                public Healthjournal fromString(String s) {
+                public Healthjournal fromString(String string) {
                     return null;
                 }
             });
 
             if (!journals.isEmpty()) {
                 journalComboBox.getSelectionModel().selectFirst();
-                selectedJournal = journals.get(0);
+                selectedJournal = journalComboBox.getSelectionModel().getSelectedItem();
             }
 
-        } catch (Exception e) {
+            journalComboBox.setOnAction(event -> {
+                selectedJournal = journalComboBox.getSelectionModel().getSelectedItem();
+                refreshDashboardData();
+            });
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
     private void onJournalSelected() {
-        selectedJournal = journalComboBox.getSelectionModel().getSelectedItem();
         refreshDashboardData();
+    }
+
+    @FXML
+    private void goBackToMain() {
+        if (mainController != null) {
+            mainController.showHomepage();
+        }
     }
 }

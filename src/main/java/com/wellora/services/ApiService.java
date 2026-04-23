@@ -61,6 +61,28 @@ public class ApiService {
         }
     }
 
+    // 🔹 General health advice (no score needed)
+    public String getHealthAdvice() {
+        return getHealthAdvice(75); // Default to good score
+    }
+
+    // 🔹 Risk assessment summary (with score)
+    public String getRiskAssessment(int score) {
+        String level = getRiskLevel(score);
+        String description = getRiskDescription(score);
+        return "Risk Level: " + level + " - " + description;
+    }
+
+    // 🔹 Risk assessment summary (default)
+    public String getRiskAssessment() {
+        return getRiskAssessment(75); // Default to good score
+    }
+
+    // 🔹 General advice/quote
+    public String getAdvice() {
+        return getQuote();
+    }
+
     // =========================
     // 🔧 PRIVATE HELPERS
     // =========================

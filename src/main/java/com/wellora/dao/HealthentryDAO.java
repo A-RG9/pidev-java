@@ -80,6 +80,45 @@ public class HealthentryDAO {
     }
 
     // ----------------------------------------------------------------
+    // getTotalCount — total number of entries
+    // ----------------------------------------------------------------
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM healthentry";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        }
+        return 0;
+    }
+
+    // ----------------------------------------------------------------
+    // getOverallAverageWeight — average poids across all entries
+    // ----------------------------------------------------------------
+    public double getOverallAverageWeight() throws SQLException {
+        String sql = "SELECT AVG(poids) FROM healthentry";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getDouble(1);
+        }
+        return 0.0;
+    }
+
+    // ----------------------------------------------------------------
+    // getOverallAverageSleep — average sommeil across all entries
+    // ----------------------------------------------------------------
+    public double getOverallAverageSleep() throws SQLException {
+        String sql = "SELECT AVG(sommeil) FROM healthentry";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getDouble(1);
+        }
+        return 0.0;
+    }
+
+    // ----------------------------------------------------------------
     // findByJournalAndDateRange — Symfony: findByJournalAndDateRange()
     //
     // Symfony QueryBuilder:
