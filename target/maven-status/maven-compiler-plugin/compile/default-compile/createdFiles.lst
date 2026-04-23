@@ -18,6 +18,7 @@ com\wellora\dao\HealthentryDAO.class
 com\wellora\javafx\controller\HealthentryFormController$1.class
 com\wellora\javafx\controller\HealthentryController.class
 com\wellora\model\Healthentry.class
+com\wellora\javafx\controller\PredictionController.class
 com\wellora\services\ApiService.class
 com\wellora\javafx\controller\DashboardController$1.class
 com\wellora\model\Healthjournal.class
@@ -26,7 +27,9 @@ com\wellora\javafx\controller\HealthentryListController.class
 com\wellora\TestDB.class
 com\wellora\javafx\controller\SymptomController.class
 com\wellora\javafx\controller\HomepageController.class
+com\wellora\services\PredictionService.class
 com\wellora\javafx\controller\SymptomFormController$1.class
 com\wellora\javafx\controller\HealthentryListController$1.class
 com\wellora\services\PdfExportService$Statistics.class
 com\wellora\util\DBConnection.class
+com\wellora\services\PredictionService$PredictionResult.class

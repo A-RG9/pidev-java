@@ -22,6 +22,7 @@ public class MainController {
     @FXML private Button btnEntries;
     @FXML private Button btnSymptoms;
     @FXML private Button btnCalendar;
+    @FXML private Button btnPrediction;
     @FXML private Button btnTheme;
     @FXML private Button btnLogout;
 
@@ -114,6 +115,15 @@ public class MainController {
     public void showCalendar() {
         setActiveButton(btnCalendar);
         loadView("/fxml/calendar.fxml");
+    }
+
+    /**
+     * Show AI Prediction view
+     */
+    @FXML
+    public void showPrediction() {
+        setActiveButton(btnPrediction);
+        loadView("/fxml/prediction.fxml");
     }
 
     /**
@@ -254,6 +264,8 @@ public class MainController {
                 ((SymptomListController) controller).setMainController(this);
             } else if (controller instanceof CalendarController) {
                 ((CalendarController) controller).setMainController(this);
+            } else if (controller instanceof PredictionController) {
+                ((PredictionController) controller).setMainController(this);
             }
 
         } catch (Exception e) {

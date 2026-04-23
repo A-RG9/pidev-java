@@ -11,6 +11,7 @@ C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\Healthj
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\HealthjournalListController.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\HomepageController.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\MainController.java
+C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\PredictionController.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\SymptomController.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\SymptomFormController.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\javafx\controller\SymptomListController.java
@@ -20,6 +21,7 @@ C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\model\Healthjournal.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\model\Symptom.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\services\ApiService.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\services\PdfExportService.java
+C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\services\PredictionService.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\TestDAO.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\TestDB.java
 C:\Users\Khalil\wellora-jdbc\src\main\java\com\wellora\util\CharsetFilter.java

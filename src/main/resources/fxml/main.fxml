@@ -136,13 +136,21 @@
                     </VBox>
 
                     <!-- Calendar -->
-                    <VBox styleClass="sub-menu">
-                        <Button text="📅  Calendar" 
-                                styleClass="sub-nav-button" 
-                                onAction="#showCalendar"
-                                fx:id="btnCalendar"/>
-                    </VBox>
-                </VBox>
+                       <VBox styleClass="sub-menu">
+                           <Button text="📅  Calendar"
+                                   styleClass="sub-nav-button"
+                                   onAction="#showCalendar"
+                                   fx:id="btnCalendar"/>
+                       </VBox>
+                       
+                       <!-- AI Prediction -->
+                       <VBox styleClass="sub-menu">
+                           <Button text="🤖  Prediction"
+                                   styleClass="sub-nav-button"
+                                   onAction="#showPrediction"
+                                   fx:id="btnPrediction"/>
+                       </VBox>
+                   </VBox>
             </VBox>
             
             <!-- Bottom Actions -->
