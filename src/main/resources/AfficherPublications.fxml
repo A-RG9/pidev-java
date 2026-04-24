@@ -31,6 +31,7 @@
                                     <ComboBox fx:id="comboType" prefWidth="130.0" promptText="All types" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
                                     <TextField fx:id="searchHashtag" prefWidth="150.0" promptText="#hashtag" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-padding: 8;" />
                                     <ComboBox fx:id="comboSort" prefWidth="150.0" promptText="Newest pub" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
+                                    <ComboBox fx:id="comboPopularity" prefWidth="150.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-background-radius: 5;" promptText="Popularity" />
                                     <Region HBox.hgrow="ALWAYS" />
 
                                     <Button fx:id="btnAddPublication" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #009688; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="+" />

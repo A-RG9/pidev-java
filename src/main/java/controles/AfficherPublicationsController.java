@@ -9,11 +9,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import services.PublicationServices;
+import services.CommentaireServices;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +30,12 @@ public class AfficherPublicationsController {
     @FXML private ComboBox<String> comboExperience;
     @FXML private ComboBox<String> comboType;
     @FXML private ComboBox<String> comboSort;
+    @FXML private ComboBox<String> comboPopularity;
     @FXML private TextField searchHashtag;
 
     private parcours_de_sante currentParcours;
     private final PublicationServices pubService = new PublicationServices();
+    private final CommentaireServices commentService = new CommentaireServices();
 
     @FXML
     public void initialize() {
@@ -60,11 +64,31 @@ public class AfficherPublicationsController {
             comboType.setOnAction(e -> loadPublications());
         }
 
+
         if (comboSort != null) {
             comboSort.getItems().clear();
             comboSort.getItems().addAll("Newest pub", "Oldest pub");
             comboSort.setValue("Newest pub");
-            comboSort.setOnAction(e -> loadPublications());
+            comboSort.setOnAction(e -> {
+
+                if (comboPopularity != null && !comboPopularity.getValue().equals("Any popularity")) {
+                    comboPopularity.setValue("Any popularity");
+                } else {
+                    loadPublications();
+                }
+            });
+        }
+
+
+        if (comboPopularity != null) {
+            comboPopularity.getItems().clear();
+            comboPopularity.getItems().addAll("Any popularity", "Most popular", "Least popular");
+            comboPopularity.setValue("Any popularity");
+            comboPopularity.setOnAction(e -> loadPublications());
+        }
+
+        if (searchHashtag != null) {
+            searchHashtag.textProperty().addListener((observable, oldValue, newValue) -> loadPublications());
         }
     }
 
@@ -74,6 +98,21 @@ public class AfficherPublicationsController {
             trailNameLabel.setText(p.getNom_parcours());
         }
         loadPublications();
+    }
+
+    private double getPopularityScore(publication_parcours pub) {
+        try {
+            int commentsCount = commentService.afficherParPublication(pub.getId()).size();
+            LocalDate pubDate = parseDateSafely(pub.getDate_publication());
+
+            long daysOld = ChronoUnit.DAYS.between(pubDate, LocalDate.now());
+            if (daysOld < 0) daysOld = 0;
+
+
+            return (double) ((commentsCount * 10) - daysOld);
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 
     private void loadPublications() {
@@ -91,6 +130,7 @@ public class AfficherPublicationsController {
                 }
             }
 
+
             if (comboType != null && comboType.getValue() != null) {
                 String selectedType = comboType.getValue();
                 if (!selectedType.equals("All types")) {
@@ -101,9 +141,27 @@ public class AfficherPublicationsController {
             }
 
 
-            if (comboSort != null && comboSort.getValue() != null) {
-                String sortChoice = comboSort.getValue();
-                list.sort((pub1, pub2) -> {
+            if (searchHashtag != null && !searchHashtag.getText().trim().isEmpty()) {
+                String query = searchHashtag.getText().trim().toLowerCase();
+                list = list.stream()
+                        .filter(pub -> pub.getText_publication() != null && pub.getText_publication().toLowerCase().contains(query))
+                        .collect(Collectors.toList());
+            }
+
+
+            boolean usePopularity = (comboPopularity != null && comboPopularity.getValue() != null && !comboPopularity.getValue().equals("Any popularity"));
+
+            list.sort((pub1, pub2) -> {
+                if (usePopularity) {
+                    String popChoice = comboPopularity.getValue();
+                    if (popChoice.equals("Most popular")) {
+                        return Double.compare(getPopularityScore(pub2), getPopularityScore(pub1));
+                    } else {
+                        return Double.compare(getPopularityScore(pub1), getPopularityScore(pub2));
+                    }
+                } else {
+
+                    String sortChoice = (comboSort != null && comboSort.getValue() != null) ? comboSort.getValue() : "Newest pub";
                     LocalDate date1 = parseDateSafely(pub1.getDate_publication());
                     LocalDate date2 = parseDateSafely(pub2.getDate_publication());
 
@@ -112,8 +170,8 @@ public class AfficherPublicationsController {
                     } else {
                         return date2.compareTo(date1);
                     }
-                });
-            }
+                }
+            });
 
 
             if (list.isEmpty()) {
@@ -131,6 +189,8 @@ public class AfficherPublicationsController {
                     if (comboExperience != null) comboExperience.setValue("All experiences");
                     if (comboType != null) comboType.setValue("All types");
                     if (comboSort != null) comboSort.setValue("Newest pub");
+                    if (comboPopularity != null) comboPopularity.setValue("Any popularity"); // Reset this too
+                    if (searchHashtag != null) searchHashtag.clear();
                     loadPublications();
                 });
 
@@ -142,16 +202,15 @@ public class AfficherPublicationsController {
 
             for (publication_parcours pub : list) {
                 try {
-
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/PublicationCard.fxml"));
                     Parent cardNode = loader.load();
-
-
                     PublicationCardController controller = loader.getController();
 
-
-                    controller.setData(pub, currentParcours, this::loadPublications);
-
+                    controller.setData(pub, currentParcours, this::loadPublications, clickedHashtag -> {
+                        if (searchHashtag != null) {
+                            searchHashtag.setText(clickedHashtag);
+                        }
+                    });
 
                     publicationsContainer.getChildren().add(cardNode);
 

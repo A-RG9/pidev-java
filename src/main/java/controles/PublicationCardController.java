@@ -13,18 +13,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import services.CommentaireServices;
 import services.PublicationServices;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PublicationCardController {
 
@@ -33,11 +39,12 @@ public class PublicationCardController {
     @FXML private Label safetyLabel;
     @FXML private Label experienceLabel;
     @FXML private Label typeLabel;
-    @FXML private Label textLabel;
+    @FXML private Label popularityLabel;
+
+    @FXML private TextFlow textFlow;
     @FXML private ImageView imageView;
     @FXML private Button btnEditPub;
     @FXML private Button btnDeletePub;
-
 
     @FXML private Label commentsToggleLabel;
     @FXML private VBox commentSection;
@@ -52,9 +59,7 @@ public class PublicationCardController {
     private final PublicationServices pubService = new PublicationServices();
     private final CommentaireServices commentService = new CommentaireServices();
 
-
     public void initialize() {
-
         commentsToggleLabel.setOnMouseClicked(e -> {
             boolean isVisible = commentSection.isVisible();
             commentSection.setVisible(!isVisible);
@@ -64,27 +69,56 @@ public class PublicationCardController {
             }
         });
 
-
         btnSubmitComment.setOnAction(e -> handleAddComment());
-
-
         commentInputField.setOnAction(e -> handleAddComment());
     }
 
-
-    public void setData(publication_parcours pub, parcours_de_sante parcours, Runnable refreshCallback) {
+    public void setData(publication_parcours pub, parcours_de_sante parcours, Runnable refreshCallback, Consumer<String> onHashtagClicked) {
         this.currentPublication = pub;
         this.parentParcours = parcours;
         this.refreshFeedCallback = refreshCallback;
-
 
         dateLabel.setText(pub.getDate_publication());
         ambianceLabel.setText("⭐ " + pub.getAmbiance() + "/5 ambiance");
         safetyLabel.setText("🛡 " + pub.getSecurite() + "/5 safety");
         experienceLabel.setText("◉ " + pub.getExperience());
         typeLabel.setText(pub.getType_publication());
-        textLabel.setText(pub.getText_publication());
 
+        textFlow.getChildren().clear();
+        String content = pub.getText_publication();
+
+        if (content != null && !content.isEmpty()) {
+            Matcher matcher = Pattern.compile("(#\\w+)").matcher(content);
+            int lastEnd = 0;
+
+            while (matcher.find()) {
+                String normalText = content.substring(lastEnd, matcher.start());
+                if (!normalText.isEmpty()) {
+                    Text t = new Text(normalText);
+                    t.setStyle("-fx-fill: #2d3436; -fx-font-size: 14;");
+                    textFlow.getChildren().add(t);
+                }
+
+                String hashtag = matcher.group(1);
+                Hyperlink link = new Hyperlink(hashtag);
+                link.setStyle("-fx-text-fill: #00a693; -fx-font-weight: bold; -fx-padding: 0; -fx-border-width: 0;");
+                link.setOnAction(e -> {
+                    if (onHashtagClicked != null) {
+                        onHashtagClicked.accept(hashtag);
+                    }
+                });
+                textFlow.getChildren().add(link);
+
+                lastEnd = matcher.end();
+            }
+
+            String trailingText = content.substring(lastEnd);
+            if (!trailingText.isEmpty()) {
+                Text t = new Text(trailingText);
+                t.setStyle("-fx-fill: #2d3436; -fx-font-size: 14;");
+                textFlow.getChildren().add(t);
+            }
+        }
 
         if (pub.getExperience().equalsIgnoreCase("Bad")) {
             experienceLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 12;");
@@ -93,7 +127,6 @@ public class PublicationCardController {
         } else {
             experienceLabel.setStyle("-fx-text-fill: #f1c40f; -fx-font-weight: bold; -fx-font-size: 12;");
         }
-
 
         if (pub.getImage_publication() != null && !pub.getImage_publication().isEmpty()) {
             File file = new File(pub.getImage_publication());
@@ -107,7 +140,6 @@ public class PublicationCardController {
             imageView.setManaged(false);
         }
 
-
         btnDeletePub.setOnAction(e -> {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cette publication ?");
             if (confirm.showAndWait().get() == ButtonType.OK) {
@@ -119,7 +151,6 @@ public class PublicationCardController {
                 }
             }
         });
-
 
         btnEditPub.setOnAction(e -> {
             try {
@@ -133,15 +164,28 @@ public class PublicationCardController {
             }
         });
 
-
         updateCommentCount();
     }
-
 
     private void updateCommentCount() {
         try {
             List<commentaire_publication> comments = commentService.afficherParPublication(currentPublication.getId());
             commentsToggleLabel.setText("💬 " + comments.size() + " comments");
+
+            int commentsCount = comments.size();
+            LocalDate pubDate;
+            try {
+                pubDate = LocalDate.parse(currentPublication.getDate_publication().split(" ")[0]);
+            } catch (Exception ex) {
+                pubDate = LocalDate.now();
+            }
+
+            long daysOld = ChronoUnit.DAYS.between(pubDate, LocalDate.now());
+            if (daysOld < 0) daysOld = 0;
+
+            long score = (commentsCount * 10) - daysOld;
+            popularityLabel.setText("🔥 " + score);
+
         } catch (Exception e) {
             System.err.println("Error fetching comment count");
         }
@@ -165,28 +209,17 @@ public class PublicationCardController {
         if (input == null || input.trim().isEmpty()) {
             return input;
         }
-
         try {
-
             String encodedText = URLEncoder.encode(input, "UTF-8");
-
-
             URL url = new URL("https://www.purgomalum.com/service/plain?text=" + encodedText);
-
-
             Scanner scanner = new Scanner(url.openStream(), "UTF-8");
             StringBuilder response = new StringBuilder();
             while (scanner.hasNextLine()) {
                 response.append(scanner.nextLine());
             }
             scanner.close();
-
             return response.toString();
-
         } catch (Exception e) {
-            System.err.println("Profanity API failed or no internet. Falling back to original text.");
-            e.printStackTrace();
-
             return input;
         }
     }
@@ -206,12 +239,12 @@ public class PublicationCardController {
             commentService.ajouter(newComment);
             commentInputField.clear();
             loadComments();
+            updateCommentCount();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ajout du commentaire.");
             alert.show();
         }
     }
-
 
     private VBox createCommentUI(commentaire_publication comment) {
         VBox box = new VBox(5);
@@ -243,7 +276,6 @@ public class PublicationCardController {
 
         box.getChildren().addAll(header, contentLabel);
 
-
         btnEdit.setOnAction(e -> {
             TextInputDialog dialog = new TextInputDialog(comment.getCommentaire());
             dialog.setTitle("Modifier Commentaire");
@@ -254,9 +286,7 @@ public class PublicationCardController {
             result.ifPresent(newText -> {
                 if (!newText.trim().isEmpty()) {
                     try {
-                        // Apply the filter on the edited text!
                         String filteredText = filterBadWords(newText);
-
                         comment.setCommentaire(filteredText);
                         commentService.modifier(comment);
                         loadComments();
@@ -267,11 +297,11 @@ public class PublicationCardController {
             });
         });
 
-
         btnDelete.setOnAction(e -> {
             try {
                 commentService.supprimer(comment.getId());
                 loadComments();
+                updateCommentCount();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
