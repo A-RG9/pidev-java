@@ -19,8 +19,12 @@ import services.PublicationServices;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Scanner;
 
 public class PublicationCardController {
 
@@ -47,6 +51,7 @@ public class PublicationCardController {
 
     private final PublicationServices pubService = new PublicationServices();
     private final CommentaireServices commentService = new CommentaireServices();
+
 
     public void initialize() {
 
@@ -156,9 +161,41 @@ public class PublicationCardController {
         }
     }
 
+    private String filterBadWords(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return input;
+        }
+
+        try {
+
+            String encodedText = URLEncoder.encode(input, "UTF-8");
+
+
+            URL url = new URL("https://www.purgomalum.com/service/plain?text=" + encodedText);
+
+
+            Scanner scanner = new Scanner(url.openStream(), "UTF-8");
+            StringBuilder response = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                response.append(scanner.nextLine());
+            }
+            scanner.close();
+
+            return response.toString();
+
+        } catch (Exception e) {
+            System.err.println("Profanity API failed or no internet. Falling back to original text.");
+            e.printStackTrace();
+
+            return input;
+        }
+    }
+
     private void handleAddComment() {
         String text = commentInputField.getText().trim();
         if (text.isEmpty()) return;
+
+        text = filterBadWords(text);
 
         try {
             commentaire_publication newComment = new commentaire_publication();
@@ -168,7 +205,7 @@ public class PublicationCardController {
 
             commentService.ajouter(newComment);
             commentInputField.clear();
-            loadComments(); // Reload the UI
+            loadComments();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ajout du commentaire.");
             alert.show();
@@ -217,7 +254,10 @@ public class PublicationCardController {
             result.ifPresent(newText -> {
                 if (!newText.trim().isEmpty()) {
                     try {
-                        comment.setCommentaire(newText);
+                        // Apply the filter on the edited text!
+                        String filteredText = filterBadWords(newText);
+
+                        comment.setCommentaire(filteredText);
                         commentService.modifier(comment);
                         loadComments();
                     } catch (SQLException ex) {
