@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -28,6 +29,8 @@ import java.time.temporal.ChronoUnit;
 
 public class DetailsParcoursController {
 
+    @FXML private ScrollPane mainScrollPane;
+
 
     @FXML private StackPane heroContainer;
     @FXML private ImageView heroImageView;
@@ -41,6 +44,9 @@ public class DetailsParcoursController {
 
     @FXML private Label statDistance;
     @FXML private Label statPubs;
+    @FXML private Label statTemp;
+    @FXML private Label statWeatherDesc;
+    @FXML private Label statWind;
     @FXML private Label summaryLocation;
     @FXML private Label summaryDate;
     @FXML private Label summaryCoords;
@@ -54,13 +60,38 @@ public class DetailsParcoursController {
     private parcours_de_sante currentParcours;
     private Marker mapMarker;
 
+
     @FXML
     void initialize() {
         btnReturn.setOnAction(event -> returnToDisplay());
 
 
-        heroImageView.fitWidthProperty().bind(heroContainer.widthProperty());
+        heroImageView.setPreserveRatio(true);
+
+        javafx.beans.value.ChangeListener<Number> coverListener = (obs, oldVal, newVal) -> {
+            if (heroImageView.getImage() != null) {
+                double imgW = heroImageView.getImage().getWidth();
+                double imgH = heroImageView.getImage().getHeight();
+                double boxW = heroContainer.getWidth();
+                double boxH = heroContainer.getHeight();
+
+                if (imgW > 0 && imgH > 0 && boxW > 0 && boxH > 0) {
+
+                    double scale = Math.max(boxW / imgW, boxH / imgH);
+                    heroImageView.setFitWidth(imgW * scale);
+                    heroImageView.setFitHeight(imgH * scale);
+                }
+            }
+        };
+
+        heroContainer.widthProperty().addListener(coverListener);
+        heroContainer.heightProperty().addListener(coverListener);
+        heroImageView.imageProperty().addListener((obs, oldImg, newImg) -> coverListener.changed(null, null, null));
+
+
+
         heroOverlay.widthProperty().bind(heroContainer.widthProperty());
+
 
         javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle();
         clip.widthProperty().bind(heroContainer.widthProperty());
@@ -89,6 +120,12 @@ public class DetailsParcoursController {
         if (p == null) return;
         this.currentParcours = p;
 
+        Platform.runLater(() -> {
+            if (mainScrollPane != null) {
+                mainScrollPane.setVvalue(0.0);
+            }
+        });
+
         heroTitle.setText(p.getNom_parcours().toUpperCase());
         heroLocation.setText("📍 " + p.getLocalisation_parcours());
         heroDistance.setText("📏 " + p.getDistance_parcours() + " km");
@@ -97,12 +134,11 @@ public class DetailsParcoursController {
         mapLocationLabel.setText(p.getLocalisation_parcours());
         summaryCoords.setText(String.format("%.6f, %.6f", p.getLatitude_parcours(), p.getLongitude_parcours()));
 
-
         int pubCount = (p.getPublications() != null) ? p.getPublications().size() : 0;
         heroPubs.setText("📄 " + pubCount + " publications");
         statPubs.setText(String.valueOf(pubCount));
 
-        userDistanceLabel.setText("Calcul en cours...");
+        userDistanceLabel.setText("Calcul...");
         new Thread(() -> {
             double[] myLiveLocation = fetchLiveLocationFromIP();
             double distance = calculateDistance(myLiveLocation[0], myLiveLocation[1], p.getLatitude_parcours(), p.getLongitude_parcours());
@@ -111,6 +147,9 @@ public class DetailsParcoursController {
             });
         }).start();
 
+        new Thread(() -> {
+            fetchLiveWeather(p.getLatitude_parcours(), p.getLongitude_parcours());
+        }).start();
 
         try {
             LocalDate creationDate = LocalDate.parse(p.getDate_creation());
@@ -137,6 +176,72 @@ public class DetailsParcoursController {
         if (mapView.getInitialized()) {
             setMapLocation();
         }
+    }
+
+    private void fetchLiveWeather(double lat, double lon) {
+        try {
+            URL url = new URL("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current_weather=true");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5000);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            String jsonResponse = response.toString();
+
+
+            int weatherBlockIndex = jsonResponse.indexOf("\"current_weather\"");
+            if (weatherBlockIndex == -1) throw new Exception("No current_weather data found.");
+
+            String weatherBlock = jsonResponse.substring(weatherBlockIndex);
+
+            String tempStr = extractJsonValue(weatherBlock, "\"temperature\":");
+            String windStr = extractJsonValue(weatherBlock, "\"windspeed\":");
+            String codeStr = extractJsonValue(weatherBlock, "\"weathercode\":");
+
+            int weatherCode = (int) Double.parseDouble(codeStr);
+            String weatherDescription = getWeatherDescription(weatherCode);
+
+            Platform.runLater(() -> {
+                statTemp.setText(tempStr + " °C");
+                statWind.setText(windStr + " km/h");
+                statWeatherDesc.setText(weatherDescription);
+            });
+
+        } catch (Exception e) {
+            System.err.println("Failed to fetch weather: " + e.getMessage());
+            Platform.runLater(() -> {
+                statTemp.setText("N/A");
+                statWind.setText("N/A");
+                statWeatherDesc.setText("Offline");
+            });
+        }
+    }
+
+    private String extractJsonValue(String json, String key) {
+        int startIndex = json.indexOf(key);
+        if (startIndex == -1) return "0";
+        startIndex += key.length();
+        int endIndex = json.indexOf(",", startIndex);
+        if (endIndex == -1) endIndex = json.indexOf("}", startIndex);
+        return json.substring(startIndex, endIndex).trim();
+    }
+
+    private String getWeatherDescription(int code) {
+        if (code == 0) return "Clear sky ☀️";
+        if (code >= 1 && code <= 3) return "Partly cloudy ⛅";
+        if (code >= 45 && code <= 48) return "Foggy 🌫️";
+        if (code >= 51 && code <= 55) return "Drizzle 🌧️";
+        if (code >= 61 && code <= 65) return "Rain 🌧️";
+        if (code >= 71 && code <= 75) return "Snow ❄️";
+        if (code >= 95) return "Thunderstorm 🌩️";
+        return "Unknown 🌡️";
     }
 
     private double[] fetchLiveLocationFromIP() {

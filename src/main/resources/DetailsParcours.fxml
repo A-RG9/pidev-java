@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1100.0" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.DetailsParcoursController">
+<AnchorPane prefHeight="400.0" prefWidth="1100.0" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.DetailsParcoursController">
     <children>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #f4f7f6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ScrollPane fx:id="mainScrollPane" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #f4f7f6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
                 <VBox spacing="25.0">
                     <padding>
@@ -17,9 +17,9 @@
                     </padding>
                     <children>
 
-                        <StackPane fx:id="heroContainer" alignment="BOTTOM_LEFT" prefHeight="320.0" style="-fx-background-radius: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 8);">
+                        <StackPane fx:id="heroContainer" alignment="CENTER" prefHeight="320.0" minHeight="320.0" maxHeight="320.0" style="-fx-background-color: #1a1a2e; -fx-background-radius: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 8);">
                             <children>
-                                <ImageView fx:id="heroImageView" fitHeight="320.0" preserveRatio="false" />
+                                <ImageView fx:id="heroImageView" />
                                 <Rectangle fx:id="heroOverlay" fill="linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.4), transparent)" height="320.0" StackPane.alignment="BOTTOM_CENTER" />
 
                                 <VBox spacing="12.0" StackPane.alignment="BOTTOM_LEFT">
@@ -51,12 +51,12 @@
                                 </VBox>
                                 <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
                                     <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 13; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="TEMPERATURE" />
-                                    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="23.7 C" />
-                                    <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="Clear sky" />
+                                    <Label fx:id="statTemp" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="-- °C" />
+                                    <Label fx:id="statWeatherDesc" style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="Fetching..." />
                                 </VBox>
                                 <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
                                     <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 13; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="WIND" />
-                                    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="13.9 km/h" />
+                                    <Label fx:id="statWind" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="-- km/h" />
                                     <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="speed" />
                                 </VBox>
                             </children>
@@ -113,6 +113,7 @@
                                         </VBox>
                                     </children>
                                 </VBox>
+
                             </children>
                         </HBox>
                     </children>
