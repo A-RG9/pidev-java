@@ -1,4 +1,3 @@
-
 /* VIEW LAYER: Styling */
 .root {
     -fx-background-color: #121418;
@@ -229,13 +228,13 @@
     -fx-border-color: #2A2F3D;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-font-size: 15px; 
+    -fx-font-size: 15px;
 }
 
 .table-view .column-header-background {
     -fx-background-color: #2A2F3D;
     -fx-background-radius: 10 10 0 0;
-    -fx-padding: 5 0 5 0; 
+    -fx-padding: 5 0 5 0;
 }
 
 .table-view .column-header {
@@ -243,34 +242,34 @@
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #9CA3AF; 
+    -fx-text-fill: #9CA3AF;
     -fx-font-weight: bold;
-    -fx-font-size: 16px; 
+    -fx-font-size: 16px;
 }
 
 .table-row-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent transparent #2A2F3D transparent;
-    -fx-cell-size: 45px; 
+    -fx-cell-size: 45px;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #21252C; 
+    -fx-background-color: #21252C;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #00BFA5; 
+    -fx-background-color: #00BFA5;
 }
 
 .table-cell {
-    -fx-text-fill: #F3F4F6; 
-    -fx-alignment: CENTER_LEFT; 
-    -fx-padding: 0 0 0 15px; 
+    -fx-text-fill: #F3F4F6;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 15px;
 }
 
 .table-row-cell:selected .table-cell {
-    -fx-text-fill: white; 
-    -fx-font-weight: bold; 
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
 
 
@@ -427,41 +426,79 @@
 }
 
 /* ======================================================= */
-/* ====== ADAPTATION DU GRAPHIQUE POUR LE MODE SOMBRE ==== */
+/* ====== ADAPTATION DU GRAPHIQUE ======================== */
 /* ======================================================= */
 
-/* 1. Le fond de la zone de dessin du graphique */
-.dark-mode .chart-plot-background {
-    -fx-background-color: #1f2937; /* Couleur sombre pour le fond de la carte */
+.chart-plot-background { -fx-background-color: transparent; }
+.axis { -fx-tick-label-fill: #9ca3af; }
+.axis-label { -fx-text-fill: #9ca3af; }
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines { -fx-stroke: #2A2F3D; }
+.axis-tick-mark { -fx-stroke: #9ca3af; }
+
+.default-color0.chart-bar { -fx-bar-fill: #00E6A4; }
+.default-color1.chart-bar { -fx-bar-fill: #FFB020; }
+
+.light-theme .chart-vertical-grid-lines,
+.light-theme .chart-horizontal-grid-lines { -fx-stroke: #E5E7EB; }
+.light-theme .axis { -fx-tick-label-fill: #4B5563; }
+.light-theme .axis-label { -fx-text-fill: #4B5563; }
+
+/* =========================================
+   CARTES DE RECETTES (PAR DÉFAUT = SOMBRE)
+   ========================================= */
+.recipe-card {
+    -fx-background-color: #1C2026;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+.recipe-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white; }
+.recipe-calories { -fx-text-fill: #00E6A4; -fx-font-weight: bold; }
+.recipe-instructions { -fx-text-fill: #9CA3AF; -fx-font-size: 13px; }
+
+/* CARTES DE RECETTES (MODE CLAIR) */
+.light-theme .recipe-card {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+.light-theme .recipe-title { -fx-text-fill: #111827; }
+.light-theme .recipe-calories { -fx-text-fill: #00BFA5; }
+.light-theme .recipe-instructions { -fx-text-fill: #4B5563; }
+
+/* =========================================
+   DIALOGUE (PAR DÉFAUT = SOMBRE)
+   ========================================= */
+.dialog-pane { -fx-background-color: #121418; }
+.dialog-pane > *.button-bar > *.container { -fx-background-color: #121418; }
+.dialog-pane > *.label.content { -fx-text-fill: white; }
+.dialog-pane:header *.header-panel { -fx-background-color: #1C2026; }
+.dialog-pane:header *.header-panel *.label { -fx-text-fill: white; }
+
+/* DIALOGUE (MODE CLAIR) */
+.light-theme.dialog-pane { -fx-background-color: #FFFFFF; }
+.light-theme.dialog-pane > *.button-bar > *.container { -fx-background-color: #F9FAFB; }
+.light-theme.dialog-pane > *.label.content { -fx-text-fill: #111827; }
+.light-theme.dialog-pane:header *.header-panel { -fx-background-color: #F3F4F6; }
+.light-theme.dialog-pane:header *.header-panel *.label { -fx-text-fill: #111827; }
+
+/* Champs de texte (TextField) généraux (PAR DÉFAUT = SOMBRE) */
+.text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
-/* 2. Les textes des axes (les nombres et les jours) */
-.dark-mode .axis {
-    -fx-tick-label-fill: #e5e7eb; /* Gris très clair */
+/* Champs de texte (TextField) généraux (MODE CLAIR) */
+.light-theme .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #D1D5DB;
 }
 
-/* 3. Les titres des axes ("Jours", "Calories (kcal)") */
-.dark-mode .axis-label {
-    -fx-text-fill: #e5e7eb; /* Gris très clair */
-}
-
-/* 4. Les lignes de la grille (horizontales et verticales) */
-.dark-mode .chart-vertical-grid-lines,
-.dark-mode .chart-horizontal-grid-lines {
-    -fx-stroke: #374151; /* Lignes subtiles pour séparer les valeurs */
-}
-
-/* 5. Les marques de graduation sur les axes */
-.dark-mode .axis-tick-mark {
-    -fx-stroke: #9ca3af;
-}
-
-/* --- OPTIONNEL : Changer les couleurs des barres en Mode Sombre --- */
-/* Série 1 (Objectifs) */
-.dark-mode .default-color0.chart-bar {
-    -fx-bar-fill: #00E6A4;
-}
-/* Série 2 (Consommé) */
-.dark-mode .default-color1.chart-bar {
-    -fx-bar-fill: #FFB020;
+/* Nettoyer le ScrollPane des recettes */
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
 }

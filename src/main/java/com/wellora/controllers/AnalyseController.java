@@ -117,6 +117,7 @@ public class AnalyseController {
     @FXML public void navToDashboard(ActionEvent event) { switchScene(event, "Dashboard.fxml"); }
     @FXML public void navToJournal(ActionEvent event) { switchScene(event, "Journal.fxml"); }
     @FXML public void navToPlanificateur(ActionEvent event) { switchScene(event, "Planificateur.fxml"); }
+    @FXML public void navToRecettes(ActionEvent event) { switchScene(event, "Recettes.fxml"); }
     @FXML public void navToObjectifs(ActionEvent event) { switchScene(event, "Objectif.fxml"); }
     @FXML public void navToAnalyse(ActionEvent event) { /* On est déjà sur Analyse */ }
 
@@ -124,11 +125,36 @@ public class AnalyseController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/wellora/views/" + fxmlFile));
             Parent root = loader.load();
+
+            // 1. Forcer le chargement du fichier CSS
+            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
+            if (!root.getStylesheets().contains(cssPath)) {
+                root.getStylesheets().add(cssPath);
+            }
+
+            // 2. TRANSMETTRE LE THÈME À LA PAGE SUIVANTE
+            boolean isLightMode = btnThemeToggle.isSelected();
+            if (isLightMode) {
+                if (!root.getStyleClass().contains("light-theme")) {
+                    root.getStyleClass().add("light-theme");
+                }
+            } else {
+                root.getStyleClass().remove("light-theme");
+            }
+
+            // 3. Mettre à jour le bouton de la nouvelle page pour qu'il affiche le bon texte/état
+            ToggleButton nextBtnTheme = (ToggleButton) root.lookup("#btnThemeToggle");
+            if (nextBtnTheme != null) {
+                nextBtnTheme.setSelected(isLightMode);
+                nextBtnTheme.setText(isLightMode ? "🌙 Mode Sombre" : "☀️ Mode Clair");
+            }
+
+            // 4. Changer uniquement le contenu
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1200, 800);
-            scene.getStylesheets().add(getClass().getResource("/com/wellora/css/style.css").toExternalForm());
-            stage.setScene(scene);
+            stage.getScene().setRoot(root);
+
         } catch (IOException e) {
+            System.err.println("❌ Impossible de charger la page : " + fxmlFile);
             e.printStackTrace();
         }
     }

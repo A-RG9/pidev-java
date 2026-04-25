@@ -1,5 +1,6 @@
 package com.wellora.controllers;
 
+import com.wellora.services.NutritionApiService;
 import com.wellora.dao.MealPlanDAO;
 import com.wellora.models.MealPlan;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -37,6 +39,7 @@ public class PlanificateurController {
     @FXML private Button btnAjouter, btnTerminer, btnSupprimer;
 
     private final MealPlanDAO dao = new MealPlanDAO();
+    private final NutritionApiService apiService = new NutritionApiService();
 
     // Identifiants
     private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
@@ -64,7 +67,7 @@ public class PlanificateurController {
         colCalories.setCellValueFactory(new PropertyValueFactory<>("calories"));
         colStatut.setCellValueFactory(new PropertyValueFactory<>("completed"));
 
-        // --- NOUVEAU : PERSONNALISATION DE LA COLONNE STATUT ---
+        // --- PERSONNALISATION DE LA COLONNE STATUT ---
         colStatut.setCellFactory(column -> new TableCell<MealPlan, Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
@@ -115,7 +118,7 @@ public class PlanificateurController {
         }
     }
 
-    // --- NOUVEAU FORMULAIRE MODERNISÉ ---
+    // --- FORMULAIRE MODERNISÉ AVEC SERVICE API ---
     private void openAddDialog() {
         Dialog<MealPlan> dialog = new Dialog<>();
         dialog.setHeaderText(null);
@@ -147,8 +150,15 @@ public class PlanificateurController {
         String fieldStyle = "-fx-padding: 8; -fx-background-radius: 5;";
 
         TextField nameField = new TextField();
-        nameField.setPromptText("Ex: Salade César, Poulet rôti...");
+        nameField.setPromptText("Ex: Salade, Pizza...");
         nameField.setStyle(fieldStyle);
+
+        // Bouton de recherche API via le Service
+        Button btnSearchAPI = new Button("🔍 Chercher");
+        btnSearchAPI.setStyle("-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;");
+
+        HBox nameBox = new HBox(10, nameField, btnSearchAPI);
+        HBox.setHgrow(nameField, Priority.ALWAYS);
 
         ComboBox<String> typeBox = new ComboBox<>();
         typeBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
@@ -160,9 +170,31 @@ public class PlanificateurController {
         calField.setPromptText("Ex: 450");
         calField.setStyle(fieldStyle);
 
-        // Filtre pour chiffres uniquement
         UnaryOperator<TextFormatter.Change> intFilter = change -> change.getControlNewText().matches("\\d*") ? change : null;
         calField.setTextFormatter(new TextFormatter<>(intFilter));
+
+        // --- ACTION DU BOUTON DE RECHERCHE API ---
+        btnSearchAPI.setOnAction(e -> {
+            String foodQuery = nameField.getText().trim();
+            if (!foodQuery.isEmpty()) {
+                calField.setPromptText("Recherche...");
+                calField.setText("");
+
+                // Appel du NutritionApiService dans un thread séparé
+                new Thread(() -> {
+                    int caloriesFound = apiService.getCaloriesForFood(foodQuery);
+
+                    // Retour sur le thread principal pour modifier l'UI
+                    Platform.runLater(() -> {
+                        if (caloriesFound > 0) {
+                            calField.setText(String.valueOf(caloriesFound));
+                        } else {
+                            calField.setPromptText("Non trouvé 😕");
+                        }
+                    });
+                }).start();
+            }
+        });
 
         // --- STRUCTURE DU LAYOUT ---
         Label titleLabel = new Label("🍽️ Planifier un repas");
@@ -173,9 +205,9 @@ public class PlanificateurController {
         errorLabel.setStyle("-fx-text-fill: #EF4444; -fx-font-size: 13px; -fx-font-weight: bold;");
         errorLabel.setWrapText(true);
 
-        VBox nameGroup = new VBox(5, new Label("📝 Nom du plat"), nameField);
+        VBox nameGroup = new VBox(5, new Label("📝 Nom du plat (Recherche API dispo)"), nameBox);
         VBox typeGroup = new VBox(5, new Label("📌 Moment de la journée"), typeBox);
-        VBox calGroup = new VBox(5, new Label("🔥 Calories estimées"), calField);
+        VBox calGroup = new VBox(5, new Label("🔥 Calories estimées (pour 100g)"), calField);
 
         HBox splitBox = new HBox(15, typeGroup, calGroup);
         HBox.setHgrow(typeGroup, Priority.ALWAYS);
@@ -308,16 +340,42 @@ public class PlanificateurController {
     @FXML public void navToJournal(ActionEvent event) { switchScene(event, "Journal.fxml"); }
     @FXML public void navToPlanificateur(ActionEvent event) { /* On est déjà sur la page */ }
     @FXML public void navToAnalyse(ActionEvent event) { switchScene(event, "Analyse.fxml"); }
+    @FXML public void navToRecettes(ActionEvent event) { switchScene(event, "Recettes.fxml"); }
 
     private void switchScene(ActionEvent event, String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/wellora/views/" + fxmlFile));
             Parent root = loader.load();
+
+            // 1. Forcer le chargement du fichier CSS
+            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
+            if (!root.getStylesheets().contains(cssPath)) {
+                root.getStylesheets().add(cssPath);
+            }
+
+            // 2. TRANSMETTRE LE THÈME À LA PAGE SUIVANTE
+            boolean isLightMode = btnThemeToggle.isSelected();
+            if (isLightMode) {
+                if (!root.getStyleClass().contains("light-theme")) {
+                    root.getStyleClass().add("light-theme");
+                }
+            } else {
+                root.getStyleClass().remove("light-theme");
+            }
+
+            // 3. Mettre à jour le bouton de la nouvelle page pour qu'il affiche le bon texte/état
+            ToggleButton nextBtnTheme = (ToggleButton) root.lookup("#btnThemeToggle");
+            if (nextBtnTheme != null) {
+                nextBtnTheme.setSelected(isLightMode);
+                nextBtnTheme.setText(isLightMode ? "🌙 Mode Sombre" : "☀️ Mode Clair");
+            }
+
+            // 4. Changer uniquement le contenu
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1200, 800);
-            scene.getStylesheets().add(getClass().getResource("/com/wellora/css/style.css").toExternalForm());
-            stage.setScene(scene);
+            stage.getScene().setRoot(root);
+
         } catch (IOException e) {
+            System.err.println("❌ Impossible de charger la page : " + fxmlFile);
             e.printStackTrace();
         }
     }
