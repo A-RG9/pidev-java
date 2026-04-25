@@ -102,7 +102,7 @@
                                     <children>
                                         <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" spacing="15.0">
                                             <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 12; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="ACTIONS" />
-                                            <Button prefHeight="50.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ebf5ff; -fx-text-fill: #4361ee; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 8; -fx-cursor: hand;" text="📄 View publications" />
+                                            <Button fx:id="btnViewPublications" prefHeight="50.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ebf5ff; -fx-text-fill: #4361ee; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 8; -fx-cursor: hand;" text="📄 View publications" />
                                             <Button fx:id="btnReturn" prefHeight="50.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 8; -fx-text-fill: #495057; -fx-font-size: 14; -fx-font-weight: bold; -fx-cursor: hand;" text="≣ All Health Trails" />
                                         </VBox>
 

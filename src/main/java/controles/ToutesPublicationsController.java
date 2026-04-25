@@ -1,6 +1,5 @@
 package controles;
 
-import entities.parcours_de_sante;
 import entities.publication_parcours;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +18,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AfficherPublicationsController {
+public class ToutesPublicationsController {
 
     @FXML private Label trailNameLabel;
     @FXML private VBox publicationsContainer;
-
-
     @FXML private Button btnBackToTrails;
-    @FXML private Button btnGlobalFeed;
+
 
     @FXML private Button btnWritePublication;
     @FXML private Button btnAddPublication;
@@ -37,28 +34,25 @@ public class AfficherPublicationsController {
     @FXML private ComboBox<String> comboPopularity;
     @FXML private TextField searchHashtag;
 
-    private parcours_de_sante currentParcours;
     private final PublicationServices pubService = new PublicationServices();
     private final CommentaireServices commentService = new CommentaireServices();
 
     @FXML
     public void initialize() {
 
+        if (trailNameLabel != null) {
+            trailNameLabel.setText("Global Community Feed");
+        }
+
+
+        if (btnWritePublication != null) btnWritePublication.setVisible(false);
+        if (btnAddPublication != null) btnAddPublication.setVisible(false);
+
+
         if (btnBackToTrails != null) {
-            btnBackToTrails.setOnAction(e -> goBack());
+            btnBackToTrails.setOnMouseClicked(e -> goBack());
         }
 
-
-        if (btnGlobalFeed != null) {
-            btnGlobalFeed.setOnAction(e -> goToGlobalFeed());
-        }
-
-        if (btnWritePublication != null) {
-            btnWritePublication.setOnAction(e -> goToAjouterPublication());
-        }
-        if (btnAddPublication != null) {
-            btnAddPublication.setOnAction(e -> goToAjouterPublication());
-        }
 
         if (comboExperience != null) {
             comboExperience.getItems().clear();
@@ -79,7 +73,7 @@ public class AfficherPublicationsController {
             comboSort.getItems().addAll("Newest pub", "Oldest pub");
             comboSort.setValue("Newest pub");
             comboSort.setOnAction(e -> {
-                if (comboPopularity != null && !comboPopularity.getValue().equals("Any popularity")) {
+                if (comboPopularity != null && comboPopularity.getValue() != null && !comboPopularity.getValue().equals("Any popularity")) {
                     comboPopularity.setValue("Any popularity");
                 } else {
                     loadPublications();
@@ -97,13 +91,8 @@ public class AfficherPublicationsController {
         if (searchHashtag != null) {
             searchHashtag.textProperty().addListener((observable, oldValue, newValue) -> loadPublications());
         }
-    }
 
-    public void initData(parcours_de_sante p) {
-        this.currentParcours = p;
-        if (trailNameLabel != null) {
-            trailNameLabel.setText(p.getNom_parcours());
-        }
+
         loadPublications();
     }
 
@@ -111,10 +100,8 @@ public class AfficherPublicationsController {
         try {
             int commentsCount = commentService.afficherParPublication(pub.getId()).size();
             LocalDate pubDate = parseDateSafely(pub.getDate_publication());
-
             long daysOld = ChronoUnit.DAYS.between(pubDate, LocalDate.now());
             if (daysOld < 0) daysOld = 0;
-
             return (double) ((commentsCount * 10) - daysOld);
         } catch (Exception e) {
             return 0.0;
@@ -124,7 +111,9 @@ public class AfficherPublicationsController {
     private void loadPublications() {
         publicationsContainer.getChildren().clear();
         try {
-            List<publication_parcours> list = pubService.afficherParParcours(currentParcours.getId());
+
+            List<publication_parcours> list = pubService.afficher();
+
 
             if (comboExperience != null && comboExperience.getValue() != null) {
                 String selectedExp = comboExperience.getValue();
@@ -135,6 +124,7 @@ public class AfficherPublicationsController {
                 }
             }
 
+
             if (comboType != null && comboType.getValue() != null) {
                 String selectedType = comboType.getValue();
                 if (!selectedType.equals("All types")) {
@@ -144,12 +134,14 @@ public class AfficherPublicationsController {
                 }
             }
 
+
             if (searchHashtag != null && !searchHashtag.getText().trim().isEmpty()) {
                 String query = searchHashtag.getText().trim().toLowerCase();
                 list = list.stream()
                         .filter(pub -> pub.getText_publication() != null && pub.getText_publication().toLowerCase().contains(query))
                         .collect(Collectors.toList());
             }
+
 
             boolean usePopularity = (comboPopularity != null && comboPopularity.getValue() != null && !comboPopularity.getValue().equals("Any popularity"));
 
@@ -174,13 +166,14 @@ public class AfficherPublicationsController {
                 }
             });
 
+
             if (list.isEmpty()) {
                 VBox emptyStateBox = new VBox(15);
                 emptyStateBox.setAlignment(Pos.CENTER);
                 emptyStateBox.setStyle("-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 50; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);");
                 emptyStateBox.setMinHeight(200);
 
-                Label emptyLabel = new Label("No publications found for this filter combination.");
+                Label emptyLabel = new Label("No publications found.");
                 emptyLabel.setStyle("-fx-font-size: 14; -fx-text-fill: #636e72;");
 
                 Button btnClearFilters = new Button("Clear Filters");
@@ -199,13 +192,15 @@ public class AfficherPublicationsController {
                 return;
             }
 
+
             for (publication_parcours pub : list) {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/PublicationCard.fxml"));
                     Parent cardNode = loader.load();
                     PublicationCardController controller = loader.getController();
 
-                    controller.setData(pub, currentParcours, this::loadPublications, clickedHashtag -> {
+
+                    controller.setData(pub, null, this::loadPublications, clickedHashtag -> {
                         if (searchHashtag != null) {
                             searchHashtag.setText(clickedHashtag);
                         }
@@ -215,7 +210,6 @@ public class AfficherPublicationsController {
 
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    System.err.println("Failed to load PublicationCard.fxml for publication ID: " + pub.getId());
                 }
             }
 
@@ -235,44 +229,14 @@ public class AfficherPublicationsController {
         }
     }
 
-    private void goToAjouterPublication() {
-        if (currentParcours == null) return;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterPublication.fxml"));
-            Parent root = loader.load();
-
-            AjouterPublicationController controller = loader.getController();
-            controller.initData(currentParcours);
-
-            if (btnBackToTrails != null && btnBackToTrails.getScene() != null) {
-                btnBackToTrails.getScene().setRoot(root);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void goBack() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/AfficherParcours.fxml"));
-            if (btnBackToTrails != null && btnBackToTrails.getScene() != null) {
+            if (btnBackToTrails.getScene() != null) {
                 btnBackToTrails.getScene().setRoot(root);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-
-    private void goToGlobalFeed() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/ToutesPublications.fxml"));
-            if (btnGlobalFeed != null && btnGlobalFeed.getScene() != null) {
-                btnGlobalFeed.getScene().setRoot(root);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error: Could not load ToutesPublications.fxml. Make sure you created it!");
         }
     }
 }

@@ -31,7 +31,6 @@ public class DetailsParcoursController {
 
     @FXML private ScrollPane mainScrollPane;
 
-
     @FXML private StackPane heroContainer;
     @FXML private ImageView heroImageView;
     @FXML private Rectangle heroOverlay;
@@ -40,7 +39,6 @@ public class DetailsParcoursController {
     @FXML private Label heroDistance;
     @FXML private Label heroPubs;
     @FXML private Label heroDate;
-
 
     @FXML private Label statDistance;
     @FXML private Label statPubs;
@@ -52,19 +50,22 @@ public class DetailsParcoursController {
     @FXML private Label summaryCoords;
     @FXML private Label mapLocationLabel;
 
-
     @FXML private MapView mapView;
     @FXML private Button btnReturn;
+    @FXML private Button btnViewPublications;
     @FXML private Label userDistanceLabel;
 
     private parcours_de_sante currentParcours;
     private Marker mapMarker;
 
-
     @FXML
     void initialize() {
         btnReturn.setOnAction(event -> returnToDisplay());
 
+
+        if (btnViewPublications != null) {
+            btnViewPublications.setOnAction(e -> goToPublications());
+        }
 
         heroImageView.setPreserveRatio(true);
 
@@ -76,7 +77,6 @@ public class DetailsParcoursController {
                 double boxH = heroContainer.getHeight();
 
                 if (imgW > 0 && imgH > 0 && boxW > 0 && boxH > 0) {
-
                     double scale = Math.max(boxW / imgW, boxH / imgH);
                     heroImageView.setFitWidth(imgW * scale);
                     heroImageView.setFitHeight(imgH * scale);
@@ -88,10 +88,7 @@ public class DetailsParcoursController {
         heroContainer.heightProperty().addListener(coverListener);
         heroImageView.imageProperty().addListener((obs, oldImg, newImg) -> coverListener.changed(null, null, null));
 
-
-
         heroOverlay.widthProperty().bind(heroContainer.widthProperty());
-
 
         javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle();
         clip.widthProperty().bind(heroContainer.widthProperty());
@@ -195,7 +192,6 @@ public class DetailsParcoursController {
 
             String jsonResponse = response.toString();
 
-
             int weatherBlockIndex = jsonResponse.indexOf("\"current_weather\"");
             if (weatherBlockIndex == -1) throw new Exception("No current_weather data found.");
 
@@ -296,6 +292,33 @@ public class DetailsParcoursController {
             btnReturn.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println("[Navigation Error] : " + e.getMessage());
+        }
+    }
+
+
+    private void goToPublications() {
+        if (currentParcours == null) {
+            System.err.println("No parcours selected!");
+            return;
+        }
+
+        try {
+
+            mapView.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPublications.fxml"));
+            Parent root = loader.load();
+
+
+            AfficherPublicationsController controller = loader.getController();
+            controller.initData(currentParcours);
+
+
+            btnViewPublications.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading AfficherPublications.fxml");
         }
     }
 }
