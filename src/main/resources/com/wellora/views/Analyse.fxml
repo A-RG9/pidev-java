@@ -78,6 +78,7 @@
                         <NumberAxis label="Calories (kcal)" side="LEFT" />
                     </yAxis>
                 </BarChart>
+                <Button text="📥 Télécharger en PDF" onAction="#downloadPdf" styleClass="primary-button"/>
             </VBox>
 
         </VBox>

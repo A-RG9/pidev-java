@@ -132,21 +132,31 @@ public class RecettesController {
         }
 
         // Appliquer le mode CLAIR au dialogue si actif sur la page principale
+        // Appliquer le mode CLAIR au dialogue si actif sur la page principale
         if (btnThemeToggle.isSelected()) {
             dialogPane.getStyleClass().add("light-theme");
         }
+
+        // --- AJOUTEZ CES DEUX LIGNES POUR AGRANDIR LA FENÊTRE ---
+        dialogPane.setPrefWidth(450);  // Largeur de la fenêtre
+        dialogPane.setPrefHeight(320); // Hauteur de la fenêtre
 
         ButtonType btnValider = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
         dialogPane.getButtonTypes().addAll(btnValider, ButtonType.CANCEL);
 
         DatePicker datePicker = new DatePicker(LocalDate.now());
+        datePicker.getStyleClass().add("date-picker-custom");
+        datePicker.setPrefWidth(250); // Agrandir aussi le champ de date
 
         ComboBox<String> typeBox = new ComboBox<>();
         typeBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
         typeBox.setValue("Lunch");
+        typeBox.setPrefWidth(250); // Agrandir aussi le menu déroulant
 
-        VBox box = new VBox(10);
-        box.setPadding(new Insets(20, 0, 0, 0));
+        // On augmente l'espacement entre les éléments (15 au lieu de 10)
+        VBox box = new VBox(15);
+        // On ajoute des marges tout autour (Haut, Droite, Bas, Gauche) pour aérer le contenu
+        box.setPadding(new Insets(20, 20, 20, 20));
 
         Label lblDate = new Label("Choisissez la date :");
         Label lblRepas = new Label("Moment de la journée :");

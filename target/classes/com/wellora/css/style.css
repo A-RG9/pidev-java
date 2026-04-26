@@ -371,49 +371,48 @@
     -fx-text-fill: #F3F4F6;
 }
 
-/* ================== DATEPICKER CUSTOMIZATION ================== */
+/* =========================================
+   DATEPICKER (CHAMP ET CALENDRIER)
+   ========================================= */
+
+/* --- 1. CHAMP DE SAISIE (SOMBRE PAR DÉFAUT) --- */
 .date-picker-custom {
     -fx-background-color: transparent;
 }
 .date-picker-custom > .text-field {
     -fx-background-color: #1a202c;
     -fx-text-fill: white;
-    -fx-padding: 8 12;
-    -fx-background-radius: 8 0 0 8;
     -fx-border-color: #2A2F3D;
     -fx-border-radius: 8 0 0 8;
+    -fx-background-radius: 8 0 0 8;
 }
 .date-picker-custom > .arrow-button {
     -fx-background-color: #1a202c;
-    -fx-background-radius: 0 8 8 0;
     -fx-border-color: #2A2F3D;
     -fx-border-radius: 0 8 8 0;
-    -fx-padding: 8 12;
+    -fx-background-radius: 0 8 8 0;
     -fx-cursor: hand;
 }
-.date-picker-custom > .arrow-button:hover {
-    -fx-background-color: #2A2F3D;
-}
-.date-picker-custom > .arrow-button > .arrow {
-    -fx-background-color: #00E6A4;
+.date-picker-custom > .arrow-button .arrow {
+    -fx-background-color: #00E6A4; /* Icône verte */
 }
 
-/* DatePicker Popup Calendar */
+/* --- 2. POPUP CALENDRIER (SOMBRE PAR DÉFAUT) --- */
 .date-picker-popup {
-    -fx-background-color: #11151c;
+    -fx-background-color: #1a202c;
     -fx-border-color: #2A2F3D;
 }
 .date-picker-popup .month-year-pane {
-    -fx-background-color: #1a202c;
+    -fx-background-color: #11151c; /* L'en-tête avec le mois */
 }
 .date-picker-popup .month-year-pane .label {
     -fx-text-fill: white;
 }
 .date-picker-popup .day-name-cell {
-    -fx-text-fill: #9CA3AF;
+    -fx-text-fill: #9CA3AF; /* Lun, Mar, Mer... */
 }
 .date-picker-popup .day-cell {
-    -fx-background-color: #11151c;
+    -fx-background-color: #1a202c;
     -fx-text-fill: white;
 }
 .date-picker-popup .day-cell:hover {
@@ -422,6 +421,52 @@
 .date-picker-popup .day-cell:selected {
     -fx-background-color: #00E6A4;
     -fx-text-fill: #11151c;
+    -fx-font-weight: bold;
+}
+
+/* =========================================
+   DATEPICKER - MODE CLAIR
+   ========================================= */
+
+/* --- 1. CHAMP DE SAISIE (MODE CLAIR) --- */
+.light-theme .date-picker-custom > .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker-custom > .arrow-button {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker-custom > .arrow-button .arrow {
+    -fx-background-color: #00BFA5;
+}
+
+/* --- 2. POPUP CALENDRIER (MODE CLAIR) --- */
+.light-theme .date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+}
+.light-theme .date-picker-popup .month-year-pane {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .date-picker-popup .month-year-pane .label {
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+}
+.light-theme .date-picker-popup .day-name-cell {
+    -fx-text-fill: #6B7280;
+}
+.light-theme .date-picker-popup .day-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+.light-theme .date-picker-popup .day-cell:hover {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .date-picker-popup .day-cell:selected {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
@@ -501,4 +546,128 @@
 .scroll-pane,
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
+}
+
+/* =========================================
+   FORMULAIRE DE DIALOGUE (LABELS & BOUTONS)
+   ========================================= */
+
+/* Textes à l'intérieur du dialogue */
+.dialog-pane .content Label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.light-theme.dialog-pane .content Label {
+    -fx-text-fill: #111827;
+}
+
+/* Bouton d'action principal (Ajouter) */
+.dialog-pane .button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover {
+    -fx-background-color: #00A690;
+}
+
+/* Bouton Annuler (Sombre par défaut) */
+.dialog-pane .button:cancel {
+    -fx-background-color: #2A2F3D;
+}
+.dialog-pane .button:cancel:hover {
+    -fx-background-color: #3B4252;
+}
+
+/* Bouton Annuler (Mode Clair) */
+.light-theme.dialog-pane .button:cancel {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+.light-theme.dialog-pane .button:cancel:hover {
+    -fx-background-color: #D1D5DB;
+}
+
+/* =========================================
+   COMBOBOX (MENU DÉROULANT) - SOMBRE PAR DÉFAUT
+   ========================================= */
+
+/* 1. La boîte principale */
+.combo-box {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* Le texte de l'élément actuellement affiché/sélectionné */
+.combo-box > .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+/* Le petit bouton flèche à droite */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+.combo-box .arrow {
+    -fx-background-color: #00E6A4; /* Flèche verte */
+}
+
+/* 2. La fenêtre déroulante (Popup) */
+.combo-box-popup .list-view {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-control-inner-background: #1a202c; /* Force le fond interne en sombre */
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Les choix (Breakfast, Lunch, etc.) dans la liste */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-padding: 8 12;
+}
+
+/* L'effet au passage de la souris et au clic dans la liste */
+.combo-box-popup .list-view .list-cell:filled:hover,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: #00E6A4; /* Texte en vert au survol */
+}
+
+/* =========================================
+   COMBOBOX - MODE CLAIR
+   ========================================= */
+
+/* Boîte principale claire */
+.light-theme .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .combo-box > .list-cell {
+    -fx-text-fill: #111827;
+}
+
+/* Fenêtre déroulante claire */
+.light-theme .combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+    -fx-control-inner-background: white;
+}
+.light-theme .combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+
+/* Effet au survol en mode clair */
+.light-theme .combo-box-popup .list-view .list-cell:filled:hover,
+.light-theme .combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #00BFA5;
+}
 }

@@ -8,10 +8,12 @@ C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\dao\FoodLogDA
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\dao\MealPlanDAO.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\dao\NutritionGoalDAO.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\Main.java
+C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\models\DailyPlan.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\models\FoodLog.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\models\MealPlan.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\models\NutritionGoal.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\models\Recipe.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\com\wellora\ThemeManager.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\services\NutritionApiService.java
+C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\services\PdfExportService.java
 C:\Users\LENOVO STORE\Desktop\PIDEV-JAVA\src\main\java\services\RecipeApiService.java

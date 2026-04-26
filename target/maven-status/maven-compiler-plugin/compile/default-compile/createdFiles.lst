@@ -1,5 +1,7 @@
 com\wellora\controllers\JournalController.class
 com\wellora\dao\MealPlanDAO.class
+com\wellora\models\DailyPlan.class
+com\wellora\services\PdfExportService.class
 com\wellora\controllers\PlanificateurController.class
 com\wellora\controllers\AnalyseController.class
 com\wellora\utils\ThemeManager.class
