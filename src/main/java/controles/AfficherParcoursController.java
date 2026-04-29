@@ -73,8 +73,8 @@ public class AfficherParcoursController {
         fetchUserRealLocation();
 
         if (sortCombo != null) {
-            sortCombo.setItems(FXCollections.observableArrayList("Date de création", "Nom", "Distance", "Publications"));
-            sortCombo.setValue("Date de création");
+            sortCombo.setItems(FXCollections.observableArrayList("Creation date", "Name", "Distance", "Publications"));
+            sortCombo.setValue("Creation date");
             sortCombo.setOnAction(e -> applyFilters());
         }
         if (btnSortAsc != null && btnSortDesc != null) {

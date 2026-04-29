@@ -131,13 +131,13 @@ public class ParcoursCardController {
             Period period = Period.between(creationDate, today);
 
             if (period.getYears() > 0) {
-                return "il y a " + period.getYears() + " an(s)";
+                return "" + period.getYears() + " year ago";
             } else if (period.getMonths() > 0) {
-                return "il y a " + period.getMonths() + " mois";
+                return "" + period.getMonths() + " month ago";
             } else if (period.getDays() > 0) {
-                return "il y a " + period.getDays() + " jour(s)";
+                return "" + period.getDays() + " days ago";
             } else {
-                return "aujourd'hui";
+                return "today";
             }
         } catch (Exception e) {
             System.err.println("Error formatting date '"+dateString+"': " + e.getMessage());

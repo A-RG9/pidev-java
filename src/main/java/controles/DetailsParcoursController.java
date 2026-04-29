@@ -151,7 +151,7 @@ public class DetailsParcoursController {
         try {
             LocalDate creationDate = LocalDate.parse(p.getDate_creation());
             long daysBetween = ChronoUnit.DAYS.between(creationDate, LocalDate.now());
-            String timeAgo = daysBetween == 0 ? "Aujourd'hui" : "il y a " + daysBetween + " jours";
+            String timeAgo = daysBetween == 0 ? "Aujourd'hui" : " " + daysBetween + " days ago";
             heroDate.setText("📅 " + timeAgo);
             summaryDate.setText(timeAgo);
         } catch (Exception e) {

@@ -8,7 +8,7 @@
     <children>
         <VBox>
             <children>
-                <VBox spacing="5.0" style="-fx-background-color: #042b4d; -fx-padding: 20 40 20 40;">
+                <VBox spacing="5.0" style="-fx-background-color: #0eb0e2; -fx-padding: 20 40 20 40;">
                     <children>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                             <children>
@@ -40,7 +40,7 @@
 
                                 <VBox spacing="8.0">
                                     <children>
-                                        <Label style="-fx-text-fill: #808e9b; -fx-font-size: 14;" text="Parcours Name" />
+                                        <Label style="-fx-text-fill: #808e9b; -fx-font-size: 14;" text="Health Trail Name" />
                                         <TextField fx:id="searchName" promptText="Search by name..." style="-fx-background-color: white; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-padding: 10;" />
                                     </children>
                                 </VBox>
@@ -150,7 +150,7 @@
             </children>
         </VBox>
 
-        <Button fx:id="btnToggleChat" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #042b4d; -fx-text-fill: white; -fx-background-radius: 30; -fx-font-size: 24; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4); -fx-cursor: hand;" text="💬" StackPane.alignment="BOTTOM_RIGHT">
+        <Button fx:id="btnToggleChat" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #17c8c8; -fx-text-fill: white; -fx-background-radius: 30; -fx-font-size: 24; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4); -fx-cursor: hand;" text="💬" StackPane.alignment="BOTTOM_RIGHT">
             <StackPane.margin>
                 <Insets bottom="20.0" right="30.0" />
             </StackPane.margin>
