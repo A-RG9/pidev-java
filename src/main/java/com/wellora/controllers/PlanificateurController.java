@@ -2,7 +2,9 @@ package com.wellora.controllers;
 
 import com.wellora.services.NutritionApiService;
 import com.wellora.dao.MealPlanDAO;
+import com.wellora.dao.FoodLogDAO;
 import com.wellora.models.MealPlan;
+import com.wellora.models.FoodLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,6 +42,7 @@ public class PlanificateurController {
 
     private final MealPlanDAO dao = new MealPlanDAO();
     private final NutritionApiService apiService = new NutritionApiService();
+    private final FoodLogDAO foodLogDao = new FoodLogDAO();
 
     // Identifiants
     private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
@@ -275,6 +278,25 @@ public class PlanificateurController {
             boolean newStatus = !selected.isCompleted();
             if (dao.toggleCompletion(selected.getId(), newStatus)) {
                 refreshData();
+
+                // Si le nouveau statut est "Terminé", on l'ajoute au journal
+                if (newStatus) {
+                    // Création de l'entrée FoodLog avec l'ordre EXACT du constructeur
+                    FoodLog newEntry = new FoodLog(
+                            0,                      // id : 0 car c'est un nouvel enregistrement pour la BDD
+                            currentUserUuid,        // userUuid : le tien est un String
+                            selected.getDate(),     // date : LocalDate
+                            selected.getMealType(), // mealType : String (Breakfast, Lunch...)
+                            selected.getCalories(), // totalCalories : int
+                            0.0,                    // totalProtein : double
+                            0.0,                    // totalCarbs : double
+                            0.0                     // totalFats : double
+                    );
+
+                    if(foodLogDao.addFoodLog(newEntry)) {
+                        showCustomAlert(Alert.AlertType.INFORMATION, "Succès", "✅ Le plat '" + selected.getName() + "' a été ajouté à ton Journal Alimentaire !");
+                    }
+                }
             }
         }
     }

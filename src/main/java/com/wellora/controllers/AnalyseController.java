@@ -1,5 +1,8 @@
 package com.wellora.controllers;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label; // <-- NOUVEL IMPORT
 import com.wellora.dao.FoodLogDAO;
 import com.wellora.dao.NutritionGoalDAO;
 import com.wellora.dao.MealPlanDAO;
@@ -7,6 +10,7 @@ import com.wellora.models.NutritionGoal;
 import com.wellora.models.MealPlan;
 import com.wellora.models.DailyPlan;
 import com.wellora.services.PdfExportService;
+import com.wellora.services.AiService;
 import com.wellora.utils.ThemeManager;
 
 import javafx.event.ActionEvent;
@@ -33,15 +37,17 @@ public class AnalyseController {
     @FXML private ToggleButton btnThemeToggle;
     @FXML private BarChart<String, Number> progressChart;
 
+    // NOUVEAU : Le composant qui va afficher le texte de l'IA
+    @FXML private Label aiResponseLabel;
+
     private final FoodLogDAO foodLogDao = new FoodLogDAO();
     private final NutritionGoalDAO goalDao = new NutritionGoalDAO();
-    private final MealPlanDAO mealPlanDao = new MealPlanDAO(); // Ajout du DAO pour le PDF
+    private final MealPlanDAO mealPlanDao = new MealPlanDAO();
 
     private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
 
     @FXML
     public void initialize() {
-        // --- GESTION DU THEME GLOBAL ---
         if (ThemeManager.isDarkMode) {
             btnThemeToggle.setSelected(true);
             btnThemeToggle.setText("☀️ Mode Clair");
@@ -54,7 +60,6 @@ public class AnalyseController {
             rootPane.getStyleClass().remove("light-theme");
         }
 
-        // --- CHARGEMENT DU GRAPHIQUE ---
         loadChartData();
     }
 
@@ -69,20 +74,16 @@ public class AnalyseController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
 
-        // On boucle sur les 7 derniers jours (de J-6 à Aujourd'hui)
         for (int i = 6; i >= 0; i--) {
             LocalDate date = LocalDate.now().minusDays(i);
             String dateString = date.format(formatter);
 
-            // 1. Récupérer les calories consommées
             double[] totals = foodLogDao.getDailyTotals(currentUserUuid, date);
             double caloriesConsommees = totals[0];
 
-            // 2. Récupérer l'objectif
             NutritionGoal dailyGoal = goalDao.getGoalByDate(currentUserUuid, date);
             int targetCalories = (dailyGoal != null && dailyGoal.getCaloriesTarget() > 0) ? dailyGoal.getCaloriesTarget() : 2000;
 
-            // 3. Ajouter les données au graphique
             seriesConsomme.getData().add(new XYChart.Data<>(dateString, caloriesConsommees));
             seriesObjectif.getData().add(new XYChart.Data<>(dateString, targetCalories));
         }
@@ -105,26 +106,21 @@ public class AnalyseController {
     }
 
     // ==========================================
-    // EXPORT PDF : GRAPHIQUE + 7 DERNIERS JOURS
+    // EXPORT PDF
     // ==========================================
     @FXML
     public void downloadPdf(ActionEvent event) {
         List<DailyPlan> weeklyPlan = new ArrayList<>();
         DateTimeFormatter displayFormat = DateTimeFormatter.ofPattern("EEEE dd MMM");
 
-        // Boucle sur les 7 derniers jours
         for (int i = 6; i >= 0; i--) {
             LocalDate pastDate = LocalDate.now().minusDays(i);
             DailyPlan dayPlan = new DailyPlan(pastDate.format(displayFormat));
 
-            // On récupère les plats de ce jour depuis la BDD
             List<MealPlan> mealsOfTheDay = mealPlanDao.getPlansByDate(currentUserUuid, pastDate);
 
-            // On trie chaque plat dans le bon moment de la journée
             for (MealPlan meal : mealsOfTheDay) {
                 String type = meal.getMealType();
-
-                // CRÉATION DU TEXTE AVEC LE STATUT
                 String status = meal.isCompleted() ? "\n✅ Terminé" : "\n⏳ En cours";
                 String mealText = meal.getName() + status;
 
@@ -143,7 +139,6 @@ public class AnalyseController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         PdfExportService pdfService = new PdfExportService();
-
         pdfService.exportPlanToPdf(stage, progressChart, weeklyPlan);
     }
 
@@ -189,5 +184,66 @@ public class AnalyseController {
         }
     }
 
+    // ==========================================
+    // IA - COACH NUTRITIONNEL (Basé sur le Journal)
+    // ==========================================
+    @FXML
+    public void askAiForAdvice(ActionEvent event) {
+        StringBuilder nutritionData = new StringBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
 
+        boolean hasData = false;
+
+        for (int i = 6; i >= 0; i--) {
+            LocalDate pastDate = LocalDate.now().minusDays(i);
+
+            // 1. On lit depuis le Journal Alimentaire (FoodLogDAO) au lieu du Planificateur
+            double[] totals = foodLogDao.getDailyTotals(currentUserUuid, pastDate);
+            double caloriesConsommees = totals[0];
+
+            // 2. On récupère l'objectif de la journée pour que l'IA puisse comparer
+            NutritionGoal dailyGoal = goalDao.getGoalByDate(currentUserUuid, pastDate);
+            int targetCalories = (dailyGoal != null && dailyGoal.getCaloriesTarget() > 0) ? dailyGoal.getCaloriesTarget() : 2000;
+
+            // S'il y a eu des calories consommées ce jour-là, on les ajoute au prompt
+            if (caloriesConsommees > 0) {
+                hasData = true;
+                nutritionData.append("Jour ").append(pastDate.format(formatter)).append(" : ");
+                nutritionData.append(caloriesConsommees).append(" kcal consommées ");
+                nutritionData.append("(Objectif : ").append(targetCalories).append(" kcal). ");
+
+                // Si ta méthode getDailyTotals renvoie aussi les macros aux index 1, 2, 3 (Protéines, Glucides, Lipides), on les donne à l'IA !
+                if (totals.length >= 4) {
+                    nutritionData.append("Macros -> Protéines: ").append(totals[1]).append("g, ")
+                            .append("Glucides: ").append(totals[2]).append("g, ")
+                            .append("Lipides: ").append(totals[3]).append("g.");
+                }
+                nutritionData.append("\n");
+            }
+        }
+
+        if (!hasData) {
+            aiResponseLabel.setText("❌ Le coach a besoin de données ! Remplis ton Journal Alimentaire des 7 derniers jours.");
+            return;
+        }
+
+        // On affiche un texte d'attente sur l'interface
+        aiResponseLabel.setText("⏳ Le coach analyse ton journal alimentaire, un instant...");
+
+        new Thread(() -> {
+            AiService aiService = new AiService();
+
+            // On envoie un prompt clair avec les données réelles
+            String prompt = "Agis comme un coach en nutrition. Voici mon journal alimentaire des derniers jours. " +
+                    "Fais-moi une analyse courte et donne-moi un conseil pertinent basé sur ces données :\n" +
+                    nutritionData.toString();
+
+            String aiResponse = aiService.getNutritionalCoachAdvice(prompt);
+
+            // On met à jour l'interface avec la réponse
+            Platform.runLater(() -> {
+                aiResponseLabel.setText("🧑‍⚕️ Coach : " + aiResponse);
+            });
+        }).start();
+    }
 }

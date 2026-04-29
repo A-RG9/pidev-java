@@ -4,6 +4,7 @@ com\wellora\models\DailyPlan.class
 com\wellora\services\PdfExportService.class
 com\wellora\controllers\PlanificateurController.class
 com\wellora\controllers\AnalyseController.class
+com\wellora\services\AiService.class
 com\wellora\utils\ThemeManager.class
 com\wellora\controllers\RecettesController.class
 com\wellora\services\NutritionApiService.class

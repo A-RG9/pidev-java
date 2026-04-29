@@ -69,7 +69,7 @@
                 </VBox>
             </HBox>
 
-            <VBox styleClass="card" VBox.vgrow="ALWAYS" style="-fx-padding: 20;">
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" style="-fx-padding: 20;" spacing="15">
                 <BarChart fx:id="progressChart" VBox.vgrow="ALWAYS" animated="true">
                     <xAxis>
                         <CategoryAxis label="Jours" side="BOTTOM" />
@@ -78,9 +78,15 @@
                         <NumberAxis label="Calories (kcal)" side="LEFT" />
                     </yAxis>
                 </BarChart>
-                <Button text="📥 Télécharger en PDF" onAction="#downloadPdf" styleClass="primary-button"/>
-            </VBox>
 
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <Button text="📥 Télécharger en PDF" onAction="#downloadPdf" styleClass="primary-button"/>
+                    <Button text="🧑‍⚕️ Conseil du Coach IA" onAction="#askAiForAdvice" styleClass="primary-button" style="-fx-background-color: #8B5CF6; -fx-text-fill: white; -fx-border-color: transparent;"/>
+                </HBox>
+
+                <Label fx:id="aiResponseLabel" wrapText="true" text="" style="-fx-font-size: 14px; -fx-text-fill: #6B7280; -fx-font-style: italic; -fx-padding: 10 0 0 0;" maxWidth="Infinity"/>
+
+            </VBox>
         </VBox>
     </center>
 </BorderPane>
