@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="rootPane" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.wellora.controllers.AnalyseController" >
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="260" spacing="5">
+
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="logo-container">
+                <Label text="♥" styleClass="logo-icon"/>
+                <Label text="WellCare" styleClass="logo-text"/>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="user-card">
+                <Label text="tt" styleClass="user-avatar"/>
+                <VBox alignment="CENTER_LEFT" spacing="2">
+                    <Label text="test test" styleClass="user-name"/>
+                    <Label text="test@wellora.com" styleClass="user-email"/>
+                </VBox>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="sidebar-scroll" VBox.vgrow="ALWAYS">
+                <VBox spacing="2">
+
+                    <HBox alignment="CENTER_LEFT" styleClass="nav-category">
+                        <Label text="♡" styleClass="nav-icon"/>
+                        <Label text="Santé" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Label text="⌄" styleClass="chevron-icon"/>
+                    </HBox>
+                    <VBox styleClass="sub-menu">
+                        <Button text="🏠  Home" styleClass="sub-nav-button" onAction="#navToHome" maxWidth="Infinity"/>
+                        <Button text="📊  Dashboard Santé" styleClass="sub-nav-button" onAction="#navToHealthDashboard" maxWidth="Infinity"/>
+                        <Button text="📒  Journaux" styleClass="sub-nav-button" onAction="#navToHealthJournals" maxWidth="Infinity"/>
+                        <Button text="📝  Entrées" styleClass="sub-nav-button" onAction="#navToHealthEntries" maxWidth="Infinity"/>
+                        <Button text="📅  Calendrier" styleClass="sub-nav-button" onAction="#navToCalendar" maxWidth="Infinity"/>
+                        <Button text="🤖  Prédiction IA" styleClass="sub-nav-button" onAction="#navToPrediction" maxWidth="Infinity"/>
+                    </VBox>
+
+
+                    <HBox alignment="CENTER_LEFT" styleClass="nav-category">
+                        <Label text="📖" styleClass="nav-icon"/>
+                        <Label text="Nutrition" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Label text="⌃" styleClass="chevron-icon"/>
+                    </HBox>
+
+                    <VBox styleClass="sub-menu">
+                        <Button text="Dashboard" styleClass="sub-nav-button" onAction="#navToDashboard" maxWidth="Infinity"/>
+                        <Button text="Journal Alimentaire" styleClass="sub-nav-button" onAction="#navToJournal" maxWidth="Infinity"/>
+                        <Button text="Planificateur" styleClass="sub-nav-button" onAction="#navToPlanificateur" maxWidth="Infinity"/>
+                        <Button text="Recettes (IA)" styleClass="sub-nav-button" onAction="#navToRecettes" maxWidth="Infinity"/>
+                        <Button text="Objectifs" styleClass="sub-nav-button" onAction="#navToObjectifs" maxWidth="Infinity"/>
+                        <Button text="Analyse (Progrès)" styleClass="sub-nav-button, active-text" onAction="#navToAnalyse" maxWidth="Infinity"/>
+                    </VBox>
+
+                </VBox>
+            </ScrollPane>
+
+            <ToggleButton fx:id="btnThemeToggle" text="🌙 Mode Sombre" styleClass="theme-toggle" onAction="#toggleTheme" maxWidth="Infinity"/>
+            <VBox spacing="2" styleClass="bottom-actions">
+                <Button text="«     Réduire" styleClass="action-button" maxWidth="Infinity"/>
+                <Button text="👤   Mon Profil" styleClass="action-button" maxWidth="Infinity"/>
+                <Button text="🚪   Déconnexion" styleClass="action-button, logout-button" maxWidth="Infinity"/>
+            </VBox>
+
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="25" style="-fx-padding: 40;">
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Analyse de ma progression" styleClass="main-title"/>
+                    <Label text="Comparaison des calories consommées et de vos objectifs sur les 7 derniers jours." style="-fx-text-fill: #9CA3AF; -fx-font-size: 14px;"/>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" style="-fx-padding: 20;" spacing="15">
+                <BarChart fx:id="progressChart" VBox.vgrow="ALWAYS" animated="true">
+                    <xAxis>
+                        <CategoryAxis label="Jours" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Calories (kcal)" side="LEFT" />
+                    </yAxis>
+                </BarChart>
+
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <Button text="📥 Télécharger en PDF" onAction="#downloadPdf" styleClass="primary-button"/>
+                    <Button text="🧑‍⚕️ Conseil du Coach IA" onAction="#askAiForAdvice" styleClass="primary-button" style="-fx-background-color: #8B5CF6; -fx-text-fill: white; -fx-border-color: transparent;"/>
+                </HBox>
+
+                <Label fx:id="aiResponseLabel" wrapText="true" text="" style="-fx-font-size: 14px; -fx-text-fill: #6B7280; -fx-font-style: italic; -fx-padding: 10 0 0 0;" maxWidth="Infinity"/>
+
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

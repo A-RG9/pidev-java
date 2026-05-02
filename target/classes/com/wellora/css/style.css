@@ -1,0 +1,814 @@
+/* VIEW LAYER: Styling */
+.root {
+    -fx-background-color: #121418;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ================== SIDEBAR ================== */
+.sidebar {
+    -fx-background-color: #11151c; /* Background très sombre */
+    -fx-padding: 20 15 20 15;
+}
+
+/* Logo */
+.logo-container {
+    -fx-padding: 0 0 20 5;
+}
+.logo-icon {
+    -fx-background-color: #00E6A4; /* Vert émeraude/Teal */
+    -fx-text-fill: white;
+    -fx-padding: 5 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+}
+.logo-text {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Carte Utilisateur */
+.user-card {
+    -fx-background-color: #1a202c; /* Légèrement plus clair que le fond */
+    -fx-padding: 12 15;
+    -fx-background-radius: 10;
+    -fx-margin: 0 0 15 0;
+}
+.user-avatar {
+    -fx-background-color: #00E6A4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-min-width: 38px;
+    -fx-min-height: 38px;
+    -fx-background-radius: 50%; /* Rend le fond rond */
+}
+.user-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+.user-email {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 11px;
+}
+
+/* Menu principal (Santé, Nutrition) */
+.nav-category {
+    -fx-padding: 10 10;
+    -fx-cursor: hand;
+}
+.nav-category .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+.nav-category .nav-icon {
+    -fx-padding: 0 15 0 0;
+}
+.nav-category:hover .label {
+    -fx-text-fill: white;
+}
+
+/* Sous-menus (Dashboard, etc.) */
+.sub-menu {
+    -fx-padding: 0 0 10 45; /* Indentation vers la droite */
+}
+.sub-nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+.sub-nav-button:hover {
+    -fx-text-fill: white;
+}
+.sub-nav-button.active-text {
+    -fx-text-fill: #00E6A4; /* Le texte devient vert pour la page active */
+    -fx-font-weight: bold;
+}
+.sub-nav-button.active-text:hover {
+    -fx-text-fill: #00E6A4;
+}
+
+/* Barre de défilement (Scrollbar invisible mais fonctionnelle) */
+.sidebar-scroll {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #11151c;
+}
+.sidebar-scroll .viewport {
+    -fx-background-color: transparent;
+}
+.sidebar-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 5;
+}
+.sidebar-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #2A2F3D;
+    -fx-background-radius: 5;
+}
+
+/* Actions du bas (Réduire, Profil, Déconnexion) */
+.bottom-actions {
+    -fx-padding: 15 0 0 0;
+}
+.action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+.action-button:hover {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.logout-button {
+    -fx-text-fill: #FF6B6B; /* Rouge doux */
+}
+.logout-button:hover {
+    -fx-text-fill: #FF6B6B;
+    -fx-background-color: rgba(255, 107, 107, 0.1);
+}
+
+.sidebar-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 20 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 15 12 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+}
+
+.nav-button.active {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.card {
+    -fx-background-color: #1C2026;
+    -fx-background-radius: 15;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+.card-title {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+
+.card-value {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.primary-button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #00A690;
+}
+
+.secondary-button {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #3B4252;
+}
+
+.danger-button {
+    -fx-background-color: #E63946;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #D62828;
+}
+
+/* =========================================
+   TableView Styling for Better Visibility (LATEST UPDATES)
+   ========================================= */
+
+.table-view {
+    -fx-background-color: #1C2026;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2A2F3D;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 5 0 5 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #2A2F3D transparent;
+    -fx-cell-size: 45px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #21252C;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #00BFA5;
+}
+
+.table-cell {
+    -fx-text-fill: #F3F4F6;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 15px;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/* =========================================
+   Typography & Toggle Button Base
+   ========================================= */
+.main-title { -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; }
+.main-subtitle { -fx-text-fill: #9CA3AF; -fx-font-size: 14px; }
+.section-title { -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; }
+
+.theme-toggle {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.theme-toggle:selected {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+
+/* =========================================
+   LIGHT THEME OVERRIDES
+   ========================================= */
+.light-theme {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .logo-text {
+    -fx-text-fill: #111827; /* Dark gray/black for light mode */
+}
+.light-theme .sidebar {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 0);
+}
+.light-theme .sidebar-title { -fx-text-fill: #111827; }
+.light-theme .sidebar-subtitle { -fx-text-fill: #6B7280; }
+.light-theme .nav-button { -fx-text-fill: #4B5563; }
+.light-theme .nav-button:hover { -fx-background-color: #F3F4F6; -fx-text-fill: #111827; }
+.light-theme .nav-button.active { -fx-background-color: #00BFA5; -fx-text-fill: white; }
+
+.light-theme .card {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+.light-theme .card-value { -fx-text-fill: #111827; }
+.light-theme .card-title { -fx-text-fill: #6B7280; }
+
+.light-theme .main-title { -fx-text-fill: #111827; }
+.light-theme .main-subtitle { -fx-text-fill: #6B7280; }
+.light-theme .section-title { -fx-text-fill: #111827; }
+
+.light-theme .secondary-button {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+.light-theme .secondary-button:hover { -fx-background-color: #D1D5DB; }
+
+.light-theme .table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E5E7EB;
+}
+.light-theme .table-view .column-header-background {
+    -fx-background-color: #F9FAFB;
+}
+.light-theme .table-view .column-header .label {
+    -fx-text-fill: #4B5563;
+}
+.light-theme .table-row-cell {
+    -fx-border-color: transparent transparent #E5E7EB transparent;
+}
+.light-theme .table-row-cell:odd {
+    -fx-background-color: #F9FAFB;
+}
+.light-theme .table-cell {
+    -fx-text-fill: #111827;
+}
+.light-theme .table-row-cell:selected {
+    -fx-background-color: #00BFA5;
+}
+.light-theme .table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
+/* Sub-menu buttons in Light Theme */
+.light-theme .sub-nav-button {
+    -fx-text-fill: #4B5563; /* Dark gray */
+}
+
+.light-theme .sub-nav-button:hover {
+    -fx-background-color: #F3F4F6; -fx-text-fill: #111827; /* Very light gray background on hover */
+}
+
+.light-theme .sub-nav-button.active-text {
+    -fx-background-color: #00BFA5; -fx-text-fill: white;
+}
+
+.light-theme .sub-nav-button.active-text:hover {
+    -fx-text-fill: #F3F4F6;
+}
+
+/* =========================================
+   DATEPICKER (CHAMP ET CALENDRIER)
+   ========================================= */
+
+/* --- 1. CHAMP DE SAISIE (SOMBRE PAR DÉFAUT) --- */
+.date-picker-custom {
+    -fx-background-color: transparent;
+}
+.date-picker-custom > .text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 8 0 0 8;
+    -fx-background-radius: 8 0 0 8;
+}
+.date-picker-custom > .arrow-button {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 0 8 8 0;
+    -fx-background-radius: 0 8 8 0;
+    -fx-cursor: hand;
+}
+.date-picker-custom > .arrow-button .arrow {
+    -fx-background-color: #00E6A4; /* Icône verte */
+}
+
+/* --- 2. POPUP CALENDRIER (SOMBRE PAR DÉFAUT) --- */
+.date-picker-popup {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #11151c; /* L'en-tête avec le mois */
+}
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #9CA3AF; /* Lun, Mar, Mer... */
+}
+.date-picker-popup .day-cell {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #2A2F3D;
+}
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #00E6A4;
+    -fx-text-fill: #11151c;
+    -fx-font-weight: bold;
+}
+
+/* =========================================
+   DATEPICKER - MODE CLAIR
+   ========================================= */
+
+/* --- 1. CHAMP DE SAISIE (MODE CLAIR) --- */
+.light-theme .date-picker-custom > .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker-custom > .arrow-button {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker-custom > .arrow-button .arrow {
+    -fx-background-color: #00BFA5;
+}
+
+/* --- 2. POPUP CALENDRIER (MODE CLAIR) --- */
+.light-theme .date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+}
+.light-theme .date-picker-popup .month-year-pane {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .date-picker-popup .month-year-pane .label {
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+}
+.light-theme .date-picker-popup .day-name-cell {
+    -fx-text-fill: #6B7280;
+}
+.light-theme .date-picker-popup .day-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+.light-theme .date-picker-popup .day-cell:hover {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .date-picker-popup .day-cell:selected {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ======================================================= */
+/* ====== ADAPTATION DU GRAPHIQUE ======================== */
+/* ======================================================= */
+
+.chart-plot-background { -fx-background-color: transparent; }
+.axis { -fx-tick-label-fill: #9ca3af; }
+.axis-label { -fx-text-fill: #9ca3af; }
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines { -fx-stroke: #2A2F3D; }
+.axis-tick-mark { -fx-stroke: #9ca3af; }
+
+.default-color0.chart-bar { -fx-bar-fill: #00E6A4; }
+.default-color1.chart-bar { -fx-bar-fill: #FFB020; }
+
+.light-theme .chart-vertical-grid-lines,
+.light-theme .chart-horizontal-grid-lines { -fx-stroke: #E5E7EB; }
+.light-theme .axis { -fx-tick-label-fill: #4B5563; }
+.light-theme .axis-label { -fx-text-fill: #4B5563; }
+
+/* =========================================
+   CARTES DE RECETTES (PAR DÉFAUT = SOMBRE)
+   ========================================= */
+.recipe-card {
+    -fx-background-color: #1C2026;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+.recipe-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white; }
+.recipe-calories { -fx-text-fill: #00E6A4; -fx-font-weight: bold; }
+.recipe-instructions { -fx-text-fill: #9CA3AF; -fx-font-size: 13px; }
+
+/* CARTES DE RECETTES (MODE CLAIR) */
+.light-theme .recipe-card {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+.light-theme .recipe-title { -fx-text-fill: #111827; }
+.light-theme .recipe-calories { -fx-text-fill: #00BFA5; }
+.light-theme .recipe-instructions { -fx-text-fill: #4B5563; }
+
+/* =========================================
+   DIALOGUE (PAR DÉFAUT = SOMBRE)
+   ========================================= */
+.dialog-pane { -fx-background-color: #121418; }
+.dialog-pane > *.button-bar > *.container { -fx-background-color: #121418; }
+.dialog-pane > *.label.content { -fx-text-fill: white; }
+.dialog-pane:header *.header-panel { -fx-background-color: #1C2026; }
+.dialog-pane:header *.header-panel *.label { -fx-text-fill: white; }
+
+/* DIALOGUE (MODE CLAIR) */
+.light-theme.dialog-pane { -fx-background-color: #FFFFFF; }
+.light-theme.dialog-pane > *.button-bar > *.container { -fx-background-color: #F9FAFB; }
+.light-theme.dialog-pane > *.label.content { -fx-text-fill: #111827; }
+.light-theme.dialog-pane:header *.header-panel { -fx-background-color: #F3F4F6; }
+.light-theme.dialog-pane:header *.header-panel *.label { -fx-text-fill: #111827; }
+
+/* Champs de texte (TextField) généraux (PAR DÉFAUT = SOMBRE) */
+.text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Champs de texte (TextField) généraux (MODE CLAIR) */
+.light-theme .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #D1D5DB;
+}
+
+/* Nettoyer le ScrollPane des recettes */
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* =========================================
+   FORMULAIRE DE DIALOGUE (LABELS & BOUTONS)
+   ========================================= */
+
+/* Textes à l'intérieur du dialogue */
+.dialog-pane .content Label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.light-theme.dialog-pane .content Label {
+    -fx-text-fill: #111827;
+}
+
+/* Bouton d'action principal (Ajouter) */
+.dialog-pane .button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover {
+    -fx-background-color: #00A690;
+}
+
+/* Bouton Annuler (Sombre par défaut) */
+.dialog-pane .button:cancel {
+    -fx-background-color: #2A2F3D;
+}
+.dialog-pane .button:cancel:hover {
+    -fx-background-color: #3B4252;
+}
+
+/* Bouton Annuler (Mode Clair) */
+.light-theme.dialog-pane .button:cancel {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+.light-theme.dialog-pane .button:cancel:hover {
+    -fx-background-color: #D1D5DB;
+}
+
+/* =========================================
+   COMBOBOX (MENU DÉROULANT) - SOMBRE PAR DÉFAUT
+   ========================================= */
+
+/* 1. La boîte principale */
+.combo-box {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* Le texte de l'élément actuellement affiché/sélectionné */
+.combo-box > .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+/* Le petit bouton flèche à droite */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+.combo-box .arrow {
+    -fx-background-color: #00E6A4; /* Flèche verte */
+}
+
+/* 2. La fenêtre déroulante (Popup) */
+.combo-box-popup .list-view {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-control-inner-background: #1a202c; /* Force le fond interne en sombre */
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Les choix (Breakfast, Lunch, etc.) dans la liste */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-padding: 8 12;
+}
+
+/* L'effet au passage de la souris et au clic dans la liste */
+.combo-box-popup .list-view .list-cell:filled:hover,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: #00E6A4; /* Texte en vert au survol */
+}
+
+/* =========================================
+   COMBOBOX - MODE CLAIR
+   ========================================= */
+
+/* Boîte principale claire */
+.light-theme .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .combo-box > .list-cell {
+    -fx-text-fill: #111827;
+}
+
+/* Fenêtre déroulante claire */
+.light-theme .combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+    -fx-control-inner-background: white;
+}
+.light-theme .combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+
+/* Effet au survol en mode clair */
+.light-theme .combo-box-popup .list-view .list-cell:filled:hover,
+.light-theme .combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #00BFA5;
+}
+}
+/* =========================================
+   INTEG HEALTH MODULE — BUTTON VARIANTS
+   ========================================= */
+
+/* button is just the base - aliases to primary-button style */
+.button {
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.button-primary {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+.button-primary:hover { -fx-background-color: #00A690; }
+
+.button-success {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+}
+.button-success:hover { -fx-background-color: #219a52; }
+
+.button-danger {
+    -fx-background-color: #E63946;
+    -fx-text-fill: white;
+}
+.button-danger:hover { -fx-background-color: #c0392b; }
+
+.button-secondary {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: #9CA3AF;
+}
+.button-secondary:hover {
+    -fx-background-color: #3B4252;
+    -fx-text-fill: white;
+}
+
+/* Light theme overrides */
+.light-theme .button-secondary {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #374151;
+}
+.light-theme .button-secondary:hover {
+    -fx-background-color: #D1D5DB;
+    -fx-text-fill: #111827;
+}
+
+/* =========================================
+   INTEG HEALTH MODULE — TYPOGRAPHY
+   ========================================= */
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.section-label {
+    -fx-text-fill: #00E6A4;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.subsection-label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 13px;
+}
+
+.light-theme .header-label { -fx-text-fill: #111827; }
+.light-theme .section-label { -fx-text-fill: #00BFA5; }
+.light-theme .subsection-label { -fx-text-fill: #6B7280; }
+
+/* =========================================
+   INTEG HEALTH MODULE — FORM / CARD OVERRIDES
+   ========================================= */
+
+/* Labels inside GridPane/VBox in health forms */
+.root > VBox Label,
+.root Label {
+    -fx-text-fill: #E5E7EB;
+    -fx-font-size: 13px;
+}
+
+.light-theme .root > VBox Label,
+.light-theme .root Label {
+    -fx-text-fill: #374151;
+}
+
+/* DatePicker default (health forms) */
+.date-picker {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+.date-picker > .text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.date-picker .arrow-button {
+    -fx-background-color: #1a202c;
+}
+.date-picker .arrow {
+    -fx-background-color: #00E6A4;
+}
+
+.light-theme .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker > .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+.light-theme .date-picker .arrow-button { -fx-background-color: #F9FAFB; }
+.light-theme .date-picker .arrow { -fx-background-color: #00BFA5; }
+
+/* Slider */
+.slider .thumb {
+    -fx-background-color: #00E6A4;
+}
+.slider .track {
+    -fx-background-color: #2A2F3D;
+}
+.light-theme .slider .track { -fx-background-color: #D1D5DB; }
+
+/* ComboBox already styled above but ensure health module picks it up */
+
+/* Form labels in health module GridPanes */
+.form-label {
+    -fx-text-fill: #E5E7EB;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.light-theme .form-label {
+    -fx-text-fill: #374151;
+}

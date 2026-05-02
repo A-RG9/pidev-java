@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17" 
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.wellora.javafx.controller.HealthjournalFormController"
+      spacing="20" 
+      styleClass="root"
+      prefWidth="600" 
+      prefHeight="500">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+    
+    <!-- Header -->
+    <Label fx:id="headerLabel" text="Créer un Journal" styleClass="header-label"/>
+    
+    <!-- Form Card -->
+    <VBox spacing="20" styleClass="card">
+        
+        <GridPane hgap="15" vgap="15">
+            <!-- Hidden ID Field (for editing) -->
+            <Label styleClass="form-label" text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" 
+                   visible="false" managed="false"/>
+            <TextField fx:id="idField" GridPane.columnIndex="1" GridPane.rowIndex="0" 
+                      visible="false" managed="false" editable="false"/>
+            
+            <!-- Name -->
+            <Label styleClass="form-label" text="Nom du Journal:*" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" 
+                      promptText="Ex: Journal Janvier 2025" styleClass="text-field"/>
+            
+            <!-- Start Date -->
+            <Label styleClass="form-label" text="Date Début:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <DatePicker fx:id="datedebutPicker" GridPane.columnIndex="1" GridPane.rowIndex="2" 
+                       promptText="Sélectionner la date de début"/>
+            
+            <!-- End Date -->
+            <Label styleClass="form-label" text="Date Fin:*" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <DatePicker fx:id="datefinPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" 
+                       promptText="Sélectionner la date de fin"/>
+        </GridPane>
+        
+        <!-- Buttons -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="💾 Enregistrer" styleClass="button, button-success" 
+                    prefWidth="150" onAction="#save"/>
+            
+            <Button text="❌ Annuler" styleClass="button, button-secondary" 
+                    prefWidth="150" onAction="#cancel"/>
+        </HBox>
+        
+        <!-- Status -->
+        <Label fx:id="statusLabel" text="" 
+               style="-fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
+    </VBox>
+    
+    <!-- Instructions -->
+    <Label text="* Champs obligatoires" 
+           style="-fx-text-fill: #7f8c8d;"/>
+
+</VBox>

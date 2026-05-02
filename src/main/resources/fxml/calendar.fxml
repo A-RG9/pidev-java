@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.wellora.javafx.controller.CalendarController"
+            styleClass="main-scroll-pane">
+
+    <VBox spacing="20" styleClass="main-vbox">
+
+        <!-- Calendar Header -->
+        <VBox spacing="10" styleClass="header-card">
+            <Label text="📅 Calendrier de Santé" styleClass="page-title"/>
+            <Label text="Vue mensuelle et données externes" styleClass="page-subtitle"/>
+        </VBox>
+
+        <!-- Month Navigation -->
+        <HBox spacing="15" alignment="CENTER_LEFT" styleClass="navigation-bar">
+            <Button text="◀" onAction="#previousMonth" styleClass="button, button-secondary"/>
+            <Label fx:id="monthYearLabel" text="Avril 2026" styleClass="month-label"/>
+            <Button text="▶" onAction="#nextMonth" styleClass="button, button-secondary"/>
+        </HBox>
+
+        <!-- Calendar Grid -->
+        <VBox spacing="15" styleClass="calendar-card">
+
+            <!-- Day Headers -->
+            <GridPane fx:id="dayHeaderGrid" hgap="5" vgap="5">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="30"/>
+                </rowConstraints>
+
+                <Label text="Lun" GridPane.columnIndex="0" styleClass="day-header"/>
+                <Label text="Mar" GridPane.columnIndex="1" styleClass="day-header"/>
+                <Label text="Mer" GridPane.columnIndex="2" styleClass="day-header"/>
+                <Label text="Jeu" GridPane.columnIndex="3" styleClass="day-header"/>
+                <Label text="Ven" GridPane.columnIndex="4" styleClass="day-header"/>
+                <Label text="Sam" GridPane.columnIndex="5" styleClass="day-header"/>
+                <Label text="Dim" GridPane.columnIndex="6" styleClass="day-header"/>
+            </GridPane>
+
+            <!-- Calendar Days -->
+            <GridPane fx:id="calendarGrid" hgap="5" vgap="5">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                    <ColumnConstraints percentWidth="14.28" minWidth="80"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="80"/>
+                    <RowConstraints minHeight="80"/>
+                    <RowConstraints minHeight="80"/>
+                    <RowConstraints minHeight="80"/>
+                    <RowConstraints minHeight="80"/>
+                    <RowConstraints minHeight="80"/>
+                </rowConstraints>
+            </GridPane>
+
+        </VBox>
+
+        <!-- Selected Day Details -->
+        <VBox fx:id="detailsPanel" spacing="15" styleClass="details-card" visible="false">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="📋" styleClass="section-icon"/>
+                <Label fx:id="selectedDayLabel" text="Détails du jour" styleClass="section-title"/>
+            </HBox>
+
+            <GridPane hgap="15" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <!-- Health Score -->
+                <VBox GridPane.columnIndex="0" spacing="5">
+                    <Label text="Score de Santé" styleClass="detail-label"/>
+                    <Label fx:id="healthScoreLabel" text="--" styleClass="detail-value"/>
+                </VBox>
+
+                <!-- Symptoms Count -->
+                <VBox GridPane.columnIndex="1" spacing="5">
+                    <Label text="Symptômes" styleClass="detail-label"/>
+                    <Label fx:id="symptomsLabel" text="--" styleClass="detail-value"/>
+                </VBox>
+
+            </GridPane>
+
+            <!-- Weather Info -->
+            <VBox spacing="5" styleClass="weather-section">
+                <Label text="🌤️ Données Météo" styleClass="detail-label"/>
+                <HBox spacing="10">
+                    <Label fx:id="weatherIcon" text="--" styleClass="weather-icon"/>
+                    <VBox>
+                        <Label fx:id="temperatureLabel" text="Température: --" styleClass="weather-text"/>
+                        <Label fx:id="conditionsLabel" text="Conditions: --" styleClass="weather-text"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>
