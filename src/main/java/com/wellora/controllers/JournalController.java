@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+
 import com.wellora.utils.ThemeManager;
 
 public class JournalController extends BaseController {
@@ -45,6 +47,16 @@ public class JournalController extends BaseController {
 
     @FXML
     public void initialize() {
+        // --- TEST DE CONNEXION BDD ---
+        try {
+            java.sql.Connection conn = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/wellora", "root", "");
+            System.out.println("✅ DATABASE CONNECTED SUCCESSFULLY (Journal)!");
+        } catch (Exception e) {
+            showCustomAlert(Alert.AlertType.ERROR, "CRITICAL DB ERROR", "Why it failed:\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        // ------------------------------
+
         if (ThemeManager.isDarkMode) {
             btnThemeToggle.setSelected(true);
             btnThemeToggle.setText("☀️ Mode Clair");
@@ -77,7 +89,7 @@ public class JournalController extends BaseController {
             }
         });
 
-        // Charger les données initiales
+        // Charger les données initiales safely
         loadHistoryForDate(LocalDate.now());
     }
 
@@ -113,32 +125,72 @@ public class JournalController extends BaseController {
     }
 
     private void loadHistoryForDate(LocalDate date) {
-        double[] totals = dao.getDailyTotals(currentUserUuid, date);
-        lblCalories.setText(String.format("%.0f kcal", totals[0]));
-        lblProteines.setText(String.format("%.0fg", totals[1]));
-        lblGlucides.setText(String.format("%.0fg", totals[2]));
-        lblLipides.setText(String.format("%.0fg", totals[3]));
+        try {
+            double[] totals = dao.getDailyTotals(currentUserUuid, date);
+            lblCalories.setText(String.format("%.0f kcal", totals[0]));
+            lblProteines.setText(String.format("%.0fg", totals[1]));
+            lblGlucides.setText(String.format("%.0fg", totals[2]));
+            lblLipides.setText(String.format("%.0fg", totals[3]));
 
-        List<FoodLog> logs = dao.getFoodLogsByDate(currentUserUuid, date);
-        foodLogsList.setAll(logs);
+            List<FoodLog> logs = dao.getFoodLogsByDate(currentUserUuid, date);
+            foodLogsList.setAll(logs);
+
+            // Gestion de l'affichage si la BDD est vide pour cette date
+            if (logs.isEmpty()) {
+                tableHistorique.setPlaceholder(new Label("Aucun historique de repas pour cette date."));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error fetching history: " + e.getMessage());
+            tableHistorique.setPlaceholder(new Label("Erreur de connexion à la base de données."));
+            showCustomAlert(Alert.AlertType.ERROR, "Database Connection Error",
+                    "Impossible de récupérer l'historique.\nDétails: " + e.getMessage());
+        }
     }
 
-    // --- NAVIGATION ---
-    
+    // --- ALERTE CUSTOM POUR LES ERREURS ---
+    private Optional<ButtonType> showCustomAlert(Alert.AlertType type, String title, String message, ButtonType... buttonTypes) {
+        Alert alert;
+        if (buttonTypes.length > 0) {
+            alert = new Alert(type, message, buttonTypes);
+        } else {
+            alert = new Alert(type, message);
+        }
 
-    
+        alert.setTitle(title);
+        alert.setHeaderText(null);
 
+        DialogPane dialogPane = alert.getDialogPane();
+        try {
+            dialogPane.getStylesheets().add(getClass().getResource("/com/wellora/css/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("card");
 
+            if (ThemeManager.isDarkMode) {
+                dialogPane.getStyleClass().add("light-theme");
+                dialogPane.setStyle("-fx-background-color: #FFFFFF; -fx-font-family: 'Segoe UI', sans-serif;");
+            } else {
+                dialogPane.setStyle("-fx-background-color: #1F2937; -fx-font-family: 'Segoe UI', sans-serif;");
+                javafx.scene.Node content = dialogPane.lookup(".content.label");
+                if (content != null) content.setStyle("-fx-text-fill: white;");
+            }
+        } catch (Exception e) {
+            System.out.println("CSS non trouvé pour l'alerte.");
+        }
 
-    
+        for (ButtonType btnType : dialogPane.getButtonTypes()) {
+            Button btn = (Button) dialogPane.lookupButton(btnType);
+            if (btn != null) {
+                if (btnType == ButtonType.OK || btnType == ButtonType.YES) {
+                    btn.getStyleClass().add("primary-button");
+                } else if (btnType == ButtonType.NO || btnType == ButtonType.CANCEL) {
+                    btn.getStyleClass().add("secondary-button");
+                }
+            }
+        }
 
-    
-    
-
-    
-
+        return alert.showAndWait();
+    }
 
     @Override
     protected javafx.scene.Parent getRoot() { return rootPane; }
-
 }
