@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="850.0" prefWidth="1400.0" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.ModifierPublicationController">
+
+    <left>
+        <VBox prefWidth="280.0" style="-fx-background-color: #ffffff; -fx-border-color: #eaeff2; -fx-border-width: 0 1 0 0;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+                <padding>
+                    <Insets bottom="20.0" left="25.0" right="20.0" top="25.0" />
+                </padding>
+                <children>
+                    <Label alignment="CENTER" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #00d09c; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 16;" text="♡" />
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #0a1b2a; -fx-font-size: 20px;" text="WellCare" />
+                </children>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #f8f9fc; -fx-background-radius: 10;">
+                <VBox.margin>
+                    <Insets bottom="15.0" left="15.0" right="15.0" />
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                </padding>
+                <children>
+                    <Label alignment="CENTER" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #00d09c; -fx-text-fill: white; -fx-background-radius: 50; -fx-font-weight: bold; -fx-font-size: 14px;" text="ar" />
+                    <VBox alignment="CENTER_LEFT" spacing="2.0">
+                        <children>
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #1a2b3c; -fx-font-size: 13px;" text="ahmed regaieg" />
+                            <Label style="-fx-text-fill: #7f8c8d; -fx-font-size: 11px;" text="regaieg.ahmed2003@gmail.c..." />
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: white; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox spacing="5.0">
+                        <HBox alignment="CENTER_LEFT" style="-fx-padding: 12 20 12 25; -fx-cursor: hand;">
+                            <Label prefWidth="35.0" style="-fx-font-size: 16; -fx-text-fill: #555;" text="📅" />
+                            <Label style="-fx-font-size: 14; -fx-text-fill: #34495e;" text="Rendez-vous" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label style="-fx-text-fill: #bdc3c7;" text="˅" />
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" style="-fx-padding: 12 20 12 25; -fx-cursor: hand;">
+                            <Label prefWidth="35.0" style="-fx-font-size: 16; -fx-text-fill: #555;" text="♡" />
+                            <Label style="-fx-font-size: 14; -fx-text-fill: #34495e;" text="Santé" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label style="-fx-text-fill: #bdc3c7;" text="˅" />
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" style="-fx-padding: 12 20 12 25; -fx-cursor: hand;">
+                            <Label prefWidth="35.0" style="-fx-font-size: 16; -fx-text-fill: #555;" text="📖" />
+                            <Label style="-fx-font-size: 14; -fx-text-fill: #34495e;" text="Nutrition" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label style="-fx-text-fill: #bdc3c7;" text="˅" />
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" style="-fx-padding: 12 20 12 25; -fx-cursor: hand;">
+                            <Label prefWidth="35.0" style="-fx-font-size: 16; -fx-text-fill: #555;" text="♥" />
+                            <Label style="-fx-font-size: 14; -fx-text-fill: #34495e;" text="Fitness" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label style="-fx-text-fill: #bdc3c7;" text="˅" />
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #e8f8f5; -fx-padding: 12 20 12 15; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <VBox.margin>
+                                <Insets bottom="15.0" left="10.0" right="10.0" top="5.0" />
+                            </VBox.margin>
+                            <children>
+                                <Label prefWidth="35.0" style="-fx-font-size: 16; -fx-text-fill: #4e6a7c;" text=" 🌍" />
+                                <Label style="-fx-font-size: 14; -fx-text-fill: #4e6a7c; -fx-font-weight: bold;" text="Health Trail" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label style="-fx-text-fill: #bdc3c7;" text="˅" />
+                            </children>
+                        </HBox>
+
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+            <VBox spacing="10.0" style="-fx-padding: 15 20 20 25;">
+                <Button alignment="BASELINE_LEFT" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #34495e; -fx-font-size: 14; -fx-padding: 5 0 5 0;" text="«    Réduire" />
+                <Button alignment="BASELINE_LEFT" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #34495e; -fx-font-size: 14; -fx-padding: 5 0 5 0;" text="👤   Mon Profil" />
+                <Button alignment="BASELINE_LEFT" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #e74c3c; -fx-font-size: 14; -fx-font-weight: bold; -fx-padding: 5 0 5 0;" text="🚪   Déconnexion" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox style="-fx-background-color: #f4f7f6;">
+            <children>
+                <VBox style="-fx-background-color: #3498db; -fx-padding: 20 30 20 30;">
+                    <children>
+                        <Label style="-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold;" text="📝 Edit Publication" />
+                        <Label style="-fx-text-fill: #e1f0fa; -fx-font-size: 14;" text="Update the details of your trail experience" />
+                    </children>
+                </VBox>
+
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                    <content>
+                        <VBox alignment="CENTER" style="-fx-padding: 30;">
+                            <children>
+                                <VBox maxWidth="800.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 30; -fx-border-color: #dfe6e9; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+                                    <children>
+
+                                        <VBox spacing="5.0">
+                                            <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Selected trail" />
+                                            <TextField fx:id="trailNameField" editable="false" prefHeight="40.0" style="-fx-background-color: #f8f9fa; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-text-fill: #2d3436; -fx-font-size: 14;" />
+                                        </VBox>
+
+                                        <VBox spacing="5.0">
+                                            <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Publication Text" />
+                                            <TextArea fx:id="pubTextArea" prefHeight="120.0" promptText="Share your trail experience" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-font-size: 14;" wrapText="true" />
+                                        </VBox>
+
+                                        <HBox spacing="15.0">
+                                            <children>
+                                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                    <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Ambiance (1-5)" />
+                                                    <TextField fx:id="ambianceField" prefHeight="40.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
+                                                </VBox>
+                                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                    <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Safety (1-5)" />
+                                                    <TextField fx:id="safetyField" prefHeight="40.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
+                                                </VBox>
+                                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                    <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Experience" />
+                                                    <ComboBox fx:id="experienceCombo" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Select an experience" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
+                                                </VBox>
+                                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                    <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Publication Type" />
+                                                    <ComboBox fx:id="typeCombo" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Select a type" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+
+                                        <VBox spacing="5.0">
+                                            <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Publication Date" />
+                                            <DatePicker fx:id="datePicker" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="jj/mm/aaaa" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
+                                        </VBox>
+
+                                        <VBox spacing="5.0">
+                                            <Label style="-fx-text-fill: #636e72; -fx-font-size: 12;" text="Parcours Image (JPG or PNG)" />
+                                            <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-border-color: #dfe6e9; -fx-border-radius: 5;">
+                                                <children>
+                                                    <Button fx:id="btnChooseFile" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #212529; -fx-text-fill: white; -fx-background-radius: 4 0 0 4; -fx-cursor: hand;" text="Choisir un fichier" />
+                                                    <Label fx:id="fileLabel" text=" Aucun fichier n'a été sélectionné" textFill="#6c757d">
+                                                        <padding><Insets left="10.0" /></padding>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                        </VBox>
+
+                                        <HBox spacing="15.0">
+                                            <children>
+                                                <Button fx:id="btnSave" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Update" />
+                                                <Button fx:id="btnCancel" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-text-fill: #6c757d; -fx-background-radius: 5; -fx-cursor: hand;" text="Cancel" />
+                                            </children>
+                                            <padding><Insets top="10.0" /></padding>
+                                        </HBox>
+
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>

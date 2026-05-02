@@ -1,6 +1,7 @@
 package services;
 
-import entities.parcours_de_sante;
+import com.wellora.model.parcours_de_sante;
+import com.wellora.dao.ParcoursDeSanteDAO;
 import org.junit.jupiter.api.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ParcoursDeSanteServicesTest {
 
-    private static ParcoursDeSanteServices service;
+    private static ParcoursDeSanteDAO service;
     private static int testParcoursId = -1;
 
     @BeforeAll
     public static void setUp() {
 
-        service = new ParcoursDeSanteServices();
+        service = new ParcoursDeSanteDAO();
         System.out.println("--- Début des tests ---");
     }
 

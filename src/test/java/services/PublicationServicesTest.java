@@ -1,6 +1,7 @@
 package services;
 
-import entities.publication_parcours;
+import com.wellora.model.publication_parcours;
+import com.wellora.dao.PublicationDAO;
 import org.junit.jupiter.api.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PublicationServicesTest {
 
-    private static PublicationServices service;
+    private static PublicationDAO service;
     private static int testPubId = -1;
     private static final int PARCOURS_ID = 13;
 
     @BeforeAll
     public static void setUp() {
-        service = new PublicationServices();
+        service = new PublicationDAO();
         System.out.println("--- Début des tests Publication ---");
     }
 
