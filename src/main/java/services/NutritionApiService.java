@@ -11,52 +11,64 @@ import org.json.JSONObject;
 
 public class NutritionApiService {
 
-    // On crée un seul client HTTP pour toute l'application (meilleure performance)
     private final HttpClient client;
 
     public NutritionApiService() {
-        this.client = HttpClient.newHttpClient();
+        // --- NOUVEAUTÉ : On configure le client pour suivre les redirections automatiquement ---
+        this.client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
     }
 
-    /**
-     * Cherche un aliment sur l'API OpenFoodFacts et retourne ses calories pour 100g.
-     * @param foodName Le nom de l'aliment (ex: "banane", "pizza")
-     * @return Les calories (kcal) ou 0 si non trouvé
-     */
     public int getCaloriesForFood(String foodName) {
         try {
-            // Encodage du texte pour l'URL (ex: "pomme de terre" -> "pomme+de+terre")
             String encodedQuery = URLEncoder.encode(foodName, StandardCharsets.UTF_8);
 
-            // URL de l'API OpenFoodFacts
             String apiUrl = "https://world.openfoodfacts.org/cgi/search.pl?search_terms="
                     + encodedQuery + "&search_simple=1&action=process&json=1&page_size=1";
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(apiUrl))
+                    .header("User-Agent", "WelloraApp/1.0 - Java Application")
+                    // --- NOUVEAUTÉ : On force le serveur à répondre en JSON ---
+                    .header("Accept", "application/json")
                     .GET()
                     .build();
 
-            // Envoi de la requête
             HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Analyse de la réponse JSON
-            JSONObject jsonResponse = new JSONObject(response.body());
-            JSONArray products = jsonResponse.optJSONArray("products");
+            if (response.statusCode() == 200) {
+                // On nettoie les espaces invisibles au début et à la fin
+                String body = response.body().trim();
 
-            // Si on a trouvé un produit
-            if (products != null && products.length() > 0) {
-                JSONObject product = products.getJSONObject(0);
-                JSONObject nutriments = product.optJSONObject("nutriments");
-
-                // Récupération des calories
-                if (nutriments != null && nutriments.has("energy-kcal_100g")) {
-                    return nutriments.getInt("energy-kcal_100g");
+                // --- NOUVEAUTÉ : Détecteur de faux JSON ---
+                if (!body.startsWith("{")) {
+                    System.err.println("❌ L'API n'a pas renvoyé du JSON ! Voici ce qu'elle a renvoyé :");
+                    // On affiche les 200 premiers caractères pour comprendre ce qui bloque
+                    System.err.println(body.substring(0, Math.min(body.length(), 200)));
+                    return 0;
                 }
+
+                JSONObject jsonResponse = new JSONObject(body);
+                JSONArray products = jsonResponse.optJSONArray("products");
+
+                if (products != null && products.length() > 0) {
+                    JSONObject product = products.getJSONObject(0);
+                    JSONObject nutriments = product.optJSONObject("nutriments");
+
+                    if (nutriments != null && nutriments.has("energy-kcal_100g")) {
+                        // optInt gère automatiquement les erreurs de format si c'est un double
+                        return nutriments.optInt("energy-kcal_100g", 0);
+                    }
+                }
+            } else {
+                System.err.println("❌ Erreur API - Code HTTP : " + response.statusCode());
             }
+
         } catch (Exception e) {
-            System.err.println("Erreur dans NutritionApiService : " + e.getMessage());
+            System.err.println("❌ Erreur dans NutritionApiService : " + e.getMessage());
+            e.printStackTrace();
         }
-        return 0; // Retourne 0 en cas d'erreur ou si rien n'est trouvé
+        return 0;
     }
 }
