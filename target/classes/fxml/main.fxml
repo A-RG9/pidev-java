@@ -156,20 +156,20 @@
 
 
                     <VBox styleClass="sub-menu">
-                        <Button text="  Afficher Parcours" 
-                                styleClass="sub-nav-button" 
+                        <Button text="  Discover Health Trail"
+                                styleClass="sub-nav-button"
                                 onAction="#showAfficherParcours"
                                 fx:id="btnAfficherParcours"/>
                     </VBox>
                     <VBox styleClass="sub-menu">
-                        <Button text="  Ajouter Parcours" 
-                                styleClass="sub-nav-button" 
+                        <Button text="  Add Health Trail"
+                                styleClass="sub-nav-button"
                                 onAction="#showAjouterParcours"
                                 fx:id="btnAjouterParcours"/>
                     </VBox>
                     <VBox styleClass="sub-menu">
-                        <Button text="  Toutes Publications" 
-                                styleClass="sub-nav-button" 
+                        <Button text="  Feed Community"
+                                styleClass="sub-nav-button"
                                 onAction="#showToutesPublications"
                                 fx:id="btnToutesPublications"/>
                     </VBox>

@@ -62,9 +62,9 @@
                     </HBox>
 
                     <VBox styleClass="sub-menu">
-                        <Button text="  Afficher Parcours" styleClass="sub-nav-button" onAction="#showAfficherParcours" maxWidth="Infinity"/>
-                        <Button text="  Ajouter Parcours" styleClass="sub-nav-button" onAction="#showAjouterParcours" maxWidth="Infinity"/>
-                        <Button text="  Toutes Publications" styleClass="sub-nav-button" onAction="#showToutesPublications" maxWidth="Infinity"/>
+                        <Button text="  Discover Health Trail" styleClass="sub-nav-button" onAction="#showAfficherParcours" maxWidth="Infinity"/>
+                        <Button text="  Add Health Trail" styleClass="sub-nav-button" onAction="#showAjouterParcours" maxWidth="Infinity"/>
+                        <Button text="  Feed Community" styleClass="sub-nav-button" onAction="#showToutesPublications" maxWidth="Infinity"/>
                     </VBox>
 
                 </VBox>

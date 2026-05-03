@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import com.wellora.dao.ParcoursDeSanteDAO;
 import com.wellora.services.ParcoursRecommendationService;
 import com.wellora.controllers.HealthShellController;
@@ -235,15 +238,24 @@ public class AfficherParcoursController {
         ParcoursRecommendationService.WeatherServiceInterface weatherFetcher = (lat, lon, locName) -> fetchLiveWeather(lat, lon);
         aiService = new ParcoursRecommendationService(weatherFetcher);
 
+        // Chat starts hidden
+        chatWindow.setVisible(false);
+
+        // Toggle chat visibility with floating button
         if (btnToggleChat != null) {
             btnToggleChat.setOnAction(e -> {
-                chatWindow.setVisible(!chatWindow.isVisible());
-                if (chatWindow.isVisible() && chatMessagesContainer.getChildren().isEmpty()) {
+                boolean newVisibility = !chatWindow.isVisible();
+                chatWindow.setVisible(newVisibility);
+                if (newVisibility && chatMessagesContainer.getChildren().isEmpty()) {
                     showStartMenu("Hello! I can help you find a trail. How would you like to search?");
                 }
             });
         }
+
+        // Close chat
         if (btnCloseChat != null) btnCloseChat.setOnAction(e -> chatWindow.setVisible(false));
+
+        // Send message
         if (btnSendMessage != null && chatInput != null) {
             btnSendMessage.setOnAction(e -> processUserMessage());
             chatInput.setOnAction(e -> processUserMessage());
@@ -402,32 +414,7 @@ public class AfficherParcoursController {
         }).start();
     }
 
-    private void addChatMessage(String sender, String text) {
-        VBox bubble = new VBox();
-        bubble.setMaxWidth(250);
-        bubble.setPadding(new Insets(10));
 
-        Label textLabel = new Label(text);
-        textLabel.setWrapText(true);
-        textLabel.setStyle("-fx-font-size: 13;");
-
-        if (sender.equals("User")) {
-            bubble.setStyle("-fx-background-color: #e0f2f1; -fx-background-radius: 15 15 0 15;");
-            bubble.setAlignment(Pos.CENTER_RIGHT);
-            HBox wrapper = new HBox(bubble);
-            wrapper.setAlignment(Pos.CENTER_RIGHT);
-            bubble.getChildren().add(textLabel);
-            chatMessagesContainer.getChildren().add(wrapper);
-        } else {
-            bubble.setStyle("-fx-background-color: #f1f2f6; -fx-background-radius: 15 15 15 0;");
-            bubble.setAlignment(Pos.CENTER_LEFT);
-            HBox wrapper = new HBox(bubble);
-            wrapper.setAlignment(Pos.CENTER_LEFT);
-            bubble.getChildren().add(textLabel);
-            chatMessagesContainer.getChildren().add(wrapper);
-        }
-        Platform.runLater(() -> chatScrollPane.setVvalue(1.0));
-    }
 
     private ParcoursRecommendationService.WeatherInfo fetchLiveWeather(double lat, double lon) {
         try {
@@ -465,4 +452,145 @@ public class AfficherParcoursController {
             return new ParcoursRecommendationService.WeatherInfo("unknown", 0.0);
         }
     }
+
+   /**
+    * Adds a message bubble to the chat conversation with modern styling.
+    *
+    * @param sender  "AI" or "User"
+    * @param message The message text (can contain markdown-style **bold**)
+    */
+   private void addChatMessage(String sender, String message) {
+       // Main message container
+       HBox messageBox = new HBox();
+       messageBox.setMaxWidth(400.0);
+       messageBox.setPadding(new Insets(4, 8, 4, 8));
+
+       // AI messages align left, User messages align right
+       if (sender.equals("AI")) {
+           messageBox.setAlignment(Pos.CENTER_LEFT);
+           HBox.setHgrow(messageBox, Priority.NEVER);
+       } else {
+           messageBox.setAlignment(Pos.CENTER_RIGHT);
+           HBox.setHgrow(messageBox, Priority.ALWAYS);
+       }
+
+       // Create message bubble with modern styling
+       VBox bubble = new VBox();
+       bubble.setMaxWidth(320.0);
+       bubble.setPadding(new Insets(14, 18, 14, 18));
+       bubble.setSpacing(6.0);
+
+       // Modern styles with subtle effects
+       if (sender.equals("AI")) {
+           bubble.setStyle(
+               "-fx-background-color: white;" +
+               "-fx-background-radius: 18 18 18 4;" +
+               "-fx-border-color: #e3fcf9;" +
+               "-fx-border-width: 1;" +
+               "-fx-border-radius: 18;" +
+               "-fx-effect: dropshadow(gaussian, rgba(0, 166, 147, 0.12), 6, 0, 0, 2);"
+           );
+       } else {
+           bubble.setStyle(
+               "-fx-background-color: #00a693;" +
+               "-fx-background-radius: 18 18 4 18;" +
+               "-fx-effect: dropshadow(gaussian, rgba(0, 166, 147, 0.25), 8, 0, 0, 3);"
+           );
+       }
+
+       // Create header region with avatar and name
+       HBox headerBox = new HBox();
+       headerBox.setSpacing(8.0);
+       headerBox.setAlignment(Pos.CENTER_LEFT);
+
+       // Avatar for AI
+       if (sender.equals("AI")) {
+           Label avatar = new Label("🤖");
+           avatar.setStyle("-fx-font-size: 18; -fx-text-fill: #00a693;");
+           headerBox.getChildren().add(avatar);
+       }
+
+       // Sender name label
+       Label nameLabel = new Label(sender.equals("AI") ? "Assistant" : "You");
+       nameLabel.setStyle(
+           "-fx-font-size: 12; " +
+           "-fx-font-weight: bold; " +
+           "-fx-text-fill: " + (sender.equals("AI") ? "#00a693" : "white") + ";"
+       );
+       headerBox.getChildren().add(nameLabel);
+
+       // Add header to bubble
+       bubble.getChildren().add(headerBox);
+
+       // Create message content with proper formatting
+       if (message.contains("**")) {
+           // Parse markdown-style bold text
+           TextFlow textFlow = new TextFlow();
+           textFlow.setMaxWidth(300.0);
+           textFlow.setLineSpacing(2.0);
+
+           String[] parts = message.split("\\*\\*");
+           for (int i = 0; i < parts.length; i++) {
+               Text textPart = new Text(parts[i]);
+               textPart.setStyle("-fx-font-size: 13;");
+
+               if (i % 2 == 1) { // Bold section
+                   textPart.setStyle("-fx-font-size: 13; -fx-font-weight: bold;");
+               }
+
+               if (sender.equals("AI")) {
+                   textPart.setFill(javafx.scene.paint.Color.web("#2d3436"));
+               } else {
+                   textPart.setFill(javafx.scene.paint.Color.WHITE);
+               }
+
+               textFlow.getChildren().add(textPart);
+           }
+           bubble.getChildren().add(textFlow);
+       } else {
+           Label msgLabel = new Label(message);
+           msgLabel.setWrapText(true);
+           msgLabel.setMaxWidth(300.0);
+           msgLabel.setStyle(
+               "-fx-font-size: 13; " +
+               "-fx-text-fill: " + (sender.equals("AI") ? "#2d3436" : "white") + ";" +
+               "-fx-line-spacing: 2px;"
+           );
+           bubble.getChildren().add(msgLabel);
+       }
+
+       // Add timestamp (optional, subtle)
+       Label timeLabel = new Label(java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")));
+       timeLabel.setStyle(
+           "-fx-font-size: 10; " +
+           "-fx-text-fill: " + (sender.equals("AI") ? "#b2bec3" : "rgba(255,255,255,0.7)") + ";" +
+           "-fx-padding: 4 0 0 0;"
+       );
+       bubble.getChildren().add(timeLabel);
+
+       // Add bubble to message box
+       messageBox.getChildren().add(bubble);
+
+       // Add margin for message box
+       VBox.setMargin(messageBox, new Insets(2, 0, 2, 0));
+
+       // Add to container with fade-in animation
+       chatMessagesContainer.getChildren().add(messageBox);
+
+       // Fade-in animation for new message
+       messageBox.setOpacity(0.0);
+       javafx.animation.FadeTransition fadeIn = new javafx.animation.FadeTransition(javafx.util.Duration.millis(300), messageBox);
+       fadeIn.setFromValue(0.0);
+       fadeIn.setToValue(1.0);
+       fadeIn.play();
+
+       // Scroll to bottom smoothly
+       Platform.runLater(() -> {
+           javafx.animation.Interpolator interpolator = javafx.animation.Interpolator.EASE_BOTH;
+           javafx.animation.KeyValue kv = new javafx.animation.KeyValue(chatScrollPane.vvalueProperty(), 1.0, interpolator);
+           javafx.animation.KeyFrame kf = new javafx.animation.KeyFrame(javafx.util.Duration.millis(200), kv);
+           javafx.animation.Timeline timeline = new javafx.animation.Timeline(kf);
+           timeline.play();
+       });
+   }
 }
