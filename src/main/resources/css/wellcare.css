@@ -142,6 +142,23 @@
     -fx-background-color: #c82333;
 }
 
+.btn-google {
+    -fx-background-color: white;
+    -fx-text-fill: #3c4043;
+    -fx-border-color: #dadce0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+    -fx-padding: 0 16;
+}
+
+.btn-google:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #d2d4d7;
+}
+
 .btn-outline {
     -fx-background-color: transparent;
     -fx-border-color: #00A790;

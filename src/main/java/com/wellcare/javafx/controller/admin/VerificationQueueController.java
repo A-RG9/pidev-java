@@ -60,11 +60,18 @@ public class VerificationQueueController implements Initializable, ServiceAware,
     @FXML private Button viewCertificationsBtn;
 
     // Review and action controls
+    // Review and action controls
     @FXML private TextArea reviewNotesArea;
     @FXML private Button rejectBtn;
     @FXML private Button approveBtn;
     @FXML private Button bulkApproveBtn;
     @FXML private Button backToDashboardBtn;
+    @FXML private Button reprocessAiBtn;
+
+    // AI Details
+    @FXML private Label aiScoreLabel;
+    @FXML private Label aiStatusLabel;
+    @FXML private TextArea aiDescriptionArea;
 
     // Data
     private ObservableList<User> pendingApplications = FXCollections.observableArrayList();
@@ -139,6 +146,7 @@ public class VerificationQueueController implements Initializable, ServiceAware,
         viewDiplomaBtn.setOnAction(e -> handleViewDiploma());
         viewLicenseBtn.setOnAction(e -> viewDocument("License"));
         viewCertificationsBtn.setOnAction(e -> viewDocument("Certifications"));
+        reprocessAiBtn.setOnAction(e -> handleReprocessAi());
     }
 
     private void loadPendingApplications() {
@@ -223,8 +231,61 @@ public class VerificationQueueController implements Initializable, ServiceAware,
         detailPhoneLabel.setText(user.getPhone() != null ? user.getPhone() : "Not provided");
         detailLocationLabel.setText(user.getAddress() != null ? user.getAddress() : "Not provided");
 
+        // Populate AI Details
+        if (aiScoreLabel != null) {
+            aiScoreLabel.setText(user.getVerificationScore() != null ? user.getVerificationScore() + "%" : "N/A");
+            
+            String status = "PENDING";
+            if (user.getVerificationScore() != null) {
+                if (user.getVerificationScore() >= 80) status = "VERIFIED (AI)";
+                else if (user.getVerificationScore() >= 60) status = "MANUAL REVIEW REQ";
+                else status = "REJECTED (AI)";
+            }
+            aiStatusLabel.setText(status);
+            
+            if (user.getVerificationDescription() != null) {
+                aiDescriptionArea.setText(user.getVerificationDescription());
+            } else {
+                aiDescriptionArea.clear();
+            }
+        }
+
         // Clear review notes
         reviewNotesArea.clear();
+    }
+
+    private void handleReprocessAi() {
+        User selectedUser = applicationsList.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) return;
+
+        java.io.File diplomaFile = userService.getDiplomaFile(selectedUser.getDiplomaUrl());
+        if (diplomaFile == null) {
+            showAlert("Error", "Reprocess Failed", "Diploma file could not be found.");
+            return;
+        }
+
+        reprocessAiBtn.setDisable(true);
+        reprocessAiBtn.setText("Processing...");
+
+        // Trigger the service again
+        userService.reprocessDiplomaAi(selectedUser, diplomaFile)
+            .thenAccept(result -> {
+                javafx.application.Platform.runLater(() -> {
+                    showAlert("AI Processing Complete", "Reprocessing Result", 
+                        "Professional: " + selectedUser.getEmail() + "\nNew Score: " + result.score + "%\nStatus: " + result.status);
+                    loadPendingApplications();
+                    reprocessAiBtn.setDisable(false);
+                    reprocessAiBtn.setText("Reprocess with AI");
+                });
+            })
+            .exceptionally(ex -> {
+                javafx.application.Platform.runLater(() -> {
+                    showAlert("Error", "AI Reprocessing Failed", ex.getMessage());
+                    reprocessAiBtn.setDisable(false);
+                    reprocessAiBtn.setText("Reprocess with AI");
+                });
+                return null;
+            });
     }
 
     private void showEmptyState() {

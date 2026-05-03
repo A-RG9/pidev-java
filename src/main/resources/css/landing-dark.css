@@ -1,101 +1,54 @@
-/* ===========================================
-    WellCare Connect - Landing Page Dark Mode
-    =========================================== */
+/* 
+ * WellCare Connect - Landing Page Dark Mode (Emerald Palette)
+ */
 
-/* Dark mode overrides for landing page */
 .root.dark {
     -fx-background-color: #0F172A;
 }
 
 .root.dark .navbar {
-    -fx-background-color: linear-gradient(to right, #1E293B, #334155);
+    -fx-background-color: rgba(30, 41, 59, 0.9);
 }
 
-.root.dark .hero-section {
-    -fx-background-color: #1E293B;
-}
-
-.root.dark .feature-card {
-    -fx-background-color: #1E293B;
-    -fx-border-color: #334155;
-}
-
-.root.dark .testimonial-card {
-    -fx-background-color: #1E293B;
-    -fx-border-color: #334155;
-}
-
-.root.dark .footer {
-    -fx-background-color: #1E293B;
-    -fx-border-color: #334155;
-}
-
-.root.dark .stats-section {
-    -fx-background-color: linear-gradient(to right, #0F172A, #1E293B);
-}
-
-/* Text colors in dark mode */
-.root.dark .section-title,
-.root.dark .section-subtitle,
-.root.dark .feature-title,
-.root.dark .feature-description,
-.root.dark .testimonial-text,
-.root.dark .testimonial-name,
-.root.dark .testimonial-role,
-.root.dark .footer-description,
-.root.dark .footer-title,
-.root.dark .footer-link {
+.root.dark .navbar-brand, 
+.root.dark .hero-title, 
+.root.dark .section-title {
     -fx-text-fill: #F8FAFC;
 }
 
-.root.dark .hero-description,
-.root.dark .weather-location,
-.root.dark .cta-subtitle {
-    -fx-text-fill: #CBD5E1;
-}
-
-.root.dark .hero-title,
-.root.dark .hero-subtitle,
-.root.dark .navbar-brand,
-.root.dark .cta-title {
-    -fx-text-fill: #FFFFFF;
-}
-
-.root.dark .footer-copyright {
+.root.dark .hero-description, 
+.root.dark .nav-link {
     -fx-text-fill: #94A3B8;
 }
 
-/* Button adjustments for dark mode */
-.root.dark .btn-secondary {
-    -fx-background-color: #334155;
-    -fx-text-fill: #F8FAFC;
-    -fx-border-color: #475569;
-}
-
-.root.dark .btn-secondary:hover {
-    -fx-background-color: #475569;
-}
-
-/* Link colors in dark mode */
-.root.dark .footer-link:hover {
-    -fx-text-fill: #00DBB6;
-}
-
-.root.dark .hero-link:hover {
-    -fx-text-fill: #00DBB6;
-}
-
-/* Weather widget in dark mode */
-.root.dark .weather-widget {
+.root.dark .feature-card, 
+.root.dark .testimonial-card, 
+.root.dark .mockup-card {
     -fx-background-color: #1E293B;
     -fx-border-color: #334155;
 }
 
-/* Social icons in dark mode */
-.root.dark .social-icon {
-    -fx-fill: #CBD5E1;
+.root.dark .mockup-container {
+    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E293B);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
 }
 
-.root.dark .social-icon:hover {
-    -fx-fill: #00DBB6;
+.root.dark .btn-secondary {
+    -fx-background-color: #1E293B;
+    -fx-text-fill: white;
+    -fx-border-color: #334155;
+}
+
+.root.dark .btn-secondary:hover {
+    -fx-background-color: #334155;
+}
+
+.root.dark .step-number {
+    -fx-background-color: #065F46; /* Deep emerald */
+    -fx-text-fill: #D1FAE5;
+}
+
+.root.dark .icon-box {
+    -fx-background-color: #064E3B;
+    -fx-text-fill: #10B981;
 }

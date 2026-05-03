@@ -40,6 +40,7 @@ public class ProfileController implements Initializable, SceneManager.ServiceAwa
     @FXML private TextField consultationPriceField;
     @FXML private TextArea aboutArea;
     
+    @FXML private Button manage2FAButton;
     @FXML private Button saveButton;
     @FXML private Button backButton;
     @FXML private Label statusLabel;
@@ -64,6 +65,7 @@ public class ProfileController implements Initializable, SceneManager.ServiceAwa
         
         backButton.setOnAction(e -> navigateBack());
         saveButton.setOnAction(e -> handleSave());
+        manage2FAButton.setOnAction(e -> handleManage2FA());
         
         setupValidationListeners();
     }
@@ -198,6 +200,10 @@ public class ProfileController implements Initializable, SceneManager.ServiceAwa
                 // Ignore invalid numbers for now
             }
         }
+    }
+
+    private void handleManage2FA() {
+        SceneManager.getInstance().switchTo(SceneManager.TWO_FACTOR_SETUP);
     }
 
     private void navigateBack() {

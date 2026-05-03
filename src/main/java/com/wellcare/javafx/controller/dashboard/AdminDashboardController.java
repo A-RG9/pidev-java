@@ -5,6 +5,7 @@ import com.wellcare.javafx.service.UserService;
 import com.wellcare.javafx.util.SceneManager;
 import com.wellcare.javafx.util.SceneManager.ServiceAware;
 import com.wellcare.javafx.util.SceneManager.UserAware;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -198,7 +199,7 @@ public class AdminDashboardController implements Initializable, ServiceAware, Us
     public void setCurrentUser(User user) {
         this.currentUser = user;
         if (userMenu != null) {
-            setupUserMenu();
+            Platform.runLater(this::setupUserMenu);
         }
     }
 }

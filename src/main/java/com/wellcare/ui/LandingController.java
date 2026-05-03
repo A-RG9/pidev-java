@@ -201,7 +201,9 @@ public class LandingController implements Initializable, SceneManager.ServiceAwa
      */
     @FXML
     private void handleProfessional() {
-        showComingSoonAlert("Espace Professionnel", "L'inscription professionnelle sera bientôt disponible.");
+        if (sceneManager != null) {
+            sceneManager.switchToProfessionalTypeChoice();
+        }
     }
 
     /**
@@ -219,7 +221,9 @@ public class LandingController implements Initializable, SceneManager.ServiceAwa
      */
     @FXML
     private void handleStartProfessional() {
-        showComingSoonAlert("Espace Professionnel", "L'inscription professionnelle sera bientôt disponible.");
+        if (sceneManager != null) {
+            sceneManager.switchToProfessionalTypeChoice();
+        }
     }
 
     /**

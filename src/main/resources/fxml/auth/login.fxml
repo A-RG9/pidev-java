@@ -2,11 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.LoginController"
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.LoginController"
       styleClass="root" alignment="CENTER" spacing="20.0" prefWidth="1000.0" prefHeight="700.0">
 
     <!-- Main Container -->
@@ -51,6 +52,19 @@
                     <Hyperlink fx:id="forgotPasswordLink" text="Forgot password?" style="-fx-font-size: 13px;"/>
                 </HBox>
 
+                <!-- Captcha Section -->
+                <VBox spacing="8.0">
+                    <Label text="Security Verification" styleClass="form-label"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <StackPane style="-fx-background-color: #f8f9fa; -fx-padding: 2; -fx-border-color: #dee2e6; -fx-border-radius: 4;">
+                            <ImageView fx:id="captchaImageView" fitWidth="200.0" fitHeight="50.0" preserveRatio="true"/>
+                        </StackPane>
+                        <Button fx:id="refreshCaptchaButton" text="🔄" styleClass="btn-secondary" prefHeight="44.0"/>
+                    </HBox>
+                    <TextField fx:id="captchaField" promptText="Enter the code" styleClass="form-control" prefWidth="350.0"/>
+                    <Label fx:id="captchaErrorLabel" styleClass="error-label" visible="false" managed="false"/>
+                </VBox>
+
                 <!-- Login Button -->
                 <VBox spacing="10.0">
                     <Button fx:id="loginButton" text="Sign In" styleClass="btn-primary" prefWidth="350.0" prefHeight="45.0"/>
@@ -59,6 +73,20 @@
                         <Label text="Signing in..." style="-fx-font-size: 13px;"/>
                     </HBox>
                 </VBox>
+
+                <!-- Social Login Separator -->
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Separator HBox.hgrow="ALWAYS"/>
+                    <Text text="OR" style="-fx-font-size: 12px; -fx-fill: #adb5bd;"/>
+                    <Separator HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Google Login Button -->
+                <Button fx:id="googleLoginButton" text="Continue with Google" styleClass="btn-google" prefWidth="350.0" prefHeight="45.0" onAction="#handleGoogleLogin">
+                    <graphic>
+                        <Text text="G " style="-fx-font-weight: bold; -fx-fill: #4285F4; -fx-font-size: 18px;"/>
+                    </graphic>
+                </Button>
 
                 <!-- Error Message -->
                 <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false" wrapText="true" maxWidth="350.0"/>

@@ -37,3 +37,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Project specific ###
+out/
+uploads/
+fix_diploma.py
+src/main/java/FixDatabase.java
+src/main/java/InspectCheck.java
+src/main/java/InspectSchema.java

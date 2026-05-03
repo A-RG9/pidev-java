@@ -73,6 +73,9 @@ public class MyDataBase {
                     lot VARCHAR(100),
                     token VARCHAR(255),
                     rating DECIMAL(3,2) DEFAULT 0.00,
+                    backup_codes TEXT,
+                    verification_score INT,
+                    verification_description TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
@@ -113,6 +116,29 @@ public class MyDataBase {
                     user_agent TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE SET NULL
+                )
+                """);
+
+            // Create professional_verifications table
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS professional_verifications (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    professional_uuid VARCHAR(36) NOT NULL,
+                    professional_email VARCHAR(255),
+                    license_number VARCHAR(255),
+                    specialty VARCHAR(255),
+                    diploma_path VARCHAR(500),
+                    diploma_filename VARCHAR(255),
+                    extracted_data JSON,
+                    confidence_score INT,
+                    status ENUM('pending', 'processing', 'verified', 'rejected', 'manual_review') DEFAULT 'pending',
+                    validation_details JSON,
+                    forgery_indicators JSON,
+                    rejection_reason TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    verified_at DATETIME,
+                    reviewed_by VARCHAR(255),
+                    FOREIGN KEY (professional_uuid) REFERENCES users(uuid) ON DELETE CASCADE
                 )
                 """);
 

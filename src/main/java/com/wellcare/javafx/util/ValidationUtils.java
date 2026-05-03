@@ -91,9 +91,8 @@ public class ValidationUtils {
         }
         return PASSWORD_UPPERCASE.matcher(password).find()
             && PASSWORD_LOWERCASE.matcher(password).find()
-            && PASSWORD_DIGIT.matcher(password).find();
-            // Temporarily disabled special character requirement for test compatibility
-            // && PASSWORD_SPECIAL.matcher(password).find();
+            && PASSWORD_DIGIT.matcher(password).find()
+            && PASSWORD_SPECIAL.matcher(password).find();
     }
 
     /**
@@ -221,10 +220,9 @@ public class ValidationUtils {
         if (!PASSWORD_DIGIT.matcher(password).find()) {
             return "Password must contain at least one number";
         }
-        // Temporarily disabled special character requirement
-        // if (!PASSWORD_SPECIAL.matcher(password).find()) {
-        //     return "Password must contain at least one special character";
-        // }
+        if (!PASSWORD_SPECIAL.matcher(password).find()) {
+            return "Password must contain at least one special character";
+        }
         return null;
     }
 
@@ -300,6 +298,9 @@ public class ValidationUtils {
         }
         if (!PASSWORD_DIGIT.matcher(password).find()) {
             return "Password must contain at least one number";
+        }
+        if (!PASSWORD_SPECIAL.matcher(password).find()) {
+            return "Password must contain at least one special character";
         }
         if (!password.equals(confirmPassword)) {
             return "Passwords do not match";

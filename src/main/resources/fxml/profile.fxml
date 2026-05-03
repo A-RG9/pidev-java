@@ -54,6 +54,7 @@
                         
                         <Region VBox.vgrow="ALWAYS" />
                         
+                        <Button fx:id="manage2FAButton" styleClass="btn-outline" text="🔒 Manage 2FA" maxWidth="Infinity" />
                         <Button styleClass="btn-outline" text="Change Password" maxWidth="Infinity" />
                     </children>
                 </VBox>

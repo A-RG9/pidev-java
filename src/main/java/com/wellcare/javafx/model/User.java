@@ -53,6 +53,8 @@ public class User {
     private String lot;
     private String token;
     private Double rating;
+    private Integer verificationScore;
+    private String verificationDescription;
 
     /**
      * Default constructor.
@@ -299,4 +301,10 @@ public class User {
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
     }
+
+    public Integer getVerificationScore() { return verificationScore; }
+    public void setVerificationScore(Integer verificationScore) { this.verificationScore = verificationScore; }
+
+    public String getVerificationDescription() { return verificationDescription; }
+    public void setVerificationDescription(String verificationDescription) { this.verificationDescription = verificationDescription; }
 }

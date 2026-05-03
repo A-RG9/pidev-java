@@ -40,6 +40,8 @@ public class SceneManager {
     public static final String VERIFY_EMAIL = "/fxml/auth/verify-email.fxml";
     public static final String FORGOT_PASSWORD = "/fxml/auth/forgot-password.fxml";
     public static final String RESET_PASSWORD = "/fxml/auth/reset-password.fxml";
+    public static final String TWO_FACTOR_VERIFY = "/fxml/auth/2fa-verify.fxml";
+    public static final String TWO_FACTOR_SETUP = "/fxml/auth/2fa-setup.fxml";
     public static final String PROFESSIONAL_TYPE_CHOICE = "/fxml/auth/ProfessionalTypeChoiceView.fxml";
     public static final String PROFESSIONAL_REGISTRATION = "/fxml/auth/ProfessionalRegistrationView.fxml";
     public static final String PROFILE = "/fxml/profile.fxml";

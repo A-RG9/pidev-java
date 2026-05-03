@@ -1,23 +1,21 @@
 package com.wellcare.javafx.controller.auth;
 
-import com.wellcare.javafx.service.CaptchaService;
 import com.wellcare.javafx.model.User;
 import com.wellcare.javafx.service.UserService;
 import com.wellcare.javafx.util.SceneManager;
 import com.wellcare.javafx.util.ValidationUtils;
 import com.wellcare.javafx.util.SceneManager.ProfessionalTypeAware;
-import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -31,6 +29,7 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
 
     // UI Elements - Step Indicators
     @FXML private VBox step1Indicator, step2Indicator, step3Indicator;
+    @FXML private Circle circleStep1, circleStep2, circleStep3;
 
     // UI Elements - Step Contents
     @FXML private VBox step1Content, step2Content, step3Content;
@@ -51,26 +50,19 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
     @FXML private CheckBox termsCheckBox;
     @FXML private Label step3ErrorLabel;
 
-    // Captcha components
-    @FXML private ImageView captchaImageView;
-    @FXML private Button refreshCaptchaButton;
-    @FXML private TextField captchaField;
-    @FXML private Label captchaErrorLabel;
-
     // UI Elements - Password Strength
     @FXML private HBox strengthIndicator;
     @FXML private Region strengthBar1, strengthBar2, strengthBar3, strengthBar4;
     @FXML private Label strengthLabel, strengthRequirements;
+    @FXML private ProgressBar strengthProgressBar;
 
     // UI Elements - Buttons
     @FXML private Button completeButton;
 
     // Business Logic
     private UserService userService;
-    private CaptchaService captchaService;
     private String selectedProfessionalType;
     private File selectedDiplomaFile;
-    private boolean isCaptchaValid = false;
 
     // Specialty options for different professional types
     private final ObservableList<String> medicalSpecialties = FXCollections.observableArrayList(
@@ -94,13 +86,9 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
     public void initialize() {
         try {
             userService = new UserService();
-            captchaService = new CaptchaService();
             setupPasswordStrengthListener();
             setupRealTimeValidation();
             updateStepIndicators(1);
-            
-            // Initialization of captcha when Step 3 is shown
-            refreshCaptcha();
         } catch (Exception e) {
             showError("Initialization error: " + e.getMessage());
         }
@@ -139,15 +127,30 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
 
     private void updateStepIndicators(int activeStep) {
         // Reset all indicators
-        stepIndicatorStatus(step1Indicator, activeStep == 1);
-        stepIndicatorStatus(step2Indicator, activeStep == 2);
-        stepIndicatorStatus(step3Indicator, activeStep == 3);
-    }
+        step1Indicator.getStyleClass().remove("step-active");
+        step2Indicator.getStyleClass().remove("step-active");
+        step3Indicator.getStyleClass().remove("step-active");
+        
+        if (circleStep1 != null) {
+            circleStep1.getStyleClass().remove("step-circle-active");
+            circleStep2.getStyleClass().remove("step-circle-active");
+            circleStep3.getStyleClass().remove("step-circle-active");
+        }
 
-    private void stepIndicatorStatus(VBox indicator, boolean active) {
-        indicator.getStyleClass().remove("step-active");
-        if (active) {
-            indicator.getStyleClass().add("step-active");
+        // Set active step
+        switch (activeStep) {
+            case 1:
+                step1Indicator.getStyleClass().add("step-active");
+                if (circleStep1 != null) circleStep1.getStyleClass().add("step-circle-active");
+                break;
+            case 2:
+                step2Indicator.getStyleClass().add("step-active");
+                if (circleStep2 != null) circleStep2.getStyleClass().add("step-circle-active");
+                break;
+            case 3:
+                step3Indicator.getStyleClass().add("step-active");
+                if (circleStep3 != null) circleStep3.getStyleClass().add("step-circle-active");
+                break;
         }
     }
 
@@ -173,7 +176,6 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
             case 3:
                 step3Content.setVisible(true);
                 step3Content.setManaged(true);
-                refreshCaptcha(); // Refresh captcha when entering the final step
                 break;
         }
 
@@ -313,12 +315,6 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
             return false;
         }
 
-        // Final captcha validation check
-        if (!isCaptchaValid) {
-            showCaptchaError("Security verification required");
-            return false;
-        }
-
         return true;
     }
 
@@ -337,19 +333,6 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
 
         // Step 3
         confirmPasswordField.textProperty().addListener((obs, oldV, newV) -> validatePasswordsMatch());
-        
-        // Captcha validation
-        captchaField.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null && newVal.length() == 6) {
-                validateCaptcha();
-            } else {
-                isCaptchaValid = false;
-                captchaErrorLabel.setVisible(false);
-                ValidationUtils.applyValidationStyle(captchaField, true);
-            }
-        });
-        
-        refreshCaptchaButton.setOnAction(e -> refreshCaptcha());
     }
 
     private boolean validateFirstName() {
@@ -383,6 +366,7 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
     }
 
     private boolean validateLicense() {
+        String error = licenseField.getText().isEmpty() ? "Required" : ValidationUtils.validateNumericRange(licenseField.getText(), 0, 0, "dummy"); // Placeholder check
         // Real license check
         boolean isValid = licenseField.getText() != null && licenseField.getText().length() >= 5;
         ValidationUtils.applyValidationStyle(licenseField, isValid);
@@ -446,7 +430,6 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
             completeButton.setText("Complete Registration");
             showStep3Error("Registration failed: " + e.getMessage());
             e.printStackTrace();
-            refreshCaptcha();
         }
     }
 
@@ -457,7 +440,12 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
     }
 
     private void updatePasswordStrength(String password) {
-        int strength = (int) (ValidationUtils.calculatePasswordStrength(password) * 4);
+        double rawStrength = ValidationUtils.calculatePasswordStrength(password);
+        int strength = (int) (rawStrength * 4);
+        
+        if (strengthProgressBar != null) {
+            strengthProgressBar.setProgress(rawStrength);
+        }
 
         // Reset all bars
         strengthBar1.getStyleClass().removeAll("strength-weak", "strength-fair", "strength-good", "strength-strong");
@@ -469,20 +457,20 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
         switch (strength) {
             case 0: // Very Weak
                 strengthBar1.getStyleClass().add("strength-weak");
-                strengthLabel.setText("Very Weak");
+                strengthLabel.setText("Très Faible");
                 strengthLabel.getStyleClass().add("strength-weak");
                 break;
             case 1: // Weak
                 strengthBar1.getStyleClass().add("strength-weak");
                 strengthBar2.getStyleClass().add("strength-weak");
-                strengthLabel.setText("Weak");
+                strengthLabel.setText("Faible");
                 strengthLabel.getStyleClass().add("strength-weak");
                 break;
             case 2: // Fair
                 strengthBar1.getStyleClass().add("strength-fair");
                 strengthBar2.getStyleClass().add("strength-fair");
                 strengthBar3.getStyleClass().add("strength-fair");
-                strengthLabel.setText("Fair");
+                strengthLabel.setText("Moyen");
                 strengthLabel.getStyleClass().add("strength-fair");
                 break;
             case 3: // Good
@@ -490,7 +478,7 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
                 strengthBar2.getStyleClass().add("strength-good");
                 strengthBar3.getStyleClass().add("strength-good");
                 strengthBar4.getStyleClass().add("strength-good");
-                strengthLabel.setText("Good");
+                strengthLabel.setText("Bon");
                 strengthLabel.getStyleClass().add("strength-good");
                 break;
             case 4: // Strong
@@ -498,56 +486,10 @@ public class ProfessionalRegistrationController implements ProfessionalTypeAware
                 strengthBar2.getStyleClass().add("strength-strong");
                 strengthBar3.getStyleClass().add("strength-strong");
                 strengthBar4.getStyleClass().add("strength-strong");
-                strengthLabel.setText("Strong");
+                strengthLabel.setText("Excellent");
                 strengthLabel.getStyleClass().add("strength-strong");
                 break;
         }
-    }
-
-    private void refreshCaptcha() {
-        if (captchaField == null) return; // Guard for early initialization
-        captchaField.clear();
-        isCaptchaValid = false;
-        captchaErrorLabel.setVisible(false);
-        ValidationUtils.applyValidationStyle(captchaField, true);
-        
-        captchaService.generateCode();
-        captchaImageView.setImage(captchaService.generateCaptchaImage(200, 50));
-    }
-
-    private void validateCaptcha() {
-        String input = captchaField.getText().trim();
-        if (captchaService.validate(input)) {
-            isCaptchaValid = true;
-            captchaErrorLabel.setText("✓ Code correct");
-            captchaErrorLabel.setStyle("-fx-text-fill: #28a745;"); // Green
-            captchaErrorLabel.setVisible(true);
-            captchaErrorLabel.setManaged(true);
-            ValidationUtils.applyValidationStyle(captchaField, true);
-        } else {
-            isCaptchaValid = false;
-            captchaErrorLabel.setText("✗ Code incorrect");
-            captchaErrorLabel.setStyle("-fx-text-fill: #dc3545;"); // Red
-            captchaErrorLabel.setVisible(true);
-            captchaErrorLabel.setManaged(true);
-            ValidationUtils.applyValidationStyle(captchaField, false);
-            
-            // Auto-refresh after 1.5s on wrong input
-            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
-            pause.setOnFinished(e -> {
-                if (!isCaptchaValid) {
-                    refreshCaptcha();
-                }
-            });
-            pause.play();
-        }
-    }
-
-    private void showCaptchaError(String message) {
-        captchaErrorLabel.setText(message);
-        captchaErrorLabel.setStyle("-fx-text-fill: #dc3545;");
-        captchaErrorLabel.setVisible(true);
-        captchaErrorLabel.setManaged(true);
     }
 
     private void showStep1Error(String message) {

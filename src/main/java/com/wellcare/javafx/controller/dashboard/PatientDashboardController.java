@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Controller for the Patient Dashboard
  * Displays patient-specific information and navigation
  */
-public class PatientDashboardController implements Initializable {
+public class PatientDashboardController implements Initializable, SceneManager.UserAware, SceneManager.ServiceAware {
 
     @FXML private MenuButton userMenu;
     @FXML private MenuItem profileMenuItem;
@@ -49,22 +49,25 @@ public class PatientDashboardController implements Initializable {
     private User currentUser;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            userService = new UserService();
-        } catch (java.sql.SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Connection Failed");
-            alert.setHeaderText("Unable to connect to database");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-            return;
-        }
-        // TODO: Get current user from session/context
-        // For now, create a mock user
-        currentUser = createMockUser();
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-        setupUI();
+    @Override
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+        if (welcomeLabel != null) {
+            Platform.runLater(this::setupUI);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // If user already set (via dependency injection), setup UI
+        if (currentUser != null) {
+            Platform.runLater(this::setupUI);
+        }
+        
         setupEventHandlers();
         loadDashboardData();
     }
@@ -205,15 +208,5 @@ public class PatientDashboardController implements Initializable {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    // Mock user for demonstration
-    private User createMockUser() {
-        User user = new User();
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setEmail("john.doe@example.com");
-        user.setRole("ROLE_PATIENT");
-        return user;
     }
 }

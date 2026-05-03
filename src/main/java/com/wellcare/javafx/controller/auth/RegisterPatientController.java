@@ -1,14 +1,18 @@
 package com.wellcare.javafx.controller.auth;
 
+import com.wellcare.javafx.service.CaptchaService;
 import com.wellcare.javafx.model.User;
 import com.wellcare.javafx.service.UserService;
 import com.wellcare.javafx.util.SceneManager;
 import com.wellcare.javafx.util.ValidationUtils;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 
 /**
  * Controller for Patient Registration
@@ -39,8 +43,16 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
     @FXML private Hyperlink loginLink;
     @FXML private Hyperlink registerProfessionalLink;
 
+    // Captcha components
+    @FXML private ImageView captchaImageView;
+    @FXML private Button refreshCaptchaButton;
+    @FXML private TextField captchaField;
+    @FXML private Label captchaErrorLabel;
+
     private UserService userService;
+    private CaptchaService captchaService;
     private SceneManager sceneManager;
+    private boolean isCaptchaValid = false;
 
     @Override
     public void setUserService(UserService userService) {
@@ -50,9 +62,13 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
     @FXML
     public void initialize() {
         sceneManager = SceneManager.getInstance();
+        captchaService = new CaptchaService();
 
         // Set up event handlers
         setupEventHandlers();
+
+        // Initialize Captcha
+        refreshCaptcha();
 
         // Focus on first name field
         Platform.runLater(() -> firstNameField.requestFocus());
@@ -66,6 +82,9 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
         // Register button
         registerButton.setOnAction(e -> handleRegister());
 
+        // Captcha refresh
+        refreshCaptchaButton.setOnAction(e -> refreshCaptcha());
+
         // Real-time validation
         setupValidationListeners();
     }
@@ -78,6 +97,17 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
         passwordField.textProperty().addListener((obs, oldVal, newVal) -> validatePassword());
         confirmPasswordField.textProperty().addListener((obs, oldVal, newVal) -> validateConfirmPassword());
         termsCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> validateTerms());
+
+        // Captcha real-time validation
+        captchaField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.length() == 6) {
+                validateCaptcha();
+            } else {
+                isCaptchaValid = false;
+                captchaErrorLabel.setVisible(false);
+                ValidationUtils.applyValidationStyle(captchaField, true);
+            }
+        });
     }
 
     @FXML
@@ -131,8 +161,9 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
             @Override
             protected void failed() {
                 Throwable exception = getException();
-                showError("Registration failed: " + exception.getMessage());
+                showError(getFriendlyMessage(exception));
                 setLoading(false);
+                refreshCaptcha();
             }
         };
 
@@ -162,9 +193,14 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
         boolean passwordValid = validatePassword();
         boolean confirmPasswordValid = validateConfirmPassword();
         boolean termsValid = validateTerms();
+        
+        // Final Captcha check
+        if (!isCaptchaValid) {
+            showCaptchaError("Please complete the security verification correctly");
+        }
 
         return firstNameValid && lastNameValid && emailValid && phoneValid &&
-               birthDateValid && passwordValid && confirmPasswordValid && termsValid;
+               birthDateValid && passwordValid && confirmPasswordValid && termsValid && isCaptchaValid;
     }
 
     private boolean validateFirstName() {
@@ -247,6 +283,21 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
         }
     }
 
+    private String getFriendlyMessage(Throwable e) {
+        if (e == null) return "Une erreur inattendue s'est produite.";
+        String msg = e.getMessage();
+        if (msg == null) return "Une erreur inattendue s'est produite.";
+        if (msg.contains("Duplicate entry") || msg.contains("UNIQ")) {
+            return "\u26a0\ufe0f Cette adresse email est d\u00e9j\u00e0 utilis\u00e9e. Veuillez vous connecter ou utiliser une autre adresse.";
+        }
+        if (msg.contains("Communications link failure") || msg.contains("Connection refused")) {
+            return "\u26a0\ufe0f Impossible de contacter le serveur. V\u00e9rifiez que WAMP/XAMPP est d\u00e9marr\u00e9.";
+        }
+        // IllegalArgumentException messages are already user-friendly (from our service layer)
+        if (e instanceof IllegalArgumentException) return msg;
+        return "\u26a0\ufe0f Une erreur s'est produite. Veuillez r\u00e9essayer.";
+    }
+
     private void showError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
@@ -278,4 +329,49 @@ public class RegisterPatientController implements SceneManager.ServiceAware {
             clearMessages();
         }
     }
-}
+
+    private void refreshCaptcha() {
+        captchaField.clear();
+        isCaptchaValid = false;
+        captchaErrorLabel.setVisible(false);
+        ValidationUtils.applyValidationStyle(captchaField, true);
+        
+        captchaService.generateCode();
+        captchaImageView.setImage(captchaService.generateCaptchaImage(200, 50));
+    }
+
+    private void validateCaptcha() {
+        String input = captchaField.getText().trim();
+        if (captchaService.validate(input)) {
+            isCaptchaValid = true;
+            captchaErrorLabel.setText("✓ Code correct");
+            captchaErrorLabel.setStyle("-fx-text-fill: #28a745;"); // Green
+            captchaErrorLabel.setVisible(true);
+            captchaErrorLabel.setManaged(true);
+            ValidationUtils.applyValidationStyle(captchaField, true);
+        } else {
+            isCaptchaValid = false;
+            captchaErrorLabel.setText("✗ Code incorrect");
+            captchaErrorLabel.setStyle("-fx-text-fill: #dc3545;"); // Red
+            captchaErrorLabel.setVisible(true);
+            captchaErrorLabel.setManaged(true);
+            ValidationUtils.applyValidationStyle(captchaField, false);
+            
+            // Auto-refresh after 1.5s on wrong input as per Step 3
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            pause.setOnFinished(e -> {
+                if (!isCaptchaValid) {
+                    refreshCaptcha();
+                }
+            });
+            pause.play();
+        }
+    }
+
+    private void showCaptchaError(String message) {
+        captchaErrorLabel.setText(message);
+        captchaErrorLabel.setStyle("-fx-text-fill: #dc3545;");
+        captchaErrorLabel.setVisible(true);
+        captchaErrorLabel.setManaged(true);
+    }
+}

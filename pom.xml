@@ -83,11 +83,11 @@
             <version>17.0.2</version>
         </dependency>
 
-        <!-- FontAwesomeFX for Icons -->
+        <!-- org.json for JSON parsing -->
         <dependency>
-            <groupId>de.jensd</groupId>
-            <artifactId>fontawesomefx</artifactId>
-            <version>8.9</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
         </dependency>
 
     </dependencies>

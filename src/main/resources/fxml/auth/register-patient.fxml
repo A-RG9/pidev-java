@@ -2,11 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.RegisterPatientController"
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.RegisterPatientController"
       styleClass="root" alignment="CENTER" spacing="20.0" prefWidth="1000.0" prefHeight="800.0">
 
     <!-- Main Container -->
@@ -91,6 +92,19 @@
                         <CheckBox fx:id="termsCheckBox" text="I agree to the Terms of Service and Privacy Policy" style="-fx-font-size: 13px;"/>
                         <CheckBox fx:id="marketingCheckBox" text="I would like to receive marketing communications (optional)" style="-fx-font-size: 13px;"/>
                         <Label fx:id="termsErrorLabel" styleClass="error-label" visible="false" managed="false"/>
+                    </VBox>
+
+                    <!-- Captcha Section -->
+                    <VBox spacing="8.0" style="-fx-padding: 10 0 0 0;">
+                        <Label text="Security Verification" styleClass="form-label"/>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <StackPane style="-fx-background-color: #f8f9fa; -fx-padding: 2; -fx-border-color: #dee2e6; -fx-border-radius: 4;">
+                                <ImageView fx:id="captchaImageView" fitWidth="200.0" fitHeight="50.0" preserveRatio="true"/>
+                            </StackPane>
+                            <Button fx:id="refreshCaptchaButton" text="🔄" styleClass="btn-secondary" prefHeight="44.0"/>
+                        </HBox>
+                        <TextField fx:id="captchaField" promptText="Enter the code" styleClass="form-control" prefWidth="350.0"/>
+                        <Label fx:id="captchaErrorLabel" styleClass="error-label" visible="false" managed="false"/>
                     </VBox>
 
                 </VBox>
