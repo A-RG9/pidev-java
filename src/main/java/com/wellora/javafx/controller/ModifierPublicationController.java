@@ -92,6 +92,11 @@ public class ModifierPublicationController extends BaseController {
     }
 
     private void updatePublication() {
+        if (currentPublication == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune donnée de publication à mettre à jour.");
+            alert.show();
+            return;
+        }
         try {
             if (pubTextArea.getText().trim().isEmpty() || datePicker.getValue() == null ||
                     experienceCombo.getValue() == null || typeCombo.getValue() == null) {
@@ -136,7 +141,7 @@ public class ModifierPublicationController extends BaseController {
             FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
             Parent shellRoot = shellLoader.load();
             HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherPublications.fxml");
+            shellCtrl.setContentWithProxy("/fxml/AfficherPublications.fxml", currentParcours);
             Stage stage = (Stage) ((Node) btnCancel).getScene().getWindow();
             stage.getScene().setRoot(shellRoot);
         } catch (IOException e) {

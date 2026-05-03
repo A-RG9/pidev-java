@@ -157,10 +157,17 @@ public class PublicationCardController {
 
         btnEditPub.setOnAction(e -> {
             try {
+                // Load the modifier publication view directly
+                FXMLLoader modifierLoader = new FXMLLoader(getClass().getResource("/fxml/ModifierPublication.fxml"));
+                Parent modifierView = modifierLoader.load();
+                ModifierPublicationController modifierCtrl = modifierLoader.getController();
+                modifierCtrl.initData(parentParcours, currentPublication);
+                
+                // Load the shell and set the modifier view as content
                 FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
                 Parent shellRoot = shellLoader.load();
                 HealthShellController shellCtrl = shellLoader.getController();
-                shellCtrl.setContentWithProxy("/fxml/ModifierPublication.fxml", parentParcours);
+                shellCtrl.setContent(modifierView);
                 Stage stage = (Stage) ((Node)btnEditPub).getScene().getWindow();
                 stage.getScene().setRoot(shellRoot);
             } catch (IOException ex) {
