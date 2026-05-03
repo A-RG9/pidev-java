@@ -19,10 +19,11 @@ import java.util.Map;
 public class UserService {
     private final UserDAO userDAO;
     private final EmailService emailService;
+    private final DiplomaVerificationService diplomaVerificationService;
     
     // Account lockout settings
     private static final int MAX_LOGIN_ATTEMPTS = 5;
-    private static final int LOCKOUT_MINUTES = 30;
+    private static final int LOCKOUT_MINUTES = 15;
 
     /**
      * Constructor that initializes the UserDAO.
@@ -31,6 +32,7 @@ public class UserService {
     public UserService() throws SQLException {
         this.userDAO = new UserDAO();
         this.emailService = new EmailService();
+        this.diplomaVerificationService = new DiplomaVerificationService();
     }
 
     /**
@@ -582,6 +584,11 @@ public class UserService {
             throw new IllegalArgumentException(validationError);
         }
 
+        // Check email uniqueness
+        if (userDAO.emailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Cette adresse email est déjà enregistrée. Veuillez utiliser une autre adresse ou vous connecter.");
+        }
+
         // Hash password
         String hashedPassword = hashPassword(plainPassword);
 
@@ -618,6 +625,11 @@ public class UserService {
             throw new IllegalArgumentException(validationError);
         }
 
+        // Check email uniqueness
+        if (userDAO.emailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Cette adresse email est déjà enregistrée. Veuillez utiliser une autre adresse ou vous connecter.");
+        }
+
         // Validate diploma file
         if (diplomaFile == null) {
             throw new IllegalArgumentException("Diploma file is required");
@@ -639,8 +651,8 @@ public class UserService {
         int i = diplomaFile.getName().lastIndexOf('.');
         if (i > 0) extension = diplomaFile.getName().substring(i);
         
+        // Step 1: Save Diploma File locally
         String diplomaFileName = "diploma_" + createdUser.getUuid() + extension;
-        
         try {
             java.nio.file.Path targetDir = java.nio.file.Paths.get("uploads", "diplomas");
             if (!java.nio.file.Files.exists(targetDir)) {
@@ -653,11 +665,86 @@ public class UserService {
             userDAO.updateDiplomaUrl(createdUser.getUuid(), diplomaFileName);
         } catch (java.io.IOException e) {
             System.err.println("Failed to save diploma file: " + e.getMessage());
-            // Non-fatal, but user won't have a diploma viewable
         }
 
-        // Log successful professional registration
-        System.out.println("Professional registered successfully: " + createdUser.getEmail() + " (" + createdUser.getRole() + ") with diploma: " + diplomaFileName);
+        // Step 1: Create Initial Verification Record
+        com.wellcare.javafx.model.ProfessionalVerification pv = new com.wellcare.javafx.model.ProfessionalVerification();
+        pv.setProfessionalUuid(createdUser.getUuid());
+        pv.setProfessionalEmail(createdUser.getEmail());
+        pv.setLicenseNumber(createdUser.getLicenseNumber());
+        pv.setSpecialty(createdUser.getSpecialite());
+        pv.setDiplomaPath("uploads/diplomas/" + diplomaFileName);
+        
+        try {
+            userDAO.createProfessionalVerification(pv);
+        } catch (SQLException e) {
+            System.err.println("Failed to create verification record: " + e.getMessage());
+        }
+
+        // Step 2: Trigger AI Verification Pipeline
+        diplomaVerificationService.verifyDiploma(createdUser, diplomaFile)
+            .thenAccept(result -> {
+                try {
+                    // Update verification model
+                    pv.setConfidenceScore(result.score);
+                    pv.setStatus(result.status);
+                    
+                    // Wrap raw text in JSON to satisfy MySQL JSON constraint
+                    org.json.JSONObject extractedJson = new org.json.JSONObject();
+                    extractedJson.put("raw_text", result.extractedText);
+                    pv.setExtractedData(extractedJson.toString());
+                    
+                    pv.setValidationDetails(new org.json.JSONObject(result.details).toString());
+                    pv.setForgeryIndicators(new org.json.JSONObject(result.forgeryIndicators).toString());
+                    if (!"manual_review".equals(result.status)) {
+                        pv.setVerifiedAt(java.time.LocalDateTime.now());
+                    }
+
+                    // Update professional_verifications table
+                    System.out.println("AI Verification Complete for: " + createdUser.getEmail() + " | Status: " + result.status + " | ID: " + pv.getId());
+                    userDAO.updateProfessionalVerificationResults(pv);
+
+                    // Backward compatibility update for users table
+                    userDAO.updateVerificationResults(
+                        createdUser.getUuid(), 
+                        result.score, 
+                        result.status, 
+                        result.extractedText
+                    );
+
+                    // Automatic Decision Logic
+                    if ("verified".equals(result.status)) {
+                        userDAO.updateVerificationStatus(createdUser.getUuid(), true);
+                        emailService.sendSimpleEmail(createdUser.getEmail(), 
+                            "Diploma Verified Successfully", 
+                            "Great news! Our AI system has verified your diploma with a confidence score of " + result.score + "%. Your account is now fully active.");
+                    } else if ("rejected".equals(result.status)) {
+                        emailService.sendSimpleEmail(createdUser.getEmail(), 
+                            "Diploma Verification Failed", 
+                            "Unfortunately, our AI system could not verify your diploma (Score: " + result.score + "%). Our team will review it manually.");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Database error during AI verification update: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            })
+            .exceptionally(ex -> {
+                System.err.println("CRITICAL ERROR in AI Verification Pipeline: " + ex.getMessage());
+                ex.printStackTrace();
+                return null;
+            });
+
+        // Step 3: Generate verification token and send email
+        if (createdUser != null) {
+            try {
+                String token = userDAO.generateEmailVerificationToken(createdUser.getUuid());
+                new Thread(() -> {
+                    emailService.sendVerificationEmail(createdUser.getEmail(), token);
+                }).start();
+            } catch (SQLException e) {
+                System.err.println("Failed to generate verification token: " + e.getMessage());
+            }
+        }
 
         return createdUser;
     }
@@ -692,6 +779,11 @@ public class UserService {
             throw new IllegalArgumentException(validationError);
         }
 
+        // Check email uniqueness
+        if (userDAO.emailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Cette adresse email est déjà enregistrée. Veuillez utiliser une autre adresse ou vous connecter.");
+        }
+
         // Hash password
         String hashedPassword = hashPassword(plainPassword);
 
@@ -710,6 +802,169 @@ public class UserService {
         }
         
         return createdUser;
+    }
+
+    /**
+     * Reprocesses a diploma using the AI pipeline (manually triggered by Admin).
+     */
+    public java.util.concurrent.CompletableFuture<DiplomaVerificationService.VerificationResult> reprocessDiplomaAi(User professional, java.io.File diplomaFile) {
+        // Create a new verification record for this attempt
+        com.wellcare.javafx.model.ProfessionalVerification pv = new com.wellcare.javafx.model.ProfessionalVerification();
+        pv.setProfessionalUuid(professional.getUuid());
+        pv.setProfessionalEmail(professional.getEmail());
+        pv.setLicenseNumber(professional.getLicenseNumber());
+        pv.setSpecialty(professional.getSpecialite());
+        pv.setDiplomaPath("uploads/diplomas/" + diplomaFile.getName());
+        pv.setStatus("processing");
+
+        try {
+            userDAO.createProfessionalVerification(pv);
+        } catch (SQLException e) {
+            System.err.println("Failed to create verification record: " + e.getMessage());
+        }
+
+        return diplomaVerificationService.verifyDiploma(professional, diplomaFile)
+            .thenApply(result -> {
+                try {
+                    // Update verification record
+                    pv.setConfidenceScore(result.score);
+                    pv.setStatus(result.status);
+                    
+                    // Wrap raw text in JSON to satisfy MySQL JSON constraint
+                    org.json.JSONObject extractedJson = new org.json.JSONObject();
+                    extractedJson.put("raw_text", result.extractedText);
+                    pv.setExtractedData(extractedJson.toString());
+                    
+                    pv.setValidationDetails(new org.json.JSONObject(result.details).toString());
+                    pv.setForgeryIndicators(new org.json.JSONObject(result.forgeryIndicators).toString());
+                    pv.setVerifiedAt(java.time.LocalDateTime.now());
+                    userDAO.updateProfessionalVerificationResults(pv);
+
+                    // Update user table for backward compatibility
+                    userDAO.updateVerificationResults(professional.getUuid(), result.score, result.status, result.extractedText);
+                    if ("verified".equals(result.status)) {
+                        userDAO.updateVerificationStatus(professional.getUuid(), true);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException("DB Error: " + e.getMessage());
+                }
+                return result;
+            });
+    }
+
+    // ==================== GOOGLE OAUTH METHODS ====================
+
+    /**
+     * Processes Google Login logic: finds or creates user based on Google profile.
+     * Matches the Web Sprint procedure (Step 7 & 8).
+     * @param googleId the unique Google ID
+     * @param email the user's email from Google
+     * @param firstName the user's first name from Google
+     * @param lastName the user's last name from Google
+     * @param avatarUrl the profile picture URL from Google
+     * @return the logged-in User
+     * @throws SQLException if operation fails
+     */
+    public User processGoogleLogin(String googleId, String email, String firstName, String lastName, String avatarUrl) throws SQLException {
+        // 1. Search by Google ID first
+        User user = userDAO.getUserByGoogleId(googleId);
+        
+        if (user == null) {
+            // 2. Search by Email
+            user = userDAO.getUserByEmail(email);
+            
+            if (user == null) {
+                // 3. Create new account (Default role: PATIENT as per Step 7)
+                user = new User();
+                user.setEmail(email);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setAvatarUrl(avatarUrl);
+                user.setGoogleId(googleId);
+                user.setRole("ROLE_PATIENT");
+                user.setEmailVerified(true); // Google already verified
+                user.setActive(true);
+                
+                // Set random password (not used for OAuth)
+                String randomPass = java.util.UUID.randomUUID().toString();
+                user = userDAO.createUser(user, hashPassword(randomPass));
+            } else {
+                // Link Google ID to existing account (Step 7 "Then by Google ID")
+                userDAO.updateGoogleId(user.getUuid(), googleId);
+                user.setGoogleId(googleId);
+            }
+        }
+        
+        // Step 8: Update user info with latest Google data
+        user.setAvatarUrl(avatarUrl);
+        user.setLastLoginAt(LocalDateTime.now());
+        userDAO.resetLoginAttempts(user.getEmail());
+        
+        return user;
+    }
+
+    /**
+     * Resets the entire login state for a user.
+     */
+    public void resetLoginState(String email) throws SQLException {
+        userDAO.resetLoginAttempts(email);
+    }
+
+    // ==================== TWO-FACTOR AUTH ====================
+
+    /**
+     * Initiates 2FA setup by generating a secret and OTP URI.
+     */
+    public String initiate2FASetup(String uuid) throws SQLException {
+        User user = userDAO.getUserByUuid(uuid);
+        if (user == null) throw new IllegalArgumentException("Utilisateur non trouvé");
+        
+        TotpService totp = new TotpService();
+        return totp.getOtpAuthUri(totp.generateSecret(), user.getEmail());
+    }
+
+    /**
+     * Completes 2FA activation after verifying the first code.
+     * Returns generated backup codes.
+     */
+    public List<String> activate2FA(String uuid, String secret, String code) throws SQLException {
+        TotpService totp = new TotpService();
+        if (totp.verifyCode(secret, code)) {
+            List<String> backupCodes = totp.generateBackupCodes(10);
+            userDAO.update2FA(uuid, true, secret, backupCodes);
+            return backupCodes;
+        }
+        throw new IllegalArgumentException("Le code de vérification est incorrect");
+    }
+
+    /**
+     * Verifies a 2FA code (TOTP or Backup code) during login.
+     */
+    public boolean verify2FA(User user, String code) throws SQLException {
+        if (!user.isTwoFactorEnabled()) return true;
+        
+        // 1. Try TOTP
+        TotpService totp = new TotpService();
+        if (totp.verifyCode(user.getTotpSecret(), code)) {
+            return true;
+        }
+        
+        // 2. Try Backup Codes
+        List<String> backupCodes = user.getBackupCodes();
+        if (backupCodes != null && backupCodes.contains(code)) {
+            backupCodes.remove(code);
+            userDAO.update2FA(user.getUuid(), true, user.getTotpSecret(), backupCodes);
+            return true;
+        }
+        
+        return false;
+    }
+
+    /**
+     * Disables 2FA for a user.
+     */
+    public boolean disable2FA(String uuid) throws SQLException {
+        return userDAO.update2FA(uuid, false, null, null);
     }
 
     // ==================== HELPER METHODS ====================
