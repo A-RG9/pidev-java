@@ -4,12 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 
-/**
- * HealthNavigationProxy — bridges HealthShellController (PIDEV-JAVA shell)
- * with integ controllers that expect a MainController for in-shell navigation.
- *
- * Integ controllers call proxy.showHealthJournals() etc. instead of mainController.*
- */
 public class HealthNavigationProxy {
 
     private final VBox contentArea;
@@ -28,7 +22,6 @@ public class HealthNavigationProxy {
     public void showCalendar()        { loadHealth("/fxml/calendar.fxml"); }
     public void showPrediction()      { loadHealth("/fxml/prediction.fxml"); }
 
-    /** Load any health view directly into the shell content area */
     public void loadContentView(Parent view) {
         contentArea.getChildren().setAll(view);
     }
@@ -45,7 +38,6 @@ public class HealthNavigationProxy {
         }
     }
 
-    /** Inject this proxy into any integ controller that needs navigation */
     public void injectProxy(Object controller) {
         if (controller == null) return;
         try {
