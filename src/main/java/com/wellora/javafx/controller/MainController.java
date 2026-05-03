@@ -34,6 +34,11 @@ public class MainController {
     @FXML private Button btnNutritionRecettes;
     @FXML private Button btnNutritionAnalyse;
 
+    // Navigation Buttons - Health Trail
+    @FXML private Button btnAfficherParcours;
+    @FXML private Button btnAjouterParcours;
+    @FXML private Button btnToutesPublications;
+
     // Content Area - where views are loaded
     @FXML private VBox contentArea;
 
@@ -170,6 +175,26 @@ public class MainController {
     public void showNutritionAnalyse() {
         setActiveButton(btnNutritionAnalyse);
         loadNutritionView("/com/wellora/views/Analyse.fxml");
+    }
+
+    // ========== HEALTH TRAIL NAVIGATION METHODS ==========
+
+    @FXML
+    public void showAfficherParcours() {
+        setActiveButton(btnAfficherParcours);
+        loadView("/fxml/AfficherParcours.fxml");
+    }
+
+    @FXML
+    public void showAjouterParcours() {
+        setActiveButton(btnAjouterParcours);
+        loadView("/fxml/AjouterParcoursDeSante.fxml");
+    }
+
+    @FXML
+    public void showToutesPublications() {
+        setActiveButton(btnToutesPublications);
+        loadView("/fxml/ToutesPublications.fxml");
     }
 
     /**

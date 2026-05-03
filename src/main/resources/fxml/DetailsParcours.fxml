@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.sothawo.mapjfx.MapView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- Content-only view for DetailsParcours - loaded inside HealthShell -->
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.DetailsParcoursController"
+      styleClass="main-content" spacing="25" prefWidth="1200">
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="30.0" />
+    </padding>
+    <children>
+        <StackPane fx:id="heroContainer" alignment="CENTER" prefHeight="320.0" minHeight="320.0" maxHeight="320.0" style="-fx-background-color: #1a1a2e; -fx-background-radius: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 8);">
+            <children>
+                <ImageView fx:id="heroImageView" />
+                <Rectangle fx:id="heroOverlay" fill="linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.4), transparent)" height="320.0" StackPane.alignment="BOTTOM_CENTER" />
+                <VBox spacing="12.0" StackPane.alignment="BOTTOM_LEFT">
+                    <padding><Insets bottom="30.0" left="40.0" right="40.0" /></padding>
+                    <children>
+                        <Label fx:id="heroTitle" style="-fx-text-fill: white; -fx-font-size: 38; -fx-font-weight: bold; -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.5), 5, 0, 0, 2);" text="PARCOURS TITLE" />
+                        <Label fx:id="heroLocation" style="-fx-text-fill: #f8f9fa; -fx-font-size: 16; -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.5), 3, 0, 0, 1);" text="📍 Location Address Here" />
+                        <HBox spacing="25.0">
+                            <Label fx:id="heroDistance" style="-fx-text-fill: #e9ecef; -fx-font-size: 14; -fx-font-weight: bold;" text="📏 0.0 km" />
+                            <Label fx:id="heroPubs" style="-fx-text-fill: #e9ecef; -fx-font-size: 14; -fx-font-weight: bold;" text="📄 0 publications" />
+                            <Label fx:id="heroDate" style="-fx-text-fill: #e9ecef; -fx-font-size: 14; -fx-font-weight: bold;" text="📅 il y a X jours" />
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+
+        <HBox spacing="20.0">
+            <children>
+                <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                    <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 13; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="DISTANCE" />
+                    <Label fx:id="statDistance" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="0.0" />
+                    <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="km" />
+                </VBox>
+                <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                    <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 13; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="PUBLICATIONS" />
+                    <Label fx:id="statPubs" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="0" />
+                    <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="posts" />
+                </VBox>
+                <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                    <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 13; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="TEMPERATURE" />
+                    <Label fx:id="statTemp" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="-- °C" />
+                    <Label fx:id="statWeatherDesc" style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="Fetching..." />
+                </VBox>
+                <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                    <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 13; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="WIND" />
+                    <Label fx:id="statWind" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="-- km/h" />
+                    <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13;" text="speed" />
+                </VBox>
+            </children>
+        </HBox>
+
+        <HBox spacing="25.0">
+            <children>
+                <VBox spacing="25.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);">
+                            <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2b2d42; -fx-padding: 0 0 20 0;" text="Parcours Summary" />
+                            <HBox spacing="20.0">
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e9ecef; -fx-border-radius: 8;" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 12; -fx-font-weight: bold;" text="LOCATION" />
+                                    <Label fx:id="summaryLocation" wrapText="true" style="-fx-text-fill: #495057; -fx-font-size: 14; -fx-padding: 5 0 0 0;" />
+                                </VBox>
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e9ecef; -fx-border-radius: 8;" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 12; -fx-font-weight: bold;" text="CREATED" />
+                                    <Label fx:id="summaryDate" style="-fx-text-fill: #495057; -fx-font-size: 14; -fx-padding: 5 0 0 0;" />
+                                </VBox>
+                            </HBox>
+                            <VBox style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e9ecef; -fx-border-radius: 8; -fx-margin: 15 0 0 0;">
+                                <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 12; -fx-font-weight: bold;" text="COORDINATES" />
+                                <Label fx:id="summaryCoords" style="-fx-text-fill: #495057; -fx-font-size: 14; -fx-padding: 5 0 0 0;" />
+                            </VBox>
+                        </VBox>
+
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);">
+                            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 0 0 15 0;">
+                                <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="Map Overview" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label style="-fx-text-fill: #00b4d8; -fx-font-weight: bold; -fx-cursor: hand;" text="↗ Open in OpenStreetMap" />
+                            </HBox>
+                            <Label fx:id="mapLocationLabel" wrapText="true" style="-fx-text-fill: #6c757d; -fx-padding: 0 0 15 0;" />
+                            <VBox style="-fx-border-color: #e9ecef; -fx-border-radius: 8; -fx-padding: 2;">
+                                <MapView fx:id="mapView" prefHeight="350.0" />
+                            </VBox>
+                        </VBox>
+                    </children>
+                </VBox>
+
+                <VBox spacing="25.0" prefWidth="400.0" minWidth="350.0">
+                    <children>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" spacing="15.0">
+                            <Label style="-fx-text-fill: #adb5bd; -fx-font-size: 12; -fx-font-weight: bold; -fx-letter-spacing: 1px;" text="ACTIONS" />
+                            <Button fx:id="btnViewPublications" prefHeight="50.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ebf5ff; -fx-text-fill: #4361ee; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 8; -fx-cursor: hand;" text="📄 View publications" />
+                            <Button fx:id="btnReturn" prefHeight="50.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 8; -fx-text-fill: #495057; -fx-font-size: 14; -fx-font-weight: bold; -fx-cursor: hand;" text="≣ All Health Trails" />
+                        </VBox>
+
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" spacing="10.0">
+                            <Label style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2b2d42;" text="📏 Distance From You" />
+                            <Label fx:id="userDistanceLabel" style="-fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #00b4d8;" text="-- km" />
+                            <Label style="-fx-text-fill: #8d99ae; -fx-font-size: 13; -fx-line-spacing: 4px;" text="Live direct distance between your current location and this parcours." wrapText="true" />
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>

@@ -150,6 +150,31 @@
 
                 <Separator styleClass="menu-separator-thin"/>
                 
+                <!-- HEALTH TRAIL Section -->
+                <VBox spacing="0">
+                    <Label text="HEALTH TRAIL" styleClass="nav-category"/>
+
+
+                    <VBox styleClass="sub-menu">
+                        <Button text="  Afficher Parcours" 
+                                styleClass="sub-nav-button" 
+                                onAction="#showAfficherParcours"
+                                fx:id="btnAfficherParcours"/>
+                    </VBox>
+                    <VBox styleClass="sub-menu">
+                        <Button text="  Ajouter Parcours" 
+                                styleClass="sub-nav-button" 
+                                onAction="#showAjouterParcours"
+                                fx:id="btnAjouterParcours"/>
+                    </VBox>
+                    <VBox styleClass="sub-menu">
+                        <Button text="  Toutes Publications" 
+                                styleClass="sub-nav-button" 
+                                onAction="#showToutesPublications"
+                                fx:id="btnToutesPublications"/>
+                    </VBox>
+                </VBox>
+                
                 <!-- MANAGE Section -->
                 <VBox spacing="0">
                     <Label text="MANAGE" styleClass="nav-category"/>

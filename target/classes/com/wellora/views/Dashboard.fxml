@@ -54,6 +54,19 @@
                         <Button text="Analyse (Progrès)" styleClass="sub-nav-button" onAction="#navToAnalyse" maxWidth="Infinity"/>
                     </VBox>
 
+                    <!-- HEALTH TRAIL Section -->
+                    <HBox alignment="CENTER_LEFT" styleClass="nav-category">
+                        <Label text="♣" styleClass="nav-icon"/>
+                        <Label text="Health Trail" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Label text="⌄" styleClass="chevron-icon"/>
+                    </HBox>
+
+                    <VBox styleClass="sub-menu">
+                        <Button text="  Afficher Parcours" styleClass="sub-nav-button" onAction="#showAfficherParcours" maxWidth="Infinity"/>
+                        <Button text="  Ajouter Parcours" styleClass="sub-nav-button" onAction="#showAjouterParcours" maxWidth="Infinity"/>
+                        <Button text="  Toutes Publications" styleClass="sub-nav-button" onAction="#showToutesPublications" maxWidth="Infinity"/>
+                    </VBox>
+
                 </VBox>
             </ScrollPane>
 

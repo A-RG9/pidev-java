@@ -1,6 +1,7 @@
 package com.wellora.javafx.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -18,13 +19,14 @@ import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.SymptomDAO;
 import com.wellora.model.Symptom;
 import com.wellora.services.ApiService;
+import com.wellora.controllers.BaseController;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class DashboardController {
+public class DashboardController extends BaseController {
 
     private MainController mainController;
 
@@ -59,6 +61,11 @@ public class DashboardController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    @Override
+    protected Parent getRoot() {
+        return null; // Not used in Dashboard context - theme is applied via mainController
     }
 
     @FXML

@@ -37,6 +37,40 @@ public abstract class BaseController {
     @FXML public void navToCalendar(ActionEvent event)       { switchHealthScene(event, "/fxml/calendar.fxml"); }
     @FXML public void navToPrediction(ActionEvent event)     { switchHealthScene(event, "/fxml/prediction.fxml"); }
 
+    // ===================== HEALTH TRAIL NAVIGATION =====================
+
+    @FXML public void showAfficherParcours(ActionEvent event)    { switchHealthScene(event, "/fxml/AfficherParcours.fxml"); }
+    @FXML public void showAjouterParcours(ActionEvent event)     { switchHealthScene(event, "/fxml/AjouterParcoursDeSante.fxml"); }
+    @FXML public void showToutesPublications(ActionEvent event)  { switchHealthScene(event, "/fxml/ToutesPublications.fxml"); }
+
+    // ===================== HEALTH TRAIL QUICK LINKS (from AfficherPublications) =====================
+
+    @FXML public void goBack() {
+        try {
+            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
+            Parent shellRoot = shellLoader.load();
+            HealthShellController shellCtrl = shellLoader.getController();
+            shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
+            Stage stage = (Stage) ((Node)btnThemeToggle).getScene().getWindow();
+            stage.getScene().setRoot(shellRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML public void goToGlobalFeed() {
+        try {
+            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
+            Parent shellRoot = shellLoader.load();
+            HealthShellController shellCtrl = shellLoader.getController();
+            shellCtrl.setContentWithProxy("/fxml/ToutesPublications.fxml");
+            Stage stage = (Stage) ((Node)btnThemeToggle).getScene().getWindow();
+            stage.getScene().setRoot(shellRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // ===================== THEME TOGGLE =====================
 
     @FXML

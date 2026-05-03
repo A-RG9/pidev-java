@@ -29,10 +29,33 @@ public class HealthShellController extends BaseController {
 
     /** Load a health view AND inject proxy for navigation */
     public void setContentWithProxy(String fxmlPath) {
+        setContentWithProxy(fxmlPath, null);
+    }
+
+    /** Load a health view AND inject proxy for navigation, with data for the controller */
+    public void setContentWithProxy(String fxmlPath, Object data) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent view = loader.load();
-            proxy.injectProxy(loader.getController());
+            Object controller = loader.getController();
+            proxy.injectProxy(controller);
+            
+            // Pass data to controller if it has an initData method
+            if (data != null && controller != null) {
+                try {
+                    java.lang.reflect.Method method = controller.getClass().getMethod("initData", data.getClass());
+                    method.invoke(controller, data);
+                } catch (NoSuchMethodException e) {
+                    // Try with Object parameter
+                    try {
+                        java.lang.reflect.Method method = controller.getClass().getMethod("initData", Object.class);
+                        method.invoke(controller, data);
+                    } catch (NoSuchMethodException ex) {
+                        // No initData method, that's ok
+                    }
+                }
+            }
+            
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
             System.err.println("❌ Shell load failed: " + fxmlPath + " — " + e.getMessage());

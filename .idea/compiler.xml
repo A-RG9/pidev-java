@@ -7,8 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="wellora-health" />
-        <module name="wellora-merged" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="wellora-merged" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox prefWidth="600.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e1e8ed; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.PublicationCardController">
+    <padding>
+        <Insets bottom="15.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+                <Circle fill="#00a693" radius="20.0" />
+                <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #2d3436;" text="Utilisateur" />
+                        <Label fx:id="dateLabel" style="-fx-text-fill: #b2bec3; -fx-font-size: 12;" text="aujourd'hui" />
+                    </children>
+                </VBox>
+                <Button fx:id="btnEditPub" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand;" text="📝" />
+                <Button fx:id="btnDeletePub" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-text-fill: #e74c3c; -fx-cursor: hand;" text="🗑" />
+            </children>
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+                <Label fx:id="ambianceLabel" style="-fx-text-fill: #e67e22; -fx-font-weight: bold; -fx-font-size: 13;" text="⭐ 1/5 ambiance" />
+                <Label fx:id="safetyLabel" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-font-size: 13;" text="🛡 2/5 safety" />
+                <Label fx:id="experienceLabel" style="-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 12;" text="◉ Bad" />
+                <Label fx:id="typeLabel" style="-fx-background-color: #f1f2f6; -fx-text-fill: #747d8c; -fx-padding: 3 8 3 8; -fx-background-radius: 15; -fx-font-size: 12;" text="Event" />
+
+                <Label fx:id="popularityLabel" style="-fx-text-fill: #ff7675; -fx-font-weight: bold; -fx-background-color: #fff0f5; -fx-padding: 3 8 3 8; -fx-background-radius: 15; -fx-font-size: 12;" text="🔥 0" />
+            </children>
+        </HBox>
+
+        <TextFlow fx:id="textFlow" prefWidth="560.0" style="-fx-line-spacing: 4px;" />
+
+        <ImageView fx:id="imageView" fitWidth="560.0" preserveRatio="true" />
+
+        <HBox alignment="CENTER_LEFT">
+            <children>
+                <Label fx:id="commentsToggleLabel" style="-fx-text-fill: #b2bec3; -fx-cursor: hand; -fx-font-size: 13;" text="💬 0 comments" />
+            </children>
+        </HBox>
+
+        <VBox fx:id="commentSection" managed="false" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 8;" visible="false">
+            <children>
+                <VBox fx:id="commentsContainer" spacing="10.0" />
+                <HBox spacing="10.0">
+                    <children>
+                        <TextField fx:id="commentInputField" promptText="Write a comment..." style="-fx-background-radius: 20; -fx-border-color: #dfe6e9; -fx-border-radius: 20; -fx-padding: 8 15 8 15;" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnSubmitComment" style="-fx-background-color: #00a693; -fx-text-fill: white; -fx-background-radius: 20; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 15 8 15;" text="Send" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</VBox>
