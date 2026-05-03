@@ -8,35 +8,29 @@ import java.time.Duration;
 
 /**
  * Service for sending emails using the SendGrid REST API.
- * Uses the freshly created API key and authenticated sender.
+ * API Key is loaded from environment variable SENDGRID_API_KEY for security.
  */
 public class EmailService {
 
-    // Fresh, valid API key provided by the user
-    private static final String SENDGRID_API_KEY = "YOUR_SENDGRID_API_KEY_HERE";
-    private static final String SENDGRID_ENDPOINT = "https://api.sendgrid.com/v3/mail/send";
-    
-    // Explicitly using the address the user just authenticated in SendGrid Single Sender mode
-    private static final String FROM_EMAIL = "zeidimohamedtaher@gmail.com";
+  // Load from environment variable: set SENDGRID_API_KEY=SG.xxxx in your system
+  private static final String SENDGRID_API_KEY = System.getenv("SENDGRID_API_KEY") != null
+      ? System.getenv("SENDGRID_API_KEY")
+      : "SG.REPLACE_WITH_YOUR_KEY"; // Fallback placeholder - do NOT commit real key
+  private static final String SENDGRID_ENDPOINT = "https://api.sendgrid.com/v3/mail/send";
+  private static final String FROM_EMAIL = "zeidimohamedtaher@gmail.com";
 
-    private final HttpClient httpClient;
+  private final HttpClient httpClient;
 
-    public EmailService() {
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .connectTimeout(Duration.ofSeconds(10))
-                .build();
-    }
+  public EmailService() {
+    this.httpClient = HttpClient.newBuilder()
+        .version(HttpClient.Version.HTTP_2)
+        .connectTimeout(Duration.ofSeconds(10))
+        .build();
+  }
 
-    /**
-     * Sends a verification email with a 6-digit code via SendGrid API.
-     *
-     * @param toEmail The recipient's email address.
-     * @param token   The 6-digit verification token.
-     * @return true if the email was successfully accepted by SendGrid, false otherwise.
-     */
-    public boolean sendVerificationEmail(String toEmail, String token) {
-        String jsonPayload = String.format("""
+  public boolean sendVerificationEmail(String toEmail, String token) {
+    String jsonPayload = String.format(
+        """
             {
               "personalizations": [
                 {
@@ -59,44 +53,15 @@ public class EmailService {
                 }
               ]
             }
-            """, toEmail, FROM_EMAIL, token);
+            """,
+        toEmail, FROM_EMAIL, token);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SENDGRID_ENDPOINT))
-                .timeout(Duration.ofMinutes(1))
-                .header("Authorization", "Bearer " + SENDGRID_API_KEY)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
-                .build();
+    return executeSend(jsonPayload);
+  }
 
-        try {
-            System.out.println("Initiating SendGrid API call...");
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            
-            // SendGrid returns 202 Accepted on successful queueing
-            if (response.statusCode() == 202) {
-                System.out.println("SUCCESS! Verification email flawlessly queued to SendGrid for: " + toEmail);
-                return true;
-            } else {
-                System.err.println("Failed to send email. SendGrid responded with HTTP: " + response.statusCode());
-                System.err.println("Response body: " + response.body());
-                return false;
-            }
-        } catch (Exception e) {
-            System.err.println("Exception occurred while communicating with SendGrid:");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * Sends a password reset token email.
-     * @param toEmail The recipient's email
-     * @param token The 64-char reset token
-     * @return true if queued successfully
-     */
-    public boolean sendPasswordResetEmail(String toEmail, String token) {
-        String jsonPayload = String.format("""
+  public boolean sendPasswordResetEmail(String toEmail, String token) {
+    String jsonPayload = String.format(
+        """
             {
               "personalizations": [
                 {
@@ -119,34 +84,64 @@ public class EmailService {
                 }
               ]
             }
-            """, toEmail, FROM_EMAIL, token);
+            """,
+        toEmail, FROM_EMAIL, token);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SENDGRID_ENDPOINT))
-                .timeout(Duration.ofMinutes(1))
-                .header("Authorization", "Bearer " + SENDGRID_API_KEY)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
-                .build();
+    return executeSend(jsonPayload);
+  }
 
-        try {
-             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-             boolean ok = response.statusCode() == 202;
-             System.out.println(ok ? "Reset Email sent successfully to " + toEmail : "Failed sending reset email: " + response.statusCode());
-             return ok;
-        } catch (Exception e) {
-             e.printStackTrace();
-             return false;
-        }
+  public boolean sendSimpleEmail(String toEmail, String subject, String content) {
+    String jsonPayload = String.format(
+        """
+            {
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": "%s"
+                    }
+                  ],
+                  "subject": "%s"
+                }
+              ],
+              "from": {
+                "email": "%s",
+                "name": "WellCare System"
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": "%s"
+                }
+              ]
+            }
+            """,
+        toEmail, subject, FROM_EMAIL, content);
+
+    return executeSend(jsonPayload);
+  }
+
+  private boolean executeSend(String jsonPayload) {
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SENDGRID_ENDPOINT))
+        .timeout(Duration.ofMinutes(1))
+        .header("Authorization", "Bearer " + SENDGRID_API_KEY)
+        .header("Content-Type", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+        .build();
+
+    try {
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+      return response.statusCode() == 202;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
     }
+  }
 
-    /**
-     * Sends a security confirmation that the password was changed.
-     * @param toEmail The recipient's email
-     * @return true if queued successfully
-     */
-    public boolean sendPasswordChangedConfirmation(String toEmail) {
-        String jsonPayload = String.format("""
+  public boolean sendPasswordChangedConfirmation(String toEmail) {
+    String jsonPayload = String.format(
+        """
             {
               "personalizations": [
                 {
@@ -169,22 +164,9 @@ public class EmailService {
                 }
               ]
             }
-            """, toEmail, FROM_EMAIL);
+            """,
+        toEmail, FROM_EMAIL);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SENDGRID_ENDPOINT))
-                .timeout(Duration.ofMinutes(1))
-                .header("Authorization", "Bearer " + SENDGRID_API_KEY)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
-                .build();
-
-        try {
-             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-             return response.statusCode() == 202;
-        } catch (Exception e) {
-             e.printStackTrace();
-             return false;
-        }
-    }
+    return executeSend(jsonPayload);
+  }
 }
