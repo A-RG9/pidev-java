@@ -59,8 +59,12 @@ public class MainController {
             btnTheme.setText(isDarkTheme ? "🌙  Dark Mode" : "☀️  Light Mode");
         }
         
-        // Apply current theme to the scene
-        applyCurrentTheme();
+        // Apply theme when the scene becomes available (since initialize() runs before scene is set)
+        contentArea.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyCurrentTheme();
+            }
+        });
         
         // Set home as active by default
         setActiveButton(btnHome);
@@ -258,17 +262,17 @@ public class MainController {
             // Clear existing stylesheets
             scene.getStylesheets().clear();
             
-            // Add base CSS
-            String baseCss = "/fxml/dashboard.css";
-            scene.getStylesheets().add(WelloraApp.class.getResource(baseCss).toExternalForm());
+            // Add base CSS files in order: style.css (sidebar/base), dashboard.css (light theme base)
+            scene.getStylesheets().add(WelloraApp.class.getResource("/com/wellora/css/style.css").toExternalForm());
+            scene.getStylesheets().add(WelloraApp.class.getResource("/fxml/dashboard.css").toExternalForm());
             
-            // Add theme-specific CSS
+            // Add theme-specific CSS for dashboard dark mode
             if (isDarkTheme) {
                 String darkCss = "/fxml/dashboard-dark.css";
                 scene.getStylesheets().add(WelloraApp.class.getResource(darkCss).toExternalForm());
             }
             
-            // Apply dark-theme class to BorderPane root
+            // Apply dark-theme or light-theme class to BorderPane root
             root.getStyleClass().remove("dark-theme");
             root.getStyleClass().remove("light-theme");
             if (isDarkTheme) {

@@ -26,15 +26,15 @@
     <Label text="📝 Gestion des Entrées Santé" styleClass="header-label"/>
     
     <!-- Main Content -->
-    <VBox spacing="10" VBox.vgrow="ALWAYS">
-        
-        <!-- Search Bar -->
-        <HBox spacing="10">
-            <TextField fx:id="searchField" promptText="Rechercher..." 
-                     prefWidth="200" styleClass="text-field"/>
-            <Button text="🔍" styleClass="button, button-primary" onAction="#search"/>
-            <Button text="📋" styleClass="button, button-secondary" onAction="#refresh"/>
-        </HBox>
+     <VBox spacing="10" VBox.vgrow="ALWAYS" styleClass="content-area">
+         
+         <!-- Search Bar -->
+         <HBox spacing="10" styleClass="search-bar">
+             <TextField fx:id="searchField" promptText="Rechercher..." 
+                      prefWidth="200" styleClass="text-field"/>
+             <Button text="🔍" styleClass="button, button-primary" onAction="#search"/>
+             <Button text="📋" styleClass="button, button-secondary" onAction="#refresh"/>
+         </HBox>
         
         <!-- Table -->
         <TableView fx:id="tableView" styleClass="table-view" 
@@ -50,27 +50,26 @@
         </TableView>
         
         <!-- Action Buttons -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Button text="➕ Créer" styleClass="button, button-success" 
-                    prefWidth="120" onAction="#createNew"/>
-            
-            <Button text="✏️ Modifier" styleClass="button, button-primary" 
-                    prefWidth="120" onAction="#editSelected"/>
-            
-            <Button text="🗑️ Supprimer" styleClass="button, button-danger" 
-                    prefWidth="120" onAction="#deleteSelected"/>
-            
-            <Button text="🔄 Effacer" styleClass="button, button-secondary" 
-                    prefWidth="120" onAction="#clearSelection"/>
-        </HBox>
-        
-        <!-- Status -->
-        <Label fx:id="statusLabel" text="" 
-               style="-fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
-    </VBox>
-    
-    <!-- Footer Instructions -->
-    <Label text="Cliquez sur une ligne pour modifier | Cliquez sur 'Créer' pour ajouter une nouvelle entrée" 
-           style="-fx-text-fill: #7f8c8d;"/>
+                 <HBox spacing="10" alignment="CENTER_LEFT" styleClass="action-bar">
+                     <Button text="➕ Créer" styleClass="button, button-success"
+                             prefWidth="120" onAction="#createNew"/>
+                     
+                     <Button text="✏️ Modifier" styleClass="button, button-primary"
+                             prefWidth="120" onAction="#editSelected"/>
+                     
+                     <Button text="🗑️ Supprimer" styleClass="button, button-danger"
+                             prefWidth="120" onAction="#deleteSelected"/>
+                     
+                     <Button text="🔄 Effacer" styleClass="button, button-secondary"
+                             prefWidth="120" onAction="#clearSelection"/>
+                 </HBox>
+                 
+                 <!-- Status -->
+                 <Label fx:id="statusLabel" text="" styleClass="status-label"/>
+             </VBox>
+             
+             <!-- Footer Instructions -->
+             <Label text="Cliquez sur une ligne pour modifier | Cliquez sur 'Créer' pour ajouter une nouvelle entrée"
+                    styleClass="footer-label"/>
 
 </VBox>

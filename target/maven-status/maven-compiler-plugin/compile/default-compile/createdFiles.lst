@@ -21,7 +21,6 @@ com\wellora\javafx\controller\SymptomFormController.class
 com\wellora\javafx\controller\Home.class
 com\wellora\javafx\controller\AfficherPublicationsController.class
 com\wellora\javafx\controller\HealthjournalFormController.class
-com\wellora\javafx\controller\SymptomListController.class
 com\wellora\dao\HealthentryDAO.class
 com\wellora\util\MyDataBase.class
 com\wellora\model\Healthentry.class

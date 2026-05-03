@@ -198,12 +198,12 @@ public class HealthentryListController {
 
     private void setStatus(String message) {
         statusLabel.setText(message);
-        statusLabel.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+        statusLabel.getStyleClass().setAll("status-label", "status-success");
     }
 
     private void showError(String message) {
         statusLabel.setText(message);
-        statusLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;");
+        statusLabel.getStyleClass().setAll("status-label", "status-error");
     }
 
     public void setMainControllerProxy(HealthNavigationProxy proxy) {

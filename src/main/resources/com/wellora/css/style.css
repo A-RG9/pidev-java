@@ -372,6 +372,100 @@
 }
 
 /* =========================================
+   SIDEBAR & HEADER LIGHT THEME OVERRIDES (MISSING)
+   ========================================= */
+
+/* Root and layout */
+.light-theme .root {
+    -fx-background-color: #F3F4F6;
+}
+
+.light-theme .header-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E5E7EB;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 2);
+}
+
+.light-theme .app-logo {
+    -fx-text-fill: #00BFA5; /* Teal accent */
+}
+
+.light-theme .app-title {
+    -fx-text-fill: #111827;
+}
+
+.light-theme .user-avatar {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+
+.light-theme .user-name {
+    -fx-text-fill: #111827;
+}
+
+.light-theme .user-email {
+    -fx-text-fill: #6B7280;
+}
+
+.light-theme .logo-icon {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+
+.light-theme .logo-text {
+    -fx-text-fill: #111827; /* Already defined above, but ensure consistency */
+}
+
+.light-theme .user-card {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
+.light-theme .avatar-text {
+    -fx-text-fill: white;
+}
+
+.light-theme .menu-separator {
+    -fx-background-color: #E5E7EB;
+}
+
+.light-theme .nav-category .label {
+    -fx-text-fill: #6B7280;
+}
+
+.light-theme .nav-category:hover .label {
+    -fx-text-fill: #00BFA5;
+}
+
+.light-theme .bottom-actions {
+    /* No specific background, inherits from sidebar */
+}
+
+.light-theme .action-button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+
+.light-theme .action-button:hover {
+    -fx-background-color: #00A690;
+}
+
+.light-theme .logout-button {
+    -fx-text-fill: #DC2626;
+}
+
+.light-theme .logout-button:hover {
+    -fx-background-color: #FEF2F2;
+    -fx-text-fill: #DC2626;
+}
+
+.light-theme .version-label {
+    -fx-text-fill: #9CA3AF;
+}
+
+/* =========================================
    DATEPICKER (CHAMP ET CALENDRIER)
    ========================================= */
 
