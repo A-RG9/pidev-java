@@ -78,149 +78,151 @@
             <Separator styleClass="menu-separator"/>
             
             <!-- Navigation Menu -->
-            <VBox spacing="8" styleClass="nav-menu">
-                <padding>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
-                </padding>
-                
-                <!-- MENU Section -->
-                <VBox spacing="0">
-                    <Label text="MENU" styleClass="nav-category"/>
+            <ScrollPane fitToWidth="true" styleClass="sidebar-scroll" VBox.vgrow="ALWAYS">
+                <VBox spacing="8" styleClass="nav-menu">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
                     
-                    <!-- Home -->
-                    <VBox styleClass="sub-menu">
-                        <Button text="🏠  Home" 
-                                styleClass="sub-nav-button" 
-                                onAction="#showHomepage"
-                                fx:id="btnHome"/>
-                    </VBox>
-                    
-                    <!-- Dashboard -->
-                    <VBox styleClass="sub-menu">
-                        <Button text="📊  Dashboard" 
-                                styleClass="sub-nav-button" 
-                                onAction="#showDashboard"
-                                fx:id="btnDashboard"/>
-                    </VBox>
-                </VBox>
-                
-                <Separator styleClass="menu-separator-thin"/>
-
-                <!-- NUTRITION Section -->
-                <VBox spacing="0">
-                    <Label text="NUTRITION" styleClass="nav-category"/>
-
-                    <VBox styleClass="sub-menu">
-                        <Button text="🍽️  Dashboard Nutrition"
-                                styleClass="sub-nav-button"
-                                onAction="#showNutritionDashboard"
-                                fx:id="btnNutritionDashboard"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="📖  Journal Alimentaire"
-                                styleClass="sub-nav-button"
-                                onAction="#showNutritionJournal"
-                                fx:id="btnNutritionJournal"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="🎯  Objectifs"
-                                styleClass="sub-nav-button"
-                                onAction="#showNutritionObjectifs"
-                                fx:id="btnNutritionObjectifs"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="📅  Planificateur"
-                                styleClass="sub-nav-button"
-                                onAction="#showNutritionPlanificateur"
-                                fx:id="btnNutritionPlanificateur"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="🍴  Recettes"
-                                styleClass="sub-nav-button"
-                                onAction="#showNutritionRecettes"
-                                fx:id="btnNutritionRecettes"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="📊  Analyse Nutritionnelle"
-                                styleClass="sub-nav-button"
-                                onAction="#showNutritionAnalyse"
-                                fx:id="btnNutritionAnalyse"/>
-                    </VBox>
-                </VBox>
-
-                <Separator styleClass="menu-separator-thin"/>
-                
-                <!-- HEALTH TRAIL Section -->
-                <VBox spacing="0">
-                    <Label text="HEALTH TRAIL" styleClass="nav-category"/>
-
-
-                    <VBox styleClass="sub-menu">
-                        <Button text="  Discover Health Trail"
-                                styleClass="sub-nav-button"
-                                onAction="#showAfficherParcours"
-                                fx:id="btnAfficherParcours"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="  Add Health Trail"
-                                styleClass="sub-nav-button"
-                                onAction="#showAjouterParcours"
-                                fx:id="btnAjouterParcours"/>
-                    </VBox>
-                    <VBox styleClass="sub-menu">
-                        <Button text="  Feed Community"
-                                styleClass="sub-nav-button"
-                                onAction="#showToutesPublications"
-                                fx:id="btnToutesPublications"/>
-                    </VBox>
-                </VBox>
-                
-                <!-- MANAGE Section -->
-                <VBox spacing="0">
-                    <Label text="MANAGE" styleClass="nav-category"/>
-                    
-                    <!-- Health Journals -->
-                    <VBox styleClass="sub-menu">
-                        <Button text="📒  Health Journals" 
-                                styleClass="sub-nav-button" 
-                                onAction="#showHealthJournals"
-                                fx:id="btnJournals"/>
+                    <!-- MENU Section -->
+                    <VBox spacing="0">
+                        <Label text="MENU" styleClass="nav-category"/>
+                        
+                        <!-- Home -->
+                        <VBox styleClass="sub-menu">
+                            <Button text="🏠  Home"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showHomepage"
+                                    fx:id="btnHome"/>
+                        </VBox>
+                        
+                        <!-- Dashboard -->
+                        <VBox styleClass="sub-menu">
+                            <Button text="📊  Dashboard"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showDashboard"
+                                    fx:id="btnDashboard"/>
+                        </VBox>
                     </VBox>
                     
-                    <!-- Health Entries -->
-                    <VBox styleClass="sub-menu">
-                        <Button text="📝  Health Entries" 
-                                styleClass="sub-nav-button" 
-                                onAction="#showHealthEntries"
-                                fx:id="btnEntries"/>
-                    </VBox>
-                    
-                    <!-- Symptoms (hidden) -->
-                    <VBox styleClass="sub-menu">
-                        <Button text="🤒  Symptoms" 
-                                styleClass="sub-nav-button" 
-                                onAction="#showSymptoms"
-                                fx:id="btnSymptoms"
-                                visible="false" managed="false"/>
+                    <Separator styleClass="menu-separator-thin"/>
+
+                    <!-- NUTRITION Section -->
+                    <VBox spacing="0">
+                        <Label text="NUTRITION" styleClass="nav-category"/>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🍽️  Dashboard Nutrition"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showNutritionDashboard"
+                                    fx:id="btnNutritionDashboard"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="📖  Journal Alimentaire"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showNutritionJournal"
+                                    fx:id="btnNutritionJournal"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="🎯  Objectifs"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showNutritionObjectifs"
+                                    fx:id="btnNutritionObjectifs"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="📅  Planificateur"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showNutritionPlanificateur"
+                                    fx:id="btnNutritionPlanificateur"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="🍴  Recettes"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showNutritionRecettes"
+                                    fx:id="btnNutritionRecettes"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="📊  Analyse Nutritionnelle"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showNutritionAnalyse"
+                                    fx:id="btnNutritionAnalyse"/>
+                        </VBox>
                     </VBox>
 
-                    <!-- Calendar -->
-                       <VBox styleClass="sub-menu">
-                           <Button text="📅  Calendar"
-                                   styleClass="sub-nav-button"
-                                   onAction="#showCalendar"
-                                   fx:id="btnCalendar"/>
+                    <Separator styleClass="menu-separator-thin"/>
+                    
+                    <!-- HEALTH TRAIL Section -->
+                    <VBox spacing="0">
+                        <Label text="HEALTH TRAIL" styleClass="nav-category"/>
+
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="  Discover Health Trail"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showAfficherParcours"
+                                    fx:id="btnAfficherParcours"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="  Add Health Trail"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showAjouterParcours"
+                                    fx:id="btnAjouterParcours"/>
+                        </VBox>
+                        <VBox styleClass="sub-menu">
+                            <Button text="  Feed Community"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showToutesPublications"
+                                    fx:id="btnToutesPublications"/>
+                        </VBox>
+                    </VBox>
+                    
+                    <!-- MANAGE Section -->
+                    <VBox spacing="0">
+                        <Label text="MANAGE" styleClass="nav-category"/>
+                        
+                        <!-- Health Journals -->
+                        <VBox styleClass="sub-menu">
+                            <Button text="📒  Health Journals"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showHealthJournals"
+                                    fx:id="btnJournals"/>
+                        </VBox>
+                        
+                        <!-- Health Entries -->
+                        <VBox styleClass="sub-menu">
+                            <Button text="📝  Health Entries"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showHealthEntries"
+                                    fx:id="btnEntries"/>
+                        </VBox>
+                        
+                        <!-- Symptoms (hidden) -->
+                        <VBox styleClass="sub-menu">
+                            <Button text="🤒  Symptoms"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showSymptoms"
+                                    fx:id="btnSymptoms"
+                                    visible="false" managed="false"/>
+                        </VBox>
+
+                        <!-- Calendar -->
+                           <VBox styleClass="sub-menu">
+                               <Button text="📅  Calendar"
+                                       styleClass="sub-nav-button"
+                                       onAction="#showCalendar"
+                                       fx:id="btnCalendar"/>
+                           </VBox>
+                           
+                           <!-- AI Prediction -->
+                           <VBox styleClass="sub-menu">
+                               <Button text="🤖  Prediction"
+                                       styleClass="sub-nav-button"
+                                       onAction="#showPrediction"
+                                       fx:id="btnPrediction"/>
+                           </VBox>
                        </VBox>
-                       
-                       <!-- AI Prediction -->
-                       <VBox styleClass="sub-menu">
-                           <Button text="🤖  Prediction"
-                                   styleClass="sub-nav-button"
-                                   onAction="#showPrediction"
-                                   fx:id="btnPrediction"/>
-                       </VBox>
-                   </VBox>
-            </VBox>
+                </VBox>
+            </ScrollPane>
             
             <!-- Bottom Actions -->
             <Region VBox.vgrow="ALWAYS"/>

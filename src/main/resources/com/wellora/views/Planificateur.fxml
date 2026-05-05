@@ -59,6 +59,19 @@
                         <Button text="Objectifs" styleClass="sub-nav-button" onAction="#navToObjectifs" maxWidth="Infinity"/>
                         <Button text="Analyse (Progrès)" styleClass="sub-nav-button" onAction="#navToAnalyse" maxWidth="Infinity"/>
                     </VBox>
+
+                    <!-- HEALTH TRAIL Section -->
+                    <HBox alignment="CENTER_LEFT" styleClass="nav-category">
+                        <Label text="♣" styleClass="nav-icon"/>
+                        <Label text="Health Trail" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Label text="⌄" styleClass="chevron-icon"/>
+                    </HBox>
+
+                    <VBox styleClass="sub-menu">
+                        <Button text="  Discover Health Trail" styleClass="sub-nav-button" onAction="#showAfficherParcours" maxWidth="Infinity"/>
+                        <Button text="  Add Health Trail" styleClass="sub-nav-button" onAction="#showAjouterParcours" maxWidth="Infinity"/>
+                        <Button text="  Feed Community" styleClass="sub-nav-button" onAction="#showToutesPublications" maxWidth="Infinity"/>
+                    </VBox>
                 </VBox>
             </ScrollPane>
             <ToggleButton fx:id="btnThemeToggle" text="🌙 Mode Sombre" styleClass="theme-toggle" onAction="#toggleTheme" maxWidth="Infinity"/>
