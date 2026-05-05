@@ -262,15 +262,8 @@ public class MainController {
             // Clear existing stylesheets
             scene.getStylesheets().clear();
             
-            // Add base CSS files in order: style.css (sidebar/base), dashboard.css (light theme base)
+            // Add base CSS file: style.css (includes all dashboard and theme styles)
             scene.getStylesheets().add(WelloraApp.class.getResource("/com/wellora/css/style.css").toExternalForm());
-            scene.getStylesheets().add(WelloraApp.class.getResource("/fxml/dashboard.css").toExternalForm());
-            
-            // Add theme-specific CSS for dashboard dark mode
-            if (isDarkTheme) {
-                String darkCss = "/fxml/dashboard-dark.css";
-                scene.getStylesheets().add(WelloraApp.class.getResource(darkCss).toExternalForm());
-            }
             
             // Apply dark-theme or light-theme class to BorderPane root
             root.getStyleClass().remove("dark-theme");
@@ -281,32 +274,26 @@ public class MainController {
                 root.getStyleClass().add("light-theme");
             }
             
-            // Apply theme to the content area specifically
-            applyThemeToNode(contentArea, isDarkTheme);
+            // Apply theme to content area children (but not recursively adding theme classes to each child)
+            applyThemeToContentArea();
         }
     }
     
     /**
-     * Apply theme class to a node and all its children
+     * Apply theme class only to the root element, not to individual children.
+     * The CSS uses descendant selectors like .light-theme .header-card,
+     * so the theme class must be on an ancestor, not on the elements themselves.
      */
-    private void applyThemeToNode(javafx.scene.Node node, boolean isDark) {
-        if (node == null) return;
-        
-        // Remove both theme classes first
-        node.getStyleClass().remove("dark-theme");
-        node.getStyleClass().remove("light-theme");
-        
-        // Add the appropriate theme class
-        if (isDark) {
-            node.getStyleClass().add("dark-theme");
-        } else {
-            node.getStyleClass().add("light-theme");
-        }
-        
-        // Recursively apply to children
-        if (node instanceof javafx.scene.Parent) {
-            ((javafx.scene.Parent) node).getChildrenUnmodifiable().forEach(child -> {
-                applyThemeToNode(child, isDark);
+    private void applyThemeToContentArea() {
+        if (contentArea != null && contentArea.getScene() != null) {
+            Scene scene = contentArea.getScene();
+            var root = scene.getRoot();
+            
+            // Remove theme classes from all children of contentArea
+            // We only want the theme class on the root, not on individual content nodes
+            contentArea.getChildren().forEach(child -> {
+                child.getStyleClass().remove("dark-theme");
+                child.getStyleClass().remove("light-theme");
             });
         }
     }

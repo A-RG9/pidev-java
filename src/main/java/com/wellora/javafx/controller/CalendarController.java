@@ -54,6 +54,9 @@ public class CalendarController {
     @FXML private Label monthYearLabel;
     @FXML private GridPane calendarGrid;
     @FXML private Label selectedDayLabel;
+    @FXML private Label totalEntriesLabel;
+    @FXML private Label activeDaysLabel;
+    @FXML private Label avgScoreLabel;
     @FXML private Label healthScoreLabel;
     @FXML private Label symptomsLabel;
     @FXML private Label temperatureLabel;
@@ -93,7 +96,7 @@ public class CalendarController {
         // Update month/year label
         String monthName = currentYearMonth.getMonth()
                 .getDisplayName(TextStyle.FULL, Locale.FRENCH);
-        monthYearLabel.setText(monthName.substring(0, 1).toUpperCase() 
+        monthYearLabel.setText(monthName.substring(0, 1).toUpperCase()
                 + monthName.substring(1) + " " + currentYearMonth.getYear());
 
         // Get first day of month and days in month
@@ -120,6 +123,9 @@ public class CalendarController {
                 row++;
             }
         }
+
+        // Update summary cards for this month
+        updateSummaryCards();
     }
 
     /**
@@ -161,7 +167,7 @@ public class CalendarController {
         // Add score indicator circle if data exists
         if (hasData) {
             int score = getHealthScoreForDate(date);
-            
+
             // Add colored circle based on score
             Circle scoreCircle = new Circle(12);
             if (score >= 70) {
@@ -171,14 +177,14 @@ public class CalendarController {
             } else {
                 scoreCircle.setFill(Color.web("#ef4444")); // Red
             }
-            
+
             // Add day number and score circle
             cell.getChildren().addAll(dayLabel, scoreCircle);
 
             // Set tooltip using Tooltip.install (VBox doesn't have setTooltip)
             Tooltip tooltip = new Tooltip(
-                "Score: " + score + "\n" +
-                "Symptômes: " + getSymptomCountForDate(date)
+                    "Score: " + score + "\n" +
+                            "Symptômes: " + getSymptomCountForDate(date)
             );
             Tooltip.install(cell, tooltip);
         } else {
@@ -303,6 +309,48 @@ public class CalendarController {
     private void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
         generateCalendar();
+    }
+
+    // =========================
+    // 📊 SUMMARY CARDS
+    // =========================
+
+    /**
+     * Update summary cards with monthly statistics
+     */
+    private void updateSummaryCards() {
+        try {
+            List<Healthentry> entries = entryDAO.findByMonth(
+                    currentYearMonth.getYear(), currentYearMonth.getMonthValue());
+
+            // Total entries
+            totalEntriesLabel.setText(String.valueOf(entries.size()));
+
+            // Active days (unique dates with entries)
+            long activeDays = entries.stream()
+                    .map(e -> e.getDate())
+                    .distinct()
+                    .count();
+            activeDaysLabel.setText(String.valueOf(activeDays));
+
+            // Average score
+            if (!entries.isEmpty() && activeDays > 0) {
+                double avgScore = entries.stream()
+                        .map(this::calculateDailyScore)
+                        .mapToInt(Integer::intValue)
+                        .average()
+                        .orElse(0.0);
+                avgScoreLabel.setText(String.format("%.1f", avgScore));
+            } else {
+                avgScoreLabel.setText("--");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            totalEntriesLabel.setText("0");
+            activeDaysLabel.setText("0");
+            avgScoreLabel.setText("--");
+        }
     }
 
     // =========================

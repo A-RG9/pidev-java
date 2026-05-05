@@ -26,12 +26,9 @@ public class WelloraApp extends Application {
         stage.setMinHeight(700);
         
         Scene scene = new Scene(root);
-        // Apply Wellora theme CSS - load in order: style.css (base), dashboard.css (light), dashboard-dark.css (dark override)
+        // Apply Wellora theme CSS - load base stylesheet
         scene.getStylesheets().add(
             WelloraApp.class.getResource("/com/wellora/css/style.css").toExternalForm()
-        );
-        scene.getStylesheets().add(
-            WelloraApp.class.getResource("/fxml/dashboard.css").toExternalForm()
         );
         
         stage.setScene(scene);

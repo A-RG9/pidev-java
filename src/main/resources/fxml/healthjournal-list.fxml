@@ -10,13 +10,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<VBox xmlns="http://javafx.com/javafx/17" 
+<VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.wellora.javafx.controller.HealthjournalListController"
-      spacing="15" 
+      spacing="15"
       styleClass="root"
-      prefWidth="1100" 
-      prefHeight="750">
+        prefWidth="1100"
+      prefHeight="1100">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>

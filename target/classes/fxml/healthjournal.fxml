@@ -12,13 +12,13 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx/17" 
+<VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.wellora.javafx.controller.HealthjournalController"
-      spacing="15" 
+      spacing="15"
       styleClass="root"
-      prefWidth="1100" 
-      prefHeight="750">
+       prefWidth="1100"
+       prefHeight="750">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
@@ -32,6 +32,30 @@
                 prefWidth="160" onAction="#clearForm"/>
     </HBox>
     
+    <!-- Summary Cards -->
+    <HBox spacing="20" alignment="CENTER">
+        <!-- Total Journals Card -->
+        <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
+            <Label text="📒" styleClass="stat-icon"/>
+            <Label text="Total Journals" styleClass="stat-label"/>
+            <Label fx:id="totalJournalsLabel" text="0" styleClass="stat-value"/>
+        </VBox>
+
+        <!-- Active Journals Card -->
+        <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
+            <Label text="✅" styleClass="stat-icon"/>
+            <Label text="Active Journals" styleClass="stat-label"/>
+            <Label fx:id="activeJournalsLabel" text="0" styleClass="stat-value"/>
+        </VBox>
+
+        <!-- Total Entries Card -->
+        <VBox spacing="10" styleClass="stat-card" alignment="CENTER" prefWidth="200">
+            <Label text="📝" styleClass="stat-icon"/>
+            <Label text="Total Entries" styleClass="stat-label"/>
+            <Label fx:id="totalJournalEntriesLabel" text="0" styleClass="stat-value"/>
+        </VBox>
+    </HBox>
+
     <!-- Main Content -->
     <HBox spacing="20" VBox.vgrow="ALWAYS">
         

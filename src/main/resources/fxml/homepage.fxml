@@ -11,13 +11,13 @@
 
 <!-- Note: This is the CONTENT for homepage, loaded inside main.fxml -->
 <!-- Do NOT include top bar or sidebar - those are in main.fxml -->
-<VBox xmlns="http://javafx.com/javafx/17" 
+<VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.wellora.javafx.controller.HomepageController"
-      styleClass="main-content" 
+      styleClass="main-content"
       spacing="25"
       prefWidth="800"
-      prefHeight="700">
+      prefHeight="800">
     <padding>
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>

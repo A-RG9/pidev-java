@@ -15,7 +15,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.geometry.Insets?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/17" 
+<ScrollPane xmlns="http://javafx.com/javafx/17"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.wellora.javafx.controller.HealthentryFormController"
           fitToWidth="true"

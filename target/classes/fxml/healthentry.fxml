@@ -1,144 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/17" 
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.javafx.controller.HealthentryController"
-      fitToWidth="true"
-      styleClass="root">
-    
-<VBox spacing="15" styleClass="root" prefWidth="1100">
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.wellora.javafx.controller.HealthentryController"
+            fitToWidth="true"
+            fitToHeight="true"
+            pannable="true"
+            styleClass="root">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    
-    <!-- Header -->
-    <Label text="Health Entries" styleClass="header-label"/>
-    
-    <!-- Main Content -->
-    <HBox spacing="20" VBox.vgrow="ALWAYS">
-        
-        <!-- Left: Table View -->
-        <VBox spacing="10" HBox.hgrow="ALWAYS">
-            <Label text="All Entries" styleClass="section-label"/>
-            
-            <!-- Search Bar -->
-            <HBox spacing="10">
-                <TextField fx:id="searchField" promptText="Search by weight..." 
-                         prefWidth="150" styleClass="text-field"/>
-                <DatePicker fx:id="filterDatePicker" promptText="Min date"/>
-                <Button text="Search" styleClass="button, button-primary" onAction="#search"/>
-                <Button text="Refresh" styleClass="button, button-secondary" onAction="#refresh"/>
-            </HBox>
-            
-            <!-- Table -->
-            <TableView fx:id="tableView" styleClass="table-view" 
-                      VBox.vgrow="ALWAYS" onMouseClicked="#selectRow">
-                <columns>
-                    <TableColumn text="Date" prefWidth="120"/>
-                    <TableColumn text="Weight" prefWidth="70"/>
-                    <TableColumn text="BloodSugar" prefWidth="80"/>
-                    <TableColumn text="Pressure" prefWidth="80"/>
-                    <TableColumn text="Sleep" prefWidth="70"/>
-                </columns>
-            </TableView>
-            
-            <!-- Symptoms for selected entry -->
-            <Label text="Symptoms for this Entry" styleClass="section-label"/>
-            <TableView fx:id="symptomTable" styleClass="table-view" prefHeight="120">
-                <columns>
-                    <TableColumn text="Type" prefWidth="100"/>
-                    <TableColumn text="Intensity" prefWidth="60"/>
-                    <TableColumn text="Zone" prefWidth="100"/>
-                </columns>
-            </TableView>
-        </VBox>
-        
-        <!-- Right: Form -->
-        <VBox spacing="12" styleClass="card" prefWidth="380">
-            <Label text="Entry Details" styleClass="section-label"/>
-            
-            <GridPane hgap="8" vgap="8">
-                <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                
-                <Label text="Weight (kg):" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="poidsField" GridPane.columnIndex="1" GridPane.rowIndex="1" 
-                           promptText="30-200" styleClass="text-field"/>
-                
-                <Label text="Blood Sugar (g/l):" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="glycemieField" GridPane.columnIndex="1" GridPane.rowIndex="2" 
-                           promptText="0.5-3" styleClass="text-field"/>
-                
-                <Label text="Pressure (mmHg):" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                <TextField fx:id="tensionField" GridPane.columnIndex="1" GridPane.rowIndex="3" 
-                           promptText="40-120" styleClass="text-field"/>
-                
-                <Label text="Sleep (h):" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <TextField fx:id="sommeilField" GridPane.columnIndex="1" GridPane.rowIndex="4" 
-                           promptText="0-12" styleClass="text-field"/>
-                
-                <!-- Journal auto-assigned by date range -->
-                <ComboBox fx:id="journalCombo" GridPane.columnIndex="1" GridPane.rowIndex="5" 
-                          promptText="Select (or auto)"/>
-            </GridPane>
-            
-            <!-- Add Symptom Section -->
-            <Label text="Add Symptom" styleClass="section-label"/>
-            <GridPane hgap="8" vgap="8">
-                <Label text="Symptom:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <ComboBox fx:id="symptomTypeCombo" GridPane.columnIndex="1" GridPane.rowIndex="0" 
-                          promptText="Select type"/>
-                
-                <Label text="Intensity:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <Slider fx:id="symptomIntensiteSlider" min="1" max="10" 
-                           showTickLabels="true" blockIncrement="1"/>
-                    <Label fx:id="symptomIntensiteLabel" text="5"/>
-                </HBox>
-                
-                <Label text="Zone:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="symptomZoneField" GridPane.columnIndex="1" GridPane.rowIndex="2" 
-                           promptText="e.g. head, back" styleClass="text-field"/>
-            </GridPane>
-            
-            <!-- Buttons -->
-            <VBox spacing="8" alignment="CENTER">
-                <Button text="Add Entry" styleClass="button, button-success" 
-                        prefWidth="160" onAction="#add"/>
-                
-                <Button text="Update" styleClass="button, button-primary" 
-                        prefWidth="160" onAction="#update"/>
-                
-                <Button text="Delete" styleClass="button, button-danger" 
-                        prefWidth="160" onAction="#delete"/>
-                
-                <Button text="Clear Form" styleClass="button, button-secondary" 
-                        prefWidth="160" onAction="#clearForm"/>
+    <!-- ROOT CONTENT -->
+    <VBox spacing="15"
+          styleClass="root"
+          fillWidth="true"
+          maxWidth="Infinity"
+          maxHeight="Infinity">
+
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <!-- HEADER -->
+        <Label text="Health Entries" styleClass="header-label"/>
+
+        <!-- SUMMARY CARDS -->
+        <HBox spacing="20" alignment="CENTER" HBox.hgrow="ALWAYS">
+
+            <VBox spacing="10" styleClass="stat-card" alignment="CENTER">
+                <Label text="📝" styleClass="stat-icon"/>
+                <Label text="Total Entries" styleClass="stat-label"/>
+                <Label fx:id="totalEntriesLabel" text="0" styleClass="stat-value"/>
             </VBox>
-            
-            <Label fx:id="statusLabel" text="" 
-                   style="-fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
-        </VBox>
-    </HBox>
-    
-    <Label text="Enter a date and the journal will be auto-assigned | Select an entry to see its symptoms" 
-           style="-fx-text-fill: #7f8c8d;"/>
-    
-</VBox>
-    
+
+            <VBox spacing="10" styleClass="stat-card" alignment="CENTER">
+                <Label text="📅" styleClass="stat-icon"/>
+                <Label text="This Month" styleClass="stat-label"/>
+                <Label fx:id="monthEntriesLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+
+            <VBox spacing="10" styleClass="stat-card" alignment="CENTER">
+                <Label text="⚖️" styleClass="stat-icon"/>
+                <Label text="Avg Weight" styleClass="stat-label"/>
+                <Label fx:id="avgWeightLabel" text="-- kg" styleClass="stat-value"/>
+            </VBox>
+
+        </HBox>
+
+        <!-- MAIN CONTENT -->
+        <HBox spacing="20" VBox.vgrow="ALWAYS">
+
+            <!-- LEFT SIDE -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+
+                <Label text="All Entries" styleClass="section-label"/>
+
+                <!-- SEARCH -->
+                <HBox spacing="10">
+                    <TextField fx:id="searchField"
+                               promptText="Search..."
+                               styleClass="text-field"/>
+
+                    <DatePicker fx:id="filterDatePicker"/>
+
+                    <Button text="Search" onAction="#search"
+                            styleClass="button,button-primary"/>
+
+                    <Button text="Refresh" onAction="#refresh"
+                            styleClass="button,button-secondary"/>
+                </HBox>
+
+                <!-- TABLE -->
+                <TableView fx:id="tableView"
+                           VBox.vgrow="ALWAYS"
+                           onMouseClicked="#selectRow"
+                           styleClass="table-view">
+
+                    <columns>
+                        <TableColumn text="Date" prefWidth="120"/>
+                        <TableColumn text="Weight" prefWidth="70"/>
+                        <TableColumn text="BloodSugar" prefWidth="90"/>
+                        <TableColumn text="Pressure" prefWidth="90"/>
+                        <TableColumn text="Sleep" prefWidth="70"/>
+                    </columns>
+
+                </TableView>
+
+                <!-- SYMPTOMS -->
+                <Label text="Symptoms" styleClass="section-label"/>
+
+                <TableView fx:id="symptomTable"
+                           prefHeight="120"
+                           styleClass="table-view">
+
+                    <columns>
+                        <TableColumn text="Type" prefWidth="120"/>
+                        <TableColumn text="Intensity" prefWidth="80"/>
+                        <TableColumn text="Zone" prefWidth="120"/>
+                    </columns>
+
+                </TableView>
+
+            </VBox>
+
+            <!-- RIGHT SIDE -->
+            <VBox spacing="12"
+                  styleClass="card"
+                  HBox.hgrow="NEVER"
+                  maxWidth="400">
+
+                <Label text="Entry Details" styleClass="section-label"/>
+
+                <!-- FORM -->
+                <GridPane hgap="8" vgap="8">
+
+                    <Label text="Date:" GridPane.rowIndex="0"/>
+                    <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label text="Weight:" GridPane.rowIndex="1"/>
+                    <TextField fx:id="poidsField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Blood Sugar:" GridPane.rowIndex="2"/>
+                    <TextField fx:id="glycemieField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Pressure:" GridPane.rowIndex="3"/>
+                    <TextField fx:id="tensionField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label text="Sleep:" GridPane.rowIndex="4"/>
+                    <TextField fx:id="sommeilField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                    <ComboBox fx:id="journalCombo"
+                              GridPane.columnIndex="1"
+                              GridPane.rowIndex="5"
+                              promptText="Journal"/>
+
+                </GridPane>
+
+                <!-- SYMPTOM SECTION -->
+                <Label text="Add Symptom" styleClass="section-label"/>
+
+                <GridPane hgap="8" vgap="8">
+
+                    <Label text="Type:" GridPane.rowIndex="0"/>
+                    <ComboBox fx:id="symptomTypeCombo"
+                              GridPane.columnIndex="1"
+                              GridPane.rowIndex="0"/>
+
+                    <Label text="Intensity:" GridPane.rowIndex="1"/>
+
+                    <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Slider fx:id="symptomIntensiteSlider"
+                                min="1" max="10"
+                                showTickLabels="true"/>
+                        <Label fx:id="symptomIntensiteLabel" text="5"/>
+                    </HBox>
+
+                    <Label text="Zone:" GridPane.rowIndex="2"/>
+                    <TextField fx:id="symptomZoneField"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="2"/>
+
+                </GridPane>
+
+                <!-- BUTTONS -->
+                <VBox spacing="8" alignment="CENTER">
+
+                    <Button text="Add Entry" onAction="#add"
+                            styleClass="button,button-success" prefWidth="160"/>
+
+                    <Button text="Update" onAction="#update"
+                            styleClass="button,button-primary" prefWidth="160"/>
+
+                    <Button text="Delete" onAction="#delete"
+                            styleClass="button,button-danger" prefWidth="160"/>
+
+                    <Button text="Clear" onAction="#clearForm"
+                            styleClass="button,button-secondary" prefWidth="160"/>
+
+                </VBox>
+
+                <Label fx:id="statusLabel"/>
+
+            </VBox>
+
+        </HBox>
+
+    </VBox>
+
 </ScrollPane>

@@ -34,7 +34,6 @@ public class JournalController extends BaseController {
 
     // Filtres
     @FXML private ComboBox<String> comboMealFilter;
-    @FXML private ComboBox<String> comboSortCalories;
 
     @FXML private TableView<FoodLog> tableHistorique;
     @FXML private TableColumn<FoodLog, String> colRepas;

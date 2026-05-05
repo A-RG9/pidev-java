@@ -29,6 +29,9 @@ public class HealthjournalController {
 
     @FXML private TableView<Healthjournal> tableView;
     @FXML private TextField searchField;
+    @FXML private Label totalJournalsLabel;
+    @FXML private Label activeJournalsLabel;
+    @FXML private Label totalJournalEntriesLabel;
     @FXML private TextField nameField;
     @FXML private DatePicker datedebutPicker;
     @FXML private DatePicker datefinPicker;
