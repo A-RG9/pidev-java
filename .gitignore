@@ -4,18 +4,6 @@ target/
 !**/src/test/**/target/
 .kotlin
 
-### Compiled output (never commit class files or resources copies) ###
-out/
-
-### Diploma uploads (user data, not code) ###
-uploads/
-
-### Scratch / debug scripts ###
-src/main/java/FixDatabase.java
-src/main/java/InspectCheck.java
-src/main/java/InspectSchema.java
-fix_diploma.py
-
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
@@ -49,3 +37,15 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### WellCare - Security (DO NOT COMMIT THESE) ###
+config.properties
+*.properties
+!config.properties.example
+
+### WellCare - Compiled Output ###
+out/
+uploads/
+
+### WellCare - Sensitive Logs ###
+*.log

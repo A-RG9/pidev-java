@@ -1,5 +1,6 @@
 package com.wellcare.javafx.service;
 
+import com.wellcare.javafx.util.AppConfig;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -11,10 +12,9 @@ import java.time.Duration;
  */
 public class EmailService {
 
-  // SendGrid API Key - loaded from environment variable (set in your OS or .env file)
-  private static final String SENDGRID_API_KEY = System.getenv().getOrDefault("SENDGRID_API_KEY", "YOUR_SENDGRID_API_KEY_HERE");
+  private static final String SENDGRID_API_KEY = AppConfig.getSendGridApiKey();
   private static final String SENDGRID_ENDPOINT = "https://api.sendgrid.com/v3/mail/send";
-  private static final String FROM_EMAIL = "zeidimohamedtaher@gmail.com";
+  private static final String FROM_EMAIL = AppConfig.getSendGridFromEmail();
 
   private final HttpClient httpClient;
 

@@ -1,6 +1,7 @@
 package com.wellcare.javafx.service;
 
 import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.util.AppConfig;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
  */
 public class DiplomaVerificationService {
 
-    private static final String OCR_API_KEY = "helloworld"; 
+    private static final String OCR_API_KEY = AppConfig.getOcrApiKey();
     private static final String OCR_API_URL = "https://api.ocr.space/parse/image";
     
     private final HttpClient httpClient;

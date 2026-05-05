@@ -1,5 +1,6 @@
 package com.wellcare.javafx.service;
 
+import com.wellcare.javafx.util.AppConfig;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -25,9 +26,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class GoogleAuthService {
     
-    // Google credentials - loaded from environment variables (set in your OS or .env file)
-    private static final String CLIENT_ID = System.getenv().getOrDefault("GOOGLE_CLIENT_ID", "YOUR_GOOGLE_CLIENT_ID_HERE");
-    private static final String CLIENT_SECRET = System.getenv().getOrDefault("GOOGLE_CLIENT_SECRET", "YOUR_GOOGLE_CLIENT_SECRET_HERE");
+    // Google credentials loaded securely from config.properties
+    private static final String CLIENT_ID = AppConfig.getGoogleClientId();
+    private static final String CLIENT_SECRET = AppConfig.getGoogleClientSecret();
     
     private static final String REDIRECT_URI = "http://127.0.0.1:8888";
     private static final String AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
