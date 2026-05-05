@@ -5,70 +5,74 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.AfficherPublicationsController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" styleClass="parcours-afficher-publications" style="-fx-background-color: #f9fafb;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.AfficherPublicationsController">
 
-    <VBox style="-fx-background-color: #009688; -fx-padding: 20 30 20 30;">
+    <VBox style="-fx-background-color: linear-gradient(to right, #17c8c8, #17c8c8); -fx-padding: 30 40 30 40;">
         <children>
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="👥 Community Publications" />
+                <Label style="-fx-text-fill: white; -fx-font-size: 26; -fx-font-weight: bold;" text="👥 Community Publications" />
             </HBox>
-            <Label style="-fx-text-fill: #e0f2f1; -fx-font-size: 14;" text="Discover trail experiences from the community" />
+            <Label style="-fx-text-fill: #dbeafe; -fx-font-size: 15;" text="Discover trail experiences from the community">
+                <padding><Insets top="5.0" /></padding>
+            </Label>
         </children>
     </VBox>
 
-    <HBox spacing="20.0" style="-fx-padding: 30;" VBox.vgrow="ALWAYS">
+    <HBox spacing="25.0" style="-fx-padding: 30 40 40 40;" VBox.vgrow="ALWAYS">
         <children>
+
             <VBox spacing="20.0" HBox.hgrow="ALWAYS">
                 <children>
-                    <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+                    <VBox spacing="15.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 15, 0, 0, 4);">
                         <children>
                             <HBox>
-                                <Label style="-fx-text-fill: #636e72; -fx-font-size: 14;" text="Showing publications for " />
-                                <Label fx:id="trailNameLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #2d3436;" text="TRAIL NAME" />
+                                <Label style="-fx-text-fill: #6b7280; -fx-font-size: 14;" text="Showing publications for " />
+                                <Label fx:id="trailNameLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #111827;" text="TRAIL NAME" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                <ComboBox fx:id="comboExperience" prefWidth="150.0" promptText="All experiences" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
-                                <ComboBox fx:id="comboType" prefWidth="130.0" promptText="All types" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
-                                <TextField fx:id="searchHashtag" prefWidth="150.0" promptText="#hashtag" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-padding: 8;" />
-                                <ComboBox fx:id="comboSort" prefWidth="150.0" promptText="Newest pub" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5;" />
-                                <ComboBox fx:id="comboPopularity" prefWidth="150.0" promptText="Popularity" style="-fx-background-color: white; -fx-border-color: #dfe6e9; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                                <ComboBox fx:id="comboExperience" prefWidth="150.0" prefHeight="40.0" promptText="All experiences" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                <ComboBox fx:id="comboType" prefWidth="130.0" prefHeight="40.0" promptText="All types" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                <TextField fx:id="searchHashtag" prefWidth="150.0" prefHeight="40.0" promptText="#hashtag" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 10;" />
+                                <ComboBox fx:id="comboSort" prefWidth="150.0" prefHeight="40.0" promptText="Newest pub" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                <ComboBox fx:id="comboPopularity" prefWidth="150.0" prefHeight="40.0" promptText="Popularity" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6;" />
                                 <Region HBox.hgrow="ALWAYS" />
 
-                                <Button fx:id="btnAddPublication" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #009688; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="+" />
+                                <Button fx:id="btnAddPublication" prefHeight="40.0" prefWidth="45.0" style="-fx-background-color: #17c8c8; -fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="+" />
                             </HBox>
                         </children>
                     </VBox>
 
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
                         <content>
-                            <VBox fx:id="publicationsContainer" spacing="15.0">
+                            <VBox fx:id="publicationsContainer" spacing="20.0" style="-fx-padding: 5 5 15 5;">
                             </VBox>
                         </content>
                     </ScrollPane>
                 </children>
             </VBox>
 
-            <VBox minWidth="300.0" prefWidth="300.0" spacing="20.0">
+            <VBox minWidth="320.0" prefWidth="320.0" spacing="20.0">
                 <children>
-                    <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+                    <VBox spacing="15.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 15, 0, 0, 4);">
                         <children>
-                            <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2d3436;" text="🖋 Share Your Experience" />
-                            <Button fx:id="btnWritePublication" maxWidth="Infinity" prefHeight="40.0" style="-fx-background-color: #009688; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="📷 Write a Publication" />
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #111827;" text="🖋 Share Your Experience" />
+                            <Button fx:id="btnWritePublication" maxWidth="Infinity" prefHeight="45.0" style="-fx-background-color: #17c8c8; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 6; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(37,99,235,0.3), 10, 0, 0, 3);" text="📷 Write a Publication" />
                         </children>
                     </VBox>
 
-                    <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+                    <VBox spacing="15.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 15, 0, 0, 4);">
                         <children>
-                            <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #ff7405;" text="🔥 Quick Links" />
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #111827;" text="🔥 Quick Links" />
                             <VBox spacing="10.0">
-                                <Button fx:id="btnGlobalFeed" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #636e72; -fx-cursor: hand; -fx-padding: 5 0 5 0;" text="Trail publication feed" onAction="#goToGlobalFeed" />
-                                <Button fx:id="btnBackToTrails" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #636e72; -fx-cursor: hand; -fx-padding: 5 0 5 0;" text="Back to trails" onAction="#goBack" />
+                                <Button fx:id="btnGlobalFeed" alignment="BASELINE_LEFT" style="-fx-background-color: #f3f4f6; -fx-background-radius: 6; -fx-text-fill: #4b5563; -fx-font-size: 14; -fx-cursor: hand; -fx-padding: 10 15;" text="🌍 Trail publication feed" onAction="#goToGlobalFeed" maxWidth="1.7976931348623157E308" />
+                                <Button fx:id="btnBackToTrails" alignment="BASELINE_LEFT" style="-fx-background-color: #f3f4f6; -fx-background-radius: 6; -fx-text-fill: #4b5563; -fx-font-size: 14; -fx-cursor: hand; -fx-padding: 10 15;" text="⬅ Back to trails" onAction="#goBack" maxWidth="1.7976931348623157E308" />
                             </VBox>
                         </children>
                     </VBox>
                 </children>
             </VBox>
+
         </children>
     </HBox>
 

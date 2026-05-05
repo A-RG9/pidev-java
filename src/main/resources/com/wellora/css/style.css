@@ -2175,3 +2175,415 @@ ScrollPane, VBox, HBox, GridPane, BorderPane, AnchorPane {
     -fx-background-color: #0D1117;
     -fx-border-color: #30363D;
 }
+
+/* =========================================
+   PARCOURS PAGES - LIGHT THEME OVERRIDES
+   ========================================= */
+
+/* --- AJOUTER PARCOURS --- */
+.light-theme.parcours-ajouter Label {
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter .main-title,
+.light-theme.parcours-ajouter VBox > Label:first-child {
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter .main-subtitle,
+.light-theme.parcours-ajouter VBox > Label:nth-child(2) {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter TextField {
+    -fx-background-color: white !important;
+    -fx-border-color: #D1D5DB !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter TextField:disabled {
+    -fx-background-color: #F3F4F6 !important;
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter VBox > HBox > VBox > Label {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter Button {
+    -fx-background-color: #111827 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-ajouter Button.btnSave {
+    -fx-background-color: #00BFA5 !important;
+}
+.light-theme.parcours-ajouter Button.btnCancel {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+.light-theme.parcours-ajouter Separator {
+    -fx-opacity: 0.3 !important;
+}
+
+/* --- MODIFIER PARCOURS --- */
+.light-theme.parcours-modifier Label {
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-modifier .main-title,
+.light-theme.parcours-modifier VBox > Label:first-child {
+    -fx-text-fill: #00BFA5 !important;
+}
+.light-theme.parcours-modifier .main-subtitle,
+.light-theme.parcours-modifier VBox > Label:nth-child(2) {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-modifier TextField {
+    -fx-background-color: white !important;
+    -fx-border-color: #D1D5DB !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-modifier TextField:disabled {
+    -fx-background-color: #F3F4F6 !important;
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-modifier VBox > HBox > VBox > Label {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-modifier Button {
+    -fx-background-color: #111827 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-modifier Button.btnSave {
+    -fx-background-color: #00BFA5 !important;
+}
+.light-theme.parcours-modifier Button.btnCancel {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+
+/* --- DETAILS PARCOURS --- */
+.light-theme.parcours-details #heroContainer {
+    -fx-background-color: linear-gradient(to bottom, #1a1a2e 0%, #2d3436 100%) !important;
+}
+.light-theme.parcours-details #heroTitle {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-details #heroLocation {
+    -fx-text-fill: #F3F4F6 !important;
+}
+.light-theme.parcours-details #heroDistance,
+.light-theme.parcours-details #heroPubs,
+.light-theme.parcours-details #heroDate {
+    -fx-text-fill: #E9ECEF !important;
+}
+.light-theme.parcours-details .stat-card,
+.light-theme.parcours-details VBox[vbox/vbox] > VBox {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-details .stat-card .label,
+.light-theme.parcours-details VBox > Label:first-child {
+    -fx-text-fill: #ADB5BD !important;
+}
+.light-theme.parcours-details .stat-value,
+.light-theme.parcours-details VBox > Label:nth-child(2) {
+    -fx-text-fill: #2b2d42 !important;
+}
+.light-theme.parcours-details .stat-subtitle,
+.light-theme.parcours-details VBox > Label:last-child {
+    -fx-text-fill: #6C757D !important;
+}
+.light-theme.parcours-details .summary-label {
+    -fx-text-fill: #ADB5BD !important;
+}
+.light-theme.parcours-details .summary-value {
+    -fx-text-fill: #495057 !important;
+}
+.light-theme.parcours-details .section-title {
+    -fx-text-fill: #2b2d42 !important;
+}
+.light-theme.parcours-details .action-button-primary {
+    -fx-background-color: #EBF5FF !important;
+    -fx-text-fill: #4361EE !important;
+}
+.light-theme.parcours-details .action-button-secondary {
+    -fx-background-color: white !important;
+    -fx-border-color: #DEE2E6 !important;
+    -fx-text-fill: #495057 !important;
+}
+.light-theme.parcours-details .distance-label {
+    -fx-text-fill: #00B4D8 !important;
+}
+.light-theme.parcours-details .info-label {
+    -fx-text-fill: #8D99AE !important;
+}
+
+/* --- PARCOURS CARD --- */
+.light-theme.parcours-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-card .nom-label,
+.light-theme.parcours-card Label:first-child {
+    -fx-text-fill: #1e272e !important;
+}
+.light-theme.parcours-card .location-label {
+    -fx-text-fill: #95a5a6 !important;
+}
+.light-theme.parcours-card .distance-label {
+    -fx-text-fill: #00a693 !important;
+}
+.light-theme.parcours-card .date-label {
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-card .pub-count-label {
+    -fx-background-color: #E6F7F6 !important;
+    -fx-text-fill: #00a693 !important;
+}
+.light-theme.parcours-card .info-button {
+    -fx-background-color: #F1F2F6 !important;
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-card .view-button {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-card .edit-button {
+    -fx-background-color: #17c8c8 !important;
+}
+.light-theme.parcours-card .delete-button {
+    -fx-background-color: white !important;
+    -fx-text-fill: #d61111 !important;
+}
+
+/* --- AFFICHER PARCOURS (LIST PAGE) --- */
+.light-theme.parcours-afficher > VBox > VBox:first-child {
+    -fx-background-color: #0eb0e2 !important;
+}
+.light-theme.parcours-afficher > VBox > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher > VBox > VBox:first-child .main-subtitle {
+    -fx-text-fill: #D1D8E0 !important;
+}
+.light-theme.parcours-afficher HBox[style*="#f4f6f8"] {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-afficher VBox[style*="background-color: white"] {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-afficher .filter-title {
+    -fx-text-fill: #00a693 !important;
+}
+.light-theme.parcours-afficher .section-title-bold {
+    -fx-text-fill: #1e272e !important;
+}
+.light-theme.parcours-afficher .label-muted {
+    -fx-text-fill: #808e9b !important;
+}
+.light-theme.parcours-afficher TextField {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-afficher .range-slider {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-afficher .range-label-min {
+    -fx-text-fill: #B2BEC3 !important;
+}
+.light-theme.parcours-afficher .range-label-max {
+    -fx-text-fill: #00a693 !important;
+    -fx-font-weight: bold !important;
+}
+.light-theme.parcours-afficher .btn-primary {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .btn-secondary {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+    -fx-text-fill: #2F3640 !important;
+}
+.light-theme.parcours-afficher .count-label {
+    -fx-text-fill: #485460 !important;
+}
+.light-theme.parcours-afficher .combo-box {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+}
+.light-theme.parcours-afficher .sort-asc-btn {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+}
+.light-theme.parcours-afficher .sort-desc-btn {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .add-btn {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .chat-window {
+    -fx-background-color: white !important;
+    -fx-border-color: #E1E8ED !important;
+}
+.light-theme.parcours-afficher .chat-header {
+    -fx-background-color: #00a693 !important;
+}
+.light-theme.parcours-afficher .chat-header-label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .chat-scroll {
+    -fx-background-color: #F8FAF9 !important;
+}
+.light-theme.parcours-afficher .chat-messages {
+    -fx-background-color: #F8FAF9 !important;
+}
+.light-theme.parcours-afficher .quick-choices {
+    -fx-background-color: white !important;
+    -fx-border-color: #E8F5F3 !important;
+}
+.light-theme.parcours-afficher .chat-input {
+    -fx-background-color: #F8FAF9 !important;
+    -fx-border-color: #C8E6E0 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-afficher .send-btn {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .toggle-chat-btn {
+    -fx-background-color: linear-gradient(to bottom right, #00a693 0%, #008F7A 100%) !important;
+    -fx-text-fill: white !important;
+}
+
+/* --- TOUTES PUBLICATIONS (COMMUNITY FEED) --- */
+.light-theme.parcours-toutes-publications {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-toutes-publications > VBox:first-child {
+    -fx-background-color: #009688 !important;
+}
+.light-theme.parcours-toutes-publications > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-toutes-publications .filter-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-toutes-publications .filter-label {
+    -fx-text-fill: #636e72 !important;
+}
+.light-theme.parcours-toutes-publications .trail-name-label {
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-toutes-publications .combo-box,
+.light-theme.parcours-toutes-publications .text-field {
+    -fx-background-color: white !important;
+    -fx-border-color: #DFE6E9 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-toutes-publications .btn-add {
+    -fx-background-color: #009688 !important;
+    -fx-text-fill: white !important;
+}
+
+/* --- AFFICHER PUBLICATIONS (PUBLICATIONS FOR A SPECIFIC TRAIL) --- */
+.light-theme.parcours-afficher-publications {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-afficher-publications > VBox:first-child {
+    -fx-background-color: #009688 !important;
+}
+.light-theme.parcours-afficher-publications > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher-publications .info-label {
+    -fx-text-fill: #636e72 !important;
+}
+.light-theme.parcours-afficher-publications .trail-name-label {
+    -fx-text-fill: #2d3436 !important;
+    -fx-font-weight: bold !important;
+}
+.light-theme.parcours-afficher-publications .filter-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-afficher-publications .combo-box,
+.light-theme.parcours-afficher-publications .text-field {
+    -fx-background-color: white !important;
+    -fx-border-color: #DFE6E9 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-afficher-publications .btn-add {
+    -fx-background-color: #009688 !important;
+    -fx-text-fill: white !important;
+}
+
+/* --- AJOUTER PUBLICATION (NEW PUBLICATION FORM) --- */
+.light-theme.parcours-ajouter-publication {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-ajouter-publication > VBox:first-child {
+    -fx-background-color: #009688 !important;
+}
+.light-theme.parcours-ajouter-publication > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-ajouter-publication .form-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-ajouter-publication .form-label {
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-ajouter-publication .form-sublabel {
+    -fx-text-fill: #95a5a6 !important;
+}
+.light-theme.parcours-ajouter-publication .text-field,
+.light-theme.parcours-ajouter-publication .text-area {
+    -fx-background-color: white !important;
+    -fx-border-color: #D1D5DB !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter-publication .text-field:disabled {
+    -fx-background-color: #F3F4F6 !important;
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter-publication .btn-primary {
+    -fx-background-color: #00BFA5 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-ajouter-publication .btn-secondary {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+
+/* --- MODIFIER PUBLICATION (EDIT PUBLICATION FORM) --- */
+.light-theme.parcours-modifier-publication {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-modifier-publication > VBox:first-child {
+    -fx-background-color: #3498db !important;
+}
+.light-theme.parcours-modifier-publication > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-modifier-publication .form-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-modifier-publication .form-label {
+    -fx-text-fill: #636e72 !important;
+}
+.light-theme.parcours-modifier-publication .form-value {
+    -fx-text-fill: #2d3436 !important;
+    -fx-font-weight: bold !important;
+}
+.light-theme.parcours-modifier-publication .text-field,
+.light-theme.parcours-modifier-publication .text-area {
+    -fx-background-color: white !important;
+    -fx-border-color: #DFE6E9 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-modifier-publication .btn-save {
+    -fx-background-color: #3498db !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-modifier-publication .btn-cancel {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}

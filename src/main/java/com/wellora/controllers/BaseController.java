@@ -51,6 +51,20 @@ public abstract class BaseController {
             Parent shellRoot = shellLoader.load();
             HealthShellController shellCtrl = shellLoader.getController();
             shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
+
+            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
+            if (!shellRoot.getStylesheets().contains(cssPath)) {
+                shellRoot.getStylesheets().add(cssPath);
+            }
+
+            // Force light mode for parcours pages
+            applyThemeToRoot(shellRoot, true);
+            ToggleButton nextBtn = (ToggleButton) shellRoot.lookup("#btnThemeToggle");
+            if (nextBtn != null) {
+                nextBtn.setSelected(true);
+                nextBtn.setText("☀️ Mode Clair");
+            }
+
             Stage stage = (Stage) ((Node)btnThemeToggle).getScene().getWindow();
             stage.getScene().setRoot(shellRoot);
         } catch (IOException e) {
@@ -64,6 +78,20 @@ public abstract class BaseController {
             Parent shellRoot = shellLoader.load();
             HealthShellController shellCtrl = shellLoader.getController();
             shellCtrl.setContentWithProxy("/fxml/ToutesPublications.fxml");
+
+            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
+            if (!shellRoot.getStylesheets().contains(cssPath)) {
+                shellRoot.getStylesheets().add(cssPath);
+            }
+
+            // Force light mode for parcours pages
+            applyThemeToRoot(shellRoot, true);
+            ToggleButton nextBtn = (ToggleButton) shellRoot.lookup("#btnThemeToggle");
+            if (nextBtn != null) {
+                nextBtn.setSelected(true);
+                nextBtn.setText("☀️ Mode Clair");
+            }
+
             Stage stage = (Stage) ((Node)btnThemeToggle).getScene().getWindow();
             stage.getScene().setRoot(shellRoot);
         } catch (IOException e) {
@@ -139,7 +167,13 @@ public abstract class BaseController {
                 shellRoot.getStylesheets().add(cssPath);
             }
 
-            boolean isLight = btnThemeToggle != null && btnThemeToggle.isSelected();
+            // Force light mode for parcours-related pages
+            boolean isParcoursPage = fxmlPath.contains("Parcours") ||
+                                     fxmlPath.contains("Publications") ||
+                                     fxmlPath.contains("AjouterPublication") ||
+                                     fxmlPath.contains("ModifierPublication");
+
+            boolean isLight = isParcoursPage ? true : (btnThemeToggle != null && btnThemeToggle.isSelected());
             applyThemeToRoot(shellRoot, isLight);
 
             ToggleButton nextBtn = (ToggleButton) shellRoot.lookup("#btnThemeToggle");
