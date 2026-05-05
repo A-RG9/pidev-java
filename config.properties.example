@@ -1,0 +1,13 @@
+# WellCare Connect - Configuration Example
+# Copy this file to 'config.properties' and fill in your own API keys
+
+# Google OAuth 2.0 Credentials (https://console.cloud.google.com)
+google.client.id=YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com
+google.client.secret=YOUR_GOOGLE_CLIENT_SECRET
+
+# SendGrid Email API (https://app.sendgrid.com)
+sendgrid.api.key=YOUR_SENDGRID_API_KEY
+sendgrid.from.email=YOUR_EMAIL@gmail.com
+
+# OCR.space API (https://ocr.space/ocrapi)
+ocr.api.key=YOUR_OCR_SPACE_API_KEY

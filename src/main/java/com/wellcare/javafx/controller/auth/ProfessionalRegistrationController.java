@@ -1,0 +1,599 @@
+package com.wellcare.javafx.controller.auth;
+
+import com.wellcare.javafx.service.CaptchaService;
+import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.service.UserService;
+import com.wellcare.javafx.util.SceneManager;
+import com.wellcare.javafx.util.ValidationUtils;
+import com.wellcare.javafx.util.SceneManager.ProfessionalTypeAware;
+import javafx.animation.PauseTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.io.File;
+import java.time.LocalDate;
+import java.util.Arrays;
+
+public class ProfessionalRegistrationController implements ProfessionalTypeAware {
+
+    // UI Elements - Header
+    @FXML private Label titleLabel;
+    @FXML private Label step2Label;
+
+    // UI Elements - Step Indicators
+    @FXML private VBox step1Indicator, step2Indicator, step3Indicator;
+
+    // UI Elements - Step Contents
+    @FXML private VBox step1Content, step2Content, step3Content;
+
+    // UI Elements - Step 1 Fields
+    @FXML private TextField firstNameField, lastNameField, emailField, phoneField;
+    @FXML private DatePicker birthDatePicker;
+    @FXML private Label step1ErrorLabel;
+
+    // UI Elements - Step 2 Fields
+    @FXML private Label step2Title, specialtyLabel;
+    @FXML private ComboBox<String> specialtyComboBox;
+    @FXML private TextField licenseField, experienceField, diplomaFileNameField;
+    @FXML private Label step2ErrorLabel;
+
+    // UI Elements - Step 3 Fields
+    @FXML private PasswordField passwordField, confirmPasswordField;
+    @FXML private CheckBox termsCheckBox;
+    @FXML private Label step3ErrorLabel;
+
+    // Captcha components
+    @FXML private ImageView captchaImageView;
+    @FXML private Button refreshCaptchaButton;
+    @FXML private TextField captchaField;
+    @FXML private Label captchaErrorLabel;
+
+    // UI Elements - Password Strength
+    @FXML private HBox strengthIndicator;
+    @FXML private Region strengthBar1, strengthBar2, strengthBar3, strengthBar4;
+    @FXML private Label strengthLabel, strengthRequirements;
+
+    // UI Elements - Buttons
+    @FXML private Button completeButton;
+
+    // Business Logic
+    private UserService userService;
+    private CaptchaService captchaService;
+    private String selectedProfessionalType;
+    private File selectedDiplomaFile;
+    private boolean isCaptchaValid = false;
+
+    // Specialty options for different professional types
+    private final ObservableList<String> medicalSpecialties = FXCollections.observableArrayList(
+        "Cardiologie", "Dermatologie", "Endocrinologie", "Neurologie", "Psychiatrie",
+        "Physiothérapie", "Pédiatrie", "Gynécologie", "Ophtalmologie", "Autres"
+    );
+
+    private final ObservableList<String> coachingSpecialties = FXCollections.observableArrayList(
+        "Fitness Coaching", "Personal Training", "Sports Coaching", "Wellness Coaching",
+        "Rehabilitation Coaching", "Nutrition Coaching", "Weight Loss Specialist",
+        "Strength Training", "Cardio Training", "Autres"
+    );
+
+    private final ObservableList<String> nutritionSpecialties = FXCollections.observableArrayList(
+        "Clinical Nutrition", "Sports Nutrition", "Pediatric Nutrition", "Geriatric Nutrition",
+        "Weight Management", "Diabetes Nutrition", "Digestive Health", "Food Allergies & Intolerances",
+        "Plant-Based Nutrition", "Autres"
+    );
+
+    @FXML
+    public void initialize() {
+        try {
+            userService = new UserService();
+            captchaService = new CaptchaService();
+            setupPasswordStrengthListener();
+            setupRealTimeValidation();
+            updateStepIndicators(1);
+            
+            // Initialization of captcha when Step 3 is shown
+            refreshCaptcha();
+        } catch (Exception e) {
+            showError("Initialization error: " + e.getMessage());
+        }
+    }
+
+    public void setProfessionalType(String professionalType) {
+        this.selectedProfessionalType = professionalType;
+        updateUIForProfessionalType();
+    }
+
+    private void updateUIForProfessionalType() {
+        switch (selectedProfessionalType) {
+            case "ROLE_MEDECIN":
+                titleLabel.setText("Register as a Physician");
+                step2Label.setText("Physician Credentials");
+                step2Title.setText("Physician Credentials & Diploma");
+                specialtyLabel.setText("Medical Specialty *");
+                specialtyComboBox.setItems(medicalSpecialties);
+                break;
+            case "ROLE_COACH":
+                titleLabel.setText("Register as a Coach");
+                step2Label.setText("Coach Credentials");
+                step2Title.setText("Coach Credentials & Diploma");
+                specialtyLabel.setText("Coaching Specialty *");
+                specialtyComboBox.setItems(coachingSpecialties);
+                break;
+            case "ROLE_NUTRITIONIST":
+                titleLabel.setText("Register as a Nutritionist");
+                step2Label.setText("Nutritionist Credentials");
+                step2Title.setText("Nutritionist Credentials & Diploma");
+                specialtyLabel.setText("Nutrition Specialty *");
+                specialtyComboBox.setItems(nutritionSpecialties);
+                break;
+        }
+    }
+
+    private void updateStepIndicators(int activeStep) {
+        // Reset all indicators
+        stepIndicatorStatus(step1Indicator, activeStep == 1);
+        stepIndicatorStatus(step2Indicator, activeStep == 2);
+        stepIndicatorStatus(step3Indicator, activeStep == 3);
+    }
+
+    private void stepIndicatorStatus(VBox indicator, boolean active) {
+        indicator.getStyleClass().remove("step-active");
+        if (active) {
+            indicator.getStyleClass().add("step-active");
+        }
+    }
+
+    private void showStep(int stepNumber) {
+        // Hide all steps first
+        step1Content.setVisible(false);
+        step1Content.setManaged(false);
+        step2Content.setVisible(false);
+        step2Content.setManaged(false);
+        step3Content.setVisible(false);
+        step3Content.setManaged(false);
+
+        // Show the active step
+        switch (stepNumber) {
+            case 1:
+                step1Content.setVisible(true);
+                step1Content.setManaged(true);
+                break;
+            case 2:
+                step2Content.setVisible(true);
+                step2Content.setManaged(true);
+                break;
+            case 3:
+                step3Content.setVisible(true);
+                step3Content.setManaged(true);
+                refreshCaptcha(); // Refresh captcha when entering the final step
+                break;
+        }
+
+        updateStepIndicators(stepNumber);
+    }
+
+    @FXML
+    private void onNextToStep2() {
+        if (validateStep1()) {
+            showStep(2);
+        }
+    }
+
+    @FXML
+    private void onBackToStep1() {
+        showStep(1);
+    }
+
+    @FXML
+    private void onNextToStep3() {
+        if (validateStep2()) {
+            showStep(3);
+        }
+    }
+
+    @FXML
+    private void onBackToStep2() {
+        showStep(2);
+    }
+
+    @FXML
+    private void onChooseDiplomaFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Diploma/Certification File");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+            new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png"),
+            new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        Stage stage = (Stage) diplomaFileNameField.getScene().getWindow();
+        selectedDiplomaFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedDiplomaFile != null) {
+            diplomaFileNameField.setText(selectedDiplomaFile.getName());
+
+            // Validate file size (5MB limit)
+            if (selectedDiplomaFile.length() > 5 * 1024 * 1024) {
+                showStep2Error("File size must be less than 5MB");
+                selectedDiplomaFile = null;
+                diplomaFileNameField.clear();
+            } else {
+                clearStep2Error();
+            }
+        }
+    }
+
+    @FXML
+    private void onCompleteRegistration() {
+        if (validateStep3()) {
+            completeRegistration();
+        }
+    }
+
+    private boolean validateStep1() {
+        clearStep1Error();
+
+        String error = ValidationUtils.validateProfessionalPersonalInfo(
+            firstNameField.getText(),
+            lastNameField.getText(),
+            emailField.getText(),
+            phoneField.getText(),
+            birthDatePicker.getValue()
+        );
+
+        if (error != null) {
+            showStep1Error(error);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateStep2() {
+        clearStep2Error();
+
+        String specialty = specialtyComboBox.getValue();
+        String license = licenseField.getText();
+        String experience = experienceField.getText();
+
+        if (specialty == null || specialty.trim().isEmpty()) {
+            showStep2Error("Please select a specialty");
+            return false;
+        }
+
+        if (license == null || license.trim().isEmpty()) {
+            showStep2Error("License number is required");
+            return false;
+        }
+
+        if (selectedDiplomaFile == null) {
+            showStep2Error("Please upload your diploma/certification");
+            return false;
+        }
+
+        // Validate experience (optional but if provided, should be numeric)
+        if (experience != null && !experience.trim().isEmpty()) {
+            try {
+                int exp = Integer.parseInt(experience.trim());
+                if (exp < 0) {
+                    showStep2Error("Years of experience cannot be negative");
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                showStep2Error("Years of experience must be a valid number");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateStep3() {
+        clearStep3Error();
+
+        String password = passwordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
+
+        String error = ValidationUtils.validatePassword(password, confirmPassword);
+        if (error != null) {
+            showStep3Error(error);
+            return false;
+        }
+
+        if (!termsCheckBox.isSelected()) {
+            showStep3Error("You must agree to the Terms of Service and Privacy Policy");
+            return false;
+        }
+
+        // Final captcha validation check
+        if (!isCaptchaValid) {
+            showCaptchaError("Security verification required");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void setupRealTimeValidation() {
+        // Step 1
+        firstNameField.textProperty().addListener((obs, oldV, newV) -> validateFirstName());
+        lastNameField.textProperty().addListener((obs, oldV, newV) -> validateLastName());
+        emailField.textProperty().addListener((obs, oldV, newV) -> validateEmail());
+        phoneField.textProperty().addListener((obs, oldV, newV) -> validatePhone());
+        birthDatePicker.valueProperty().addListener((obs, oldV, newV) -> validateBirthDateRange());
+
+        // Step 2
+        licenseField.textProperty().addListener((obs, oldV, newV) -> validateLicense());
+        experienceField.textProperty().addListener((obs, oldV, newV) -> validateExperience());
+        specialtyComboBox.valueProperty().addListener((obs, oldV, newV) -> validateSpecialty());
+
+        // Step 3
+        confirmPasswordField.textProperty().addListener((obs, oldV, newV) -> validatePasswordsMatch());
+        
+        // Captcha validation
+        captchaField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.length() == 6) {
+                validateCaptcha();
+            } else {
+                isCaptchaValid = false;
+                captchaErrorLabel.setVisible(false);
+                ValidationUtils.applyValidationStyle(captchaField, true);
+            }
+        });
+        
+        refreshCaptchaButton.setOnAction(e -> refreshCaptcha());
+    }
+
+    private boolean validateFirstName() {
+        String error = ValidationUtils.validateName(firstNameField.getText(), "First name");
+        ValidationUtils.applyValidationStyle(firstNameField, error == null);
+        return error == null;
+    }
+
+    private boolean validateLastName() {
+        String error = ValidationUtils.validateName(lastNameField.getText(), "Last name");
+        ValidationUtils.applyValidationStyle(lastNameField, error == null);
+        return error == null;
+    }
+
+    private boolean validateEmail() {
+        String error = ValidationUtils.validateEmail(emailField.getText());
+        ValidationUtils.applyValidationStyle(emailField, error == null);
+        return error == null;
+    }
+
+    private boolean validatePhone() {
+        String error = ValidationUtils.validatePhone(phoneField.getText());
+        ValidationUtils.applyValidationStyle(phoneField, error == null);
+        return error == null;
+    }
+
+    private boolean validateBirthDateRange() {
+        String error = ValidationUtils.validateMinAge(birthDatePicker.getValue(), 18);
+        ValidationUtils.applyValidationStyle(birthDatePicker, error == null);
+        return error == null;
+    }
+
+    private boolean validateLicense() {
+        // Real license check
+        boolean isValid = licenseField.getText() != null && licenseField.getText().length() >= 5;
+        ValidationUtils.applyValidationStyle(licenseField, isValid);
+        return isValid;
+    }
+
+    private boolean validateExperience() {
+        String error = ValidationUtils.validateNumericRange(experienceField.getText(), 0, 50, "Experience");
+        ValidationUtils.applyValidationStyle(experienceField, error == null);
+        return error == null;
+    }
+
+    private boolean validateSpecialty() {
+        boolean isValid = specialtyComboBox.getValue() != null && !specialtyComboBox.getValue().isEmpty();
+        ValidationUtils.applyValidationStyle(specialtyComboBox, isValid);
+        return isValid;
+    }
+
+    private boolean validatePasswordsMatch() {
+        String error = ValidationUtils.validateConfirmPassword(passwordField.getText(), confirmPasswordField.getText());
+        ValidationUtils.applyValidationStyle(confirmPasswordField, error == null);
+        return error == null;
+    }
+
+    private void completeRegistration() {
+        try {
+            completeButton.setDisable(true);
+            completeButton.setText("Creating Account...");
+
+            // Create user object
+            User user = new User();
+            user.setEmail(emailField.getText().trim());
+            user.setPassword(passwordField.getText()); // Will be hashed by service
+            user.setFirstName(firstNameField.getText().trim());
+            user.setLastName(lastNameField.getText().trim());
+            user.setPhone(phoneField.getText().trim());
+            user.setBirthdate(birthDatePicker.getValue());
+            user.setRole(selectedProfessionalType);
+            user.setSpecialite(specialtyComboBox.getValue());
+            user.setLicenseNumber(licenseField.getText().trim());
+
+            if (!experienceField.getText().trim().isEmpty()) {
+                user.setYearsOfExperience(Integer.parseInt(experienceField.getText().trim()));
+            }
+
+            // Register the professional
+            userService.registerProfessional(user, selectedDiplomaFile);
+
+            // Show success message
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Registration Successful");
+            successAlert.setHeaderText("Account Created Successfully!");
+            successAlert.setContentText("Your professional account has been created and is pending verification by our administrators. You will receive an email notification once your account is activated (24-48 hours).");
+            successAlert.showAndWait();
+
+            // Return to verify email screen
+            SceneManager.getInstance().switchTo(SceneManager.VERIFY_EMAIL, user.getEmail());
+
+        } catch (Exception e) {
+            completeButton.setDisable(false);
+            completeButton.setText("Complete Registration");
+            showStep3Error("Registration failed: " + e.getMessage());
+            e.printStackTrace();
+            refreshCaptcha();
+        }
+    }
+
+    private void setupPasswordStrengthListener() {
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updatePasswordStrength(newValue);
+        });
+    }
+
+    private void updatePasswordStrength(String password) {
+        int strength = (int) (ValidationUtils.calculatePasswordStrength(password) * 4);
+
+        // Reset all bars
+        strengthBar1.getStyleClass().removeAll("strength-weak", "strength-fair", "strength-good", "strength-strong");
+        strengthBar2.getStyleClass().removeAll("strength-weak", "strength-fair", "strength-good", "strength-strong");
+        strengthBar3.getStyleClass().removeAll("strength-weak", "strength-fair", "strength-good", "strength-strong");
+        strengthBar4.getStyleClass().removeAll("strength-weak", "strength-fair", "strength-good", "strength-strong");
+        strengthLabel.getStyleClass().removeAll("strength-weak", "strength-fair", "strength-good", "strength-strong");
+
+        switch (strength) {
+            case 0: // Very Weak
+                strengthBar1.getStyleClass().add("strength-weak");
+                strengthLabel.setText("Very Weak");
+                strengthLabel.getStyleClass().add("strength-weak");
+                break;
+            case 1: // Weak
+                strengthBar1.getStyleClass().add("strength-weak");
+                strengthBar2.getStyleClass().add("strength-weak");
+                strengthLabel.setText("Weak");
+                strengthLabel.getStyleClass().add("strength-weak");
+                break;
+            case 2: // Fair
+                strengthBar1.getStyleClass().add("strength-fair");
+                strengthBar2.getStyleClass().add("strength-fair");
+                strengthBar3.getStyleClass().add("strength-fair");
+                strengthLabel.setText("Fair");
+                strengthLabel.getStyleClass().add("strength-fair");
+                break;
+            case 3: // Good
+                strengthBar1.getStyleClass().add("strength-good");
+                strengthBar2.getStyleClass().add("strength-good");
+                strengthBar3.getStyleClass().add("strength-good");
+                strengthBar4.getStyleClass().add("strength-good");
+                strengthLabel.setText("Good");
+                strengthLabel.getStyleClass().add("strength-good");
+                break;
+            case 4: // Strong
+                strengthBar1.getStyleClass().add("strength-strong");
+                strengthBar2.getStyleClass().add("strength-strong");
+                strengthBar3.getStyleClass().add("strength-strong");
+                strengthBar4.getStyleClass().add("strength-strong");
+                strengthLabel.setText("Strong");
+                strengthLabel.getStyleClass().add("strength-strong");
+                break;
+        }
+    }
+
+    private void refreshCaptcha() {
+        if (captchaField == null) return; // Guard for early initialization
+        captchaField.clear();
+        isCaptchaValid = false;
+        captchaErrorLabel.setVisible(false);
+        ValidationUtils.applyValidationStyle(captchaField, true);
+        
+        captchaService.generateCode();
+        captchaImageView.setImage(captchaService.generateCaptchaImage(200, 50));
+    }
+
+    private void validateCaptcha() {
+        String input = captchaField.getText().trim();
+        if (captchaService.validate(input)) {
+            isCaptchaValid = true;
+            captchaErrorLabel.setText("✓ Code correct");
+            captchaErrorLabel.setStyle("-fx-text-fill: #28a745;"); // Green
+            captchaErrorLabel.setVisible(true);
+            captchaErrorLabel.setManaged(true);
+            ValidationUtils.applyValidationStyle(captchaField, true);
+        } else {
+            isCaptchaValid = false;
+            captchaErrorLabel.setText("✗ Code incorrect");
+            captchaErrorLabel.setStyle("-fx-text-fill: #dc3545;"); // Red
+            captchaErrorLabel.setVisible(true);
+            captchaErrorLabel.setManaged(true);
+            ValidationUtils.applyValidationStyle(captchaField, false);
+            
+            // Auto-refresh after 1.5s on wrong input
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            pause.setOnFinished(e -> {
+                if (!isCaptchaValid) {
+                    refreshCaptcha();
+                }
+            });
+            pause.play();
+        }
+    }
+
+    private void showCaptchaError(String message) {
+        captchaErrorLabel.setText(message);
+        captchaErrorLabel.setStyle("-fx-text-fill: #dc3545;");
+        captchaErrorLabel.setVisible(true);
+        captchaErrorLabel.setManaged(true);
+    }
+
+    private void showStep1Error(String message) {
+        step1ErrorLabel.setText(message);
+        step1ErrorLabel.setVisible(true);
+    }
+
+    private void clearStep1Error() {
+        step1ErrorLabel.setText("");
+        step1ErrorLabel.setVisible(false);
+    }
+
+    private void showStep2Error(String message) {
+        step2ErrorLabel.setText(message);
+        step2ErrorLabel.setVisible(true);
+    }
+
+    private void clearStep2Error() {
+        step2ErrorLabel.setText("");
+        step2ErrorLabel.setVisible(false);
+    }
+
+    private void showStep3Error(String message) {
+        step3ErrorLabel.setText(message);
+        step3ErrorLabel.setVisible(true);
+    }
+
+    private void clearStep3Error() {
+        step3ErrorLabel.setText("");
+        step3ErrorLabel.setVisible(false);
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("An error occurred");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void onBackToTypeChoice() {
+        try {
+            SceneManager.getInstance().switchToProfessionalTypeChoice();
+        } catch (Exception e) {
+            showError("Error navigating back: " + e.getMessage());
+        }
+    }
+}
