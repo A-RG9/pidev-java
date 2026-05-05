@@ -468,13 +468,20 @@ public class ExerciseLibraryController {
                     showSuccessMessage("Exercice modifié avec succès!");
                     loadExercises();
                     closeForm();
-                } else if (radioUpload.isSelected() && selectedVideoFile != null) {
-                    exercise.setId(selectedExercise.getId());
+                } // Dans le cas upload vidéo
+                else if (radioUpload.isSelected() && selectedVideoFile != null) {
                     uploadVideoFile(exercise, () -> {
-                        exerciseDAO.updateExercise(exercise);
+                        // Vérifier que le chemin est relatif
+                        System.out.println("🔍 Chemin vidéo sauvegardé: " + exercise.getVideoUrl());
+
+                        if (isEditMode) {
+                            exerciseDAO.updateExercise(exercise);
+                        } else {
+                            exerciseDAO.addExercise(exercise);
+                        }
                         loadExercises();
                         closeForm();
-                        showSuccessMessage("Exercice modifié avec succès!");
+                        showSuccessMessage("Exercice " + (isEditMode ? "modifié" : "ajouté") + " avec succès!");
                     });
                     return;
                 } else if (radioUpload.isSelected() && selectedVideoFile == null) {

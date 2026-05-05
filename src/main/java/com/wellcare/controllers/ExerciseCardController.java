@@ -127,30 +127,22 @@ public class ExerciseCardController {
             lblDifficulty.setVisible(false);
         }
     }
-
     /**
      * Affiche le GIF ou la vidéo selon l'URL
      */
     private void setupVideoPlayer(String url) {
         videoPlayer.setContextMenuEnabled(false);
-// Test direct d'un GIF existant
-        File testGif = new File("uploads/gifs/3_4_Sit_up.gif");
-        if (testGif.exists()) {
-            System.out.println("✅ GIF trouvé: " + testGif.getAbsolutePath());
-            String testUrl = testGif.toURI().toString();
-            System.out.println("URL: " + testUrl);
-            videoPlayer.getEngine().loadContent("<html><body><img src='" + testUrl + "'/></body></html>");
-        }
+
         if (url != null && !url.isEmpty()) {
             System.out.println("🎬 Chargement: " + url);
 
-            // 🔥 CAS 1: Fichier GIF local (commence par uploads/gifs/ ou contient .gif)
-            if (url.endsWith(".gif") && new File(url).exists()) {
-                displayLocalGif(url);
+            // 🔥 CAS 1: Fichier GIF local
+            if (url.endsWith(".gif")) {
+                displayMediaFile(url, "gif");
             }
             // 📹 CAS 2: Vidéo locale
-            else if (url.startsWith("uploads/") && new File(url).exists()) {
-                displayLocalVideo(url);
+            else if (url.contains(".mp4") || url.contains(".avi") || url.contains(".mov") || url.contains(".webm")) {
+                displayMediaFile(url, "video");
             }
             // 🎬 CAS 3: YouTube
             else if (VideoUploadService.isValidYouTubeUrl(url)) {
@@ -166,75 +158,102 @@ public class ExerciseCardController {
     }
 
     /**
-     * Affiche un GIF local dans le WebView
+     * Affiche un fichier média local (GIF ou vidéo)
      */
-    private void displayLocalGif(String gifPath) {
+    private void displayMediaFile(String path, String type) {
         try {
-            // Nettoyer et encoder le chemin pour l'URL
-            String localUrl;
-            if (gifPath.startsWith("file:/")) {
-                localUrl = gifPath;
-            } else {
-                File gifFile = new File(gifPath);
-                if (gifFile.exists()) {
-                    // 🔥 Remplacer les backslashes par des slashes et encoder
-                    String path = gifFile.getAbsolutePath().replace("\\", "/");
-                    localUrl = "file:///" + path;
+            File mediaFile = findMediaFile(path);
+
+            if (mediaFile != null && mediaFile.exists()) {
+                String localUrl = mediaFile.toURI().toString();
+                System.out.println("📁 " + type.toUpperCase() + " trouvé: " + localUrl);
+
+                if (type.equals("gif")) {
+                    displayGifContent(localUrl);
                 } else {
-                    System.err.println("❌ Fichier non trouvé: " + gifPath);
-                    showPlaceholder();
-                    return;
+                    displayVideoContent(localUrl);
                 }
+            } else {
+                System.err.println("❌ " + type.toUpperCase() + " non trouvé: " + path);
+                showPlaceholder();
             }
-
-            System.out.println("📁 Affichage GIF: " + localUrl);
-
-            // 🔥 Construction HTML simplifiée et robuste
-            String html = "<!DOCTYPE html>"
-                    + "<html>"
-                    + "<head>"
-                    + "<style>"
-                    + "body { margin: 0; background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; }"
-                    + "img { max-width: 100%; max-height: 100%; object-fit: contain; }"
-                    + "</style>"
-                    + "</head>"
-                    + "<body>"
-                    + "<img src=\"" + localUrl + "\" alt=\"Exercise demonstration\"/>"
-                    + "</body>"
-                    + "</html>";
-
-            videoPlayer.getEngine().loadContent(html);
-            Tooltip.install(videoPlayer, new Tooltip("Animation GIF de l'exercice"));
-
         } catch (Exception e) {
-            System.err.println("❌ Erreur affichage GIF: " + e.getMessage());
+            System.err.println("❌ Erreur affichage " + type + ": " + e.getMessage());
             showPlaceholder();
         }
     }
 
     /**
-     * Affiche une vidéo locale
+     * Cherche le fichier média dans différents emplacements
      */
-    private void displayLocalVideo(String url) {
-        try {
-            File videoFile = new File(url);
-            if (videoFile.exists()) {
-                String localUrl = videoFile.toURI().toString();
-                String html = """
-                        <html>
-                        <body style='margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100%;'>
-                            <video width='100%' height='100%' controls autoplay style='max-width:100%;max-height:100%;'>
-                                <source src='%s' type='video/mp4'>
-                                Votre navigateur ne supporte pas la lecture vidéo.
-                            </video>
-                        </body>
-                        </html>
-                        """.formatted(localUrl);
-                videoPlayer.getEngine().loadContent(html);
-            } else {
-                showPlaceholder();
+    private File findMediaFile(String path) {
+        // 1. Essayer le chemin direct
+        File directFile = new File(path);
+        if (directFile.exists()) {
+            return directFile;
+        }
+
+        // 2. Essayer depuis le dossier du projet
+        File projectFile = new File(System.getProperty("user.dir"), path);
+        if (projectFile.exists()) {
+            return projectFile;
+        }
+
+        // 3. Essayer dans uploads/videos/ ou uploads/gifs/
+        String fileName = new File(path).getName();
+        if (path.contains(".mp4") || path.contains(".avi")) {
+            File uploadsVideo = new File("uploads/videos/" + fileName);
+            if (uploadsVideo.exists()) {
+                return uploadsVideo;
             }
+        } else if (path.contains(".gif")) {
+            File uploadsGif = new File("uploads/gifs/" + fileName);
+            if (uploadsGif.exists()) {
+                return uploadsGif;
+            }
+        }
+
+        // 4. Essayer avec le chemin absolu
+        File absoluteFile = new File(System.getProperty("user.dir") + "/" + path);
+        if (absoluteFile.exists()) {
+            return absoluteFile;
+        }
+
+        return null;
+    }
+
+    /**
+     * Affiche un GIF dans le WebView
+     */
+    private void displayGifContent(String gifUrl) {
+        String html = "<!DOCTYPE html>"
+                + "<html>"
+                + "<head>"
+                + "<style>"
+                + "body { margin: 0; background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; }"
+                + "img { max-width: 100%; max-height: 100%; object-fit: contain; }"
+                + "</style>"
+                + "</head>"
+                + "<body>"
+                + "<img src=\"" + gifUrl + "\" alt=\"Exercise demonstration\"/>"
+                + "</body>"
+                + "</html>";
+
+        videoPlayer.getEngine().loadContent(html);
+        Tooltip.install(videoPlayer, new Tooltip("Animation GIF de l'exercice"));
+    }
+
+    /**
+     * Affiche une vidéo dans le WebView
+     */
+    private void displayVideoContent(String videoUrl) {
+        try {
+            // 🔥 Méthode directe sans HTML complexe
+            String html = "<video width='100%' height='100%' controls autoplay><source src='" + videoUrl + "' type='video/mp4'></video>";
+            videoPlayer.getEngine().loadContent(html);
+
         } catch (Exception e) {
+            System.err.println("❌ Erreur affichage vidéo: " + e.getMessage());
             showPlaceholder();
         }
     }
@@ -248,20 +267,20 @@ public class ExerciseCardController {
     }
 
     /**
-     * Affiche un placeholder
+     * Affiche un placeholder quand aucun média n'est disponible
      */
     private void showPlaceholder() {
         String html = """
-                <html>
-                <body style='margin:0;padding:0;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;height:100%;'>
-                    <div style='text-align:center;color:white;font-family:Arial;'>
-                        <div style='font-size:48px;margin-bottom:16px;'>🎬</div>
-                        <div style='font-size:14px;'>Aperçu non disponible</div>
-                        <div style='font-size:12px;margin-top:8px;opacity:0.8'> + exercise.getName() + </div>
-                    </div>
-                </body>
-                </html>
-                """;
+        <html>
+        <body style='margin:0;padding:0;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;height:100%;'>
+            <div style='text-align:center;color:white;font-family:Arial;'>
+                <div style='font-size:48px;margin-bottom:16px;'>🎬</div>
+                <div style='font-size:14px;'>Aperçu non disponible</div>
+                <div style='font-size:12px;margin-top:8px;opacity:0.8'>Exercice</div>
+            </div>
+        </body>
+        </html>
+        """;
         videoPlayer.getEngine().loadContent(html);
     }
 
