@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.CoachDashboardController"
+      style="-fx-background-color: #F8FAFC;"
+      VBox.vgrow="ALWAYS">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 12 20; -fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-width: 0 0 1 0;">
+        <Label text="♡ Wellora Coach" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #14b8a6;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="selectedClientName" text="Sélectionnez un client" style="-fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+        <Label fx:id="lblClientStatus" text="⚫" style="-fx-text-fill: #94A3B8;"/>
+        <HBox spacing="8">
+            <Button fx:id="btnStartCall" text="🎥 Appel" onAction="#startVideoCall" disable="true"
+                    style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 5 12; -fx-cursor: hand; -fx-font-size: 11px;"/>
+            <Button fx:id="btnJoinCall" text="📞 Rejoindre" onAction="#joinVideoCall" disable="true"
+                    style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 5 12; -fx-cursor: hand; -fx-font-size: 11px;"/>
+        </HBox>
+        <Label fx:id="lblConnectionStatus" text="🔴" style="-fx-font-size: 12px;"/>
+    </HBox>
+
+    <!-- Contenu principal -->
+    <HBox VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+
+        <!-- Panneau gauche - Conversations -->
+        <VBox prefWidth="300" style="-fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-width: 0 1 0 0;">
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 15;">
+                <Label text="💬 Messages" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblUnreadCount" text="0" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-padding: 2 6; -fx-background-radius: 10; -fx-font-size: 10px;"/>
+            </HBox>
+
+            <TextField fx:id="searchConversation" promptText="🔍 Rechercher un client..."
+                       style="-fx-background-radius: 20; -fx-padding: 8 12; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-margin: 0 10 10 10;"/>
+
+            <ListView fx:id="conversationsList" VBox.vgrow="ALWAYS"
+                      style="-fx-background-color: transparent; -fx-background: transparent;"/>
+
+            <!-- Stats -->
+            <VBox spacing="8" style="-fx-padding: 12; -fx-border-color: #E2E8F0; -fx-border-width: 1 0 0 0;">
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox alignment="CENTER">
+                        <Label text="📬" style="-fx-font-size: 16px;"/>
+                        <Label fx:id="lblUnreadCountStat" text="0" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #EF4444;"/>
+                        <Label text="Non lus" style="-fx-text-fill: #64748B; -fx-font-size: 9px;"/>
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Label text="🟢" style="-fx-font-size: 16px;"/>
+                        <Label fx:id="lblOnlineClients" text="0" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #10B981;"/>
+                        <Label text="En ligne" style="-fx-text-fill: #64748B; -fx-font-size: 9px;"/>
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Label text="💬" style="-fx-font-size: 16px;"/>
+                        <Label fx:id="lblTotalConversations" text="0" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #8B5CF6;"/>
+                        <Label text="Conversations" style="-fx-text-fill: #64748B; -fx-font-size: 9px;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <!-- Panneau droit - Chat -->
+        <VBox HBox.hgrow="ALWAYS" style="-fx-background-color: #F8FAFC;">
+
+            <ScrollPane fx:id="messagesScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS"
+                        style="-fx-background-color: transparent; -fx-background: transparent;">
+                <VBox fx:id="messagesContainer" spacing="8" style="-fx-padding: 20;"/>
+            </ScrollPane>
+
+            <Label fx:id="lblTypingIndicator" text="" style="-fx-text-fill: #94A3B8; -fx-font-size: 11px; -fx-padding: 5 20;"/>
+
+            <HBox spacing="8" style="-fx-padding: 12 15; -fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-width: 1 0 0 0;">
+                <TextField fx:id="messageInput" promptText="Écrivez votre message... (Entrée pour envoyer)"
+                           HBox.hgrow="ALWAYS" onAction="#sendMessage"
+                           style="-fx-background-radius: 20; -fx-padding: 8 12; -fx-font-size: 13px; -fx-border-color: #E2E8F0; -fx-border-width: 1px;"/>
+                <Button text="📎" onAction="#attachFile"
+                        style="-fx-background-color: transparent; -fx-text-fill: #64748B; -fx-cursor: hand; -fx-font-size: 16px;"/>
+                <Button text="Envoyer" onAction="#sendMessage"
+                        style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 6 16; -fx-cursor: hand;"/>
+            </HBox>
+        </VBox>
+    </HBox>
+</VBox>
