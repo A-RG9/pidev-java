@@ -1,7 +1,6 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,12 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.example.entities.Examens;
-import org.example.service.ExamensServices;
+import org.example.services.ExamensServices;
 
 public class LabResultsController {
 

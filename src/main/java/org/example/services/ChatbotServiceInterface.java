@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.services;
 
 import java.util.HashMap;
 import java.util.List;

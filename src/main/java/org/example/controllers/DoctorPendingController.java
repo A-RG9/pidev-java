@@ -1,6 +1,6 @@
-package org.example.controller;
+package org.example.controllers;
 
-import org.example.service.EmailService;
+import org.example.services.EmailService;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
 import javafx.animation.*;
@@ -19,7 +19,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.entities.Consultation;
-import org.example.service.ConsulationServices;
+import org.example.services.ConsulationServices;
 import java.sql.SQLException;
 
 import java.util.ArrayList;

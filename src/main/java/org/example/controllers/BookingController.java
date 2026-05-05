@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.example.entities.Consultation;
-import org.example.service.ConsulationServices;
+import org.example.services.ConsulationServices;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

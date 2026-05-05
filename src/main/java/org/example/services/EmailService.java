@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.services;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

@@ -1,6 +1,5 @@
-package org.example.controller;
+package org.example.controllers;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -23,7 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import org.example.service.DoctorAnalyticsService;
+import org.example.services.DoctorAnalyticsService;
 
 public class doc {
 

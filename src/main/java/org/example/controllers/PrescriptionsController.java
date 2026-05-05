@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.entities.Ordonnance;
-import org.example.service.OrdonnanceServices;
+import org.example.services.OrdonnanceServices;
 
 public class PrescriptionsController {
 

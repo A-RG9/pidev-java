@@ -1,22 +1,20 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import org.example.entities.Consultation;
 import org.example.entities.Ordonnance;
 import org.example.entities.Examens;
-import org.example.service.ConsulationServices;
-import org.example.service.OrdonnanceServices;
-import org.example.service.ExamensServices;
+import org.example.services.ConsulationServices;
+import org.example.services.OrdonnanceServices;
+import org.example.services.ExamensServices;
 import javafx.concurrent.Task;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 

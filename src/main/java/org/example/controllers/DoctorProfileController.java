@@ -1,19 +1,16 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import org.example.controller.DoctorSearchController.Doctor;
+import org.example.controllers.DoctorSearchController.Doctor;
 
 public class DoctorProfileController {
 

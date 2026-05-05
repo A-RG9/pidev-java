@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.services;
 import org.example.entities.Examens;
 import java.sql.SQLException;
 import java.util.List;

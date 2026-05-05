@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -9,9 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import org.example.service.ChatbotService;
-import org.example.service.ChatbotServiceInterface;
+import org.example.services.ChatbotService;
+import org.example.services.ChatbotServiceInterface;
 
 import java.util.ArrayList;
 import java.util.List;

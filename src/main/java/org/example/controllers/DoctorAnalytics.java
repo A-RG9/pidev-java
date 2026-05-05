@@ -1,6 +1,5 @@
-package org.example.controller;
+package org.example.controllers;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +14,6 @@ import javafx.scene.layout.*;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
 

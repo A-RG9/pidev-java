@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.service.ConsulationServices;
+import org.example.services.ConsulationServices;
 import java.sql.*;
 
 public class CheckDatabase {
