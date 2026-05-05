@@ -1,6 +1,6 @@
-package com.wellora.service;
-import com.wellora.model.Ordonnance;
-import com.wellora.util.DatabaseConnection;
+package com.wellora.javafx.service;
+import com.wellora.javafx.model.Ordonnance;
+import com.wellora.javafx.util.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

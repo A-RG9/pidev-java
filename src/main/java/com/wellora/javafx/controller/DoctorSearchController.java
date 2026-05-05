@@ -1,6 +1,6 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
-import com.wellora.util.DatabaseConnection;
+import com.wellora.javafx.util.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;

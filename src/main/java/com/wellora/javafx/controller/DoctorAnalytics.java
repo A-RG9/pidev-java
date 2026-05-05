@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

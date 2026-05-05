@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import com.wellora.service.DoctorAnalyticsService;
+import com.wellora.javafx.service.DoctorAnalyticsService;
 
 public class doc {
 

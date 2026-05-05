@@ -1,6 +1,6 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
-import com.wellora.service.EmailService;
+import com.wellora.javafx.service.EmailService;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
 import javafx.animation.*;
@@ -18,8 +18,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import com.wellora.model.Consultation;
-import com.wellora.service.ConsulationServices;
+import com.wellora.javafx.model.Consultation;
+import com.wellora.javafx.service.ConsulationServices;
 import java.sql.SQLException;
 
 import java.util.ArrayList;

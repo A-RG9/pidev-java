@@ -1,7 +1,7 @@
-package com.wellora.service;
+package com.wellora.javafx.service;
 
-import com.wellora.model.Consultation;
-import com.wellora.util.DatabaseConnection;
+import com.wellora.javafx.model.Consultation;
+import com.wellora.javafx.util.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

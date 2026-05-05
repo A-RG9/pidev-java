@@ -7,7 +7,7 @@
 <?import javafx.scene.Node?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.controller.PrescriptionsController"
+      fx:controller="com.wellora.javafx.controller.PrescriptionsController"
       style="-fx-background-color: #f9fafb;">
 
     <!-- LEFT SIDEBAR - Included from sidebar.fxml -->

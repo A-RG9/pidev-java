@@ -1,6 +1,6 @@
 package com.wellora;
 
-import com.wellora.service.ConsulationServices;
+import com.wellora.javafx.service.ConsulationServices;
 import java.sql.*;
 
 public class CheckDatabase {

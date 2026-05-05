@@ -1,4 +1,4 @@
-package com.wellora.service;
+package com.wellora.javafx.service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

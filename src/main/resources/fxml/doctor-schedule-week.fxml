@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"             fx:controller="com.wellora.controller.DoctorScheduleController"
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"             fx:controller="com.wellora.javafx.controller.DoctorScheduleController"
               stylesheets="@../css/styles.css">
   <!-- ========== LEFT SIDEBAR ========== -->
   <left>

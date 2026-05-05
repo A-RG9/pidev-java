@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,8 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import com.wellora.model.Consultation;
-import com.wellora.service.ConsulationServices;
+import com.wellora.javafx.model.Consultation;
+import com.wellora.javafx.service.ConsulationServices;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

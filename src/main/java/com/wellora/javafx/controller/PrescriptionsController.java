@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -12,8 +12,8 @@ import javafx.fxml.FXMLLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wellora.model.Ordonnance;
-import com.wellora.service.OrdonnanceServices;
+import com.wellora.javafx.model.Ordonnance;
+import com.wellora.javafx.service.OrdonnanceServices;
 
 public class PrescriptionsController {
 
