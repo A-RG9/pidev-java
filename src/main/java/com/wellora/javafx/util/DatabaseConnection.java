@@ -1,4 +1,4 @@
-package com.wellora.util;
+package com.wellora.javafx.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

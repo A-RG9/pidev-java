@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -13,8 +13,8 @@ import javafx.stage.FileChooser;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wellora.model.Examens;
-import com.wellora.service.ExamensServices;
+import com.wellora.javafx.model.Examens;
+import com.wellora.javafx.service.ExamensServices;
 
 public class LabResultsController {
 

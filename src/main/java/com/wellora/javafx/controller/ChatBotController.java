@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -9,8 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import com.wellora.service.ChatbotService;
-import com.wellora.service.ChatbotServiceInterface;
+import com.wellora.javafx.service.ChatbotService;
+import com.wellora.javafx.service.ChatbotServiceInterface;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.wellora.service;
-import com.wellora.model.Examens;
-import com.wellora.util.DatabaseConnection;
+package com.wellora.javafx.service;
+import com.wellora.javafx.model.Examens;
+import com.wellora.javafx.util.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

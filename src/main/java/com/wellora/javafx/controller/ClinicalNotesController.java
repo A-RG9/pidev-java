@@ -1,16 +1,16 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
-import com.wellora.model.Consultation;
-import com.wellora.model.Ordonnance;
-import com.wellora.model.Examens;
-import com.wellora.service.ConsulationServices;
-import com.wellora.service.OrdonnanceServices;
-import com.wellora.service.ExamensServices;
+import com.wellora.javafx.model.Consultation;
+import com.wellora.javafx.model.Ordonnance;
+import com.wellora.javafx.model.Examens;
+import com.wellora.javafx.service.ConsulationServices;
+import com.wellora.javafx.service.OrdonnanceServices;
+import com.wellora.javafx.service.ExamensServices;
 import javafx.concurrent.Task;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonBar;

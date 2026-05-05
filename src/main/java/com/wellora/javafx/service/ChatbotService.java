@@ -1,4 +1,4 @@
-package com.wellora.service;
+package com.wellora.javafx.service;
 
 import java.net.URI;
 import java.net.http.HttpClient;

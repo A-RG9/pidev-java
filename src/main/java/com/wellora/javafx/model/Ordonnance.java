@@ -1,4 +1,4 @@
-package com.wellora.model;
+package com.wellora.javafx.model;
 import java.time.LocalDate;
 public class Ordonnance {
     private Integer id;

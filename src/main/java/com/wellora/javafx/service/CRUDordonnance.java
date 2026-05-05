@@ -1,5 +1,5 @@
-package com.wellora.service;
-import com.wellora.model.Ordonnance;
+package com.wellora.javafx.service;
+import com.wellora.javafx.model.Ordonnance;
 import java.sql.SQLException;
 import java.util.List;
 

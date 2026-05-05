@@ -1,4 +1,4 @@
-package com.wellora.controller;
+package com.wellora.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import com.wellora.controller.DoctorSearchController.Doctor;
+import com.wellora.javafx.controller.DoctorSearchController.Doctor;
 
 public class DoctorProfileController {
 

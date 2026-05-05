@@ -10,7 +10,7 @@
 
 <HBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.controller.DoctorAnalytics"
+      fx:controller="com.wellora.javafx.controller.DoctorAnalytics"
       stylesheets="/css/Dashboard.css"
       style="-fx-background-color: #f9fafb;">
 
