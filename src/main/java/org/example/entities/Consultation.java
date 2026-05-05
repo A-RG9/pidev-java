@@ -1,7 +1,9 @@
 package org.example.entities;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
 public class Consultation {
     private Integer id;
     private String consultationType;
@@ -20,7 +22,13 @@ public class Consultation {
     private String plan;
     private List<String> diagnoses;
     private String appointmentMode;
-    // Clinical notes fields
+    private String patientId;          // foreign key to user table (varchar 36)
+    private String patientEmail;
+    private String patientFirstName;
+    private String patientLastName;
+    private String patientPhone;
+
+    // Clinical notes fields (optional)
     private String chiefComplaint;
     private Integer bpSystolic;
     private Integer bpDiastolic;
@@ -31,7 +39,14 @@ public class Consultation {
     private String followUpType;
     private String followUpPriority;
 
-    public Consultation(Integer id, String consultationType, String reasonForVisit, String symptomsDescription, LocalDate dateConsultation, LocalTime timeConsultation, Integer duration, String location, Integer fee, String status, String notes, String subjective, String objective, String assessment, String plan, List<String> diagnoses) {
+    // Constructors
+    public Consultation() {}
+
+    public Consultation(Integer id, String consultationType, String reasonForVisit, String symptomsDescription,
+                        LocalDate dateConsultation, LocalTime timeConsultation, Integer duration,
+                        String location, Integer fee, String status, String notes, String subjective,
+                        String objective, String assessment, String plan, List<String> diagnoses,
+                        String patientId) {
         this.id = id;
         this.consultationType = consultationType;
         this.reasonForVisit = reasonForVisit;
@@ -48,217 +63,103 @@ public class Consultation {
         this.assessment = assessment;
         this.plan = plan;
         this.diagnoses = diagnoses;
-    }
-    public Consultation() {
-    }
-    public LocalTime getTimeConsultation() {
-        return timeConsultation;
+        this.patientId = patientId;
     }
 
-    public void setTimeConsultation(LocalTime timeConsultation) {
-        this.timeConsultation = timeConsultation;
-    }
+    // Getters and Setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public Integer getId() {
-        return id;
-    }
+    public String getConsultationType() { return consultationType; }
+    public void setConsultationType(String consultationType) { this.consultationType = consultationType; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getReasonForVisit() { return reasonForVisit; }
+    public void setReasonForVisit(String reasonForVisit) { this.reasonForVisit = reasonForVisit; }
 
-    public String getConsultationType() {
-        return consultationType;
-    }
+    public String getSymptomsDescription() { return symptomsDescription; }
+    public void setSymptomsDescription(String symptomsDescription) { this.symptomsDescription = symptomsDescription; }
 
-    public void setConsultationType(String consultationType) {
-        this.consultationType = consultationType;
-    }
+    public LocalDate getDateConsultation() { return dateConsultation; }
+    public void setDateConsultation(LocalDate dateConsultation) { this.dateConsultation = dateConsultation; }
 
-    public String getReasonForVisit() {
-        return reasonForVisit;
-    }
+    public LocalTime getTimeConsultation() { return timeConsultation; }
+    public void setTimeConsultation(LocalTime timeConsultation) { this.timeConsultation = timeConsultation; }
 
-    public void setReasonForVisit(String reasonForVisit) {
-        this.reasonForVisit = reasonForVisit;
-    }
+    public Integer getDuration() { return duration; }
+    public void setDuration(Integer duration) { this.duration = duration; }
 
-    public String getSymptomsDescription() {
-        return symptomsDescription;
-    }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
-    public void setSymptomsDescription(String symptomsDescription) {
-        this.symptomsDescription = symptomsDescription;
-    }
+    public Integer getFee() { return fee; }
+    public void setFee(Integer fee) { this.fee = fee; }
 
-    public LocalDate getDateConsultation() {
-        return dateConsultation;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public void setDateConsultation(LocalDate dateConsultation) {
-        this.dateConsultation = dateConsultation;
-    }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
 
-    public Integer getDuration() {
-        return duration;
-    }
+    public String getSubjective() { return subjective; }
+    public void setSubjective(String subjective) { this.subjective = subjective; }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
+    public String getObjective() { return objective; }
+    public void setObjective(String objective) { this.objective = objective; }
 
-    public String getLocation() {
-        return location;
-    }
+    public String getAssessment() { return assessment; }
+    public void setAssessment(String assessment) { this.assessment = assessment; }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    public String getPlan() { return plan; }
+    public void setPlan(String plan) { this.plan = plan; }
 
-    public Integer getFee() {
-        return fee;
-    }
+    public List<String> getDiagnoses() { return diagnoses; }
+    public void setDiagnoses(List<String> diagnoses) { this.diagnoses = diagnoses; }
 
-    public void setFee(Integer fee) {
-        this.fee = fee;
-    }
+    public String getAppointmentMode() { return appointmentMode; }
+    public void setAppointmentMode(String appointmentMode) { this.appointmentMode = appointmentMode; }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getPatientId() { return patientId; }
+    public void setPatientId(String patientId) { this.patientId = patientId; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getPatientEmail() { return patientEmail; }
+    public void setPatientEmail(String patientEmail) { this.patientEmail = patientEmail; }
 
-    public String getNotes() {
-        return notes;
-    }
+    public String getPatientFirstName() { return patientFirstName; }
+    public void setPatientFirstName(String patientFirstName) { this.patientFirstName = patientFirstName; }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+    public String getPatientLastName() { return patientLastName; }
+    public void setPatientLastName(String patientLastName) { this.patientLastName = patientLastName; }
 
-    public String getSubjective() {
-        return subjective;
-    }
+    public String getPatientPhone() { return patientPhone; }
+    public void setPatientPhone(String patientPhone) { this.patientPhone = patientPhone; }
 
-    public void setSubjective(String subjective) {
-        this.subjective = subjective;
-    }
+    // Optional clinical fields
+    public String getChiefComplaint() { return chiefComplaint; }
+    public void setChiefComplaint(String chiefComplaint) { this.chiefComplaint = chiefComplaint; }
 
-    public String getObjective() {
-        return objective;
-    }
+    public Integer getBpSystolic() { return bpSystolic; }
+    public void setBpSystolic(Integer bpSystolic) { this.bpSystolic = bpSystolic; }
 
-    public void setObjective(String objective) {
-        this.objective = objective;
-    }
+    public Integer getBpDiastolic() { return bpDiastolic; }
+    public void setBpDiastolic(Integer bpDiastolic) { this.bpDiastolic = bpDiastolic; }
 
-    public String getAssessment() {
-        return assessment;
-    }
+    public Integer getPulse() { return pulse; }
+    public void setPulse(Integer pulse) { this.pulse = pulse; }
 
-    public void setAssessment(String assessment) {
-        this.assessment = assessment;
-    }
+    public Double getTemperature() { return temperature; }
+    public void setTemperature(Double temperature) { this.temperature = temperature; }
 
-    public String getPlan() {
-        return plan;
-    }
+    public Integer getSpo2() { return spo2; }
+    public void setSpo2(Integer spo2) { this.spo2 = spo2; }
 
-    public void setPlan(String plan) {
-        this.plan = plan;
-    }
+    public LocalDate getFollowUpDate() { return followUpDate; }
+    public void setFollowUpDate(LocalDate followUpDate) { this.followUpDate = followUpDate; }
 
-    public List<String> getDiagnoses() {
-        return diagnoses;
-    }
+    public String getFollowUpType() { return followUpType; }
+    public void setFollowUpType(String followUpType) { this.followUpType = followUpType; }
 
-    public void setDiagnoses(List<String> diagnoses) {
-        this.diagnoses = diagnoses;
-    }
-
-    public String getAppointmentMode() {
-        return appointmentMode;
-    }
-
-    public void setAppointmentMode(String appointmentMode) {
-        this.appointmentMode = appointmentMode;
-    }
-
-    // Clinical notes getters and setters
-    public String getChiefComplaint() {
-        return chiefComplaint;
-    }
-
-    public void setChiefComplaint(String chiefComplaint) {
-        this.chiefComplaint = chiefComplaint;
-    }
-
-    public Integer getBpSystolic() {
-        return bpSystolic;
-    }
-
-    public void setBpSystolic(Integer bpSystolic) {
-        this.bpSystolic = bpSystolic;
-    }
-
-    public Integer getBpDiastolic() {
-        return bpDiastolic;
-    }
-
-    public void setBpDiastolic(Integer bpDiastolic) {
-        this.bpDiastolic = bpDiastolic;
-    }
-
-    public Integer getPulse() {
-        return pulse;
-    }
-
-    public void setPulse(Integer pulse) {
-        this.pulse = pulse;
-    }
-
-    public Double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
-    }
-
-    public Integer getSpo2() {
-        return spo2;
-    }
-
-    public void setSpo2(Integer spo2) {
-        this.spo2 = spo2;
-    }
-
-    public LocalDate getFollowUpDate() {
-        return followUpDate;
-    }
-
-    public void setFollowUpDate(LocalDate followUpDate) {
-        this.followUpDate = followUpDate;
-    }
-
-    public String getFollowUpType() {
-        return followUpType;
-    }
-
-    public void setFollowUpType(String followUpType) {
-        this.followUpType = followUpType;
-    }
-
-    public String getFollowUpPriority() {
-        return followUpPriority;
-    }
-
-    public void setFollowUpPriority(String followUpPriority) {
-        this.followUpPriority = followUpPriority;
-    }
+    public String getFollowUpPriority() { return followUpPriority; }
+    public void setFollowUpPriority(String followUpPriority) { this.followUpPriority = followUpPriority; }
 
     @Override
     public String toString() {
@@ -274,16 +175,7 @@ public class Consultation {
                 ", fee=" + fee +
                 ", status='" + status + '\'' +
                 ", notes='" + notes + '\'' +
-                ", subjective='" + subjective + '\'' +
-                ", objective='" + objective + '\'' +
-                ", assessment='" + assessment + '\'' +
-                ", plan='" + plan + '\'' +
-                ", diagnoses=" + diagnoses +
+                ", patientId='" + patientId + '\'' +
                 '}';
     }
-
-
-
-
-
 }

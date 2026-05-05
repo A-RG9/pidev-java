@@ -32,8 +32,32 @@ CREATE TABLE IF NOT EXISTS consultation (
     follow_up_date DATE,
     follow_up_type VARCHAR(50),
     follow_up_priority VARCHAR(50),
+    patient_id VARCHAR(36) DEFAULT NULL,
+    patient_email VARCHAR(255),
+    patient_first_name VARCHAR(100),
+    patient_last_name VARCHAR(100),
+    patient_phone VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_patient_id (patient_id)
+);
+
+-- Create the user table
+CREATE TABLE IF NOT EXISTS user (
+    id VARCHAR(36) PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    password VARCHAR(255),
+    phone VARCHAR(20),
+    date_of_birth DATE,
+    gender VARCHAR(20),
+    address TEXT,
+    role VARCHAR(50) DEFAULT 'patient',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_role (role)
 );
 
 -- Create the Examens (Lab Results) table for WellCare Connect

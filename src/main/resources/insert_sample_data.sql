@@ -3,6 +3,13 @@
 
 USE wellora;
 
+-- Insert sample users
+INSERT INTO user (id, email, first_name, last_name, password, phone, date_of_birth, gender, role) VALUES
+(UUID(), 'patient1@wellcare.com', 'John', 'Doe', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGx86WYH68B17lXhK', '555-0101', '1985-03-15', 'Male', 'patient'),
+(UUID(), 'patient2@wellcare.com', 'Jane', 'Smith', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGx86WYH68B17lXhK', '555-0102', '1990-07-22', 'Female', 'patient'),
+(UUID(), 'patient3@wellcare.com', 'Robert', 'Johnson', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGx86WYH68B17lXhK', '555-0103', '1978-11-30', 'Male', 'patient'),
+(UUID(), 'dr.mariem@wellcare.com', 'Mariem', 'Fakhfakh', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGx86WYH68B17lXhK', '555-0200', '1980-05-10', 'Female', 'doctor');
+
 -- Insert sample Examens (Lab Results) data
 INSERT INTO examens (type_examen, nom_examen, date_examen, resultat, status, notes, doctor_analysis, doctor_treatment, consultation_id) VALUES
 ('Blood Test', 'Complete Blood Count (CBC)', CURDATE(), 

@@ -11,8 +11,8 @@ public class OrdonnanceServices implements CRUDordonnance {
     @Override
     public void AddOrdonnance(Ordonnance ordonnance) throws SQLException {
         String query = "INSERT INTO ordonnance (date_ordonnance, medicament, dosage, forme, " +
-                       "duree_traitement, instructions, frequency, diagnosis_code, consultation_id) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       "duree_traitement, instructions, frequency, diagnosis_code, status, consultation_id, updated_at) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -25,24 +25,11 @@ public class OrdonnanceServices implements CRUDordonnance {
             pstmt.setString(6, ordonnance.getInstructions() != null ? ordonnance.getInstructions() : "");
             pstmt.setString(7, ordonnance.getFrequency() != null ? ordonnance.getFrequency() : "");
             pstmt.setString(8, ordonnance.getDiagnosisCode() != null ? ordonnance.getDiagnosisCode() : "");
+            pstmt.setString(9, ordonnance.getStatus() != null ? ordonnance.getStatus() : "active");
+            pstmt.setInt(10, ordonnance.getConsultationId());
             
-            int consultationId = ordonnance.getConsultationId();
-            if (consultationId > 0) {
-                pstmt.setInt(9, consultationId);
-            } else {
-                pstmt.setNull(9, java.sql.Types.INTEGER);
-            }
-            
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int id = (int) generatedKeys.getLong(1);
-                        ordonnance.setId(id);
-                        System.out.println("✓ Ordonnance added successfully with ID: " + id);
-                    }
-                }
-            }
+            pstmt.executeUpdate();
+            System.out.println("Ordonnance added successfully!");
         }
     }
 
@@ -87,7 +74,7 @@ public class OrdonnanceServices implements CRUDordonnance {
     @Override
     public void ModifyOrdonnance(int id, Ordonnance ordonnance) throws SQLException {
         String query = "UPDATE ordonnance SET date_ordonnance = ?, medicament = ?, dosage = ?, forme = ?, " +
-                       "duree_traitement = ?, instructions = ?, frequency = ?, diagnosis_code = ? " +
+                       "duree_traitement = ?, instructions = ?, frequency = ?, diagnosis_code = ?, status = ?, updated_at = NOW() " +
                        "WHERE id = ?";
         
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -101,7 +88,8 @@ public class OrdonnanceServices implements CRUDordonnance {
             pstmt.setString(6, ordonnance.getInstructions());
             pstmt.setString(7, ordonnance.getFrequency());
             pstmt.setString(8, ordonnance.getDiagnosisCode());
-            pstmt.setInt(9, id);
+            pstmt.setString(9, ordonnance.getStatus());
+            pstmt.setInt(10, id);
             
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {

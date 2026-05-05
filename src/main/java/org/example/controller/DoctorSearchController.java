@@ -169,7 +169,7 @@ public class DoctorSearchController {
         try {
             java.sql.Connection conn = org.example.utils.DatabaseConnection.getInstance().getConnection();
             java.sql.PreparedStatement stmt = conn.prepareStatement(
-                "SELECT uuid, first_name, last_name, address, years_of_experience, specialite, consultation_price, rating FROM users WHERE role = ? ORDER BY rating DESC");
+                "SELECT uuid, first_name, last_name, address, years_of_experience, specialite, consultation_price, rating FROM users WHERE role = ?");
             stmt.setString(1, "ROLE_MEDECIN");
             java.sql.ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

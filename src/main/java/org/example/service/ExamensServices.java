@@ -11,8 +11,8 @@ public class ExamensServices implements CRUDexamens {
     @Override
     public void AddExamens(Examens examens) throws SQLException {
         String query = "INSERT INTO examens (type_examen, date_examen, resultat, status, notes, nom_examen, " +
-                       "date_realisation, result_file, doctor_analysis, doctor_treatment, consultation_id, medecin_id) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       "date_realisation, result_file, doctor_analysis, doctor_treatment, consultation_id, medecin_id, updated_at) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -28,26 +28,11 @@ public class ExamensServices implements CRUDexamens {
             pstmt.setString(8, examens.getResultFile() != null ? examens.getResultFile() : "");
             pstmt.setString(9, examens.getDoctorAnalysis() != null ? examens.getDoctorAnalysis() : "");
             pstmt.setString(10, examens.getDoctorTreatment() != null ? examens.getDoctorTreatment() : "");
-            
-            int consultationId = getConsultationId(examens);
-            if (consultationId > 0) {
-                pstmt.setInt(11, consultationId);
-            } else {
-                pstmt.setNull(11, java.sql.Types.INTEGER);
-            }
-            
+            pstmt.setInt(11, getConsultationId(examens));
             pstmt.setInt(12, 0); // medecin_id default
             
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int id = (int) generatedKeys.getLong(1);
-                        examens.setId(id);
-                        System.out.println("✓ Examens added successfully with ID: " + id);
-                    }
-                }
-            }
+            pstmt.executeUpdate();
+            System.out.println("Examens added successfully!");
         }
     }
     
@@ -105,7 +90,7 @@ public class ExamensServices implements CRUDexamens {
     public void ModifyExamens(int id, Examens examens) throws SQLException {
         String query = "UPDATE examens SET type_examen = ?, date_examen = ?, resultat = ?, status = ?, " +
                        "notes = ?, nom_examen = ?, date_realisation = ?, result_file = ?, " +
-                       "doctor_analysis = ?, doctor_treatment = ? WHERE id = ?";
+                       "doctor_analysis = ?, doctor_treatment = ?, updated_at = NOW() WHERE id = ?";
         
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {

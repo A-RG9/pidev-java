@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="org.example.controller.DoctorPendingController"
+             stylesheets="@../css/styles.css">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+            <padding><Insets top="16" right="24" bottom="16" left="24"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <HBox spacing="12" alignment="CENTER">
+                    <Text text="📋" style="-fx-font-size: 24px;"/>
+                    <Text text="Demandes de rendez-vous en attente" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                </HBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="16" alignment="CENTER">
+                    <Label fx:id="pendingCountLabel" style="-fx-background-color: #fef3c7; -fx-text-fill: #b45309; -fx-padding: 4 12; -fx-background-radius: 20;">
+                        <graphic><Text text="⏱️ " style="-fx-font-size: 12px;"/></graphic>
+                    </Label>
+                    <Button onAction="#goBackToSchedule" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-padding: 8 16; -fx-background-radius: 8;">
+                        <graphic><Text text="← "/></graphic>
+                        <Text text="Retour au planning"/>
+                    </Button>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center: List of pending appointments + empty state -->
+    <center>
+        <StackPane>
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
+                <VBox fx:id="appointmentsContainer" spacing="16" style="-fx-padding: 24;">
+                    <!-- Dynamic appointment cards will be added here -->
+                </VBox>
+            </ScrollPane>
+            <VBox fx:id="emptyState" alignment="CENTER" spacing="16" visible="false" style="-fx-background-color: #f9fafb;">
+                <Text text="📅" style="-fx-font-size: 64px;"/>
+                <Text text="Aucune demande en attente" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #374151;"/>
+                <Text text="Tous les rendez-vous sont traités." style="-fx-fill: #6b7280;"/>
+                <Button onAction="#goBackToSchedule" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 8;">
+                    <graphic><Text text="📆 "/></graphic>
+                    <Text text="Voir mon planning"/>
+                </Button>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Footer legend -->
+    <bottom>
+        <VBox style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
+            <padding><Insets top="12" right="24" bottom="12" left="24"/></padding>
+            <HBox spacing="24" alignment="CENTER_LEFT">
+                <HBox spacing="8" alignment="CENTER">
+                    <Text text="✅" style="-fx-font-size: 14px;"/>
+                    <Text text="Accepter = Ajoute au planning" style="-fx-fill: #4b5563; -fx-font-size: 13px;"/>
+                </HBox>
+                <HBox spacing="8" alignment="CENTER">
+                    <Text text="❌" style="-fx-font-size: 14px;"/>
+                    <Text text="Refuser = Demande rejetée" style="-fx-fill: #4b5563; -fx-font-size: 13px;"/>
+                </HBox>
+                <HBox spacing="8" alignment="CENTER">
+                    <Text text="⏱️" style="-fx-font-size: 14px;"/>
+                    <Text fx:id="legendCountText" text="0 demande(s) en attente" style="-fx-fill: #4b5563; -fx-font-size: 13px;"/>
+                </HBox>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

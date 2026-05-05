@@ -14,9 +14,9 @@ public class WellCareApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Load the booking FXML (with sidebar)
+        // Load the doctor search FXML (with sidebar) as the initial page
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/booking.fxml"));
+        loader.setLocation(getClass().getResource("/fxml/doctor-search.fxml"));
         
         // Load the root element
         Parent root = loader.load();
@@ -28,7 +28,7 @@ public class WellCareApp extends Application {
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         
         // Set up the stage
-        stage.setTitle("WellCare Connect - Prendre RDV");
+        stage.setTitle("WellCare Connect - Trouver un Médecin");
         stage.setScene(scene);
         stage.setMinWidth(1000);
         stage.setMinHeight(700);

@@ -104,6 +104,60 @@ public class BookingController {
         this.consultationService = new ConsulationServices();
     }
 
+    /**
+     * Sets the pre-selected date and time for the booking form.
+     * This method is called from the DoctorScheduleController when a user
+     * clicks on an appointment slot or day.
+     *
+     * @param date The LocalDate to pre-select
+     * @param time The LocalTime to pre-select
+     */
+    public void setPreSelectedDateTime(LocalDate date, LocalTime time) {
+        if (date == null) return;
+        
+        // Set the calendar to show the correct month
+        currentMonth = YearMonth.from(date);
+        generateCalendar();
+        
+        // Find and select the date button
+        for (Button btn : dateButtons) {
+            int day = Integer.parseInt(btn.getText());
+            LocalDate buttonDate = currentMonth.atDay(day);
+            if (buttonDate.equals(date) && !btn.isDisabled()) {
+                // Simulate date selection
+                selectedDate = date;
+                if (selectedDateButton != null) {
+                    selectedDateButton.setStyle("-fx-background-color: white; -fx-border-color: #d1d5db; -fx-background-radius: 8; -fx-font-size: 14;");
+                }
+                btn.setStyle("-fx-background-color: #2563eb; -fx-text-fill: white; -fx-border-radius: 8; -fx-font-size: 14;");
+                selectedDateButton = btn;
+                selectedDateLabel.setText(date.format(DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy")));
+                break;
+            }
+        }
+        
+        // Generate time slots for the selected date
+        generateTimeSlots();
+        
+        // Select the time if provided
+        if (time != null) {
+            String timeStr = time.format(DateTimeFormatter.ofPattern("HH:mm"));
+            selectedTime = timeStr;
+            selectedTimeLabel.setText(timeStr);
+            
+            // Find and style the corresponding time button
+            for (Button btn : timeSlotButtons) {
+                if (btn.getText().equals(timeStr) && !btn.isDisabled()) {
+                    for (Button b : timeSlotButtons) {
+                        b.setStyle("-fx-background-color: white; -fx-border-color: #d1d5db; -fx-background-radius: 8; -fx-font-size: 14;");
+                    }
+                    btn.setStyle("-fx-background-color: #2563eb; -fx-text-fill: white; -fx-border-radius: 8; -fx-font-size: 14;");
+                    break;
+                }
+            }
+        }
+    }
+
     @FXML
     private void initialize() {
         // Pre-fill patient info as per the photo
@@ -424,6 +478,12 @@ public class BookingController {
             consultation.setAppointmentMode(appointmentMode);
             consultation.setNotes("Mode: " + appointmentMode + ", Patient: " + firstNameField.getText() + " " + lastNameField.getText());
             
+            // Set patient contact information
+            consultation.setPatientEmail(emailField.getText());
+            consultation.setPatientFirstName(firstNameField.getText());
+            consultation.setPatientLastName(lastNameField.getText());
+            consultation.setPatientPhone(phoneField.getText());
+            
             // Check if this is a reschedule or new booking
             if (isRescheduleMode && rescheduleConsultationId > 0) {
                 // Update existing consultation
@@ -525,6 +585,20 @@ public class BookingController {
         if (consultation.getDuration() != null) {
             duration = consultation.getDuration();
             selectDuration(duration);
+        }
+        
+        // Pre-fill patient information from existing consultation
+        if (consultation.getPatientFirstName() != null) {
+            firstNameField.setText(consultation.getPatientFirstName());
+        }
+        if (consultation.getPatientLastName() != null) {
+            lastNameField.setText(consultation.getPatientLastName());
+        }
+        if (consultation.getPatientEmail() != null) {
+            emailField.setText(consultation.getPatientEmail());
+        }
+        if (consultation.getPatientPhone() != null) {
+            phoneField.setText(consultation.getPatientPhone());
         }
         
         // Start from step 1 to show the entire booking form
