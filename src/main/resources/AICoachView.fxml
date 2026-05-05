@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30; -fx-background-color: #F8FAFC;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.AICoachController">
+
+    <Label text="🤖 AI Coach" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+    <Label text="Décrivez votre objectif en langage naturel, l'IA crée votre programme"
+           style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+
+    <Separator/>
+
+    <Label fx:id="lblStatus" text="🟢 IA Coach prête" style="-fx-text-fill: #10B981; -fx-font-size: 12px;"/>
+
+    <!-- Suggestions -->
+    <VBox spacing="10">
+        <Label text="💡 Exemples de demandes:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+        <FlowPane fx:id="suggestionsContainer" hgap="10" vgap="10"/>
+    </VBox>
+
+    <!-- Zone de saisie -->
+    <Label text="📝 Décrivez votre objectif:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+    <TextArea fx:id="txtUserRequest" prefHeight="100"
+              promptText="Exemple: Je veux perdre 5 kilos en 2 mois, je suis débutant"
+              style="-fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-padding: 10;"/>
+
+    <!-- Boutons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="btnAnalyze" text="🔍 Analyser ma demande" onAction="#analyzeRequest"
+                style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25;"/>
+        <Button fx:id="btnGenerateProgram" text="✨ Générer le programme" onAction="#generateProgram" disable="true"
+                style="-fx-background-color: #8B5CF6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25;"/>
+    </HBox>
+
+    <ProgressBar fx:id="progressBar" visible="false" prefWidth="400"/>
+
+    <!-- Réponse -->
+    <Label text="📄 Réponse de l'IA:" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+    <TextArea fx:id="txtResponse" prefHeight="200" editable="false"
+              style="-fx-background-color: #F1F5F9; -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-padding: 10; -fx-font-family: 'Segoe UI';"/>
+
+</VBox>

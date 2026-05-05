@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:id="mainStackPane"
+           fx:controller="org.example.controllers.ExerciseLibraryController"
+           prefHeight="800.0"
+           prefWidth="1100.0"
+           style="-fx-background-color: #F8FAFC;">
+
+    <BorderPane>
+
+        <!-- TOP - Header -->
+        <top>
+            <VBox spacing="15" style="-fx-padding: 20 30 20 30; -fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <VBox>
+                        <Label text="💪 Exercise Library" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                        <Label text="Browse exercises with video demonstrations" style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <HBox spacing="15">
+                        <Button text="📥 Importer WorkoutX" onAction="#openWorkoutXImport"
+                                style="-fx-background-color: #8B5CF6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25; -fx-cursor: hand; -fx-font-size: 14px;"/>
+                        <Button text="+ Nouvel Exercice" onAction="#openAddForm"
+                                style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25; -fx-cursor: hand; -fx-font-size: 14px;"/>
+                    </HBox>
+                </HBox>
+
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <TextField fx:id="searchField" promptText="🔍 Search exercises..." HBox.hgrow="ALWAYS"
+                               style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 10 15; -fx-font-size: 13px;"/>
+                    <ComboBox fx:id="sortComboBox" prefWidth="180"
+                              style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8 12;"/>
+                    <Label fx:id="lblResultCount" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                </HBox>
+            </VBox>
+        </top>
+
+        <!-- LEFT - Sidebar filtres -->
+        <!-- LEFT - Sidebar filtres -->
+        <!-- LEFT - Sidebar filtres -->
+        <left>
+            <VBox spacing="15" prefWidth="260" style="-fx-padding: 25 20 25 20; -fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-width: 0 1 0 0;">
+
+                <Label text="📂 Categories" style="-fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-font-size: 14px;"/>
+                <VBox spacing="8">
+                    <Button text="All Categories" onAction="#filterAll" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <Button text="💪 Strength" onAction="#filterByStrength" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <Button text="🏃 Cardio" onAction="#filterByCardio" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <Button text="🧘 Yoga" onAction="#filterByYoga" maxWidth="Infinity"
+                            style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px;"/>
+                </VBox>
+
+                <Separator style="-fx-background-color: #E2E8F0;"/>
+
+                <!-- SECTION SOURCE - CORRIGÉE -->
+                <Label text="📌 Source" style="-fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-font-size: 14px;"/>
+                <VBox spacing="8" style="-fx-padding: 5 0 0 0;">
+                    <RadioButton fx:id="radioAllExercises" text="📚 Tous les exercices" selected="true">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="sourceToggleGroup" />
+                        </toggleGroup>
+                        <style>-fx-text-fill: #1E293B; -fx-font-size: 13px; -fx-cursor: hand;</style>
+                    </RadioButton>
+
+                    <HBox spacing="5" alignment="CENTER_LEFT">
+                        <RadioButton fx:id="radioLocalExercises" text="📝 Exercices locaux" toggleGroup="$sourceToggleGroup">
+                            <style>-fx-text-fill: #1E293B; -fx-font-size: 13px; -fx-cursor: hand;</style>
+                        </RadioButton>
+                        <Label fx:id="lblLocalCount" text="(0)" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                    </HBox>
+
+                    <HBox spacing="5" alignment="CENTER_LEFT">
+                        <RadioButton fx:id="radioApiExercises" text="🌐 WorkoutX API" toggleGroup="$sourceToggleGroup">
+                            <style>-fx-text-fill: #1E293B; -fx-font-size: 13px; -fx-cursor: hand;</style>
+                        </RadioButton>
+                        <Label fx:id="lblApiCount" text="(0)" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                    </HBox>
+                </VBox>
+
+                <Separator style="-fx-background-color: #E2E8F0;"/>
+
+                <Label text="⭐ Difficulty" style="-fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-font-size: 14px;"/>
+                <VBox spacing="8" style="-fx-padding: 5 0 0 10;">
+                    <CheckBox fx:id="checkBeginner" text="🌱 Beginner" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-cursor: hand;"/>
+                    <CheckBox fx:id="checkIntermediate" text="⚡ Intermediate" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-cursor: hand;"/>
+                    <CheckBox fx:id="checkAdvanced" text="🔥 Advanced" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-cursor: hand;"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <Button text="Reset Filters" onAction="#resetFilters"
+                        style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 16; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+            </VBox>
+        </left>
+
+        <!-- CENTER - Cartes des exercices -->
+        <center>
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                <FlowPane fx:id="cardsContainer" hgap="25" vgap="25" style="-fx-padding: 25;" />
+            </ScrollPane>
+        </center>
+    </BorderPane>
+
+    <!-- FORMULAIRE OVERLAY - Ajout/Modification d'exercice -->
+    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.7);">
+        <VBox spacing="15" maxWidth="500" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 20;">
+
+            <Label text="✏️ Détails de l'exercice" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="txtTitle" promptText="Nom de l'exercice *" />
+            <TextArea fx:id="txtDescription" promptText="Description..." prefHeight="80" wrapText="true"/>
+
+            <!-- Sélection du type de source vidéo -->
+            <VBox spacing="10">
+                <Label text="Source de la vidéo *" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                <HBox spacing="15">
+                    <RadioButton fx:id="radioYouTube" text="📺 URL YouTube" selected="true"/>
+                    <RadioButton fx:id="radioUpload" text="📁 Upload depuis l'ordinateur"/>
+                </HBox>
+            </VBox>
+
+            <!-- Champ URL YouTube -->
+            <TextField fx:id="txtVideoUrl" promptText="🔗 Lien YouTube (ex: https://youtube.com/watch?v=...)" />
+
+            <!-- Zone d'upload vidéo locale -->
+            <VBox fx:id="uploadVideoContainer" visible="false" managed="false" spacing="10">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="btnChooseVideo" text="📂 Choisir une vidéo" onAction="#chooseVideoFile"
+                            style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15; -fx-cursor: hand;"/>
+                    <Label fx:id="lblSelectedVideo" text="Aucun fichier sélectionné" style="-fx-text-fill: #64748B;"/>
+                </HBox>
+                <ProgressBar fx:id="uploadProgress" visible="false" prefWidth="400" />
+                <Label fx:id="lblUploadStatus" text="" style="-fx-text-fill: #10B981; -fx-font-size: 11px;"/>
+                <MediaView fx:id="videoPreview" visible="false" fitWidth="400" fitHeight="250" />
+            </VBox>
+
+            <!-- Catégorie et Difficulté -->
+            <HBox spacing="15">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Catégorie" style="-fx-text-fill: #475569; -fx-font-size: 12px;"/>
+                    <ComboBox fx:id="comboCategory" maxWidth="Infinity" />
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Difficulté" style="-fx-text-fill: #475569; -fx-font-size: 12px;"/>
+                    <ComboBox fx:id="comboDifficulty" maxWidth="Infinity" />
+                </VBox>
+            </HBox>
+
+            <!-- Durée -->
+            <TextField fx:id="txtDuration" promptText="⏱️ Durée (minutes)" />
+
+            <!-- Message d'erreur -->
+            <Label fx:id="lblError" textFill="#EF4444" visible="false" managed="false" style="-fx-font-size: 12px;"/>
+
+            <!-- Boutons d'action -->
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Button text="Annuler" onAction="#closeForm"
+                        style="-fx-background-color: transparent; -fx-border-color: #EF4444; -fx-text-fill: #EF4444; -fx-border-radius: 5; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                <Button text="Enregistrer" onAction="#handleSave"
+                        style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20; -fx-cursor: hand;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</StackPane>

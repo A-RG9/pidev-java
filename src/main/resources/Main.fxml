@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainRoot" styleClass="main-container" prefHeight="650.0" prefWidth="900.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controllers.MainController">
+
+    <left>
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="false"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;"
+                    prefWidth="240.0"
+                    maxWidth="240.0">
+
+            <VBox spacing="12" style="-fx-padding: 15 12 15 12; -fx-background-color: #FFFFFF; -fx-border-color: #E2E8F0; -fx-border-width: 0 1 0 0;">
+
+                <Label text="♡ WellCare" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-padding: 0 0 5 0;"/>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="TT" style="-fx-min-width: 30; -fx-min-height: 30; -fx-alignment: center; -fx-background-color: #8B5CF6; -fx-background-radius: 15; -fx-text-fill: white; -fx-font-size: 12px;"/>
+                    <VBox alignment="CENTER_LEFT">
+                        <Label text="Test User" style="-fx-font-size: 12px; -fx-text-fill: #1E293B; -fx-font-weight: bold;"/>
+                        <Label text="test@wellora.com" style="-fx-font-size: 9px; -fx-text-fill: #64748B;"/>
+                    </VBox>
+                </HBox>
+
+                <Separator style="-fx-background-color: #E2E8F0; -fx-pref-height: 1;"/>
+
+                <Label text="FITNESS" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-padding: 5 0 2 5; -fx-font-weight: bold;"/>
+
+                <Button text="Dashboard" onAction="#loadFitnessDashboard" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="Goals" onAction="#loadGoals" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="Planificateur" onAction="#loadworkoutplan" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="🤖 AI Coach" onAction="#loadAICoach" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="Mon Coach" onAction="#loadClients" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="🌍 Défis du Monde" onAction="#loadCountryChallenge" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="📋 Mes Plans" onAction="#loadDailyPlanView" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                <Label text="COACH" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-padding: 10 0 2 5; -fx-font-weight: bold;"/>
+
+                <Button text="All plans" onAction="#loadDailyPlanEditor" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="Exercise Library" onAction="#loadExerciseLibrary" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="Mes clients" onAction="#loadcoach" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <Button fx:id="btnTheme" text="🌓 Thème" onAction="#toggleTheme" style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 8; -fx-padding: 8 12; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="👤 Profil" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                <Button text="🚪 Déconnexion" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                <Region prefHeight="20"/>
+
+            </VBox>
+        </ScrollPane>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;">
+
+            <StackPane fx:id="contentArea"
+                       style="-fx-background-color: #F8FAFC; -fx-padding: 15;"/>
+
+        </ScrollPane>
+    </center>
+
+</BorderPane>
