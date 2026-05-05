@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.ProfessionalRegistrationController"
+      fitToWidth="true" fitToHeight="false" styleClass="registration-scroll-pane">
+    <VBox spacing="16.0" styleClass="registration-container"
+      prefWidth="900.0">
+
+    <!-- Ultra-Compact Header -->
+    <HBox spacing="12.0" alignment="CENTER_LEFT" VBox.vgrow="NEVER" styleClass="ultra-compact-header">
+        <Button text="←" styleClass="back-button-small" onAction="#onBackToTypeChoice" />
+        <VBox spacing="2.0">
+            <Label fx:id="titleLabel" text="Register as a Physician" styleClass="registration-title">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Label>
+            <Label text="Join our network of healthcare professionals" styleClass="registration-subtitle">
+                <font>
+                    <Font size="12.0" />
+                </font>
+            </Label>
+        </VBox>
+    </HBox>
+
+    <!-- Ultra-Compact Step Indicator -->
+    <HBox fx:id="stepIndicator" spacing="16.0" alignment="CENTER" VBox.vgrow="NEVER" styleClass="ultra-compact-stepper">
+        <VBox fx:id="step1Indicator" styleClass="step-indicator, step-active" spacing="4.0" alignment="CENTER">
+            <Label text="1" styleClass="step-number" />
+            <Label text="Personal" styleClass="step-label" />
+        </VBox>
+        <VBox fx:id="step2Indicator" styleClass="step-indicator" spacing="4.0" alignment="CENTER">
+            <Label text="2" styleClass="step-number" />
+            <Label fx:id="step2Label" text="Credentials" styleClass="step-label" />
+        </VBox>
+        <VBox fx:id="step3Indicator" styleClass="step-indicator" spacing="4.0" alignment="CENTER">
+            <Label text="3" styleClass="step-number" />
+            <Label text="Security" styleClass="step-label" />
+        </VBox>
+    </HBox>
+
+    <!-- Content Area -->
+    <VBox fx:id="contentArea" spacing="8.0" VBox.vgrow="ALWAYS" styleClass="content-area">
+
+        <!-- Step 1: Personal Information -->
+        <VBox fx:id="step1Content" styleClass="step-content" spacing="25.0">
+            <Label text="Personal Information" styleClass="step-title">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+
+            <GridPane hgap="20.0" vgap="15.0" styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="120.0" prefWidth="150.0" maxWidth="200.0" halignment="RIGHT" />
+                    <ColumnConstraints minWidth="200.0" prefWidth="300.0" hgrow="ALWAYS" />
+                </columnConstraints>
+
+                <Label text="First Name *" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="form-label" />
+                <TextField fx:id="firstNameField" promptText="Enter your first name" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="form-field" />
+
+                <Label text="Last Name *" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="form-label" />
+                <TextField fx:id="lastNameField" promptText="Enter your last name" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="form-field" />
+
+                <Label text="Professional Email *" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="form-label" />
+                <TextField fx:id="emailField" promptText="your.email@professional.com" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="form-field" />
+
+                <Label text="Phone" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="form-label" />
+                <TextField fx:id="phoneField" promptText="+216 XX XXX XXX" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="form-field" />
+
+                <Label text="Date of Birth" GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="form-label" />
+                <DatePicker fx:id="birthDatePicker" promptText="Select date" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="form-field" />
+            </GridPane>
+
+            <Label fx:id="step1ErrorLabel" text="" styleClass="error-label" wrapText="true" />
+
+            <HBox spacing="20.0" alignment="CENTER_RIGHT">
+                <Button text="Next" styleClass="primary-button" onAction="#onNextToStep2" />
+            </HBox>
+        </VBox>
+
+        <!-- Step 2: Professional Credentials -->
+        <VBox fx:id="step2Content" styleClass="step-content" spacing="25.0" visible="false" managed="false">
+            <VBox spacing="8.0">
+                <Label fx:id="step2Title" text="Professional Credentials" styleClass="step-title">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label text="Please select your specialty and upload relevant certifications for verification." styleClass="step-description">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
+            </VBox>
+
+            <GridPane hgap="20.0" vgap="15.0" styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="120.0" prefWidth="150.0" maxWidth="200.0" halignment="RIGHT" />
+                    <ColumnConstraints minWidth="200.0" prefWidth="300.0" hgrow="ALWAYS" />
+                </columnConstraints>
+
+                <!-- Dynamic fields based on professional type -->
+                <Label fx:id="specialtyLabel" text="Medical Specialty *" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="form-label" />
+                <ComboBox fx:id="specialtyComboBox" promptText="Select specialty" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="form-field" />
+
+                <Label text="License Number *" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="form-label" />
+                <TextField fx:id="licenseField" promptText="Enter license number" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="form-field" />
+
+                <Label text="Years of Experience" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="form-label" />
+                <TextField fx:id="experienceField" promptText="e.g. 5" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="form-field" />
+
+                <Label text="Diploma / Certification *" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.valignment="TOP" styleClass="form-label" />
+                <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                    <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <TextField fx:id="diplomaFileNameField" promptText="No file selected" editable="false" HBox.hgrow="ALWAYS" styleClass="form-field" prefWidth="200.0" />
+                        <Button text="Choose File" styleClass="secondary-button" onAction="#onChooseDiplomaFile" prefWidth="100.0" />
+                    </HBox>
+                    <Label text="Your diploma will be securely stored and used for verification purposes only." styleClass="file-upload-info" wrapText="true" maxWidth="300.0">
+                        <font>
+                            <Font size="11.0" />
+                        </font>
+                    </Label>
+                </VBox>
+            </GridPane>
+
+            <Label fx:id="step2ErrorLabel" text="" styleClass="error-label" wrapText="true" />
+
+            <HBox spacing="20.0" alignment="CENTER">
+                <Button text="Back" styleClass="secondary-button" onAction="#onBackToStep1" />
+                <Button text="Next" styleClass="primary-button" onAction="#onNextToStep3" />
+            </HBox>
+        </VBox>
+
+        <!-- Step 3: Security -->
+        <VBox fx:id="step3Content" styleClass="step-content" spacing="25.0" visible="false" managed="false">
+            <Label text="Account Security" styleClass="step-title">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+
+            <VBox spacing="15.0" styleClass="security-section">
+                <Label text="Create a strong password for your account" styleClass="security-info">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+
+                <Label text="Password *" styleClass="form-label" />
+                <PasswordField fx:id="passwordField" promptText="Enter password" styleClass="form-field" />
+
+                <Label text="Confirm Password *" styleClass="form-label" />
+                <PasswordField fx:id="confirmPasswordField" promptText="Confirm password" styleClass="form-field" />
+
+                <!-- Password Strength Indicator -->
+                <VBox fx:id="passwordStrengthContainer" spacing="5.0">
+                    <Label text="Password Strength:" styleClass="form-label" />
+                    <HBox fx:id="strengthIndicator" spacing="5.0" alignment="CENTER_LEFT">
+                        <Region fx:id="strengthBar1" styleClass="strength-bar, strength-weak" prefWidth="60.0" prefHeight="4.0" />
+                        <Region fx:id="strengthBar2" styleClass="strength-bar" prefWidth="60.0" prefHeight="4.0" />
+                        <Region fx:id="strengthBar3" styleClass="strength-bar" prefWidth="60.0" prefHeight="4.0" />
+                        <Region fx:id="strengthBar4" styleClass="strength-bar" prefWidth="60.0" prefHeight="4.0" />
+                        <Label fx:id="strengthLabel" text="Weak" styleClass="strength-label, strength-weak" />
+                    </HBox>
+                    <Label fx:id="strengthRequirements" text="Requirements: 8+ characters, uppercase, lowercase, number, special character" styleClass="strength-requirements" wrapText="true">
+                        <font>
+                            <Font size="11.0" />
+                        </font>
+                    </Label>
+                </VBox>
+            </VBox>
+
+            <!-- Terms and Conditions -->
+            <VBox spacing="15.0" styleClass="terms-section">
+                <CheckBox fx:id="termsCheckBox" text="I confirm that I am a licensed healthcare professional and agree to the Terms of Service and Privacy Policy. I understand that my credentials will be verified before account activation." wrapText="true" styleClass="terms-checkbox" />
+            </VBox>
+
+            <!-- Captcha Section -->
+            <VBox spacing="8.0" styleClass="security-section">
+                <Label text="Security Verification" styleClass="form-label"/>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <StackPane style="-fx-background-color: #f8f9fa; -fx-padding: 2; -fx-border-color: #dee2e6; -fx-border-radius: 4;">
+                        <ImageView fx:id="captchaImageView" fitWidth="200.0" fitHeight="50.0" preserveRatio="true"/>
+                    </StackPane>
+                    <Button fx:id="refreshCaptchaButton" text="🔄" styleClass="secondary-button" prefHeight="44.0"/>
+                </HBox>
+                <TextField fx:id="captchaField" promptText="Enter the code" styleClass="form-field" />
+                <Label fx:id="captchaErrorLabel" styleClass="error-label" visible="false" managed="false"/>
+            </VBox>
+
+            <Label fx:id="step3ErrorLabel" text="" styleClass="error-label" wrapText="true" />
+
+            <HBox spacing="20.0" alignment="CENTER">
+                <Button text="Back" styleClass="secondary-button" onAction="#onBackToStep2" />
+                <Button fx:id="completeButton" text="Complete Registration" styleClass="primary-button" onAction="#onCompleteRegistration" />
+            </HBox>
+        </VBox>
+
+    </VBox>
+
+        <padding>
+            <Insets top="16.0" right="24.0" bottom="24.0" left="24.0" />
+        </padding>
+    </VBox>
+</ScrollPane>
