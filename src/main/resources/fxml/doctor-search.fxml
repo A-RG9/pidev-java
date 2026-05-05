@@ -14,7 +14,7 @@
 <?import javafx.scene.text.*?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="org.example.controllers.DoctorSearchController"
+      fx:controller="com.wellora.controller.DoctorSearchController"
       fx:id="rootPane"
       style="-fx-background-color: #f9fafb;">
 
