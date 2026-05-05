@@ -6,7 +6,7 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.CountryChallengeController"
+            fx:controller="com.wellcare.controllers.CountryChallengeController"
             fitToWidth="true"
             style="-fx-background-color: #F8FAFC; -fx-background: transparent;">
 

@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.UserDashboardController"
+      fx:controller="com.wellcare.controllers.UserDashboardController"
       style="-fx-background-color: #F8FAFC;"
       VBox.vgrow="ALWAYS">
 

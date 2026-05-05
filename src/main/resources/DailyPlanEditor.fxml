@@ -4,7 +4,7 @@
 <?import javafx.geometry.Insets?>
 
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-           fx:controller="org.example.controllers.DailyPlanController" style="-fx-background-color: #F8FAFC;">
+           fx:controller="com.wellcare.controllers.DailyPlanController" style="-fx-background-color: #F8FAFC;">
 
     <BorderPane>
         <top>

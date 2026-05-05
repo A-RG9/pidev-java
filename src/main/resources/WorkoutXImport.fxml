@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30; -fx-background-color: #F8FAFC;" prefWidth="450" prefHeight="420" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.WorkoutXImportController">
+<VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30; -fx-background-color: #F8FAFC;" prefWidth="450" prefHeight="420" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.wellcare.controllers.WorkoutXImportController">
 
     <Label text="📥 Import WorkoutX" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
     <Label text="Récupération paginée (10 par page)" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>

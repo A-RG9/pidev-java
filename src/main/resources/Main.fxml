@@ -5,7 +5,7 @@
 <BorderPane fx:id="mainRoot" styleClass="main-container" prefHeight="650.0" prefWidth="900.0"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.controllers.MainController">
+            fx:controller="com.wellcare.controllers.MainController">
 
     <left>
         <ScrollPane fitToWidth="true"

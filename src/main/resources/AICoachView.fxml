@@ -5,7 +5,7 @@
 <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30; -fx-background-color: #F8FAFC;"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.AICoachController">
+      fx:controller="com.wellcare.controllers.AICoachController">
 
     <Label text="🤖 AI Coach" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
     <Label text="Décrivez votre objectif en langage naturel, l'IA crée votre programme"

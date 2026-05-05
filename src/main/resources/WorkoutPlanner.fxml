@@ -6,7 +6,7 @@
 <HBox spacing="0" prefHeight="750.0" prefWidth="1200.0" style="-fx-background-color: #F8FAFC;"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.WorkoutPlannerController">
+      fx:controller="com.wellcare.controllers.WorkoutPlannerController">
 
     <VBox spacing="20" HBox.hgrow="ALWAYS" style="-fx-padding: 30;">
         <HBox alignment="CENTER_LEFT" spacing="20">

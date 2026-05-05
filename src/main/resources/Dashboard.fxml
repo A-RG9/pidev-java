@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.GoalController" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #F8FAFC;">
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.wellcare.controllers.GoalController" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #F8FAFC;">
 
     <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: transparent;">
 
