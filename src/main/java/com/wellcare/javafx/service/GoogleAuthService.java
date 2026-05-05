@@ -22,17 +22,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Service to handle Google OAuth 2.0 flow for Desktop Applications.
- * Credentials are loaded from environment variables for security.
  */
 public class GoogleAuthService {
     
-    // Load from environment variables: set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in your system
-    private static final String CLIENT_ID = System.getenv("GOOGLE_CLIENT_ID") != null
-        ? System.getenv("GOOGLE_CLIENT_ID")
-        : "YOUR_GOOGLE_CLIENT_ID"; // Fallback placeholder - do NOT commit real credentials
-    private static final String CLIENT_SECRET = System.getenv("GOOGLE_CLIENT_SECRET") != null
-        ? System.getenv("GOOGLE_CLIENT_SECRET")
-        : "YOUR_GOOGLE_CLIENT_SECRET"; // Fallback placeholder - do NOT commit real credentials
+    // Google credentials - loaded from environment variables (set in your OS or .env file)
+    private static final String CLIENT_ID = System.getenv().getOrDefault("GOOGLE_CLIENT_ID", "YOUR_GOOGLE_CLIENT_ID_HERE");
+    private static final String CLIENT_SECRET = System.getenv().getOrDefault("GOOGLE_CLIENT_SECRET", "YOUR_GOOGLE_CLIENT_SECRET_HERE");
     
     private static final String REDIRECT_URI = "http://127.0.0.1:8888";
     private static final String AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
