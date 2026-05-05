@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controllers.DoctorAnalytics"
+      stylesheets="/css/Dashboard.css"
+      style="-fx-background-color: #f9fafb;">
+
+    <!-- LEFT SIDEBAR - Replace with your actual sidebar.fxml -->
+    <fx:include source="sidebar.fxml" />
+
+    <!-- MAIN CONTENT -->
+    <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
+        <VBox spacing="0" style="-fx-padding: 0;">
+
+            <!-- Header -->
+            <VBox style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, #00000010, 3, 0, 0, 1);">
+                <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <VBox spacing="4">
+                        <Text text="Tableau de Bord Médecin" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-fill: #1f2937;"/>
+                        <Text text="Surveillance des patients, alertes et génération de rapports médicaux" style="-fx-font-size: 14px; -fx-fill: #6b7280;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <HBox spacing="12" alignment="CENTER">
+                        <Label fx:id="aiStatusLabel" text="IA Mode Simulation" styleClass="ai-status-badge"/>
+                        <TextField fx:id="patientSearchField" promptText="Rechercher un patient..." styleClass="search-field"/>
+                        <ComboBox fx:id="alertFilterCombo" styleClass="filter-combo"/>
+                    </HBox>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="24" style="-fx-padding: 32 48 48 48;">
+
+                <!-- Statistics Cards (1x4) -->
+                <GridPane hgap="16" vgap="16">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                    </columnConstraints>
+
+                    <VBox styleClass="stat-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="4">
+                                <Label text="Patients actifs" styleClass="stat-label"/>
+                                <Label fx:id="totalPatientsValue" text="1" styleClass="stat-value"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <StackPane styleClass="stat-icon-wellcare">
+                                <Text text="👥" style="-fx-font-size: 24px;"/>
+                            </StackPane>
+                        </HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT">
+                            <Text text="+3 ce mois" style="-fx-font-size: 12px; -fx-fill:#059669;"/>
+                            <Text text="ce mois" style="-fx-font-size: 12px; -fx-fill:#6b7280;"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="stat-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="4">
+                                <Label text="Alertes critiques" styleClass="stat-label"/>
+                                <Label fx:id="criticalAlertsValue" text="0" styleClass="stat-value-rose"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <StackPane styleClass="stat-icon-rose">
+                                <Text text="⚠️" style="-fx-font-size: 24px;"/>
+                            </StackPane>
+                        </HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT">
+                            <Text text="+2 cette semaine" style="-fx-font-size: 12px; -fx-fill:#e11d48;"/>
+                            <Text text="cette semaine" style="-fx-font-size: 12px; -fx-fill:#6b7280;"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="stat-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="4">
+                                <Label text="Consultations aujourd'hui" styleClass="stat-label"/>
+                                <Label fx:id="todayAppointmentsValue" text="0" styleClass="stat-value"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <StackPane styleClass="stat-icon-amber">
+                                <Text text="📅" style="-fx-font-size: 24px;"/>
+                            </StackPane>
+                        </HBox>
+                        <Text text="10:00 - CHAHD" style="-fx-font-size: 12px; -fx-fill:#6b7280;"/>
+                    </VBox>
+
+                    <VBox styleClass="stat-card" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="4">
+                                <Label text="Rapports générés" styleClass="stat-label"/>
+                                <Label fx:id="reportsGeneratedValue" text="0" styleClass="stat-value"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <StackPane styleClass="stat-icon-blue">
+                                <Text text="📄" style="-fx-font-size: 24px;"/>
+                            </StackPane>
+                        </HBox>
+                        <Text text="Ce mois" style="-fx-font-size: 12px; -fx-fill:#059669;"/>
+                    </VBox>
+                </GridPane>
+
+                <!-- AI Predictions Section -->
+                <VBox spacing="12" styleClass="ai-predictions-panel">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <StackPane styleClass="ai-icon">
+                            <Text text="🧠" style="-fx-font-size: 24px;"/>
+                        </StackPane>
+                        <VBox spacing="2">
+                            <Text text="Prédictions IA" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                            <Text text="Activité prévue pour les 7 prochains jours" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button onAction="#refreshAIPredictions" styleClass="refresh-button">
+                            <Text text="⟳ Actualiser" style="-fx-font-size: 13px;"/>
+                        </Button>
+                    </HBox>
+                    <HBox fx:id="predictionsContainer" spacing="8" alignment="CENTER"/>
+                    <HBox alignment="CENTER_RIGHT" spacing="8">
+                        <Text text="Confiance: 85%" style="-fx-font-size: 12px; -fx-fill: #059669;"/>
+                        <Label fx:id="lastPredictionUpdateLabel" text="Dernière mise à jour: --" style="-fx-font-size: 11px; -fx-fill: #9ca3af;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Two columns layout -->
+                <HBox spacing="24">
+                    <!-- Left column: Patient Table + Treatment Chart -->
+                    <VBox spacing="20" HBox.hgrow="ALWAYS" styleClass="left-column">
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="👨‍⚕️" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Surveillance des Patients" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text text="Vue d'ensemble et alertes" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button onAction="#refreshPatientData" styleClass="outline-button">
+                                    <Text text="⟳" style="-fx-font-size: 14px;"/>
+                                </Button>
+                            </HBox>
+                            <TableView fx:id="patientsTable" styleClass="patient-table">
+                                <columns>
+                                    <TableColumn text="PATIENT" fx:id="patientNameColumn" prefWidth="200"/>
+                                    <TableColumn text="SCORE SANTÉ" fx:id="healthScoreColumn" prefWidth="120"/>
+                                    <TableColumn text="TENDANCE" fx:id="trendColumn" prefWidth="100"/>
+                                    <TableColumn text="ALERTES" fx:id="alertsColumn" prefWidth="80"/>
+                                    <TableColumn text="DERNIÈRE ENTRÉE" fx:id="lastEntryColumn" prefWidth="130"/>
+                                    <TableColumn text="ACTIONS" fx:id="actionsColumn" prefWidth="100"/>
+                                </columns>
+                                <placeholder>
+                                    <Label text="Aucun patient trouvé" style="-fx-text-fill: #9ca3af; -fx-padding: 20;"/>
+                                </placeholder>
+                            </TableView>
+                         </VBox>
+
+                        <!-- Treatment Effectiveness Chart -->
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="📈" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Efficacité des traitements" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <ComboBox fx:id="treatmentMetricCombo" styleClass="metric-combo" prefWidth="180"/>
+                            </HBox>
+                            <LineChart fx:id="treatmentEffectivenessChart" title="Taux de réussite des traitements" styleClass="treatment-chart">
+                                <xAxis>
+                                    <CategoryAxis label="Mois"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Taux (%) " side="LEFT"/>
+                                </yAxis>
+                            </LineChart>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Right column: Profit + Suggestions + Recommendations + Alerts + Quick Report -->
+                    <VBox spacing="20" minWidth="320" prefWidth="340">
+                        <!-- Profit Predictions -->
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="💰" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Prévisions de revenus" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Text text="Basé sur les consultations" style="-fx-font-size: 11px; -fx-fill: #6b7280;"/>
+                            </HBox>
+                            <VBox fx:id="profitPredictionsContainer" spacing="8"/>
+                        </VBox>
+
+                        <!-- Planning Suggestions -->
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="📅" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Suggestions d'amélioration du planning" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                            </HBox>
+                            <ListView fx:id="planningSuggestionsList" styleClass="suggestions-list"/>
+                        </VBox>
+
+                        <!-- AI Recommendations -->
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="💡" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Recommandations IA" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                            </HBox>
+                            <ListView fx:id="recommendationsList" styleClass="recommendations-list"/>
+                        </VBox>
+
+                        <!-- Recent Alerts -->
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="🔔" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Alertes Récentes" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="recentAlertsCount" text="0" styleClass="alert-badge"/>
+                            </HBox>
+                            <ListView fx:id="recentAlertsList" styleClass="alerts-list"/>
+                        </VBox>
+
+                        <!-- Quick Report Generator -->
+                        <VBox spacing="12" styleClass="analytics-panel">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <StackPane styleClass="panel-icon">
+                                    <Text text="📑" style="-fx-font-size: 18px;"/>
+                                </StackPane>
+                                <Text text="Rapport Rapide" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                            </HBox>
+                            <VBox spacing="12">
+                                <ComboBox fx:id="reportPatientCombo" promptText="Sélectionner un patient..." styleClass="full-combo"/>
+                                <ComboBox fx:id="reportTypeCombo" styleClass="full-combo"/>
+                                <ComboBox fx:id="reportPeriodCombo" styleClass="full-combo"/>
+                                <Button onAction="#generateQuickReport" styleClass="primary-button">
+                                    <Text text="📄 Générer le rapport" style="-fx-font-size: 14px;"/>
+                                </Button>
+                            </VBox>
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+
+    <!-- Modals -->
+    <StackPane fx:id="patientModal" styleClass="modal-overlay" visible="false">
+        <VBox styleClass="modal-content" maxWidth="800">
+            <HBox styleClass="modal-header" alignment="CENTER_LEFT">
+                <Text text="Détails du Patient" styleClass="modal-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#closePatientModal" styleClass="modal-close">✕</Button>
+            </HBox>
+            <VBox fx:id="patientModalContent" spacing="16" styleClass="modal-body"/>
+        </VBox>
+    </StackPane>
+</HBox>

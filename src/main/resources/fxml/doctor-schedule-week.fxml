@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"             fx:controller="org.example.controllers.DoctorScheduleController"
+              stylesheets="@../css/styles.css">
+  <!-- ========== LEFT SIDEBAR ========== -->
+  <left>
+    <fx:include source="sidebar.fxml" />
+  </left>
+  <!-- ========== HEADER ========== -->
+  <top>
+        <VBox styleClass="header" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+            <padding><Insets top="16" right="24" bottom="16" left="24"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="24">
+                <!-- Logo + Title -->
+                <HBox spacing="12" alignment="CENTER">
+                    <StackPane styleClass="logo-icon">
+                        <Rectangle width="40" height="40" arcWidth="12" arcHeight="12"
+                                   style="-fx-fill: linear-gradient(to bottom right, #00A790, #66D9C8); -fx-effect: dropshadow(gaussian, #00A79040, 8, 0, 0, 2);"/>
+                        <Text text="📅" style="-fx-font-size: 20px;"/>
+                    </StackPane>
+                    <Text text="Agenda" styleClass="title" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
+                </HBox>
+
+                <!-- Navigation -->
+                <HBox spacing="8" alignment="CENTER">
+                    <Button onAction="#previousWeek" styleClass="nav-button">
+                        <graphic><Text text="‹" style="-fx-font-size: 18px;"/></graphic>
+                    </Button>
+                    <Label fx:id="weekRangeLabel" styleClass="week-range"
+                           style="-fx-font-size: 14px; -fx-font-weight: 500; -fx-text-fill: #1f2937; -fx-padding: 0 8;"/>
+                    <Button onAction="#nextWeek" styleClass="nav-button">
+                        <graphic><Text text="›" style="-fx-font-size: 18px;"/></graphic>
+                    </Button>
+                    <Button onAction="#goToCurrentWeek" styleClass="today-button"
+                            style="-fx-background-color: transparent; -fx-border-color: #00A790; -fx-border-radius: 8; -fx-text-fill: #00A790; -fx-padding: 6 16;">
+                        <Text text="Aujourd'hui"/>
+                    </Button>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Pending Requests Button -->
+                <Button onAction="#openPendingRequests" styleClass="pending-button"
+                        style="-fx-background-color: #fffbeb; -fx-border-color: #fde68a; -fx-border-radius: 8; -fx-text-fill: #b45309;">
+                    <graphic>
+                        <HBox spacing="8" alignment="CENTER">
+                            <Text text="⏱️"/>
+                            <Text text="Demandes en attente"/>
+                            <StackPane fx:id="pendingBadgeContainer" styleClass="badge-container" visible="false">
+                                <Label fx:id="pendingBadge" styleClass="badge-label"
+                                       style="-fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+                            </StackPane>
+                        </HBox>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ========== MAIN CONTENT ========== -->
+     <center>
+         <HBox styleClass="main-content" style="-fx-background-color: #f9fafb;" HBox.hgrow="ALWAYS">
+
+            <!-- TIME COLUMN -->
+            <VBox styleClass="time-column" minWidth="64" prefWidth="64"
+                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 1 0 0;">
+                <Region prefHeight="72" style="-fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;"/>
+                <VBox fx:id="timeLabelsContainer" spacing="0"/>
+            </VBox>
+
+            <!-- DAYS COLUMNS (ScrollPane) -->
+            <ScrollPane fx:id="daysScrollPane" fitToHeight="true" HBox.hgrow="ALWAYS"
+                        style="-fx-background-color: transparent; -fx-border-width: 0;">
+                <HBox fx:id="daysContainer" spacing="0" styleClass="days-container"/>
+            </ScrollPane>
+
+            <!-- RIGHT SIDEBAR -->
+            <VBox styleClass="sidebar" minWidth="280" prefWidth="280" spacing="24"
+                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 0 1;">
+                <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
+
+                <!-- Legend -->
+                <VBox spacing="12">
+                    <Text text="Légende" styleClass="sidebar-title" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-fill: #6b7280;"/>
+                    <VBox spacing="8">
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Rectangle width="16" height="16" arcWidth="4" arcHeight="4" style="-fx-fill: #00A790;"/>
+                            <Text text="Consultations" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                        </HBox>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Rectangle width="16" height="16" arcWidth="4" arcHeight="4" style="-fx-fill: #3B82F6;"/>
+                            <Text text="Suivis" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                        </HBox>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Rectangle width="16" height="16" arcWidth="4" arcHeight="4" style="-fx-fill: #A855F7;"/>
+                            <Text text="Nouveaux patients" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                        </HBox>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Rectangle width="16" height="16" arcWidth="4" arcHeight="4" style="-fx-fill: #6B7280;"/>
+                            <Text text="Procédures" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                        </HBox>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Rectangle width="16" height="16" arcWidth="4" arcHeight="4" style="-fx-fill: #D1FAE5;"/>
+                            <Text text="Temps libre" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Today Section -->
+                <VBox spacing="12" styleClass="today-section" style="-fx-background-color: #f9fafb; -fx-background-radius: 12; -fx-padding: 12;">
+                    <Label fx:id="todayLabel" styleClass="sidebar-title" style="-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #1f2937;"/>
+                    <VBox fx:id="todayAppointmentsList" spacing="8"/>
+                </VBox>
+
+                <!-- Upcoming -->
+                <VBox spacing="12">
+                    <Text text="À venir" styleClass="sidebar-title" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-fill: #6b7280;"/>
+                    <VBox fx:id="upcomingList" spacing="8"/>
+                </VBox>
+
+                <!-- Quick actions -->
+                <VBox spacing="12">
+                    <Text text="Actions" styleClass="sidebar-title" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-fill: #6b7280;"/>
+                    <Button onAction="#openLeaveRequest" styleClass="action-button"
+                            style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-alignment: center-left; -fx-padding: 8 12;">
+                        <graphic><Text text="📅+ "/></graphic>
+                        <Text text="Demander un congé"/>
+                    </Button>
+                </VBox>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- ========== MODAL : Appointment Details ========== -->
+    <StackPane fx:id="appointmentModal" styleClass="modal-overlay" visible="false">
+        <VBox styleClass="modal-content" maxWidth="500" style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 5);">
+            <HBox styleClass="modal-header" alignment="CENTER_LEFT" style="-fx-padding: 16 20; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+                <Text text="Détails du rendez-vous" styleClass="modal-title" style="-fx-font-size: 18px; -fx-font-weight: 600; -fx-fill: #1f2937;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#closeAppointmentModal" styleClass="modal-close"
+                        style="-fx-background-color: transparent; -fx-text-fill: #9ca3af; -fx-font-size: 16px;">
+                    <graphic><Text text="✕"/></graphic>
+                </Button>
+            </HBox>
+            <VBox fx:id="appointmentModalContent" spacing="16" styleClass="modal-body" style="-fx-padding: 20;"/>
+            <HBox styleClass="modal-footer" alignment="CENTER_RIGHT" spacing="12"
+                  style="-fx-padding: 12 20; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
+                <Button onAction="#closeAppointmentModal" styleClass="secondary-button"
+                        style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-padding: 6 16;">
+                    <Text text="Fermer"/>
+                </Button>
+            </HBox>
+        </VBox>
+    </StackPane>
+
+    <!-- ========== MODAL : All Appointments of a Day ========== -->
+    <StackPane fx:id="dayAppointmentsModal" styleClass="modal-overlay" visible="false">
+        <VBox styleClass="modal-content" maxWidth="600" style="-fx-background-color: white; -fx-background-radius: 16;">
+            <HBox styleClass="modal-header" alignment="CENTER_LEFT" style="-fx-padding: 16 20;">
+                <Text text="Rendez-vous du " styleClass="modal-title"/>
+                <Label fx:id="selectedDateDisplay" styleClass="modal-title" style="-fx-text-fill: #00A790;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#closeDayAppointmentsModal" styleClass="modal-close">
+                    <graphic><Text text="✕"/></graphic>
+                </Button>
+            </HBox>
+            <VBox fx:id="dayAppointmentsContent" spacing="12" styleClass="modal-body" style="-fx-padding: 20; max-height: 400px;"/>
+        </VBox>
+    </StackPane>
+
+</BorderPane>

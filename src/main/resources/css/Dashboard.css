@@ -1,0 +1,192 @@
+/* ========== Doctor Dashboard – JavaFX CSS ========== */
+
+.ai-status-badge {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #b45309;
+    -fx-padding: 4 12;
+    -fx-background-radius: 20;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.search-field, .filter-combo, .small-combo, .full-combo {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+}
+.search-field:focused, .filter-combo:focused {
+    -fx-border-color: #00A790;
+}
+
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+.stat-label {
+    -fx-font-size: 14px;
+    -fx-fill: #6b7280;
+    -fx-text-fill: #6b7280;
+}
+.stat-value {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: #1f2937;
+    -fx-text-fill: #1f2937;
+}
+.stat-value-rose {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: #e11d48;
+    -fx-text-fill: #e11d48;
+}
+.stat-icon-wellcare, .stat-icon-rose, .stat-icon-amber, .stat-icon-blue {
+    -fx-background-radius: 50%;
+    -fx-padding: 10;
+}
+.stat-icon-wellcare { -fx-background-color: #d1fae5; }
+.stat-icon-rose { -fx-background-color: #fee2e2; }
+.stat-icon-amber { -fx-background-color: #fef3c7; }
+.stat-icon-blue { -fx-background-color: #dbeafe; }
+
+.ai-predictions-panel {
+    -fx-background-color: #ecfdf5;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+}
+.ai-icon {
+    -fx-background-color: rgba(0,167,144,0.1);
+    -fx-background-radius: 16;
+    -fx-padding: 8;
+}
+.refresh-button {
+    -fx-background-color: white;
+    -fx-border-color: #00A790;
+    -fx-border-radius: 8;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+    -fx-text-fill: #00A790;
+}
+.refresh-button:hover {
+    -fx-background-color: #f0fdf4;
+}
+
+.analytics-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+.panel-icon {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 10;
+    -fx-padding: 6;
+}
+
+.patient-table {
+    -fx-background-color: transparent;
+}
+.patient-table .column-header-background {
+    -fx-background-color: #f3f4f6;
+}
+.patient-table .column-header, .patient-table .filler {
+    -fx-background-color: #f3f4f6;
+    -fx-padding: 10;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+.patient-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 8;
+}
+.patient-table .table-row-cell:hover {
+    -fx-background-color: #f9fafb;
+}
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 6;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+.action-button:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 6;
+}
+.outline-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-padding: 4 8;
+    -fx-cursor: hand;
+}
+.outline-button:hover {
+    -fx-background-color: #f9fafb;
+}
+.primary-button {
+    -fx-background-color: #00A790;
+    -fx-text-fill: white;
+    -fx-padding: 10 16;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.primary-button:hover {
+    -fx-background-color: #008F7A;
+}
+.suggestions-list, .recommendations-list, .alerts-list {
+    -fx-background-color: transparent;
+}
+.suggestions-list .list-cell, .recommendations-list .list-cell, .alerts-list .list-cell {
+    -fx-background-color: #f9fafb;
+    -fx-padding: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+.alerts-list .list-cell:filled:selected {
+    -fx-background-color: #fee2e2;
+}
+.alert-badge {
+    -fx-background-color: #e11d48;
+    -fx-text-fill: white;
+    -fx-padding: 2 8;
+    -fx-background-radius: 20;
+    -fx-font-size: 12px;
+}
+.modal-overlay {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 5);
+}
+.modal-header {
+    -fx-padding: 16 20;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+.modal-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-fill: #1f2937;
+}
+.modal-close {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 18px;
+    -fx-cursor: hand;
+}
+.modal-body {
+    -fx-padding: 20;
+}
+.left-column {
+    -fx-padding: 0;
+}
+.effectiveness-chart {
+    -fx-background-color: transparent;
+}
