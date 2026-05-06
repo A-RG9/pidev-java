@@ -19,17 +19,24 @@ public class Healthjournal {
     private String name;
     private LocalDate datedebut;
     private LocalDate datefin;
+    private String userId; // Added userId for integration
     private List<Healthentry> entries = new ArrayList<>();
 
     // ---- Constructors ----
 
     public Healthjournal() {}
 
-    public Healthjournal(int id, String name, LocalDate datedebut, LocalDate datefin) {
+    public Healthjournal(int id, String name, LocalDate datedebut, LocalDate datefin, String userId) {
         this.id = id;
         this.name = name;
         this.datedebut = datedebut;
         this.datefin = datefin;
+        this.userId = userId;
+    }
+
+    // Constructor for backwards compatibility (can be removed later if not needed)
+    public Healthjournal(int id, String name, LocalDate datedebut, LocalDate datefin) {
+        this(id, name, datedebut, datefin, null);
     }
 
     // ---- Symfony equivalent: getEntriesByDateRange() ----
@@ -56,6 +63,9 @@ public class Healthjournal {
 
     public LocalDate getDatefin() { return datefin; }
     public void setDatefin(LocalDate datefin) { this.datefin = datefin; }
+
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public List<Healthentry> getEntries() { return entries; }
     public void setEntries(List<Healthentry> entries) { this.entries = entries; }
