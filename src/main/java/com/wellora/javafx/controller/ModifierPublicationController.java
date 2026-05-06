@@ -137,15 +137,8 @@ public class ModifierPublicationController extends BaseController {
     }
 
     private void goBackToPublications() {
-        try {
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherPublications.fxml", currentParcours);
-            Stage stage = (Stage) ((Node) btnCancel).getScene().getWindow();
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mainController != null) {
+            mainController.loadViewWithData("/fxml/AfficherPublications.fxml", currentParcours);
         }
     }
 

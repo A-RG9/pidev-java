@@ -1,5 +1,6 @@
 package com.wellora.javafx.controller;
 
+import com.wellora.javafx.controller.MainController;
 import com.wellora.model.parcours_de_sante;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.wellora.dao.ParcoursDeSanteDAO;
-import com.wellora.controllers.HealthShellController;
-import com.wellora.javafx.controller.ModifierParcoursDeSanteController;
-import com.wellora.javafx.controller.AfficherPublicationsController;
-import com.wellora.javafx.controller.DetailsParcoursController;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -35,6 +32,11 @@ public class ParcoursCardController {
     @FXML private Button btnInfo;
 
     private final ParcoursDeSanteDAO ps = new ParcoursDeSanteDAO();
+    private MainController mainController;
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
+    }
 
     public void setData(parcours_de_sante p, Runnable refreshCallback) {
         if (p == null) return;
@@ -78,68 +80,25 @@ public class ParcoursCardController {
 
         if (btnEdit != null) {
             btnEdit.setOnAction(event -> {
-                loadViewWithHealthShell("/fxml/ModifierParcoursDeSante.fxml", p, "ModifierParcoursDeSanteController");
+                if (mainController != null) {
+                    mainController.loadViewWithData("/fxml/ModifierParcoursDeSante.fxml", p);
+                }
             });
         }
 
         if (btnView != null) {
             btnView.setOnAction(event -> {
-                loadViewWithHealthShell("/fxml/AfficherPublications.fxml", p, "AfficherPublicationsController");
+                if (mainController != null) {
+                    mainController.loadViewWithData("/fxml/AfficherPublications.fxml", p);
+                }
             });
         }
         if (btnInfo != null) {
             btnInfo.setOnAction(event -> {
-                loadViewWithHealthShell("/fxml/DetailsParcours.fxml", p, "DetailsParcoursController");
+                if (mainController != null) {
+                    mainController.loadViewWithData("/fxml/DetailsParcours.fxml", p);
+                }
             });
-        }
-    }
-
-    private void loadViewWithHealthShell(String fxmlPath, parcours_de_sante p, String controllerType) {
-        try {
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-
-            // Load content into shell
-            shellCtrl.setContentWithProxy(fxmlPath);
-
-            // After content is loaded, initialize the controller with data
-            // We need to get the content controller from the shell
-            // Since setContentWithProxy loads asynchronously, we need a different approach
-            // Let's load the content first, then set it in the shell
-            FXMLLoader contentLoader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent contentRoot = contentLoader.load();
-
-            // Initialize the controller with data based on type
-            switch (controllerType) {
-                case "ModifierParcoursDeSanteController":
-                    ModifierParcoursDeSanteController editCtrl = contentLoader.getController();
-                    editCtrl.initData(p);
-                    break;
-                case "AfficherPublicationsController":
-                    AfficherPublicationsController viewCtrl = contentLoader.getController();
-                    viewCtrl.initData(p);
-                    break;
-                case "DetailsParcoursController":
-                    DetailsParcoursController detailsCtrl = contentLoader.getController();
-                    detailsCtrl.initData(p);
-                    break;
-            }
-
-            // Set the content in the shell
-            shellCtrl.setContent(contentRoot);
-
-            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
-            if (!shellRoot.getStylesheets().contains(cssPath)) {
-                shellRoot.getStylesheets().add(cssPath);
-            }
-
-            Stage stage = (Stage) btnInfo.getScene().getWindow();
-            stage.getScene().setRoot(shellRoot);
-
-        } catch (IOException e) {
-            System.err.println("Erreur lors du chargement de la vue : " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

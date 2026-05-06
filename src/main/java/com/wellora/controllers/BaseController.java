@@ -1,5 +1,6 @@
 package com.wellora.controllers;
 
+import com.wellora.javafx.controller.MainController;
 import com.wellora.utils.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public abstract class BaseController {
 
     @FXML protected ToggleButton btnThemeToggle;
+    protected MainController mainController;
 
     // ===================== NUTRITION NAVIGATION =====================
 
@@ -46,72 +48,25 @@ public abstract class BaseController {
     // ===================== HEALTH TRAIL QUICK LINKS (from AfficherPublications) =====================
 
     @FXML public void goBack() {
-        try {
-            Parent rootNode = getRoot();
-            if (rootNode == null || rootNode.getScene() == null) {
-                System.err.println("❌ Cannot goBack: Root or Scene is null");
-                return;
-            }
-            Stage stage = (Stage) rootNode.getScene().getWindow();
-
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
-
-            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
-            if (!shellRoot.getStylesheets().contains(cssPath)) {
-                shellRoot.getStylesheets().add(cssPath);
-            }
-
-            // Force light mode for parcours pages
-            applyThemeToRoot(shellRoot, true);
-            ToggleButton nextBtn = (ToggleButton) shellRoot.lookup("#btnThemeToggle");
-            if (nextBtn != null) {
-                nextBtn.setSelected(true);
-                nextBtn.setText("☀️ Mode Clair");
-            }
-
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mainController != null) {
+            mainController.loadView("/fxml/AfficherParcours.fxml");
         }
     }
 
     @FXML public void goToGlobalFeed() {
-        try {
-            Parent rootNode = getRoot();
-            if (rootNode == null || rootNode.getScene() == null) {
-                System.err.println("❌ Cannot goToGlobalFeed: Root or Scene is null");
-                return;
-            }
-            Stage stage = (Stage) rootNode.getScene().getWindow();
-
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/ToutesPublications.fxml");
-
-            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
-            if (!shellRoot.getStylesheets().contains(cssPath)) {
-                shellRoot.getStylesheets().add(cssPath);
-            }
-
-            // Force light mode for parcours pages
-            applyThemeToRoot(shellRoot, true);
-            ToggleButton nextBtn = (ToggleButton) shellRoot.lookup("#btnThemeToggle");
-            if (nextBtn != null) {
-                nextBtn.setSelected(true);
-                nextBtn.setText("☀️ Mode Clair");
-            }
-
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mainController != null) {
+            mainController.loadView("/fxml/ToutesPublications.fxml");
         }
     }
 
     // ===================== THEME TOGGLE =====================
+
+    /**
+     * Set the MainController reference for navigation to main.fxml views
+     */
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
+    }
 
     @FXML
     public void toggleTheme(ActionEvent event) {

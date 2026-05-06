@@ -206,20 +206,9 @@ public class ModifierParcoursDeSanteController extends BaseController {
     }
 
     private void returnToDisplay() {
-        try {
+        if (mainController != null) {
             mapView.close();
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
-            String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
-            if (!shellRoot.getStylesheets().contains(cssPath)) {
-                shellRoot.getStylesheets().add(cssPath);
-            }
-            Stage stage = (Stage) btnCancel.getScene().getWindow();
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            System.err.println("[Navigation Error] Impossible de charger l'affichage : " + e.getMessage());
+            mainController.loadView("/fxml/AfficherParcours.fxml");
         }
     }
 

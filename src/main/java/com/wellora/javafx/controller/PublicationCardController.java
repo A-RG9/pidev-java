@@ -1,6 +1,6 @@
 package com.wellora.javafx.controller;
 
-import com.wellora.controllers.HealthShellController;
+import com.wellora.javafx.controller.MainController;
 import com.wellora.model.commentaire_publication;
 import com.wellora.model.parcours_de_sante;
 import com.wellora.model.publication_parcours;
@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PublicationCardController {
+    private MainController mainController;
 
     @FXML private Label dateLabel;
     @FXML private Label ambianceLabel;
@@ -61,6 +62,10 @@ public class PublicationCardController {
 
     private final PublicationDAO pubService = new PublicationDAO();
     private final CommentaireDAO commentService = new CommentaireDAO();
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
+    }
 
     public void initialize() {
         commentsToggleLabel.setOnMouseClicked(e -> {
@@ -156,22 +161,8 @@ public class PublicationCardController {
         });
 
         btnEditPub.setOnAction(e -> {
-            try {
-                // Load the modifier publication view directly
-                FXMLLoader modifierLoader = new FXMLLoader(getClass().getResource("/fxml/ModifierPublication.fxml"));
-                Parent modifierView = modifierLoader.load();
-                ModifierPublicationController modifierCtrl = modifierLoader.getController();
-                modifierCtrl.initData(parentParcours, currentPublication);
-                
-                // Load the shell and set the modifier view as content
-                FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-                Parent shellRoot = shellLoader.load();
-                HealthShellController shellCtrl = shellLoader.getController();
-                shellCtrl.setContent(modifierView);
-                Stage stage = (Stage) ((Node)btnEditPub).getScene().getWindow();
-                stage.getScene().setRoot(shellRoot);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if (mainController != null) {
+                mainController.loadViewWithTwoData("/fxml/ModifierPublication.fxml", parentParcours, currentPublication);
             }
         });
 

@@ -289,17 +289,8 @@ public class DetailsParcoursController extends BaseController {
     }
 
     private void returnToDisplay() {
-        try {
-            mapView.close();
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
-            Parent root = shellRoot;
-            Stage stage = (Stage) btnReturn.getScene().getWindow();
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            System.err.println("[Navigation Error] : " + e.getMessage());
+        if (mainController != null) {
+            mainController.loadView("/fxml/AfficherParcours.fxml");
         }
     }
 
@@ -314,21 +305,9 @@ public class DetailsParcoursController extends BaseController {
             return;
         }
 
-        try {
+        if (mainController != null) {
             mapView.close();
-
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherPublications.fxml");
-            Parent root = shellRoot;
-
-            Stage stage = (Stage) btnViewPublications.getScene().getWindow();
-            stage.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading AfficherPublications.fxml");
+            mainController.loadViewWithData("/fxml/AfficherPublications.fxml", currentParcours);
         }
     }
 }

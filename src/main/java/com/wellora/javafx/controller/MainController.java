@@ -1,6 +1,7 @@
 package com.wellora.javafx.controller;
 
 import com.wellora.javafx.WelloraApp;
+import com.wellora.controllers.BaseController;
 import com.wellora.controllers.HealthNavigationProxy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -420,6 +421,115 @@ public class MainController implements SceneManager.UserAware {
                 ((PredictionController) controller).setMainController(this);
             } else if (controller instanceof AfficherParcoursController) {
                 ((AfficherParcoursController) controller).setMainController(this);
+            } else if (controller instanceof DetailsParcoursController) {
+                ((DetailsParcoursController) controller).setMainController(this);
+            } else if (controller instanceof AfficherPublicationsController) {
+                ((AfficherPublicationsController) controller).setMainController(this);
+            } else if (controller instanceof AjouterPublicationController) {
+                ((AjouterPublicationController) controller).setMainController(this);
+            } else if (controller instanceof ModifierPublicationController) {
+                ((ModifierPublicationController) controller).setMainController(this);
+            } else if (controller instanceof AjouterParcoursDeSante) {
+                ((AjouterParcoursDeSante) controller).setMainController(this);
+            } else if (controller instanceof BaseController bc) {
+                bc.setMainController(this);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Failed to load view: " + fxmlPath + "\n" + e.getMessage());
+        }
+    }
+
+    /**
+     * Load FXML view into the content area and pass data to its controller
+     * @param fxmlPath path to FXML file
+     * @param data data object to pass to controller via initData method (can be null)
+     */
+    public void loadViewWithData(String fxmlPath, Object data) {
+        try {
+            // Clear current content
+            contentArea.getChildren().clear();
+
+            // Load new view
+            FXMLLoader loader = new FXMLLoader(WelloraApp.class.getResource(fxmlPath));
+            Parent view = loader.load();
+
+            // Remove the inner sidebar if the view is a BorderPane
+            if (view instanceof javafx.scene.layout.BorderPane) {
+                ((javafx.scene.layout.BorderPane) view).setLeft(null);
+            }
+
+            // Add to content area
+            contentArea.getChildren().add(view);
+
+            // Apply current theme
+            applyCurrentTheme();
+
+            // Set mainController reference if controller extends BaseController
+            Object controller = loader.getController();
+            if (controller instanceof BaseController bc) {
+                bc.setMainController(this);
+            }
+
+            // Pass data to controller if data provided and controller has initData method
+            if (data != null && controller != null) {
+                try {
+                    java.lang.reflect.Method initDataMethod = controller.getClass().getMethod("initData", data.getClass());
+                    initDataMethod.invoke(controller, data);
+                } catch (NoSuchMethodException e) {
+                    // Controller doesn't have initData with this parameter type, that's okay
+                    System.err.println("Controller " + controller.getClass().getSimpleName() + " does not have initData(" + data.getClass().getSimpleName() + ") method");
+                } catch (Exception e) {
+                    System.err.println("Error calling initData: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Failed to load view: " + fxmlPath + "\n" + e.getMessage());
+        }
+    }
+
+    public VBox getContentArea() {
+        return contentArea;
+    }
+
+    /**
+     * Load FXML view into the content area and pass two data objects to its controller's initData method.
+     * @param fxmlPath path to FXML file
+     * @param data1 first data object
+     * @param data2 second data object
+     */
+    public void loadViewWithTwoData(String fxmlPath, Object data1, Object data2) {
+        try {
+            contentArea.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(WelloraApp.class.getResource(fxmlPath));
+            Parent view = loader.load();
+
+            if (view instanceof javafx.scene.layout.BorderPane) {
+                ((javafx.scene.layout.BorderPane) view).setLeft(null);
+            }
+
+            contentArea.getChildren().add(view);
+            applyCurrentTheme();
+
+            Object controller = loader.getController();
+            if (controller instanceof BaseController bc) {
+                bc.setMainController(this);
+            }
+
+            if (data1 != null && data2 != null && controller != null) {
+                try {
+                    java.lang.reflect.Method method = controller.getClass().getMethod("initData", data1.getClass(), data2.getClass());
+                    method.invoke(controller, data1, data2);
+                } catch (NoSuchMethodException e) {
+                    System.err.println("Controller " + controller.getClass().getSimpleName() + " does not have initData(" + data1.getClass().getSimpleName() + ", " + data2.getClass().getSimpleName() + ") method");
+                } catch (Exception e) {
+                    System.err.println("Error calling initData: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
 
         } catch (Exception e) {

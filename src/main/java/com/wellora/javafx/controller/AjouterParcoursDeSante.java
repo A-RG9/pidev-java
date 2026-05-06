@@ -7,6 +7,7 @@ import com.sothawo.mapjfx.Marker;
 import com.sothawo.mapjfx.event.MapViewEvent;
 import com.wellora.model.parcours_de_sante;
 import com.wellora.controllers.HealthShellController;
+import com.wellora.javafx.controller.MainController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -28,6 +29,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 public class AjouterParcoursDeSante {
+
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     @FXML private TextField nomField;
     @FXML private TextField locationField;
@@ -136,16 +143,9 @@ public class AjouterParcoursDeSante {
     }
 
     private void returnToDisplay() {
-        try {
+        if (mainController != null) {
             mapView.close();
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
-            Stage stage = (Stage) btnCancel.getScene().getWindow();
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            System.err.println("[Navigation Error] : " + e.getMessage());
+            mainController.loadView("/fxml/AfficherParcours.fxml");
         }
     }
 

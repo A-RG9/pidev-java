@@ -67,6 +67,10 @@ public class AfficherParcoursController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+        // Re-load UI to ensure card controllers get mainController before setData()
+        if (cardsContainer != null) {
+            loadData();
+        }
     }
 
     private double userLat = 37.2744;
@@ -223,6 +227,7 @@ public class AfficherParcoursController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ParcoursCard.fxml"));
                 Parent card = loader.load();
                 ParcoursCardController controller = loader.getController();
+                controller.setMainController(this.mainController);
                 controller.setData(p, this::loadData);
                 cardsContainer.getChildren().add(card);
             } catch (IOException e) { System.err.println("Error loading card: " + e.getMessage()); }

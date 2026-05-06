@@ -42,6 +42,15 @@ public class ToutesPublicationsController extends BaseController {
     private final PublicationDAO pubService = new PublicationDAO();
     private final CommentaireDAO commentService = new CommentaireDAO();
 
+    @Override
+    public void setMainController(com.wellora.javafx.controller.MainController mainController) {
+        super.setMainController(mainController);
+        // Re-load publications to ensure card controllers get mainController before setData()
+        if (publicationsContainer != null) {
+            loadPublications();
+        }
+    }
+
     @FXML
     public void initialize() {
 
@@ -198,14 +207,12 @@ public class ToutesPublicationsController extends BaseController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PublicationCard.fxml"));
                     Parent cardNode = loader.load();
                     PublicationCardController controller = loader.getController();
-
-
+                    controller.setMainController(this.mainController);
                     controller.setData(pub, null, this::loadPublications, clickedHashtag -> {
                         if (searchHashtag != null) {
                             searchHashtag.setText(clickedHashtag);
                         }
                     });
-
                     publicationsContainer.getChildren().add(cardNode);
 
                 } catch (IOException ex) {

@@ -48,30 +48,16 @@ public class AfficherPublicationsController extends BaseController {
     public void initialize() {
         if (btnBackToTrails != null) {
             btnBackToTrails.setOnAction(e -> {
-                try {
-                    FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-                    Parent shellRoot = shellLoader.load();
-                    HealthShellController shellCtrl = shellLoader.getController();
-                    shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
-                    Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-                    stage.getScene().setRoot(shellRoot);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                if (mainController != null) {
+                    mainController.loadView("/fxml/AfficherParcours.fxml");
                 }
             });
         }
 
         if (btnGlobalFeed != null) {
             btnGlobalFeed.setOnAction(e -> {
-                try {
-                    FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-                    Parent shellRoot = shellLoader.load();
-                    HealthShellController shellCtrl = shellLoader.getController();
-                    shellCtrl.setContentWithProxy("/fxml/ToutesPublications.fxml");
-                    Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-                    stage.getScene().setRoot(shellRoot);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                if (mainController != null) {
+                    mainController.loadView("/fxml/ToutesPublications.fxml");
                 }
             });
         }
@@ -227,13 +213,12 @@ public class AfficherPublicationsController extends BaseController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PublicationCard.fxml"));
                     Parent cardNode = loader.load();
                     PublicationCardController controller = loader.getController();
-
                     controller.setData(pub, currentParcours, this::loadPublications, clickedHashtag -> {
                         if (searchHashtag != null) {
                             searchHashtag.setText(clickedHashtag);
                         }
                     });
-
+                    controller.setMainController(this.mainController);
                     publicationsContainer.getChildren().add(cardNode);
 
                 } catch (IOException ex) {
@@ -260,15 +245,8 @@ public class AfficherPublicationsController extends BaseController {
 
     private void goToAjouterPublication() {
         if (currentParcours == null) return;
-        try {
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AjouterPublication.fxml", currentParcours);
-            Stage stage = (Stage) ((Node)btnBackToTrails).getScene().getWindow();
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mainController != null) {
+            mainController.loadViewWithData("/fxml/AjouterPublication.fxml", currentParcours);
         }
     }
 
