@@ -409,16 +409,36 @@ public class MainController implements SceneManager.UserAware {
                 hc.setMainControllerProxy(healthProxy);
             } else if (controller instanceof DashboardController) {
                 ((DashboardController) controller).setMainController(this);
-            } else if (controller instanceof HealthjournalListController) {
-                ((HealthjournalListController) controller).setMainController(this);
-            } else if (controller instanceof HealthentryListController) {
-                ((HealthentryListController) controller).setMainController(this);
-            } else if (controller instanceof SymptomListController) {
-                ((SymptomListController) controller).setMainController(this);
-            } else if (controller instanceof CalendarController) {
-                ((CalendarController) controller).setMainController(this);
-            } else if (controller instanceof PredictionController) {
-                ((PredictionController) controller).setMainController(this);
+             } else if (controller instanceof HealthjournalListController) {
+                 ((HealthjournalListController) controller).setMainController(this);
+                 if (healthProxy == null) {
+                     healthProxy = new HealthNavigationProxy(contentArea, null);
+                 }
+                 ((HealthjournalListController) controller).setMainControllerProxy(healthProxy);
+             } else if (controller instanceof HealthentryListController) {
+                 ((HealthentryListController) controller).setMainController(this);
+                 if (healthProxy == null) {
+                     healthProxy = new HealthNavigationProxy(contentArea, null);
+                 }
+                 ((HealthentryListController) controller).setMainControllerProxy(healthProxy);
+             } else if (controller instanceof SymptomListController) {
+                 ((SymptomListController) controller).setMainController(this);
+                 if (healthProxy == null) {
+                     healthProxy = new HealthNavigationProxy(contentArea, null);
+                 }
+                 ((SymptomListController) controller).setMainControllerProxy(healthProxy);
+             } else if (controller instanceof CalendarController) {
+                 ((CalendarController) controller).setMainController(this);
+                 if (healthProxy == null) {
+                     healthProxy = new HealthNavigationProxy(contentArea, null);
+                 }
+                 ((CalendarController) controller).setMainControllerProxy(healthProxy);
+             } else if (controller instanceof PredictionController) {
+                 ((PredictionController) controller).setMainController(this);
+                 if (healthProxy == null) {
+                     healthProxy = new HealthNavigationProxy(contentArea, null);
+                 }
+                 ((PredictionController) controller).setMainControllerProxy(healthProxy);
             } else if (controller instanceof AfficherParcoursController) {
                 ((AfficherParcoursController) controller).setMainController(this);
             } else if (controller instanceof DetailsParcoursController) {

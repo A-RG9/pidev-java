@@ -1,5 +1,6 @@
 package com.wellora.javafx.controller;
 
+import com.wellora.controllers.HealthNavigationProxy;
 import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.HealthjournalDAO;
 import com.wellora.dao.SymptomDAO;
@@ -408,5 +409,15 @@ public class HealthentryController {
      */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    /**
+     * Set proxy for health sub-module navigation
+     * HealthentryController uses direct DAO operations, not proxy navigation
+     * This method exists for interface compatibility
+     */
+    public void setMainControllerProxy(HealthNavigationProxy proxy) {
+        // HealthentryController uses direct DAO operations, not proxy navigation
+        // This method exists for interface compatibility
     }
 }
