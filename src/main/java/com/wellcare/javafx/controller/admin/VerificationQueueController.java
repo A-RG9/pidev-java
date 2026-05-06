@@ -158,6 +158,8 @@ public class VerificationQueueController implements Initializable, ServiceAware,
                                 user.getRole().equals("ROLE_COACH") ||
                                 user.getRole().equals("ROLE_NUTRITIONIST")))
                 .collect(java.util.stream.Collectors.toList());
+            applicationsList.getSelectionModel().clearSelection();
+            applicationsList.setItems(null);
             pendingApplications.clear();
             pendingApplications.addAll(pendingUsers);
 

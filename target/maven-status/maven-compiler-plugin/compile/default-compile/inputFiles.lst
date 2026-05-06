@@ -1,116 +1,116 @@
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\SymptomFormController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\service\UserService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\NutritionGoalDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\util\PasswordStrengthIndicator.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\WelloraApp.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\util\ValidationUtils.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\TestPasswordHash.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HealthentryController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\dashboard\AdminDashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\service\DiplomaVerificationService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\AfficherPublicationsController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\service\EmailService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\model\ProfessionalVerification.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\DashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\LoginController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\models\DailyPlan.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\TestDB.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\util\SceneManager.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\nutrition\services\AiService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HealthentryListController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\models\FoodLog.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\models\Recipe.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\HealthjournalDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\RecettesController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HealthjournalListController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\service\GoogleAuthService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\AnalyseController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\PublicationCardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\util\MyDataBase.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\dashboard\PatientDashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\InspectCheck.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\AfficherParcoursController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\services\PdfExportService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\AjouterParcoursDeSante.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\BaseController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HealthjournalController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\services\PredictionService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\MainApplication.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\admin\UserManagementController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\RegisterPatientController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\ModifierPublicationController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\model\parcours_de_sante.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\services\ParcoursRecommendationService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\admin\ProfessionalManagementController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\CalendarController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\models\NutritionGoal.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\FixDatabase.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\MainController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\dashboard\CoachDashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\nutrition\services\RecipeApiService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\model\publication_parcours.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\ProfessionalTypeChoiceController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\ForgotPasswordController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\FoodLogDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\nutrition\services\NutritionPdfExportService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\TwoFactorSetupController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\service\TotpService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HealthjournalFormController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\model\commentaire_publication.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\HealthNavigationProxy.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HomepageController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\ui\LandingController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\ICrud.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\PredictionController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\DashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\Main.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\HealthentryFormController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\HealthentryDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\ToutesPublicationsController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\ParcoursDeSanteDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\PublicationDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\HealthShellController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\dashboard\DoctorDashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\TestBackend.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\services\ApiService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\util\MyDataBase.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\DetailsParcoursController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\SymptomListController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\nutrition\services\NutritionApiService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\model\User.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\CommentaireDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\ParcoursCardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\Home.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\InspectSchema.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\util\CharsetFilter.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\ProfileController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\dashboard\NutritionistDashboardController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\Main.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\SymptomController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\service\CaptchaService.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\util\DBConnection.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\JournalController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\VerifyEmailController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\model\Healthjournal.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\ModifierParcoursDeSanteController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\admin\AdminEditUserController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\util\AppConfig.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\util\DatabaseConnection.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\PlanificateurController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\javafx\controller\AjouterPublicationController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\models\MealPlan.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\model\Symptom.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\model\Healthentry.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\admin\VerificationQueueController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\SymptomDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\ProfessionalRegistrationController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\utils\ThemeManager.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\TwoFactorVerifyController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\dao\UserDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\TestDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\controller\auth\ResetPasswordController.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\util\Main.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\TestAdminLogin.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellcare\javafx\TestDatabase.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\dao\MealPlanDAO.java
-C:\Users\lenovo\Desktop\pijava\pidev-java\src\main\java\com\wellora\controllers\ObjectifController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\HealthShellController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\model\parcours_de_sante.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\admin\VerificationQueueController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\ToutesPublicationsController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\MealPlanDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\model\Healthentry.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\Main.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\ParcoursCardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\InspectCheck.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HealthentryFormController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\nutrition\services\NutritionApiService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\MainApplication.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\ParcoursDeSanteDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\TestDB.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\ModifierParcoursDeSanteController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\FixDatabase.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\AjouterParcoursDeSante.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\AjouterPublicationController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\SymptomListController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\services\ParcoursRecommendationService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\util\CharsetFilter.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\Home.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\dashboard\DoctorDashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\util\DatabaseConnection.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\models\MealPlan.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\PredictionController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\TestPasswordHash.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\admin\ProfessionalManagementController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\InspectSchema.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\models\FoodLog.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\nutrition\services\NutritionPdfExportService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\nutrition\services\AiService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\models\Recipe.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\HealthNavigationProxy.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\CommentaireDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\service\UserService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\PublicationDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\TestDatabase.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\util\AppConfig.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\ResetPasswordController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\models\NutritionGoal.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\model\User.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\MainController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\SymptomController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\util\SceneManager.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\nutrition\services\RecipeApiService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\util\MyDataBase.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\TestBackend.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\DetailsParcoursController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\LoginController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\WelloraApp.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\model\Symptom.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\AnalyseController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\utils\ThemeManager.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\RecettesController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\HealthentryDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\service\EmailService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\ProfessionalTypeChoiceController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\dashboard\CoachDashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\service\DiplomaVerificationService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\CalendarController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\ui\LandingController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\DashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\NutritionGoalDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\TwoFactorVerifyController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\SymptomFormController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\ProfileController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\dashboard\AdminDashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\ICrud.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\TwoFactorSetupController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HealthjournalController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\AfficherParcoursController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\services\PdfExportService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\model\ProfessionalVerification.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\util\PasswordStrengthIndicator.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\model\commentaire_publication.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\model\publication_parcours.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\model\Healthjournal.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\PublicationCardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\util\DBConnection.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\Main.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\service\TotpService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\dashboard\PatientDashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\DashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\VerifyEmailController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\models\DailyPlan.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HomepageController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\TestDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\admin\AdminEditUserController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\util\Main.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\util\MyDataBase.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\service\CaptchaService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\FoodLogDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\services\PredictionService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\AfficherPublicationsController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\JournalController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\ModifierPublicationController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\dao\UserDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\services\ApiService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\TestAdminLogin.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\BaseController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\ObjectifController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\SymptomDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\RegisterPatientController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\controllers\PlanificateurController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\service\GoogleAuthService.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\ProfessionalRegistrationController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HealthjournalFormController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\dashboard\NutritionistDashboardController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\auth\ForgotPasswordController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HealthentryController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HealthentryListController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\javafx\controller\HealthjournalListController.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellora\dao\HealthjournalDAO.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\util\ValidationUtils.java
+C:\Users\LENOVO STORE\Desktop\user\src\main\java\com\wellcare\javafx\controller\admin\UserManagementController.java

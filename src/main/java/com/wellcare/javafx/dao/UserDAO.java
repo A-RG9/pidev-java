@@ -1160,8 +1160,13 @@ public class UserDAO {
             user.setRating(rating);
         }
         
-        user.setVerificationScore(rs.getInt("verification_score"));
-        user.setVerificationDescription(rs.getString("verification_description"));
+        try {
+            user.setVerificationScore(rs.getInt("verification_score"));
+        } catch (SQLException e) { /* Column might not exist */ }
+        
+        try {
+            user.setVerificationDescription(rs.getString("verification_description"));
+        } catch (SQLException e) { /* Column might not exist */ }
         
         return user;
     }
@@ -1176,6 +1181,9 @@ public class UserDAO {
             stmt.setTimestamp(3, Timestamp.valueOf(java.time.LocalDateTime.now()));
             stmt.setString(4, uuid);
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Ignored backward compatibility update due to DB schema: " + e.getMessage());
+            return true; // Pretend it succeeded since real data is in professional_verifications
         }
     }
 

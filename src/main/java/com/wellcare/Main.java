@@ -88,7 +88,7 @@ public class Main extends Application {
     private void createAdminUserIfNotExists() {
         try {
             // Try to find existing admin user
-            User existingAdmin = userService.authenticate("admin@wellcare.com", "Admin123");
+            User existingAdmin = userService.authenticate("admin@wellcare.com", "Admin123!");
             if (existingAdmin != null) {
                 System.out.println("Admin user already exists and can login.");
                 return;
@@ -107,7 +107,7 @@ public class Main extends Application {
             adminUser.setEmail("admin@wellcare.com");
             adminUser.setFirstName("WellCare");
             adminUser.setLastName("Admin");
-            adminUser.setPassword("Admin123"); // Will be hashed by service
+            adminUser.setPassword("Admin123!"); // Will be hashed by service
             adminUser.setRole("ROLE_ADMIN");
             adminUser.setLicenseNumber("ADMIN-001"); // Required for professionals
             adminUser.setActive(true);
@@ -117,10 +117,10 @@ public class Main extends Application {
             adminUser.setUpdatedAt(LocalDateTime.now());
 
             // Use registerProfessional to ensure proper password hashing
-            userService.registerProfessional(adminUser, "Admin123");
+            userService.registerProfessional(adminUser, "Admin123!");
             System.out.println("✅ Admin user created successfully!");
             System.out.println("Email: admin@wellcare.com");
-            System.out.println("Password: Admin123");
+            System.out.println("Password: Admin123!");
 
         } catch (Exception e) {
             System.err.println("❌ Error creating admin user: " + e.getMessage());
