@@ -1,0 +1,27 @@
+.root {
+    -bg-main: #0f172a;
+    -bg-sidebar: #020617;
+    -bg-card: #1e293b;
+    -text-primary: #ffffff;
+    -text-secondary: #94a3b8;
+    -accent: #14b8a6;
+    -border-color: #334155;
+    -hover-bg: #334155;
+}
+
+/* Backgrounds */
+.main-container, .main-bg, .content-area { -fx-background-color: -bg-main; }
+.sidebar { -fx-background-color: -bg-sidebar; -fx-border-color: -border-color; -fx-border-width: 0 1 0 0; }
+.card-bg { -fx-background-color: -bg-card; -fx-background-radius: 10; -fx-border-color: -border-color; -fx-border-radius: 10; }
+.user-profile { -fx-background-color: -bg-card; -fx-background-radius: 8; -fx-padding: 10; }
+
+/* Texts */
+.text-primary, .label, .title-text { -fx-text-fill: -text-primary; }
+.text-secondary { -fx-text-fill: -text-secondary; }
+.logo-text { -fx-text-fill: -accent; -fx-font-size: 24px; -fx-font-weight: bold; }
+
+/* Inputs & Buttons */
+.text-field, .combo-box, .text-area, .date-picker { -fx-background-color: -bg-card; -fx-text-fill: -text-primary; -fx-border-color: -border-color; -fx-border-radius: 5;}
+.menu-btn { -fx-background-color: transparent; -fx-text-fill: -text-secondary; -fx-alignment: CENTER_LEFT; -fx-padding: 10 20; -fx-cursor: hand; }
+.menu-btn:hover { -fx-background-color: -hover-bg; -fx-text-fill: -accent; }
+.theme-btn { -fx-background-color: transparent; -fx-border-color: -border-color; -fx-text-fill: -accent; -fx-cursor: hand; }

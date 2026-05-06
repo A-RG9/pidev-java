@@ -7,10 +7,15 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,6 +50,9 @@ public class CoachDashboardController implements Initializable {
 
     @FXML private ListView<String> todaySessionsList;
     @FXML private ListView<String> recentProgressList;
+
+    // Content area for dynamic loading
+    @FXML private VBox contentArea;
 
     private UserService userService;
     private User currentUser;
@@ -101,9 +109,114 @@ public class CoachDashboardController implements Initializable {
         progressBtn.setOnAction(e -> handleProgress());
         messagesBtn.setOnAction(e -> handleMessages());
         scheduleBtn.setOnAction(e -> handleSchedule());
+    }
 
-        // Update sidebar active state
-        updateSidebarActiveState(dashboardBtn);
+    // ========== NOUVELLES MÉTHODES POUR LES BOUTONS FITNESS ==========
+
+    @FXML
+    private void loadDailyPlanEditor() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DailyPlanEditor.fxml"));
+            Parent view = loader.load();
+
+            // Injecter le contrôleur si nécessaire
+            Object controller = loader.getController();
+            if (controller != null) {
+                try {
+                    // Essayer d'appeler setMainController
+                    java.lang.reflect.Method method = controller.getClass().getMethod("setMainController", Object.class);
+                    method.invoke(controller, this);
+                } catch (NoSuchMethodException e) {
+                    // La méthode n'existe pas, c'est normal
+                    System.out.println("No setMainController method found in " + controller.getClass().getSimpleName());
+                } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                    System.err.println("Could not invoke setMainController: " + e.getMessage());
+                }
+            }
+
+            // Remplacer le contenu principal
+            replaceMainContent(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Cannot load view", "Failed to load Daily Plan Editor: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void loadExerciseLibrary() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExerciseLibrary.fxml"));
+            Parent view = loader.load();
+
+            // Injecter le contrôleur si nécessaire
+            Object controller = loader.getController();
+            if (controller != null) {
+                try {
+                    java.lang.reflect.Method method = controller.getClass().getMethod("setMainController", Object.class);
+                    method.invoke(controller, this);
+                } catch (NoSuchMethodException e) {
+                    // Ignorer
+                } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                    System.err.println("Could not invoke setMainController: " + e.getMessage());
+                }
+            }
+
+            replaceMainContent(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Cannot load view", "Failed to load Exercise Library: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void loadClientsList() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientsList.fxml"));
+            Parent view = loader.load();
+
+            // Injecter le contrôleur si nécessaire
+            Object controller = loader.getController();
+            if (controller != null) {
+                try {
+                    java.lang.reflect.Method method = controller.getClass().getMethod("setMainController", Object.class);
+                    method.invoke(controller, this);
+                } catch (NoSuchMethodException e) {
+                    // Ignorer
+                } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                    System.err.println("Could not invoke setMainController: " + e.getMessage());
+                }
+            }
+
+            replaceMainContent(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Cannot load view", "Failed to load Clients List: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Remplace le contenu principal du dashboard
+     */
+    private void replaceMainContent(Parent newContent) {
+        // Chercher le VBox principal dans la scène actuelle
+        if (contentArea == null) {
+            // Essayer de trouver le contentArea dans la vue parente
+            Parent root = dashboardBtn.getScene().getRoot();
+            if (root instanceof BorderPane) {
+                VBox center = (VBox) ((BorderPane) root).getCenter();
+                if (center != null && center.getId() != null && center.getId().equals("contentArea")) {
+                    contentArea = center;
+                }
+            }
+        }
+
+        if (contentArea != null) {
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(newContent);
+        } else {
+            // Fallback: remplacer toute la scène
+            dashboardBtn.getScene().setRoot(newContent);
+        }
     }
 
     private void loadDashboardData() {
@@ -115,26 +228,26 @@ public class CoachDashboardController implements Initializable {
 
     private void loadTodaySessions() {
         ObservableList<String> sessions = FXCollections.observableArrayList(
-            "🕐 08:00 AM - Sarah Johnson (HIIT Training)",
-            "🕐 09:00 AM - Mike Chen (Strength Training)",
-            "🕐 10:30 AM - Emma Wilson (Yoga Session)",
-            "🕐 14:00 PM - David Brown (Cardio Workout)",
-            "🕐 15:30 PM - Lisa Garcia (Personal Training)",
-            "🕐 17:00 PM - Tom Anderson (Group Class)"
+                "🕐 08:00 AM - Sarah Johnson (HIIT Training)",
+                "🕐 09:00 AM - Mike Chen (Strength Training)",
+                "🕐 10:30 AM - Emma Wilson (Yoga Session)",
+                "🕐 14:00 PM - David Brown (Cardio Workout)",
+                "🕐 15:30 PM - Lisa Garcia (Personal Training)",
+                "🕐 17:00 PM - Tom Anderson (Group Class)"
         );
         todaySessionsList.setItems(sessions);
     }
 
     private void loadRecentProgress() {
         ObservableList<String> progress = FXCollections.observableArrayList(
-            "📈 Sarah Johnson: Lost 2kg this month - Goal achieved!",
-            "💪 Mike Chen: Increased bench press by 15kg",
-            "🧘 Emma Wilson: Improved flexibility - 30% increase",
-            "❤️ David Brown: Improved cardio endurance",
-            "🏆 Lisa Garcia: Completed 10-week program",
-            "🎯 Tom Anderson: Met all fitness goals",
-            "📊 Group Class: 85% attendance rate this month",
-            "⭐ New client: Maria Rodriguez joined program"
+                "📈 Sarah Johnson: Lost 2kg this month - Goal achieved!",
+                "💪 Mike Chen: Increased bench press by 15kg",
+                "🧘 Emma Wilson: Improved flexibility - 30% increase",
+                "❤️ David Brown: Improved cardio endurance",
+                "🏆 Lisa Garcia: Completed 10-week program",
+                "🎯 Tom Anderson: Met all fitness goals",
+                "📊 Group Class: 85% attendance rate this month",
+                "⭐ New client: Maria Rodriguez joined program"
         );
         recentProgressList.setItems(progress);
     }
@@ -148,7 +261,7 @@ public class CoachDashboardController implements Initializable {
     private void updateSidebarActiveState(Button activeButton) {
         // Reset all buttons
         Button[] navButtons = {dashboardBtn, clientsBtn, sessionsBtn, programsBtn,
-                               progressBtn, messagesBtn, scheduleBtn};
+                progressBtn, messagesBtn, scheduleBtn};
 
         for (Button btn : navButtons) {
             btn.getStyleClass().remove("sidebar-item.active");
@@ -178,13 +291,20 @@ public class CoachDashboardController implements Initializable {
     @FXML
     private void handleDashboard() {
         updateSidebarActiveState(dashboardBtn);
-        // Already on dashboard
+        // Recharger le dashboard
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CoachDashboard.fxml"));
+            Parent view = loader.load();
+            replaceMainContent(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleClients() {
         updateSidebarActiveState(clientsBtn);
-        showAlert("Clients", "Client Roster", "Full client profiles and management tools are currently in development.");
+        loadClientsList();
     }
 
     @FXML
@@ -196,7 +316,7 @@ public class CoachDashboardController implements Initializable {
     @FXML
     private void handlePrograms() {
         updateSidebarActiveState(programsBtn);
-        showAlert("Programs", "Training Programs", "Custom training program builder is being finalized.");
+        loadDailyPlanEditor();
     }
 
     @FXML

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.wellcare.javafx.controller.DailyPlanViewController"
+            fitToWidth="true"
+            fitToHeight="false"
+            style="-fx-background-color: #F8FAFC; -fx-background: transparent; -fx-border-color: transparent;">
+
+    <VBox spacing="25" style="-fx-background-color: #F8FAFC; -fx-padding: 30;">
+
+        <!-- HEADER -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <VBox spacing="5">
+                <Label text="🏋️ WellCare" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                <Label text="Mes Plans d'Entraînement" style="-fx-text-fill: #64748B; -fx-font-size: 16px;"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ComboBox fx:id="goalSelector" prefWidth="300"
+                      style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 10 15; -fx-font-size: 14px;"/>
+        </HBox>
+
+        <!-- STATISTIQUES -->
+        <HBox spacing="20">
+            <VBox style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="📋 TOTAL PLANS" style="-fx-text-fill: #64748B; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblTodayPlansCount" text="0" style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+            </VBox>
+            <VBox style="-fx-background-color: #F0FDF4; -fx-background-radius: 20; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="✅ COMPLÉTÉS" style="-fx-text-fill: #10B981; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblCompletedCount" text="0" style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: #10B981;"/>
+            </VBox>
+            <VBox style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="📊 PROGRESSION" style="-fx-text-fill: #64748B; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblProgressPercent" text="0%" style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: #8B5CF6;"/>
+            </VBox>
+        </HBox>
+
+        <!-- BARRE DE PROGRESSION -->
+        <VBox spacing="10">
+            <Label text="Progression globale" style="-fx-text-fill: #64748B; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <ProgressBar fx:id="progressBar" prefWidth="600" minHeight="15"
+                         style="-fx-accent: #8B5CF6; -fx-background-color: #E2E8F0; -fx-background-radius: 8; -fx-padding: 0;"
+                         progress="0"/>
+        </VBox>
+
+        <!-- LISTE DES PLANS -->
+        <VBox spacing="15">
+            <Label text="📋 MES PLANS D'ENTRAÎNEMENT" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+            <ListView fx:id="plansListView" prefHeight="450"
+                      style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;"/>
+        </VBox>
+
+        <!-- SECTION VIDÉO AVEC NAVIGATION -->
+        <VBox fx:id="videoSection" spacing="15" visible="false" managed="false"
+              style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);">
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="🎬" style="-fx-font-size: 28px;"/>
+                <Label fx:id="videoTitleLabel" text="Démonstration de l'exercice" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1E293B;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="✕" onAction="#closeVideo"
+                        style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 14px; -fx-padding: 6 14; -fx-background-radius: 8; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <!-- Contrôles de navigation vidéo -->
+            <HBox fx:id="videoControlsBar" spacing="15" alignment="CENTER">
+                <!-- Les boutons sont ajoutés programmatiquement dans le contrôleur -->
+            </HBox>
+
+            <WebView fx:id="videoPlayer" prefHeight="450" minHeight="450"
+                     style="-fx-border-radius: 12; -fx-background-radius: 12; -fx-border-color: #E2E8F0; -fx-border-width: 1px;"/>
+
+            <Button text="✅ Terminer ce plan" onAction="#completePlan"
+                    style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-padding: 14 30; -fx-cursor: hand; -fx-font-size: 16px;"/>
+        </VBox>
+
+        <!-- SECTION RÉCOMPENSE -->
+        <VBox fx:id="rewardSection" spacing="15" visible="false" managed="false"
+              style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);">
+
+            <Label text="🎉 FÉLICITATIONS ! 🎉" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #667eea; -fx-alignment: center;"/>
+            <WebView fx:id="gifPlayer" prefHeight="350" minHeight="350"
+                     style="-fx-border-radius: 15; -fx-background-radius: 15;"/>
+            <Button text="Continuer mon aventure 💪" onAction="#closeReward"
+                    style="-fx-background-color: #667eea; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 25; -fx-padding: 12 30; -fx-cursor: hand; -fx-font-size: 15px;"/>
+        </VBox>
+
+        <!-- ESPACE POUR LE SCROLL -->
+        <Region prefHeight="50"/>
+
+    </VBox>
+</ScrollPane>

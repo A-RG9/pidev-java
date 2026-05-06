@@ -11,7 +11,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" 
+<BorderPane xmlns="http://javafx.com/javafx/17"
            xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.wellora.javafx.controller.MainController"
            prefWidth="1200" 
@@ -176,7 +176,54 @@
                                     fx:id="btnToutesPublications"/>
                         </VBox>
                     </VBox>
-                    
+                    <!-- SPORT / FITNESS Section -->
+                    <VBox spacing="0">
+                        <Label text="FITNESS" styleClass="nav-category"/>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🏋️  Dashboard Fitness"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadFitnessDashboard"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🎯  Goals"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadGoals"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="📅  Planificateur"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadWorkoutPlan"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🤖  AI Coach"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadAICoach"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="👨‍🏫  Mon Coach"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadClients"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🌍  Défis du Monde"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadCountryChallenge"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="📋  Mes Plans"
+                                    styleClass="sub-nav-button"
+                                    onAction="#loadDailyPlanView"/>
+                        </VBox>
+                    </VBox>
+
+                    <Separator styleClass="menu-separator-thin"/>
                     <!-- MANAGE Section -->
                     <VBox spacing="0">
                         <Label text="MANAGE" styleClass="nav-category"/>

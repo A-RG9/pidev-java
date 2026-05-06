@@ -13,7 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import com.wellcare.javafx.util.SceneManager;
 import com.wellcare.javafx.model.User;
-
+import java.net.URL;
+import javafx.scene.Node;
 /**
  * MainController - Handles application navigation
  * Uses dynamic content switching (no new windows)
@@ -59,7 +60,7 @@ public class MainController implements SceneManager.UserAware {
 
     // Proxy for health sub-module navigation from homepage quick-links
     private HealthNavigationProxy healthProxy;
-    
+
     // Theme tracking - shared across all views
     private static boolean isDarkTheme = false;
 
@@ -70,15 +71,15 @@ public class MainController implements SceneManager.UserAware {
             String firstName = user.getFirstName() != null ? user.getFirstName() : "";
             String lastName = user.getLastName() != null ? user.getLastName() : "";
             String fullName = firstName + " " + lastName;
-            
+
             lblUserName.setText(fullName.trim().isEmpty() ? "Utilisateur" : fullName);
             lblUserEmail.setText(user.getEmail() != null ? user.getEmail() : "");
-            
+
             String initials = "";
             if (!firstName.isEmpty()) initials += firstName.substring(0, 1).toUpperCase();
             if (!lastName.isEmpty()) initials += lastName.substring(0, 1).toUpperCase();
             if (initials.isEmpty()) initials = "U";
-            
+
             lblUserInitials.setText(initials);
         }
     }
@@ -93,14 +94,14 @@ public class MainController implements SceneManager.UserAware {
         if (btnTheme != null) {
             btnTheme.setText(isDarkTheme ? "🌙  Dark Mode" : "☀️  Light Mode");
         }
-        
+
         // Apply theme when the scene becomes available (since initialize() runs before scene is set)
         contentArea.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyCurrentTheme();
             }
         });
-        
+
         showHomepage();
     }
 
@@ -242,12 +243,12 @@ public class MainController implements SceneManager.UserAware {
             contentArea.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             javafx.scene.Parent view = loader.load();
-            
+
             // Remove the inner sidebar if the view is a BorderPane
             if (view instanceof javafx.scene.layout.BorderPane) {
                 ((javafx.scene.layout.BorderPane) view).setLeft(null);
             }
-            
+
             contentArea.getChildren().add(view);
             applyCurrentTheme();
         } catch (Exception e) {
@@ -270,7 +271,7 @@ public class MainController implements SceneManager.UserAware {
             com.wellcare.javafx.controller.auth.ProfileController profileCtrl = loader.getController();
             profileCtrl.setUserService(new com.wellcare.javafx.service.UserService());
             profileCtrl.setMainController(this);
-            
+
             contentArea.getChildren().clear();
             contentArea.getChildren().add(view);
             applyThemeToContentArea();
@@ -301,51 +302,51 @@ public class MainController implements SceneManager.UserAware {
     @FXML
     private void toggleTheme() {
         isDarkTheme = !isDarkTheme;
-        
+
         // Update the theme button text
         if (btnTheme != null) {
             btnTheme.setText(isDarkTheme ? "🌙  Dark Mode" : "☀️  Light Mode");
         }
-        
+
         // Apply theme to scene
         applyCurrentTheme();
     }
-    
+
     /**
      * Apply the current theme to the entire scene
      */
     private void applyCurrentTheme() {
         if (contentArea == null) return;
-        
+
         Scene scene = contentArea.getScene();
         if (scene == null) return;
-        
+
         Parent root = scene.getRoot();
         if (root == null) return;
-        
+
         // Clear existing stylesheets
         scene.getStylesheets().clear();
-        
+
         // Add base CSS file: style.css (includes all dashboard and theme styles)
         try {
             scene.getStylesheets().add(WelloraApp.class.getResource("/com/wellora/css/style.css").toExternalForm());
         } catch (Exception e) {
             System.err.println("Could not load style.css: " + e.getMessage());
         }
-        
+
         // Apply theme class to root
         root.getStyleClass().removeAll("dark-theme", "light-theme");
         root.getStyleClass().add(isDarkTheme ? "dark-theme" : "light-theme");
-        
+
         // Update the theme button text if it exists
         if (btnTheme != null) {
             btnTheme.setText(isDarkTheme ? "🌙  Dark Mode" : "☀️  Light Mode");
         }
-        
+
         // Apply theme to content area
         applyThemeToContentArea();
     }
-    
+
     /**
      * Apply theme class only to the root element, not to individual children.
      * The CSS uses descendant selectors like .light-theme .header-card,
@@ -583,5 +584,50 @@ public class MainController implements SceneManager.UserAware {
         alert.setHeaderText("Something went wrong");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    // Dans MainController.java - Ajoutez ces méthodes avec les autres méthodes de navigation
+
+// ========== FITNESS / SPORT NAVIGATION METHODS ==========
+
+    @FXML
+    public void loadFitnessDashboard() {
+        setActiveButton(null);
+        loadView("/FitnessDashboard.fxml");
+    }
+
+    @FXML
+    public void loadGoals() {
+        setActiveButton(null);
+        loadView("/Dashboard.fxml");
+    }
+
+    @FXML
+    public void loadWorkoutPlan() {
+        setActiveButton(null);
+        loadView("/WorkoutPlanner.fxml");
+    }
+
+    @FXML
+    public void loadAICoach() {
+        setActiveButton(null);
+        loadView("/AICoachView.fxml");
+    }
+
+    @FXML
+    public void loadClients() {
+        setActiveButton(null);
+        loadView("/UserDashboard.fxml");
+    }
+
+    @FXML
+    public void loadCountryChallenge() {
+        setActiveButton(null);
+        loadView("/CountryChallengeView.fxml");
+    }
+
+    @FXML
+    public void loadDailyPlanView() {
+        setActiveButton(null);
+        loadView("/DailyPlanView.fxml");
     }
 }

@@ -31,21 +31,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
-
-### WellCare - Security (DO NOT COMMIT THESE) ###
+.idea/
+.mvn/
+*.class
 config.properties
-*.properties
-!config.properties.example
-
-### WellCare - Compiled Output ###
-out/
-uploads/
-
-### WellCare - Sensitive Logs ###
-*.log

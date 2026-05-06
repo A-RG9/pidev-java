@@ -31,6 +31,7 @@
         <!-- Main Content -->
         <HBox VBox.vgrow="ALWAYS">
             <!-- Sidebar -->
+            <!-- Sidebar -->
             <VBox styleClass="sidebar" HBox.hgrow="NEVER">
                 <children>
                     <VBox spacing="5.0" VBox.vgrow="ALWAYS">
@@ -46,6 +47,15 @@
                             <Button fx:id="progressBtn" styleClass="sidebar-item" text="📈 Progress" maxWidth="1.7976931348623157E308" />
                             <Button fx:id="messagesBtn" styleClass="sidebar-item" text="💬 Messages" maxWidth="1.7976931348623157E308" />
                             <Button fx:id="scheduleBtn" styleClass="sidebar-item" text="🕒 Schedule" maxWidth="1.7976931348623157E308" />
+
+                            <!-- NOUVEAUX BOUTONS FITNESS PLANS -->
+                            <Label text="FITNESS PLANS" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-padding: 20 0 2 5; -fx-font-weight: bold;"/>
+
+                            <Button text="📋 All Plans" onAction="#loadDailyPlanEditor" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                            <Button text="📚 Exercise Library" onAction="#loadExerciseLibrary" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                            <Button text="👥 Mes Clients" onAction="#loadClientsList" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
                         </children>
                     </VBox>
                 </children>

@@ -9,8 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
  * Classe principale de l'application WellCare Connect
@@ -69,7 +67,9 @@ public class Main extends Application {
 
             // Gestionnaire de fermeture
             primaryStage.setOnCloseRequest(e -> {
-                controller.onClose();
+                if (controller != null) {
+                    controller.onClose();
+                }
             });
 
             // Afficher la fenêtre
@@ -91,47 +91,13 @@ public class Main extends Application {
             User existingAdmin = userService.authenticate("admin@wellcare.com", "Admin123!");
             if (existingAdmin != null) {
                 System.out.println("Admin user already exists and can login.");
-                return;
             }
         } catch (Exception e) {
-            // Admin doesn't exist or authentication failed, create new one
-            System.out.println("Admin user not found or authentication failed, creating new admin user...");
-        }
-
-        try {
-            // Create admin user
-            System.out.println("Creating admin user for testing...");
-
-            User adminUser = new User();
-            adminUser.setUuid(java.util.UUID.randomUUID().toString());
-            adminUser.setEmail("admin@wellcare.com");
-            adminUser.setFirstName("WellCare");
-            adminUser.setLastName("Admin");
-            adminUser.setPassword("Admin123!"); // Will be hashed by service
-            adminUser.setRole("ROLE_ADMIN");
-            adminUser.setLicenseNumber("ADMIN-001"); // Required for professionals
-            adminUser.setActive(true);
-            adminUser.setVerifiedByAdmin(true);
-            adminUser.setEmailVerified(true);
-            adminUser.setCreatedAt(LocalDateTime.now());
-            adminUser.setUpdatedAt(LocalDateTime.now());
-
-            // Use registerProfessional to ensure proper password hashing
-            userService.registerProfessional(adminUser, "Admin123!");
-            System.out.println("✅ Admin user created successfully!");
-            System.out.println("Email: admin@wellcare.com");
-            System.out.println("Password: Admin123!");
-
-        } catch (Exception e) {
-            System.err.println("❌ Error creating admin user: " + e.getMessage());
-            e.printStackTrace();
-            // Don't fail the application if admin creation fails
+            // Admin doesn't exist or authentication failed
+            System.out.println("Admin user not found, proceeding...");
         }
     }
 
-    /**
-     * Point d'entrée principal
-     */
     public static void main(String[] args) {
         launch(args);
     }

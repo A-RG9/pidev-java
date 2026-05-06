@@ -17,17 +17,18 @@ public class FoodLogDAO {
     }
 
     public boolean addFoodLog(FoodLog log) {
-        String query = "INSERT INTO food_logs (user_uuid, date, meal_type, total_calories, total_protein, total_carbs, total_fats) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO food_logs (user_id, user_uuid, date, meal_type, total_calories, total_protein, total_carbs, total_fats) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, log.getUserUuid());
-            pstmt.setDate(2, Date.valueOf(log.getDate()));
-            pstmt.setString(3, log.getMealType());
-            pstmt.setInt(4, log.getTotalCalories());
-            pstmt.setDouble(5, log.getTotalProtein());
-            pstmt.setDouble(6, log.getTotalCarbs());
-            pstmt.setDouble(7, log.getTotalFats());
+            pstmt.setInt(1, log.getUserId());
+            pstmt.setString(2, log.getUserUuid());
+            pstmt.setDate(3, Date.valueOf(log.getDate()));
+            pstmt.setString(4, log.getMealType());
+            pstmt.setInt(5, log.getTotalCalories());
+            pstmt.setDouble(6, log.getTotalProtein());
+            pstmt.setDouble(7, log.getTotalCarbs());
+            pstmt.setDouble(8, log.getTotalFats());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
