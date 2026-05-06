@@ -1,0 +1,806 @@
+  /* WellCare Connect - Styles */
+
+/* Global Styles */
+.root {
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -fx-background-color: #f9fafb;
+    -fx-text-fill: #1f2937;
+}
+
+/* Header Styles */
+.header-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+    -fx-fill: #1f2937;
+}
+
+.header-subtitle {
+    -fx-font-size: 14px;
+    -fx-fill: #6b7280;
+}
+
+/* Primary Button */
+.btn-primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+/* Stats Card */
+.stats-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, #00000010, 3, 0, 0, 1);
+}
+
+.stats-label {
+    -fx-font-size: 14px;
+    -fx-fill: #6b7280;
+}
+
+.stats-value {
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+/* Stats Icon */
+.stats-icon {
+    -fx-background-radius: 12;
+    -fx-min-width: 48;
+    -fx-min-height: 48;
+}
+
+.stats-icon-bg {
+    -fx-background-radius: 12;
+}
+
+/* Quick Action Button */
+.quick-action-btn {
+    -fx-background-color: white;
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 16;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12;
+    -fx-cursor: hand;
+}
+
+.quick-action-btn:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-effect: dropshadow(gaussian, #00000020, 4, 0, 0, 2);
+}
+
+/* Tab Styles */
+.tab-pane .tab-header-area .tab {
+    -fx-background-color: transparent;
+    -fx-fill: #6b7280;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.tab-pane .tab-header-area .tab:selected {
+    -fx-background-color: #2563eb;
+    -fx-fill: #2563eb;
+}
+
+.tab-pane .tab-header-area .tab:hover {
+    -fx-fill: #1f2937;
+}
+
+/* Appointment Card */
+.appointment-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+}
+
+.appointment-card:hover {
+    -fx-effect: dropshadow(gaussian, #00000015, 4, 0, 0, 2);
+}
+
+/* Status Badge */
+.status-badge {
+    -fx-font-size: 12px;
+    -fx-padding: 4 8 4 8;
+    -fx-background-radius: 4;
+    -fx-font-weight: 500;
+}
+
+.status-confirmed {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #059669;
+}
+
+.status-pending {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #d97706;
+}
+
+.status-completed {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #2563eb;
+}
+
+.status-cancelled {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #dc2626;
+}
+
+/* Action Button */
+.action-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+    -fx-padding: 8 12 8 12;
+    -fx-background-radius: 6;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+}
+
+.action-btn:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.action-btn.danger {
+    -fx-text-fill: #dc2626;
+    -fx-border-color: #dc2626;
+}
+
+.action-btn.danger:hover {
+    -fx-background-color: #fef2f2;
+}
+
+/* Empty State */
+.empty-state {
+    -fx-background-color: #f9fafb;
+    -fx-background-radius: 12;
+    -fx-padding: 32;
+    -fx-alignment: center;
+}
+
+.empty-state-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-fill: #1f2937;
+}
+
+.empty-state-message {
+    -fx-fill: #6b7280;
+}
+
+/* Loading */
+.loading-indicator {
+    -fx-progress-color: #2563eb;
+}
+
+/* Dialog Styles */
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f9fafb;
+}
+
+/* Doctor Card Styles */
+.doctor-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);
+}
+
+.doctor-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 12, 0, 0, 4);
+}
+
+.doctor-name {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.doctor-specialty-pill {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 12px;
+    -fx-padding: 4 12 4 12;
+    -fx-background-radius: 16;
+}
+
+.doctor-detail-icon {
+    -fx-font-size: 13px;
+}
+
+.doctor-detail-text {
+    -fx-font-size: 13px;
+    -fx-fill: #4b5563;
+}
+
+.doctor-hospital {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.doctor-rating {
+    -fx-font-size: 14px;
+}
+
+.doctor-rating-value {
+    -fx-text-fill: #f59e0b;
+    -fx-font-weight: bold;
+}
+
+.doctor-rating-count {
+    -fx-font-size: 12px;
+    -fx-fill: #6b7280;
+}
+
+.slot-button {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #374151;
+    -fx-font-size: 12px;
+    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 6;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+}
+
+.slot-button:hover {
+    -fx-background-color: #e5e7eb;
+    -fx-border-color: #d1d5db;
+}
+
+.slot-button:pressed {
+    -fx-background-color: #d1d5db;
+}
+
+.view-profile-button {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 8;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.view-profile-button:hover {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #9ca3af;
+}
+
+.book-appointment-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.book-appointment-button:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.availability-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-fill: #374151;
+}
+
+.next-label {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #059669;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-padding: 4 8 4 8;
+    -fx-background-radius: 4;
+}
+
+/* Recommended Button */
+.recommended-button {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #d97706;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.recommended-button:hover {
+    -fx-background-color: #fde68a;
+}
+
+/* View Toggle Button Active */
+.view-toggle-active {
+    -fx-background-color: #eff6ff;
+    -fx-text-fill: #1d4ed8;
+}
+
+.view-toggle-inactive {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+}
+
+/* ==================== Doctor Schedule Week View ==================== */
+
+/* Week Grid Container */
+.week-grid {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1 0 0 1;
+}
+
+/* Day Header */
+.day-header {
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 1 1 0;
+    -fx-alignment: center;
+    -fx-padding: 12 8 12 8;
+}
+
+.day-header-today {
+    -fx-background-color: #d1fae5;
+}
+
+.day-name {
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #6b7280;
+}
+
+.day-date {
+    -fx-font-size: 20px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1f2937;
+}
+
+.day-date-today {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #00A790;
+    -fx-background-radius: 50%;
+    -fx-background-color: #d1fae5;
+    -fx-padding: 8;
+    -fx-alignment: center;
+}
+
+/* Time Column */
+.time-column {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 1 0 0;
+}
+
+.time-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7280;
+    -fx-alignment: center-right;
+    -fx-padding: 0 8 0 8;
+    -fx-pref-height: 60;
+}
+
+/* Day Column */
+.day-column {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Hour Slot */
+.hour-slot {
+    -fx-border-color: #f3f4f6;
+    -fx-border-width: 0 0 1 0;
+    -fx-cursor: hand;
+}
+
+.hour-slot:hover {
+    -fx-background-color: #f9fafb;
+}
+
+/* Appointment Node */
+.appointment-node {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 2;
+    -fx-cursor: hand;
+}
+
+.appointment-node:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.appointment-box {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 4;
+}
+
+.appointment-time {
+    -fx-font-size: 10px;
+    -fx-font-weight: 600;
+    -fx-text-fill: white;
+}
+
+.appointment-title {
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+}
+
+/* Appointment Type Colors */
+.appointment-consultation {
+    -fx-background-color: #00A790;
+}
+
+.appointment-followup {
+    -fx-background-color: #3b82f6;
+}
+
+.appointment-newpatient {
+    -fx-background-color: #a855f7;
+}
+
+.appointment-procedure {
+    -fx-background-color: #6b7280;
+}
+
+/* Sidebar Section */
+.sidebar-section {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12;
+}
+
+.sidebar-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-fill: #1f2937;
+}
+
+.sidebar-count {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Sidebar Appointment Card */
+.sidebar-appointment-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+
+.sidebar-appointment-card:hover {
+    -fx-background-color: #f9fafb;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+.sidebar-appointment-indicator {
+    -fx-background-radius: 2;
+}
+
+/* Week Navigation Buttons */
+.week-nav-btn {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #374151;
+    -fx-font-size: 16px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.week-nav-btn:hover {
+    -fx-background-color: #e5e7eb;
+}
+
+.week-today-btn {
+    -fx-background-color: #00A790;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.week-today-btn:hover {
+    -fx-background-color: #008f7a;
+}
+
+/* Week Label */
+.week-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1f2937;
+}
+
+/* Pending Badge */
+.pending-badge {
+    -fx-background-color: #dc2626;
+    -fx-background-radius: 12;
+    -fx-min-width: 24;
+    -fx-min-height: 24;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+/* Quick Action Button (Schedule) */
+.quick-action-schedule {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 16;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12;
+    -fx-cursor: hand;
+}
+
+.quick-action-schedule:hover {
+    -fx-background-color: #f9fafb;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+/* Legend Items */
+.legend-item {
+    -fx-spacing: 8;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.legend-color-box {
+    -fx-arc-width: 4;
+    -fx-arc-height: 4;
+}
+
+.legend-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Day Column Header (mobile/compact) */
+.day-column-header {
+    -fx-background-color: #e5e7eb;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 0 1 1 0;
+    -fx-alignment: center;
+    -fx-padding: 8;
+}
+
+.day-column-header-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #6b7280;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .day-column {
+        -fx-pref-width: 100;
+        -fx-min-width: 100;
+        -fx-max-width: 100;
+    }
+}
+
+@media (max-width: 900px) {
+    .day-column {
+        -fx-pref-width: 80;
+        -fx-min-width: 80;
+        -fx-max-width: 80;
+    }
+
+    .appointment-title {
+        -fx-font-size: 10px;
+    }
+}
+
+/* Main Content Area */
+.main-content {
+    -fx-background-color: #f9fafb;
+}
+
+/* Days Container */
+.days-container {
+    -fx-background-color: transparent;
+    -fx-padding: 16 0;
+}
+
+/* Day Column Styles */
+.day-column {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+    -fx-pref-width: 120;
+    -fx-min-width: 120;
+    -fx-max-width: 120;
+}
+
+/* Hour Slot */
+.hour-slot {
+    -fx-border-color: #f3f4f6;
+    -fx-border-width: 0 0 1 0;
+    -fx-cursor: hand;
+}
+
+.hour-slot:hover {
+    -fx-background-color: #f9fafb;
+}
+
+/* Appointment Node */
+.appointment-node {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 2;
+    -fx-cursor: hand;
+}
+
+.appointment-node:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 0 1;
+}
+
+/* Today Section */
+.today-section {
+    -fx-background-color: #f9fafb;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Content */
+.modal-content {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+}
+
+/* Modal Title */
+.modal-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-fill: #1f2937;
+}
+
+/* Modal Body */
+.modal-body {
+    -fx-padding: 20;
+}
+
+/* Modal Footer */
+.modal-footer {
+    -fx-padding: 12 20;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Secondary Button */
+.secondary-button {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-padding: 6 16;
+}
+
+/* Action Button */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #374151;
+    -fx-alignment: center-left;
+    -fx-padding: 8 12;
+}
+
+.action-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Pending Button */
+.pending-button {
+    -fx-background-color: #fffbeb;
+    -fx-border-color: #fde68a;
+    -fx-border-radius: 8;
+    -fx-text-fill: #b45309;
+}
+
+.pending-button:hover {
+    -fx-background-color: #fef3c7;
+}
+
+/* Today Button */
+.today-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #00A790;
+    -fx-border-radius: 8;
+    -fx-text-fill: #00A790;
+    -fx-padding: 6 16;
+}
+
+.today-button:hover {
+    -fx-background-color: #d1fae5;
+}
+
+/* Nav Button */
+.nav-button {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #374151;
+    -fx-font-size: 16px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.nav-button:hover {
+    -fx-background-color: #e5e7eb;
+}
+
+/* Logo Icon */
+.logo-icon {
+    -fx-background-radius: 12;
+}
+
+/* Badge Container */
+.badge-container {
+    -fx-background-color: #dc2626;
+    -fx-background-radius: 12;
+    -fx-min-width: 24;
+    -fx-min-height: 24;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+/* Badge Label */
+.badge-label {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Day Column Header */
+.day-column-header {
+    -fx-background-color: #e5e7eb;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 0 1 1 0;
+    -fx-alignment: center;
+    -fx-padding: 8;
+}
+
+.day-column-header-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #6b7280;
+}
