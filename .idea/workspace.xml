@@ -5,70 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9af9db7-2b8d-46b9-827b-8dbc0821e25e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/TestDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/TestDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/TestDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/TestDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/AnalyseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/AnalyseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/BaseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/BaseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/DashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthNavigationProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthNavigationProxy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthShellController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthShellController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/JournalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/JournalController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/ObjectifController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/ObjectifController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/RecettesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/RecettesController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/FoodLogDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/FoodLogDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthentryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthentryDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthjournalDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthjournalDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/MealPlanDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/MealPlanDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/NutritionGoalDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/NutritionGoalDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/SymptomDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/SymptomDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/WelloraApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/WelloraApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/CalendarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/CalendarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalListController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HomepageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HomepageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/PredictionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/PredictionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomListController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthentry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthentry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthjournal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthjournal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/model/Symptom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/model/Symptom.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/DailyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/DailyPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/FoodLog.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/FoodLog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/MealPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/MealPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/NutritionGoal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/NutritionGoal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/Recipe.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/Recipe.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/AiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/AiService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionApiService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionPdfExportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionPdfExportService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/RecipeApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/RecipeApiService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/ApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/ApiService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService$Statistics.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService$Statistics.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService$PredictionResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService$PredictionResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/util/CharsetFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/util/CharsetFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/util/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/util/DBConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/utils/ThemeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/utils/ThemeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +132,7 @@
       <workItem from="1778084454560" duration="510000" />
       <workItem from="1778084998182" duration="386000" />
       <workItem from="1778085406016" duration="435000" />
-      <workItem from="1778085960553" duration="1407000" />
+      <workItem from="1778085960553" duration="3071000" />
     </task>
     <servers />
   </component>
