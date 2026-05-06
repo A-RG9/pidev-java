@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.XYChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.FontWeight?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.wellora.javafx.controller.DashboardController"
+            fitToWidth="true"
+            styleClass="root"
+>
+
+    <VBox spacing="20" styleClass="root" prefWidth="1200">
+
+        <!-- Header -->
+        <padding>
+            <Insets top="30" right="30" bottom="20" left="30"/>
+        </padding>
+
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <Label text="Dashboard - Analytics" styleClass="header-label"/>
+            <Label text="Overview of your health data" styleClass="section-label"/>
+        </HBox>
+
+        <!-- Journal Selector -->
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="journal-selector">
+            <Label text="Journal: " styleClass="journal-selector-label"/>
+            <ComboBox fx:id="journalComboBox" onAction="#onJournalSelected" prefWidth="250" styleClass="dashboard-combo"/>
+            <Button text="Refresh" styleClass="button, button-secondary" onAction="#refreshDashboard"/>
+            <Button text="Export PDF" styleClass="button, button-primary" onAction="#exportPdf"/>
+        </HBox>
+
+        <!-- Summary Cards -->
+        <HBox spacing="20" alignment="CENTER">
+            <!-- Health Score Card -->
+            <VBox spacing="10" styleClass="stat-card-enhanced" alignment="CENTER" prefWidth="200">
+                <HBox spacing="5" alignment="CENTER">
+                    <Label text="🏆" styleClass="stat-icon-large"/>
+                </HBox>
+                <Label text="Health Score" styleClass="stat-label-enhanced"/>
+                <Label fx:id="healthScoreLabel" text="0" styleClass="stat-value-enhanced"/>
+                <Label text="Out of 100" styleClass="stat-sublabel"/>
+            </VBox>
+
+            <!-- Total Entries Card -->
+            <VBox spacing="10" styleClass="stat-card-enhanced" alignment="CENTER" prefWidth="200">
+                <HBox spacing="5" alignment="CENTER">
+                    <Label text="📝" styleClass="stat-icon-large"/>
+                </HBox>
+                <Label text="Total Entries" styleClass="stat-label-enhanced"/>
+                <Label fx:id="entryCountLabel" text="0" styleClass="stat-value-enhanced"/>
+                <Label text="All time records" styleClass="stat-sublabel"/>
+            </VBox>
+
+            <!-- Total Symptoms Card -->
+            <VBox spacing="10" styleClass="stat-card-enhanced" alignment="CENTER" prefWidth="200">
+                <HBox spacing="5" alignment="CENTER">
+                    <Label text="🤒" styleClass="stat-icon-large"/>
+                </HBox>
+                <Label text="Symptoms Tracked" styleClass="stat-label-enhanced"/>
+                <Label fx:id="symptomCountLabel" text="0" styleClass="stat-value-enhanced"/>
+                <Label text="Total occurrences" styleClass="stat-sublabel"/>
+            </VBox>
+
+            <!-- Average Weight Card -->
+            <VBox spacing="10" styleClass="stat-card-enhanced" alignment="CENTER" prefWidth="200">
+                <HBox spacing="5" alignment="CENTER">
+                    <Label text="⚖️" styleClass="stat-icon-large"/>
+                </HBox>
+                <Label text="Avg Weight" styleClass="stat-label-enhanced"/>
+                <Label fx:id="avgWeightLabel" text="-- kg" styleClass="stat-value-enhanced"/>
+                <Label text="Overall average" styleClass="stat-sublabel"/>
+            </VBox>
+
+            <!-- Average Sleep Card -->
+            <VBox spacing="10" styleClass="stat-card-enhanced" alignment="CENTER" prefWidth="200">
+                <HBox spacing="5" alignment="CENTER">
+                    <Label text="😴" styleClass="stat-icon-large"/>
+                </HBox>
+                <Label text="Avg Sleep" styleClass="stat-label-enhanced"/>
+                <Label fx:id="avgSleepLabel" text="-- h" styleClass="stat-value-enhanced"/>
+                <Label text="Hours per night" styleClass="stat-sublabel"/>
+            </VBox>
+        </HBox>
+
+        <!-- Quick Stats Row -->
+        <HBox spacing="20" alignment="CENTER" styleClass="quick-stats-cards">
+            <!-- Recent Activity -->
+            <VBox spacing="10" styleClass="quick-stat-card">
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <HBox styleClass="quick-stat-icon">
+                        <Label text="📊" styleClass="quick-stat-icon-text"/>
+                    </HBox>
+                    <Label text="Recent Activity" styleClass="quick-stat-title"/>
+                </HBox>
+                <VBox styleClass="quick-stat-content">
+                    <Label text="Last entry: Today" styleClass="quick-stat-text"/>
+                    <Label text="5 entries this week" styleClass="quick-stat-text-muted"/>
+                </VBox>
+            </VBox>
+
+            <!-- Health Progress -->
+            <VBox spacing="10" styleClass="quick-stat-card">
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <HBox styleClass="quick-stat-icon">
+                        <Label text="📈" styleClass="quick-stat-icon-text"/>
+                    </HBox>
+                    <Label text="Health Progress" styleClass="quick-stat-title"/>
+                </HBox>
+                <VBox styleClass="quick-stat-content">
+                    <Label text="Improving trend" styleClass="quick-stat-text"/>
+                    <Label text="+12% from last month" styleClass="quick-stat-text-muted"/>
+                </VBox>
+            </VBox>
+
+            <!-- Wellness Tips -->
+            <VBox spacing="10" styleClass="quick-stat-card">
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <HBox styleClass="quick-stat-icon">
+                        <Label text="💡" styleClass="quick-stat-icon-text"/>
+                    </HBox>
+                    <Label text="Wellness Tips" styleClass="quick-stat-title"/>
+                </HBox>
+                <VBox styleClass="quick-stat-content">
+                    <Label text="Stay hydrated" styleClass="quick-stat-text"/>
+                    <Label text="8 tips available" styleClass="quick-stat-text-muted"/>
+                </VBox>
+            </VBox>
+        </HBox>
+
+        <!-- Service Cards - Quote and Risk Level -->
+        <HBox spacing="20" alignment="CENTER" styleClass="service-cards">
+            <!-- Daily Motivation Card -->
+            <VBox spacing="10" styleClass="service-card-enhanced" prefWidth="400">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <HBox styleClass="service-icon-container">
+                        <Label text="💡" styleClass="service-icon-large"/>
+                    </HBox>
+                    <Label text="Daily Motivation" styleClass="service-title-enhanced"/>
+                </HBox>
+                <Label fx:id="quoteLabel" text="Stay healthy and keep tracking your wellness journey!" styleClass="service-content-enhanced" wrapText="true"/>
+            </VBox>
+
+            <!-- Risk Level Card -->
+            <VBox spacing="10" styleClass="service-card-enhanced" prefWidth="400">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <HBox styleClass="service-icon-container">
+                        <Label text="⚠️" styleClass="service-icon-large"/>
+                    </HBox>
+                    <Label text="Risk Assessment" styleClass="service-title-enhanced"/>
+                </HBox>
+                <Label fx:id="riskLabel" text="Risk Level: Low" styleClass="service-content-enhanced" wrapText="true"/>
+            </VBox>
+        </HBox>
+
+        <!-- Charts Section -->
+        <GridPane hgap="20" vgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="50"/>
+                <RowConstraints percentHeight="50"/>
+            </rowConstraints>
+
+            <!-- Sleep Trend Line Chart -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5" styleClass="chart-container">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Sleep" styleClass="chart-icon"/>
+                    <Label text="Sleep Trend" styleClass="chart-title"/>
+                </HBox>
+                <Label text="Sleep hours per day" styleClass="chart-subtitle"/>
+                <LineChart fx:id="sleepLineChart" styleClass="chart">
+                    <xAxis>
+                        <CategoryAxis label="Date" styleClass="axis-label"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Hours" styleClass="axis-label"/>
+                    </yAxis>
+                </LineChart>
+            </VBox>
+
+            <!-- Weight Trend Line Chart -->
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5" styleClass="chart-container">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Weight" styleClass="chart-icon"/>
+                    <Label text="Weight Trend" styleClass="chart-title"/>
+                </HBox>
+                <Label text="Weight in kilograms" styleClass="chart-subtitle"/>
+                <LineChart fx:id="weightLineChart" styleClass="chart">
+                    <xAxis>
+                        <CategoryAxis label="Date" styleClass="axis-label"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Kg" styleClass="axis-label"/>
+                    </yAxis>
+                </LineChart>
+            </VBox>
+
+            <!-- Glycemia Trend Line Chart -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5" styleClass="chart-container">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Glycemia" styleClass="chart-icon"/>
+                    <Label text="Glycemia Trend" styleClass="chart-title"/>
+                </HBox>
+                <Label text="Blood sugar level in g/L" styleClass="chart-subtitle"/>
+                <LineChart fx:id="glycemiaLineChart" styleClass="chart">
+                    <xAxis>
+                        <CategoryAxis label="Date" styleClass="axis-label"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="g/L" styleClass="axis-label"/>
+                    </yAxis>
+                </LineChart>
+            </VBox>
+
+            <!-- Symptoms Distribution Pie Chart -->
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5" styleClass="chart-container">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Symptoms" styleClass="chart-icon"/>
+                    <Label text="Symptoms Distribution" styleClass="chart-title"/>
+                </HBox>
+                <Label text="Distribution by symptom type" styleClass="chart-subtitle"/>
+                <PieChart fx:id="symptomPieChart" styleClass="pie-chart"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Alerts and Recommendations -->
+        <VBox fx:id="alertContainer"
+              visible="false"
+              spacing="10"
+              styleClass="alert-card">
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Alert" styleClass="alert-icon"/>
+                <Label fx:id="alertTitle" text="Alert" styleClass="alert-title"/>
+            </HBox>
+
+            <Label fx:id="alertMessage"
+                   wrapText="true"
+                   styleClass="alert-message"/>
+        </VBox>
+
+        <!-- Recommendations Section -->
+        <VBox fx:id="recommendationsContainer"
+              visible="false"
+              spacing="12"
+              styleClass="recommendations-container">
+
+            <!-- Header -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Tips" styleClass="section-icon"/>
+                <Label text="Recommendations"
+                       styleClass="section-title"/>
+            </HBox>
+
+            <!-- Subtitle -->
+            <Label text="Personalized tips based on your health data"
+                   styleClass="section-subtitle"
+                   wrapText="true"/>
+
+            <!-- Content list -->
+            <VBox fx:id="recommendationsList"
+                  spacing="10"
+                  styleClass="recommendations-list">
+            </VBox>
+        </VBox>
+
+        <!-- Refresh Button -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Refresh Data"
+                    styleClass="button, button-success"
+                    onAction="#refreshDashboard"/>
+            <Button text="Back to Menu"
+                    styleClass="button, button-secondary"
+                    onAction="#goBackToMain"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

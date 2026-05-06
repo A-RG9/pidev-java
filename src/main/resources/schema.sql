@@ -1,3 +1,4 @@
+
 -- Create the Examens (Lab Results) table for WellCare Connect
 -- Run this SQL in your MySQL database to create the required table
 
@@ -105,3 +106,35 @@ INSERT INTO examens (type_examen, nom_examen, date_examen, resultat, status, not
 ('Urinalysis', 'Urine Test', DATE_SUB(CURDATE(), INTERVAL 3 DAY),
  'pH: 6.0\nSpecific Gravity: 1.015\nNo abnormalities detected',
  'COMPLETED', 'Kidney function normal');
+
+CREATE TABLE IF NOT EXISTS healthjournal (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    name      VARCHAR(255) NOT NULL,
+    datedebut DATE         NOT NULL,
+    datefin   DATE         NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Replaces: Healthentry entity
+-- UNIQUE(date, journal_id) mirrors PHP: #[ORM\UniqueConstraint(columns: ['date', 'journal_id'])]
+CREATE TABLE IF NOT EXISTS healthentry (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    date       DATE           NOT NULL,
+    poids      DOUBLE         NOT NULL,
+    glycemie   DOUBLE         NOT NULL,
+    tension    VARCHAR(20)    NOT NULL,
+    sommeil    INT            NOT NULL,
+    journal_id INT            NOT NULL,
+    UNIQUE KEY uq_date_journal (date, journal_id),
+    FOREIGN KEY (journal_id) REFERENCES healthjournal(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Replaces: Symptom entity
+CREATE TABLE IF NOT EXISTS symptom (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    type      VARCHAR(100) NOT NULL,
+    intensite INT          NOT NULL,
+    zone      VARCHAR(100) NULL,
+    entry_id  INT          NOT NULL,
+    FOREIGN KEY (entry_id) REFERENCES healthentry(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

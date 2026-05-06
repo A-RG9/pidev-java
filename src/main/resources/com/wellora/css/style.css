@@ -1,0 +1,2663 @@
+/* VIEW LAYER: Styling */
+.root {
+    -fx-background-color: #121418;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ================== SIDEBAR ================== */
+.sidebar {
+    -fx-background-color: #11151c; /* Background très sombre */
+    -fx-padding: 20 15 20 15;
+}
+
+/* Logo */
+.logo-container {
+    -fx-padding: 0 0 20 5;
+}
+.logo-icon {
+    -fx-background-color: #00E6A4; /* Vert émeraude/Teal */
+    -fx-text-fill: white;
+    -fx-padding: 5 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+}
+.logo-text {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Carte Utilisateur */
+.user-card {
+    -fx-background-color: #1a202c; /* Légèrement plus clair que le fond */
+    -fx-padding: 12 15;
+    -fx-background-radius: 10;
+    -fx-margin: 0 0 15 0;
+}
+.user-avatar {
+    -fx-background-color: #00E6A4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-min-width: 38px;
+    -fx-min-height: 38px;
+    -fx-background-radius: 50%; /* Rend le fond rond */
+}
+.user-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+.user-email {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 11px;
+}
+
+/* Menu principal (Santé, Nutrition) */
+.nav-category {
+    -fx-padding: 10 10;
+    -fx-cursor: hand;
+}
+.nav-category .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+.nav-category .nav-icon {
+    -fx-padding: 0 15 0 0;
+}
+.nav-category:hover .label {
+    -fx-text-fill: white;
+}
+
+/* Sous-menus (Dashboard, etc.) */
+.sub-menu {
+    -fx-padding: 0 0 10 45; /* Indentation vers la droite */
+}
+.sub-nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+.sub-nav-button:hover {
+    -fx-text-fill: white;
+}
+.sub-nav-button.active {
+    -fx-text-fill: #00E6A4; /* Le texte devient vert pour la page active */
+    -fx-font-weight: bold;
+}
+.sub-nav-button.active:hover {
+    -fx-text-fill: #00E6A4;
+}
+
+/* Barre de défilement (Scrollbar invisible mais fonctionnelle) */
+.sidebar-scroll {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #11151c;
+}
+.sidebar-scroll .viewport {
+    -fx-background-color: transparent;
+}
+.sidebar-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 5;
+}
+.sidebar-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #2A2F3D;
+    -fx-background-radius: 5;
+}
+
+/* Actions du bas (Réduire, Profil, Déconnexion) */
+.bottom-actions {
+    -fx-padding: 15 0 0 0;
+}
+.action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+.action-button:hover {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.logout-button {
+    -fx-text-fill: #FF6B6B; /* Rouge doux */
+}
+.logout-button:hover {
+    -fx-text-fill: #FF6B6B;
+    -fx-background-color: rgba(255, 107, 107, 0.1);
+}
+
+.sidebar-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 20 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 15 12 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+}
+
+.nav-button.active {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.card {
+    -fx-background-color: #1C2026;
+    -fx-background-radius: 15;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+.card-title {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+
+.card-value {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.primary-button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #00A690;
+}
+
+.secondary-button {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #3B4252;
+}
+
+.danger-button {
+    -fx-background-color: #E63946;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #D62828;
+}
+
+/* =========================================
+   TableView Styling for Better Visibility (LATEST UPDATES)
+   ========================================= */
+
+.table-view {
+    -fx-background-color: #1C2026;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2A2F3D;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 5 0 5 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #2A2F3D transparent;
+    -fx-cell-size: 45px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #21252C;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #00BFA5;
+}
+
+.table-cell {
+    -fx-text-fill: #F3F4F6;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 15px;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/* =========================================
+   Typography & Toggle Button Base
+   ========================================= */
+.main-title { -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; }
+.main-subtitle { -fx-text-fill: #9CA3AF; -fx-font-size: 14px; }
+.section-title { -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; }
+
+.theme-toggle {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.theme-toggle:selected {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+
+/* =========================================
+   LIGHT THEME OVERRIDES
+   ========================================= */
+.light-theme {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .logo-text {
+    -fx-text-fill: #111827; /* Dark gray/black for light mode */
+}
+.light-theme .sidebar {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 0);
+}
+.light-theme .sidebar-title { -fx-text-fill: #111827; }
+.light-theme .sidebar-subtitle { -fx-text-fill: #6B7280; }
+.light-theme .nav-button { -fx-text-fill: #4B5563; }
+.light-theme .nav-button:hover { -fx-background-color: #F3F4F6; -fx-text-fill: #111827; }
+.light-theme .nav-button.active { -fx-background-color: #00BFA5; -fx-text-fill: white; }
+
+.light-theme .card {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+.light-theme .card-value { -fx-text-fill: #111827; }
+.light-theme .card-title { -fx-text-fill: #6B7280; }
+
+.light-theme .main-title { -fx-text-fill: #111827; }
+.light-theme .main-subtitle { -fx-text-fill: #6B7280; }
+.light-theme .section-title { -fx-text-fill: #111827; }
+
+.light-theme .secondary-button {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+.light-theme .secondary-button:hover { -fx-background-color: #D1D5DB; }
+
+.light-theme .table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E5E7EB;
+}
+.light-theme .table-view .column-header-background {
+    -fx-background-color: #F9FAFB;
+}
+.light-theme .table-view .column-header .label {
+    -fx-text-fill: #4B5563;
+}
+.light-theme .table-row-cell {
+    -fx-border-color: transparent transparent #E5E7EB transparent;
+}
+.light-theme .table-row-cell:odd {
+    -fx-background-color: #F9FAFB;
+}
+.light-theme .table-cell {
+    -fx-text-fill: #111827;
+}
+.light-theme .table-row-cell:selected {
+    -fx-background-color: #00BFA5;
+}
+.light-theme .table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
+/* Sub-menu buttons in Light Theme */
+.light-theme .sub-nav-button {
+    -fx-text-fill: #4B5563; /* Dark gray */
+}
+
+.light-theme .sub-nav-button:hover {
+    -fx-background-color: #F3F4F6; -fx-text-fill: #111827; /* Very light gray background on hover */
+}
+
+.light-theme .sub-nav-button.active {
+    -fx-background-color: #00BFA5; -fx-text-fill: white;
+}
+
+.light-theme .sub-nav-button.active:hover {
+    -fx-text-fill: #F3F4F6;
+}
+
+/* =========================================
+   SIDEBAR & HEADER LIGHT THEME OVERRIDES (MISSING)
+   ========================================= */
+
+/* Root and layout */
+.light-theme.root,
+.light-theme .root {
+    -fx-background-color: #F3F4F6;
+}
+
+.light-theme .header-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E5E7EB;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 2);
+}
+
+.light-theme .app-logo {
+    -fx-text-fill: #00BFA5; /* Teal accent */
+}
+
+.light-theme .app-title {
+    -fx-text-fill: #111827;
+}
+
+.light-theme .user-avatar {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+
+.light-theme .user-name {
+    -fx-text-fill: #111827;
+}
+
+.light-theme .user-email {
+    -fx-text-fill: #6B7280;
+}
+
+.light-theme .logo-icon {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+
+.light-theme .logo-text {
+    -fx-text-fill: #111827; /* Already defined above, but ensure consistency */
+}
+
+.light-theme .user-card {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
+.light-theme .avatar-text {
+    -fx-text-fill: white;
+}
+
+.light-theme .menu-separator {
+    -fx-background-color: #E5E7EB;
+}
+
+.light-theme .nav-category .label {
+    -fx-text-fill: #6B7280;
+}
+
+.light-theme .nav-category:hover .label {
+    -fx-text-fill: #00BFA5;
+}
+
+.light-theme .bottom-actions {
+    /* No specific background, inherits from sidebar */
+}
+
+.light-theme .action-button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+
+.light-theme .action-button:hover {
+    -fx-background-color: #00A690;
+}
+
+.light-theme .logout-button {
+    -fx-text-fill: #DC2626;
+}
+
+.light-theme .logout-button:hover {
+    -fx-background-color: #FEF2F2;
+    -fx-text-fill: #DC2626;
+}
+
+.light-theme .version-label {
+    -fx-text-fill: #9CA3AF;
+}
+
+/* =========================================
+   DATEPICKER (CHAMP ET CALENDRIER)
+   ========================================= */
+
+/* --- 1. CHAMP DE SAISIE (SOMBRE PAR DÉFAUT) --- */
+.date-picker-custom {
+    -fx-background-color: transparent;
+}
+.date-picker-custom > .text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 8 0 0 8;
+    -fx-background-radius: 8 0 0 8;
+}
+.date-picker-custom > .arrow-button {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 0 8 8 0;
+    -fx-background-radius: 0 8 8 0;
+    -fx-cursor: hand;
+}
+.date-picker-custom > .arrow-button .arrow {
+    -fx-background-color: #00E6A4; /* Icône verte */
+}
+
+/* --- 2. POPUP CALENDRIER (SOMBRE PAR DÉFAUT) --- */
+.date-picker-popup {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #11151c; /* L'en-tête avec le mois */
+}
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #9CA3AF; /* Lun, Mar, Mer... */
+}
+.date-picker-popup .day-cell {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #2A2F3D;
+}
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #00E6A4;
+    -fx-text-fill: #11151c;
+    -fx-font-weight: bold;
+}
+
+/* =========================================
+   DATEPICKER - MODE CLAIR
+   ========================================= */
+
+/* --- 1. CHAMP DE SAISIE (MODE CLAIR) --- */
+.light-theme .date-picker-custom > .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker-custom > .arrow-button {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker-custom > .arrow-button .arrow {
+    -fx-background-color: #00BFA5;
+}
+
+/* --- 2. POPUP CALENDRIER (MODE CLAIR) --- */
+.light-theme .date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+}
+.light-theme .date-picker-popup .month-year-pane {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .date-picker-popup .month-year-pane .label {
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+}
+.light-theme .date-picker-popup .day-name-cell {
+    -fx-text-fill: #6B7280;
+}
+.light-theme .date-picker-popup .day-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+.light-theme .date-picker-popup .day-cell:hover {
+    -fx-background-color: #F3F4F6;
+}
+.light-theme .date-picker-popup .day-cell:selected {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ======================================================= */
+/* ====== ADAPTATION DU GRAPHIQUE ======================== */
+/* ======================================================= */
+
+.chart-plot-background { -fx-background-color: transparent; }
+.axis { -fx-tick-label-fill: #9ca3af; }
+.axis-label { -fx-text-fill: #9ca3af; }
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines { -fx-stroke: #2A2F3D; }
+.axis-tick-mark { -fx-stroke: #9ca3af; }
+
+.default-color0.chart-bar { -fx-bar-fill: #00E6A4; }
+.default-color1.chart-bar { -fx-bar-fill: #FFB020; }
+
+.light-theme .chart-vertical-grid-lines,
+.light-theme .chart-horizontal-grid-lines { -fx-stroke: #E5E7EB; }
+.light-theme .axis { -fx-tick-label-fill: #4B5563; }
+.light-theme .axis-label { -fx-text-fill: #4B5563; }
+
+/* =========================================
+   CARTES DE RECETTES (PAR DÉFAUT = SOMBRE)
+   ========================================= */
+.recipe-card {
+    -fx-background-color: #1C2026;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+.recipe-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white; }
+.recipe-calories { -fx-text-fill: #00E6A4; -fx-font-weight: bold; }
+.recipe-instructions { -fx-text-fill: #9CA3AF; -fx-font-size: 13px; }
+
+/* CARTES DE RECETTES (MODE CLAIR) */
+.light-theme .recipe-card {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+.light-theme .recipe-title { -fx-text-fill: #111827; }
+.light-theme .recipe-calories { -fx-text-fill: #00BFA5; }
+.light-theme .recipe-instructions { -fx-text-fill: #4B5563; }
+
+/* =========================================
+   DIALOGUE (PAR DÉFAUT = SOMBRE)
+   ========================================= */
+.dialog-pane { -fx-background-color: #121418; }
+.dialog-pane > *.button-bar > *.container { -fx-background-color: #121418; }
+.dialog-pane > *.label.content { -fx-text-fill: white; }
+.dialog-pane:header *.header-panel { -fx-background-color: #1C2026; }
+.dialog-pane:header *.header-panel *.label { -fx-text-fill: white; }
+
+/* DIALOGUE (MODE CLAIR) */
+.light-theme.dialog-pane { -fx-background-color: #FFFFFF; }
+.light-theme.dialog-pane > *.button-bar > *.container { -fx-background-color: #F9FAFB; }
+.light-theme.dialog-pane > *.label.content { -fx-text-fill: #111827; }
+.light-theme.dialog-pane:header *.header-panel { -fx-background-color: #F3F4F6; }
+.light-theme.dialog-pane:header *.header-panel *.label { -fx-text-fill: #111827; }
+
+/* Champs de texte (TextField) généraux (PAR DÉFAUT = SOMBRE) */
+.text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Champs de texte (TextField) généraux (MODE CLAIR) */
+.light-theme .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #D1D5DB;
+}
+
+/* Nettoyer le ScrollPane des recettes */
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* =========================================
+   FORMULAIRE DE DIALOGUE (LABELS & BOUTONS)
+   ========================================= */
+
+/* Textes à l'intérieur du dialogue */
+.dialog-pane .content Label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.light-theme.dialog-pane .content Label {
+    -fx-text-fill: #111827;
+}
+
+/* Bouton d'action principal (Ajouter) */
+.dialog-pane .button {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover {
+    -fx-background-color: #00A690;
+}
+
+/* Bouton Annuler (Sombre par défaut) */
+.dialog-pane .button:cancel {
+    -fx-background-color: #2A2F3D;
+}
+.dialog-pane .button:cancel:hover {
+    -fx-background-color: #3B4252;
+}
+
+/* Bouton Annuler (Mode Clair) */
+.light-theme.dialog-pane .button:cancel {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #111827;
+}
+.light-theme.dialog-pane .button:cancel:hover {
+    -fx-background-color: #D1D5DB;
+}
+
+/* =========================================
+   COMBOBOX (MENU DÉROULANT) - SOMBRE PAR DÉFAUT
+   ========================================= */
+
+/* 1. La boîte principale */
+.combo-box {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* Le texte de l'élément actuellement affiché/sélectionné */
+.combo-box > .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+/* Le petit bouton flèche à droite */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+.combo-box .arrow {
+    -fx-background-color: #00E6A4; /* Flèche verte */
+}
+
+/* 2. La fenêtre déroulante (Popup) */
+.combo-box-popup .list-view {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-control-inner-background: #1a202c; /* Force le fond interne en sombre */
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Les choix (Breakfast, Lunch, etc.) dans la liste */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+    -fx-padding: 8 12;
+}
+
+/* L'effet au passage de la souris et au clic dans la liste */
+.combo-box-popup .list-view .list-cell:filled:hover,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: #00E6A4; /* Texte en vert au survol */
+}
+
+/* =========================================
+   COMBOBOX - MODE CLAIR
+   ========================================= */
+
+/* Boîte principale claire */
+.light-theme .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .combo-box > .list-cell {
+    -fx-text-fill: #111827;
+}
+
+/* Fenêtre déroulante claire */
+.light-theme .combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+    -fx-control-inner-background: white;
+}
+.light-theme .combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+
+/* Effet au survol en mode clair */
+.light-theme .combo-box-popup .list-view .list-cell:filled:hover,
+.light-theme .combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #00BFA5;
+}
+}
+/* =========================================
+   INTEG HEALTH MODULE — BUTTON VARIANTS
+   ========================================= */
+
+/* button is just the base - aliases to primary-button style */
+.button {
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.button-primary {
+    -fx-background-color: #00BFA5;
+    -fx-text-fill: white;
+}
+.button-primary:hover { -fx-background-color: #00A690; }
+
+.button-success {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+}
+.button-success:hover { -fx-background-color: #219a52; }
+
+.button-danger {
+    -fx-background-color: #E63946;
+    -fx-text-fill: white;
+}
+.button-danger:hover { -fx-background-color: #c0392b; }
+
+.button-secondary {
+    -fx-background-color: #2A2F3D;
+    -fx-text-fill: #9CA3AF;
+}
+.button-secondary:hover {
+    -fx-background-color: #3B4252;
+    -fx-text-fill: white;
+}
+
+/* Light theme overrides */
+.light-theme .button-secondary {
+    -fx-background-color: #E5E7EB;
+    -fx-text-fill: #374151;
+}
+.light-theme .button-secondary:hover {
+    -fx-background-color: #D1D5DB;
+    -fx-text-fill: #111827;
+}
+
+/* =========================================
+   INTEG HEALTH MODULE — TYPOGRAPHY
+   ========================================= */
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.section-label {
+    -fx-text-fill: #00E6A4;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.subsection-label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 13px;
+}
+
+.light-theme .header-label { -fx-text-fill: #111827; }
+.light-theme .section-label { -fx-text-fill: #00BFA5; }
+.light-theme .subsection-label { -fx-text-fill: #6B7280; }
+
+/* =========================================
+    INTEG HEALTH MODULE — FORM / CARD OVERRIDES
+    ========================================= */
+
+/* Labels inside GridPane/VBox in health forms */
+.root > VBox Label,
+.root Label {
+    -fx-text-fill: #E5E7EB;
+    -fx-font-size: 13px;
+}
+
+.light-theme .root > VBox Label,
+.light-theme .root Label {
+    -fx-text-fill: #374151;
+}
+
+/* DatePicker default (health forms) */
+.date-picker {
+    -fx-background-color: #1a202c;
+    -fx-border-color: #2A2F3D;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+.date-picker > .text-field {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+.date-picker .arrow-button {
+    -fx-background-color: #1a202c;
+}
+.date-picker .arrow {
+    -fx-background-color: #00E6A4;
+}
+
+.light-theme .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #D1D5DB;
+}
+.light-theme .date-picker > .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+}
+.light-theme .date-picker .arrow-button { -fx-background-color: #F9FAFB; }
+.light-theme .date-picker .arrow { -fx-background-color: #00BFA5; }
+
+/* Slider */
+.slider .thumb {
+    -fx-background-color: #00E6A4;
+}
+.slider .track {
+    -fx-background-color: #2A2F3D;
+}
+.light-theme .slider .track { -fx-background-color: #D1D5DB; }
+
+/* ComboBox already styled above but ensure health module picks it up */
+
+/* Form labels in health module GridPanes */
+.form-label {
+    -fx-text-fill: #E5E7EB;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.light-theme .form-label {
+    -fx-text-fill: #374151;
+}
+
+/* ==========================================================================
+   Wellora Health - Dashboard Styles (Light Theme Base)
+   Modern Dashboard/SaaS Design with Teal Accent (#00A790)
+   ========================================================================== */
+
+/* ========== RESET & BASE ========== */
+.light-theme .root {
+    -fx-background-color: #F3F4F6;
+    -fx-font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1E293B;
+}
+
+.dark-theme .root {
+    -fx-background-color: #0D1117;
+    -fx-font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #E2E8F0;
+}
+
+/* Ensure all panes have transparent background by default so parent background shows through */
+ScrollPane, VBox, HBox, GridPane, BorderPane, AnchorPane {
+    -fx-background-color: transparent;
+}
+
+/* ========== LAYOUT CONTAINERS ========== */
+.content-area {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+}
+
+.light-theme .content-area {
+    -fx-background-color: #F3F4F6 !important;
+}
+
+.dark-theme .content-area {
+    -fx-background-color: #161B22;
+}
+
+.main-content {
+    -fx-background-color: transparent;
+    -fx-padding: 20;
+}
+
+.light-theme .main-content {
+    -fx-background-color: #F3F4F6;
+}
+
+.dark-theme .main-content {
+    -fx-background-color: transparent;
+}
+
+/* Calendar and Dashboard page containers */
+.main-vbox, .main-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.light-theme .main-vbox, .light-theme .main-scroll-pane,
+.light-theme .main-scroll-pane .viewport {
+    -fx-background-color: #F3F4F6 !important;
+}
+
+.dark-theme .main-vbox,
+.dark-theme .main-scroll-pane,
+.dark-theme .main-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ========== HEADER BAR ========== */
+.header-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 4, 0, 0, 2);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 30;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-height: 60;
+}
+
+.app-logo {
+    -fx-font-size: 28px;
+    -fx-text-fill: #00A790;
+}
+
+.app-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.user-avatar {
+    -fx-font-size: 18px;
+    -fx-text-fill: #00A790;
+    -fx-font-weight: bold;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #64748B;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 25 10 25 20;
+}
+
+.menu-header {
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #64748B;
+    -fx-padding: 15 0 8 0;
+    -fx-letter-spacing: 1.5px;
+}
+
+.menu-separator {
+    -fx-background-color: #E2E8F0;
+    -fx-pref-height: 1;
+    -fx-padding: 8 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #475569;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 12 15;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+
+.nav-button:hover {
+    -fx-background-color: #F1F5F9;
+    -fx-text-fill: #00A790;
+}
+
+.nav-button.active {
+    -fx-background-color: #E6FFFA;
+    -fx-text-fill: #00A790;
+    -fx-font-weight: 600;
+}
+
+.nav-button.logout {
+    -fx-text-fill: #DC2626;
+}
+
+.nav-button.logout:hover {
+    -fx-background-color: #FEF2F2;
+}
+
+.version-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #94A3B8;
+    -fx-alignment: CENTER;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.header-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+    -fx-padding: 0 0 15 0;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #00A790;
+    -fx-padding: 0 0 10 0;
+}
+
+.section-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #64748B;
+    -fx-padding: 0 0 15 0;
+}
+
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.page-subtitle {
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #64748B;
+}
+
+.detail-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #64748B;
+}
+
+.detail-value {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.month-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.day-header {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #64748B;
+    -fx-alignment: CENTER;
+}
+
+.day-number {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #334155;
+}
+
+.score-indicator {
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748B;
+}
+
+.weather-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748B;
+}
+
+/* ========== BUTTONS ========== */
+.button {
+    -fx-background-radius: 8;
+    -fx-padding: 10 18;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
+.button-primary {
+    -fx-background-color: #00A790;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 8;
+}
+
+.button-primary:hover {
+    -fx-background-color: #008F7A;
+    -fx-effect: dropshadow(gaussian, rgba(0,167,144,0.3), 6, 0, 0, 2);
+}
+
+.button-secondary {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #64748B;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #00A790;
+    -fx-text-fill: #00A790;
+}
+
+.button-success {
+    -fx-background-color: #10B981;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 8;
+}
+
+.button-success:hover {
+    -fx-background-color: #059669;
+}
+
+.button-bordered {
+    -fx-background-color: transparent;
+    -fx-text-fill: #00A790;
+    -fx-border-color: #00A790;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+}
+
+.button-bordered:hover {
+    -fx-background-color: #00A790;
+    -fx-text-fill: #FFFFFF;
+}
+
+.action-button {
+    -fx-background-color: #00A790;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+    -fx-padding: 12 24;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #008F7A;
+}
+
+/* ========== CARDS & PANELS ========== */
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 4);
+    -fx-padding: 20;
+}
+
+.stat-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+}
+
+.stat-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,167,144,0.2), 12, 0, 0, 5);
+    -fx-translate-y: -2;
+    -fx-border-color: #00A790;
+}
+
+/* ========== ENHANCED STAT CARDS ========== */
+.stat-card-enhanced {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-cursor: default;
+}
+
+.stat-card-enhanced:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,167,144,0.2), 12, 0, 0, 5);
+    -fx-translate-y: -2;
+    -fx-border-color: #00A790;
+}
+
+.stat-icon-container {
+    -fx-background-color: #E6FFFA;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+    -fx-min-width: 48;
+    -fx-min-height: 48;
+    -fx-max-width: 48;
+    -fx-max-height: 48;
+    -fx-alignment: CENTER;
+}
+
+.stat-icon-large {
+    -fx-font-size: 24px;
+    -fx-text-fill: #00A790;
+}
+
+.stat-label-enhanced {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #64748B;
+}
+
+.stat-value-enhanced {
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.stat-sublabel {
+    -fx-font-size: 12px;
+    -fx-text-fill: #94A3B8;
+}
+
+/* ========== ENHANCED SERVICE CARDS ========== */
+.service-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.service-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,167,144,0.15), 10, 0, 0, 4);
+    -fx-translate-y: -2;
+    -fx-border-color: #00A790;
+}
+
+.service-card-enhanced {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.service-card-enhanced:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,167,144,0.15), 10, 0, 0, 4);
+    -fx-translate-y: -2;
+    -fx-border-color: #00A790;
+}
+
+.service-icon-container {
+    -fx-background-color: #EEF2FF;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-min-width: 40;
+    -fx-min-height: 40;
+    -fx-max-width: 40;
+    -fx-max-height: 40;
+    -fx-alignment: CENTER;
+}
+
+.service-icon-large {
+    -fx-font-size: 20px;
+    -fx-text-fill: #00A790;
+}
+
+.service-title-enhanced {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.service-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748B;
+}
+
+.service-content-enhanced {
+    -fx-font-size: 14px;
+    -fx-text-fill: #475569;
+    -fx-wrap-text: true;
+}
+
+/* ========== QUICK STATS CARDS ========== */
+.quick-stats-cards {
+    -fx-spacing: 20;
+    -fx-alignment: CENTER;
+}
+
+.quick-stat-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-min-width: 280;
+    -fx-max-width: 280;
+}
+
+.quick-stat-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,167,144,0.15), 10, 0, 0, 4);
+    -fx-translate-y: -2;
+    -fx-border-color: #00A790;
+}
+
+.quick-stat-icon {
+    -fx-background-color: #E6FFFA;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+    -fx-max-width: 36;
+    -fx-max-height: 36;
+    -fx-alignment: CENTER;
+}
+
+.quick-stat-icon-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: #00A790;
+}
+
+.quick-stat-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.quick-stat-content {
+    -fx-background-color: #FAFBFC;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-border-color: #F1F5F9;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.quick-stat-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #475569;
+    -fx-padding: 2 0;
+}
+
+.quick-stat-text-muted {
+    -fx-font-size: 13px;
+    -fx-text-fill: #94A3B8;
+    -fx-padding: 2 0;
+}
+
+/* ========== ALERTS & RECOMMENDATIONS ========== */
+.alert-card {
+    -fx-background-color: #FEF3C7;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-border-color: #F59E0B;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.alert-icon {
+    -fx-font-size: 18px;
+    -fx-text-fill: #D97706;
+}
+
+.alert-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #92400E;
+}
+
+.alert-message {
+    -fx-font-size: 13px;
+    -fx-text-fill: #92400E;
+}
+
+.recommendations-container {
+    -fx-background-color: #ECFDF5;
+    -fx-border-color: #10B981;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 15;
+}
+
+.recommendations-list {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+
+.recommendation-item {
+    -fx-font-size: 13px;
+    -fx-text-fill: #065F46;
+    -fx-padding: 3 0;
+}
+
+/* ========== CHART CONTAINER ========== */
+.chart-container {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-padding: 20;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1E293B;
+}
+
+.chart-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748B;
+}
+
+.chart-icon {
+    -fx-font-size: 16px;
+    -fx-text-fill: #00A790;
+}
+
+/* ========== STATUS & FOOTER LABELS ========== */
+.status-label.status-success {
+    -fx-text-fill: #10B981;
+    -fx-font-weight: 600;
+}
+
+.status-label.status-error {
+    -fx-text-fill: #DC2626;
+    -fx-font-weight: 600;
+}
+
+.footer-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #94A3B8;
+}
+
+/* ==========================================================================
+   DARK THEME OVERRIDES
+   All styles below apply ONLY when .dark-theme class is present on root
+   Modern Dashboard/SaaS Design with Blue Accent (#58A6FF)
+   ========================================================================== */
+
+/* ========== ROOT & BASE ========== */
+.dark-theme {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme.root,
+.dark-theme .root {
+    -fx-background-color: #0D1117;
+    -fx-text-fill: #C9D1D9;
+}
+
+/* ========== LAYOUT CONTAINERS ========== */
+.dark-theme .content-area {
+    -fx-background-color: #161B22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 3);
+}
+
+.dark-theme .main-content {
+    -fx-background-color: transparent;
+}
+
+/* ========== HEADER BAR ========== */
+.dark-theme .header-bar {
+    -fx-background-color: #161B22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 4, 0, 0, 2);
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .app-logo {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .app-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .user-avatar {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .user-name {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== SIDEBAR ========== */
+.dark-theme .sidebar {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .menu-header {
+    -fx-text-fill: #6E7681;
+}
+
+.dark-theme .menu-separator {
+    -fx-background-color: #30363D;
+}
+
+.dark-theme .nav-button {
+    -fx-text-fill: #C9D1D9;
+    -fx-background-color: transparent;
+}
+
+.dark-theme .nav-button:hover {
+    -fx-background-color: rgba(88, 166, 255, 0.1);
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .nav-button.active {
+    -fx-background-color: rgba(88, 166, 255, 0.15);
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .nav-button.logout {
+    -fx-text-fill: #F85149;
+}
+
+.dark-theme .nav-button.logout:hover {
+    -fx-background-color: rgba(248, 81, 73, 0.1);
+}
+
+.dark-theme .version-label {
+    -fx-text-fill: #6E7681;
+}
+
+/* ========== CALENDAR PAGE ========== */
+/* Main scroll pane and layout */
+.main-scroll-pane,
+.main-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.light-theme .main-scroll-pane,
+.light-theme .main-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.light-theme .main-vbox {
+    -fx-background-color: #FFFFFF;
+}
+
+.dark-theme .main-vbox {
+    -fx-background-color: #121418;
+}
+
+/* Calendar - Selected Day Label */
+.selected-day-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #2D3748;
+    -fx-padding: 10 0 5 0;
+}
+
+.light-theme .selected-day-label {
+    -fx-text-fill: #2D3748;
+}
+
+.dark-theme .selected-day-label {
+    -fx-text-fill: #E2E8F0;
+}
+
+/* Calendar - Weather Section */
+.weather-section {
+    -fx-padding: 10 0 0 0;
+}
+
+.weather-icon {
+    -fx-font-size: 32px;
+    -fx-text-alignment: center;
+}
+
+.main-vbox {
+    -fx-background-color: transparent;
+    -fx-padding: 20;
+}
+
+/* Header card */
+.header-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+}
+
+/* Navigation bar */
+.navigation-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-padding: 15 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+/* Calendar card */
+.calendar-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+}
+
+/* Day header cells */
+.day-header {
+    -fx-text-fill: #64748B;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-alignment: center;
+    -fx-padding: 8 0;
+}
+
+/* Details card */
+.details-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+}
+
+/* Weather section */
+.weather-section {
+    -fx-background-color: #F8FAFC;
+    -fx-background-radius: 12;
+    -fx-padding: 15;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.weather-icon {
+    -fx-font-size: 24px;
+    -fx-text-fill: #00A790;
+}
+
+/* Ensure stat-icon, stat-label, stat-value have light theme (they may be defined elsewhere but ensure consistency) */
+.stat-icon {
+    -fx-text-fill: #00A790;
+}
+
+.stat-label {
+    -fx-text-fill: #64748B;
+    -fx-font-size: 13px;
+}
+
+.stat-value {
+    -fx-text-fill: #1E293B;
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.dark-theme .version-label {
+    -fx-text-fill: #6E7681;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.dark-theme .header-label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .section-title {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .section-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .page-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .page-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .detail-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .detail-value {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .month-label {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .day-header {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .day-number {
+    -fx-text-fill: #E2E8F0;
+}
+
+.dark-theme .score-indicator {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .weather-text {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .weather-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .main-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.dark-theme .main-vbox {
+    -fx-background-color: transparent;
+}
+
+.dark-theme .header-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .navigation-bar {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .calendar-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .details-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .weather-section {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .stat-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .stat-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-value {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .label {
+    -fx-text-fill: #C9D1D9;
+}
+
+/* ========== BUTTONS ========== */
+.dark-theme .button-primary {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .button-primary:hover {
+    -fx-background-color: #2EA043;
+}
+
+.dark-theme .button-secondary {
+    -fx-background-color: #21262D;
+    -fx-text-fill: #C9D1D9;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .button-secondary:hover {
+    -fx-background-color: #30363D;
+    -fx-border-color: #58A6FF;
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .button-success {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .button-success:hover {
+    -fx-background-color: #2EA043;
+}
+
+.dark-theme .button-bordered {
+    -fx-background-color: transparent;
+    -fx-text-fill: #58A6FF;
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .button-bordered:hover {
+    -fx-background-color: rgba(88, 166, 255, 0.15);
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .action-button {
+    -fx-background-color: #238636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dark-theme .action-button:hover {
+    -fx-background-color: #2EA043;
+}
+
+/* ========== CARDS & PANELS ========== */
+.dark-theme .card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, 4);
+}
+
+.dark-theme .stat-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3);
+}
+
+.dark-theme .stat-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(88, 166, 255, 0.3), 12, 0, 0, 5);
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .stat-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .stat-label {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-value {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .service-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3);
+}
+
+.dark-theme .service-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(88, 166, 255, 0.3), 10, 0, 0, 4);
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .service-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .service-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .service-content {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .chart-container {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .chart-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .chart-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .chart-icon {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .quote-card {
+    -fx-background-color: #1C2128;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .quote-text {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .advice-card {
+    -fx-background-color: #1C2128;
+    -fx-border-color: #238636;
+}
+
+.dark-theme .advice-text {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .risk-box {
+    -fx-background-color: #1C2128;
+    -fx-border-color: #D29922;
+}
+
+.dark-theme .details-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+/* ========== ENHANCED STAT CARDS (DARK) ========== */
+.dark-theme .stat-card-enhanced {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .stat-card-enhanced:hover {
+    -fx-effect: dropshadow(gaussian, rgba(88, 166, 255, 0.3), 12, 0, 0, 5);
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .stat-icon-container {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme .stat-icon-large {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .stat-label-enhanced {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .stat-value-enhanced {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .stat-sublabel {
+    -fx-text-fill: #6E7681;
+}
+
+/* ========== ENHANCED SERVICE CARDS (DARK) ========== */
+.dark-theme .service-card-enhanced {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .service-card-enhanced:hover {
+    -fx-effect: dropshadow(gaussian, rgba(88, 166, 255, 0.15), 10, 0, 0, 4);
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .service-icon-container {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme .service-icon-large {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .service-title-enhanced {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .service-subtitle {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .service-content-enhanced {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== QUICK STATS CARDS (DARK) ========== */
+.dark-theme .quick-stat-card {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .quick-stat-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(88, 166, 255, 0.3), 10, 0, 0, 4);
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .quick-stat-icon {
+    -fx-background-color: #0D1117;
+}
+
+.dark-theme .quick-stat-icon-text {
+    -fx-text-fill: #58A6FF;
+}
+
+.dark-theme .quick-stat-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .quick-stat-content {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+}
+
+.dark-theme .quick-stat-text {
+    -fx-text-fill: #C9D1D9;
+}
+
+.dark-theme .quick-stat-text-muted {
+    -fx-text-fill: #6E7681;
+}
+
+/* ========== ALERTS & RECOMMENDATIONS (DARK) ========== */
+.dark-theme .alert-card {
+    -fx-background-color: #1C2128;
+    -fx-border-color: #D29922;
+}
+
+.dark-theme .alert-icon {
+    -fx-text-fill: #D29922;
+}
+
+.dark-theme .alert-title {
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .alert-message {
+    -fx-text-fill: #8B949E;
+}
+
+.dark-theme .recommendations-container {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #238636;
+}
+
+.dark-theme .recommendations-list {
+    -fx-background-color: transparent;
+}
+
+/* ========== STATUS & FOOTER LABELS (DARK) ========== */
+.dark-theme .status-label.status-success {
+    -fx-text-fill: #238636;
+}
+
+.dark-theme .status-label.status-error {
+    -fx-text-fill: #F85149;
+}
+
+.dark-theme .footer-label {
+    -fx-text-fill: #8B949E;
+}
+
+/* ========== FORMS ========== */
+.dark-theme .form-label {
+    -fx-text-fill: #C9D1D9;
+}
+
+.dark-theme .form-field {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .form-field:focused {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .form-field:hover {
+    -fx-border-color: #484F58;
+}
+
+.dark-theme .text-field {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .text-field:focused {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .date-picker {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+    -fx-text-fill: #F0F6FC;
+}
+
+.dark-theme .date-picker:focused {
+    -fx-border-color: #58A6FF;
+}
+
+.dark-theme .combo-box {
+    -fx-background-color: #0D1117;
+    -fx-border-color: #30363D;
+}
+
+/* =========================================
+   PARCOURS PAGES - LIGHT THEME OVERRIDES
+   ========================================= */
+
+/* --- AJOUTER PARCOURS --- */
+.light-theme.parcours-ajouter Label {
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter .main-title,
+.light-theme.parcours-ajouter VBox > Label:first-child {
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter .main-subtitle,
+.light-theme.parcours-ajouter VBox > Label:nth-child(2) {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter TextField {
+    -fx-background-color: white !important;
+    -fx-border-color: #D1D5DB !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter TextField:disabled {
+    -fx-background-color: #F3F4F6 !important;
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter VBox > HBox > VBox > Label {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter Button {
+    -fx-background-color: #111827 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-ajouter Button.btnSave {
+    -fx-background-color: #00BFA5 !important;
+}
+.light-theme.parcours-ajouter Button.btnCancel {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+.light-theme.parcours-ajouter Separator {
+    -fx-opacity: 0.3 !important;
+}
+
+/* --- MODIFIER PARCOURS --- */
+.light-theme.parcours-modifier Label {
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-modifier .main-title,
+.light-theme.parcours-modifier VBox > Label:first-child {
+    -fx-text-fill: #00BFA5 !important;
+}
+.light-theme.parcours-modifier .main-subtitle,
+.light-theme.parcours-modifier VBox > Label:nth-child(2) {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-modifier TextField {
+    -fx-background-color: white !important;
+    -fx-border-color: #D1D5DB !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-modifier TextField:disabled {
+    -fx-background-color: #F3F4F6 !important;
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-modifier VBox > HBox > VBox > Label {
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-modifier Button {
+    -fx-background-color: #111827 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-modifier Button.btnSave {
+    -fx-background-color: #00BFA5 !important;
+}
+.light-theme.parcours-modifier Button.btnCancel {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+
+/* --- DETAILS PARCOURS --- */
+.light-theme.parcours-details #heroContainer {
+    -fx-background-color: linear-gradient(to bottom, #1a1a2e 0%, #2d3436 100%) !important;
+}
+.light-theme.parcours-details #heroTitle {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-details #heroLocation {
+    -fx-text-fill: #F3F4F6 !important;
+}
+.light-theme.parcours-details #heroDistance,
+.light-theme.parcours-details #heroPubs,
+.light-theme.parcours-details #heroDate {
+    -fx-text-fill: #E9ECEF !important;
+}
+.light-theme.parcours-details .stat-card,
+.light-theme.parcours-details VBox[vbox/vbox] > VBox {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-details .stat-card .label,
+.light-theme.parcours-details VBox > Label:first-child {
+    -fx-text-fill: #ADB5BD !important;
+}
+.light-theme.parcours-details .stat-value,
+.light-theme.parcours-details VBox > Label:nth-child(2) {
+    -fx-text-fill: #2b2d42 !important;
+}
+.light-theme.parcours-details .stat-subtitle,
+.light-theme.parcours-details VBox > Label:last-child {
+    -fx-text-fill: #6C757D !important;
+}
+.light-theme.parcours-details .summary-label {
+    -fx-text-fill: #ADB5BD !important;
+}
+.light-theme.parcours-details .summary-value {
+    -fx-text-fill: #495057 !important;
+}
+.light-theme.parcours-details .section-title {
+    -fx-text-fill: #2b2d42 !important;
+}
+.light-theme.parcours-details .action-button-primary {
+    -fx-background-color: #EBF5FF !important;
+    -fx-text-fill: #4361EE !important;
+}
+.light-theme.parcours-details .action-button-secondary {
+    -fx-background-color: white !important;
+    -fx-border-color: #DEE2E6 !important;
+    -fx-text-fill: #495057 !important;
+}
+.light-theme.parcours-details .distance-label {
+    -fx-text-fill: #00B4D8 !important;
+}
+.light-theme.parcours-details .info-label {
+    -fx-text-fill: #8D99AE !important;
+}
+
+/* --- PARCOURS CARD --- */
+.light-theme.parcours-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-card .nom-label,
+.light-theme.parcours-card Label:first-child {
+    -fx-text-fill: #1e272e !important;
+}
+.light-theme.parcours-card .location-label {
+    -fx-text-fill: #95a5a6 !important;
+}
+.light-theme.parcours-card .distance-label {
+    -fx-text-fill: #00a693 !important;
+}
+.light-theme.parcours-card .date-label {
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-card .pub-count-label {
+    -fx-background-color: #E6F7F6 !important;
+    -fx-text-fill: #00a693 !important;
+}
+.light-theme.parcours-card .info-button {
+    -fx-background-color: #F1F2F6 !important;
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-card .view-button {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-card .edit-button {
+    -fx-background-color: #17c8c8 !important;
+}
+.light-theme.parcours-card .delete-button {
+    -fx-background-color: white !important;
+    -fx-text-fill: #d61111 !important;
+}
+
+/* --- AFFICHER PARCOURS (LIST PAGE) --- */
+.light-theme.parcours-afficher > VBox > VBox:first-child {
+    -fx-background-color: #0eb0e2 !important;
+}
+.light-theme.parcours-afficher > VBox > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher > VBox > VBox:first-child .main-subtitle {
+    -fx-text-fill: #D1D8E0 !important;
+}
+.light-theme.parcours-afficher HBox[style*="#f4f6f8"] {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-afficher VBox[style*="background-color: white"] {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-afficher .filter-title {
+    -fx-text-fill: #00a693 !important;
+}
+.light-theme.parcours-afficher .section-title-bold {
+    -fx-text-fill: #1e272e !important;
+}
+.light-theme.parcours-afficher .label-muted {
+    -fx-text-fill: #808e9b !important;
+}
+.light-theme.parcours-afficher TextField {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-afficher .range-slider {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-afficher .range-label-min {
+    -fx-text-fill: #B2BEC3 !important;
+}
+.light-theme.parcours-afficher .range-label-max {
+    -fx-text-fill: #00a693 !important;
+    -fx-font-weight: bold !important;
+}
+.light-theme.parcours-afficher .btn-primary {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .btn-secondary {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+    -fx-text-fill: #2F3640 !important;
+}
+.light-theme.parcours-afficher .count-label {
+    -fx-text-fill: #485460 !important;
+}
+.light-theme.parcours-afficher .combo-box {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+}
+.light-theme.parcours-afficher .sort-asc-btn {
+    -fx-background-color: white !important;
+    -fx-border-color: #DCDDE1 !important;
+}
+.light-theme.parcours-afficher .sort-desc-btn {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .add-btn {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .chat-window {
+    -fx-background-color: white !important;
+    -fx-border-color: #E1E8ED !important;
+}
+.light-theme.parcours-afficher .chat-header {
+    -fx-background-color: #00a693 !important;
+}
+.light-theme.parcours-afficher .chat-header-label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .chat-scroll {
+    -fx-background-color: #F8FAF9 !important;
+}
+.light-theme.parcours-afficher .chat-messages {
+    -fx-background-color: #F8FAF9 !important;
+}
+.light-theme.parcours-afficher .quick-choices {
+    -fx-background-color: white !important;
+    -fx-border-color: #E8F5F3 !important;
+}
+.light-theme.parcours-afficher .chat-input {
+    -fx-background-color: #F8FAF9 !important;
+    -fx-border-color: #C8E6E0 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-afficher .send-btn {
+    -fx-background-color: #00a693 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher .toggle-chat-btn {
+    -fx-background-color: linear-gradient(to bottom right, #00a693 0%, #008F7A 100%) !important;
+    -fx-text-fill: white !important;
+}
+
+/* --- TOUTES PUBLICATIONS (COMMUNITY FEED) --- */
+.light-theme.parcours-toutes-publications {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-toutes-publications > VBox:first-child {
+    -fx-background-color: #009688 !important;
+}
+.light-theme.parcours-toutes-publications > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-toutes-publications .filter-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-toutes-publications .filter-label {
+    -fx-text-fill: #636e72 !important;
+}
+.light-theme.parcours-toutes-publications .trail-name-label {
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-toutes-publications .combo-box,
+.light-theme.parcours-toutes-publications .text-field {
+    -fx-background-color: white !important;
+    -fx-border-color: #DFE6E9 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-toutes-publications .btn-add {
+    -fx-background-color: #009688 !important;
+    -fx-text-fill: white !important;
+}
+
+/* --- AFFICHER PUBLICATIONS (PUBLICATIONS FOR A SPECIFIC TRAIL) --- */
+.light-theme.parcours-afficher-publications {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-afficher-publications > VBox:first-child {
+    -fx-background-color: #009688 !important;
+}
+.light-theme.parcours-afficher-publications > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-afficher-publications .info-label {
+    -fx-text-fill: #636e72 !important;
+}
+.light-theme.parcours-afficher-publications .trail-name-label {
+    -fx-text-fill: #2d3436 !important;
+    -fx-font-weight: bold !important;
+}
+.light-theme.parcours-afficher-publications .filter-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-afficher-publications .combo-box,
+.light-theme.parcours-afficher-publications .text-field {
+    -fx-background-color: white !important;
+    -fx-border-color: #DFE6E9 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-afficher-publications .btn-add {
+    -fx-background-color: #009688 !important;
+    -fx-text-fill: white !important;
+}
+
+/* --- AJOUTER PUBLICATION (NEW PUBLICATION FORM) --- */
+.light-theme.parcours-ajouter-publication {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-ajouter-publication > VBox:first-child {
+    -fx-background-color: #009688 !important;
+}
+.light-theme.parcours-ajouter-publication > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-ajouter-publication .form-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-ajouter-publication .form-label {
+    -fx-text-fill: #2d3436 !important;
+}
+.light-theme.parcours-ajouter-publication .form-sublabel {
+    -fx-text-fill: #95a5a6 !important;
+}
+.light-theme.parcours-ajouter-publication .text-field,
+.light-theme.parcours-ajouter-publication .text-area {
+    -fx-background-color: white !important;
+    -fx-border-color: #D1D5DB !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-ajouter-publication .text-field:disabled {
+    -fx-background-color: #F3F4F6 !important;
+    -fx-text-fill: #6B7280 !important;
+}
+.light-theme.parcours-ajouter-publication .btn-primary {
+    -fx-background-color: #00BFA5 !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-ajouter-publication .btn-secondary {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+
+/* --- MODIFIER PUBLICATION (EDIT PUBLICATION FORM) --- */
+.light-theme.parcours-modifier-publication {
+    -fx-background-color: #F3F4F6 !important;
+}
+.light-theme.parcours-modifier-publication > VBox:first-child {
+    -fx-background-color: #3498db !important;
+}
+.light-theme.parcours-modifier-publication > VBox:first-child Label {
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-modifier-publication .form-card {
+    -fx-background-color: white !important;
+}
+.light-theme.parcours-modifier-publication .form-label {
+    -fx-text-fill: #636e72 !important;
+}
+.light-theme.parcours-modifier-publication .form-value {
+    -fx-text-fill: #2d3436 !important;
+    -fx-font-weight: bold !important;
+}
+.light-theme.parcours-modifier-publication .text-field,
+.light-theme.parcours-modifier-publication .text-area {
+    -fx-background-color: white !important;
+    -fx-border-color: #DFE6E9 !important;
+    -fx-text-fill: #111827 !important;
+}
+.light-theme.parcours-modifier-publication .btn-save {
+    -fx-background-color: #3498db !important;
+    -fx-text-fill: white !important;
+}
+.light-theme.parcours-modifier-publication .btn-cancel {
+    -fx-background-color: transparent !important;
+    -fx-border-color: #DC2626 !important;
+    -fx-text-fill: #DC2626 !important;
+}
+
+/* ========== PROFILE MODULE CLASSES ========== */
+.form-control {
+    -fx-padding: 10;
+    -fx-background-color: #f5f6fa;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2f3640;
+}
+
+.form-control:focused {
+    -fx-border-color: #00A790;
+}
+
+.dark-theme .form-control {
+    -fx-background-color: #2D333B;
+    -fx-border-color: #444C56;
+    -fx-text-fill: #e1e4e8;
+}
+
+.btn-primary {
+    -fx-background-color: #00A790;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #008B7A;
+}
+
+.btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #00A790;
+    -fx-text-fill: #00A790;
+    -fx-font-weight: bold;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+}
+
+.btn-outline:hover {
+    -fx-background-color: #00A790;
+    -fx-text-fill: white;
+}
+
+.dark-theme .btn-outline {
+    -fx-border-color: #00DBB6;
+    -fx-text-fill: #00DBB6;
+}
+
+.dark-theme .btn-outline:hover {
+    -fx-background-color: #00DBB6;
+    -fx-text-fill: #2D333B;
+}
+
+.role-label {
+    -fx-font-weight: bold;
+    -fx-background-color: #E6F7F4;
+    -fx-text-fill: #00A790;
+    -fx-padding: 4 12;
+    -fx-background-radius: 12;
+}
+
+.dark-theme .role-label {
+    -fx-background-color: #1A3A35;
+    -fx-text-fill: #00DBB6;
+}

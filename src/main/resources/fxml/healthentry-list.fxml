@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.wellora.javafx.controller.HealthentryListController"
+      spacing="15"
+      styleClass="root"
+      prefWidth="1100"
+      prefHeight="1100">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header -->
+    <Label text="📝 Gestion des Entrées Santé" styleClass="header-label"/>
+    
+    <!-- Main Content -->
+     <VBox spacing="10" VBox.vgrow="ALWAYS" styleClass="content-area">
+         
+         <!-- Search Bar -->
+         <HBox spacing="10" styleClass="search-bar">
+             <TextField fx:id="searchField" promptText="Rechercher..." 
+                      prefWidth="200" styleClass="text-field"/>
+             <Button text="🔍" styleClass="button, button-primary" onAction="#search"/>
+             <Button text="📋" styleClass="button, button-secondary" onAction="#refresh"/>
+         </HBox>
+        
+        <!-- Table -->
+        <TableView fx:id="tableView" styleClass="table-view" 
+                  VBox.vgrow="ALWAYS" onMouseClicked="#selectRow">
+            <columns>
+                <TableColumn text="Date" prefWidth="120" fx:id="dateCol"/>
+                <TableColumn text="Poids" prefWidth="80" fx:id="poidsCol"/>
+                <TableColumn text="Glycémie" prefWidth="80" fx:id="glycemieCol"/>
+                <TableColumn text="Tension" prefWidth="80" fx:id="tensionCol"/>
+                <TableColumn text="Sleep" prefWidth="60" fx:id="sommeilCol"/>
+                <TableColumn text="Symptoms" prefWidth="100" fx:id="symptomCol"/>
+            </columns>
+        </TableView>
+        
+        <!-- Action Buttons -->
+                 <HBox spacing="10" alignment="CENTER_LEFT" styleClass="action-bar">
+                     <Button text="➕ Créer" styleClass="button, button-success"
+                             prefWidth="120" onAction="#createNew"/>
+                     
+                     <Button text="✏️ Modifier" styleClass="button, button-primary"
+                             prefWidth="120" onAction="#editSelected"/>
+                     
+                     <Button text="🗑️ Supprimer" styleClass="button, button-danger"
+                             prefWidth="120" onAction="#deleteSelected"/>
+                     
+                     <Button text="🔄 Effacer" styleClass="button, button-secondary"
+                             prefWidth="120" onAction="#clearSelection"/>
+                 </HBox>
+                 
+                 <!-- Status -->
+                 <Label fx:id="statusLabel" text="" styleClass="status-label"/>
+             </VBox>
+             
+             <!-- Footer Instructions -->
+             <Label text="Cliquez sur une ligne pour modifier | Cliquez sur 'Créer' pour ajouter une nouvelle entrée"
+                    styleClass="footer-label"/>
+
+</VBox>

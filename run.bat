@@ -1,0 +1,3 @@
+@echo off
+echo Starting WellCare Application...
+java --module-path "javafx-sdk-17.0.2\lib" --add-modules javafx.controls,javafx.fxml,javafx.web -cp "out;bcrypt-0.10.2.jar;bytes-1.5.0.jar;mysql-connector-j-8.3.0.jar;javax.mail-1.6.2.jar;json-20231013.jar;activation-1.1.1.jar;C:\Users\lenovo\.m2\repository\org\controlsfx\controlsfx\11.2.1\controlsfx-11.2.1.jar;C:\Users\lenovo\.m2\repository\com\sothawo\mapjfx\3.1.0\mapjfx-3.1.0.jar;C:\Users\lenovo\.m2\repository\org\slf4j\slf4j-api\1.7.31\slf4j-api-1.7.31.jar" com.wellcare.Main
