@@ -4,45 +4,124 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9af9db7-2b8d-46b9-827b-8dbc0821e25e" name="Changes" comment="" />
+    <list default="true" id="fec71f13-d9a6-4393-ad63-a20a3231bdeb" name="Changes" comment="structure">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/dao/CommentaireDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/dao/CommentaireDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/dao/ParcoursDeSanteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/dao/ParcoursDeSanteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/dao/PublicationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/dao/PublicationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/AjouterParcoursDeSante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/AjouterParcoursDeSante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/AjouterPublicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/AjouterPublicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/ParcoursCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/ParcoursCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/PublicationCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/PublicationCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/model/commentaire_publication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/model/commentaire_publication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/model/parcours_de_sante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/model/parcours_de_sante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/model/publication_parcours.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/model/publication_parcours.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/ParcoursCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/ParcoursCard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/PublicationCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/PublicationCard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/TestDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/TestDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/TestDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/TestDB.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/AnalyseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/AnalyseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/BaseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/BaseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/DashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthNavigationProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthNavigationProxy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthShellController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/HealthShellController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/JournalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/JournalController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/ObjectifController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/ObjectifController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/PlanificateurController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/controllers/RecettesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/controllers/RecettesController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/FoodLogDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/FoodLogDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthentryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthentryDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthjournalDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/HealthjournalDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/MealPlanDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/MealPlanDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/NutritionGoalDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/NutritionGoalDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/dao/SymptomDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/dao/SymptomDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/WelloraApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/WelloraApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/CalendarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/CalendarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/DashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthentryListController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HealthjournalListController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HomepageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/HomepageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/PredictionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/PredictionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/SymptomListController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthentry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthentry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthjournal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/model/Healthjournal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/model/Symptom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/model/Symptom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/DailyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/DailyPlan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/FoodLog.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/FoodLog.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/MealPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/MealPlan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/NutritionGoal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/NutritionGoal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/models/Recipe.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/models/Recipe.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/AiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/AiService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionApiService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionPdfExportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/NutritionPdfExportService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/RecipeApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/nutrition/services/RecipeApiService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/ApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/ApiService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService$Statistics.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService$Statistics.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PdfExportService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService$PredictionResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService$PredictionResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/services/PredictionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/util/CharsetFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/util/CharsetFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/util/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/util/DBConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/utils/ThemeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/utils/ThemeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CopilotPersistence">
-    <persistenceIdMap>
-      <entry key="_C:/Users/marie/IdeaProjects/wellora" value="3C4ZrMfZ0zgW5utSVHnffCcvrfv" />
-    </persistenceIdMap>
-  </component>
-  <component name="CopilotUserSelectedChatMode">
-    <option name="chatModeId" value="Agent" />
-  </component>
-  <component name="CopilotUserSelectedModel">
-    <selectedModels>
-      <entry key="agent-panel" value="Auto" />
-      <entry key="chat-panel" value="Auto" />
-    </selectedModels>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="JavaFXApplication" />
+        <option value="HTML File" />
         <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="ParcoursSante_ahmed" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;A-RG9&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/A-RG9/pidev-java.git&quot;,
+    &quot;accountId&quot;: &quot;134680fb-b32f-4a06-952d-7032cf12fa37&quot;
+  }
+}</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="3C4ZrMfZ0zgW5utSVHnffCcvrfv" />
+  <component name="ProjectId" id="3BofZBrAdXuo0IbH9GalFQaaksJ" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
@@ -50,52 +129,95 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.WellCareApp.executor": "Run",
-    "Maven.wellora [org.codehaus.mojo:exec-maven-plugin:3.1.0:java].executor": "Run",
-    "Maven.wellora [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
-    "Maven.wellora [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.wellora-backend [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.wellora-merged [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "integration-test2",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/marie/IdeaProjects/wellora/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JUnit.ParcoursDeSanteServicesTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublicationServicesTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pidev [javafx:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pidev [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;integration-test2&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/Ahmed/IdeaProjects/pidev/src/main/java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Ahmed/IdeaProjects/pidev/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ahmed\IdeaProjects\pidev\src\main\resources\fxml" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.wellora.javafx" />
-      <recent name="org.example.service" />
+      <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="wellora-merged" />
+  <component name="RunManager" selected="Maven.pidev [javafx:run]">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="util.Main" />
+      <module name="pidev" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="wellora-merged" />
-      <option name="filePath" />
+    <configuration name="pidev [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="javafx:run" />
+              </list>
+            </option>
+            <option name="multimoduleDir" />
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Maven.pidev [javafx:run]" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Maven.pidev [javafx:run]" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Maven.pidev [javafx:run]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -107,68 +229,247 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b9af9db7-2b8d-46b9-827b-8dbc0821e25e" name="Changes" comment="" />
-      <created>1775647017566</created>
+      <changelist id="fec71f13-d9a6-4393-ad63-a20a3231bdeb" name="Changes" comment="" />
+      <created>1775160399627</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1775647017566</updated>
-      <workItem from="1775655279967" duration="470000" />
-      <workItem from="1775756097365" duration="20824000" />
-      <workItem from="1776107949954" duration="6993000" />
-      <workItem from="1776158579169" duration="41588000" />
-      <workItem from="1776246091093" duration="48248000" />
-      <workItem from="1777222467964" duration="1752000" />
-      <workItem from="1777225288117" duration="43248000" />
-      <workItem from="1777486813768" duration="4439000" />
-      <workItem from="1777491309981" duration="30295000" />
-      <workItem from="1777718427602" duration="1416000" />
-      <workItem from="1777997207792" duration="34592000" />
-      <workItem from="1778084454560" duration="510000" />
-      <workItem from="1778084998182" duration="386000" />
-      <workItem from="1778085406016" duration="435000" />
-      <workItem from="1778085960553" duration="3071000" />
+      <updated>1775160399627</updated>
+      <workItem from="1775160401137" duration="585000" />
+      <workItem from="1775161004113" duration="1151000" />
+      <workItem from="1775162420921" duration="2318000" />
+      <workItem from="1775416884795" duration="614000" />
+      <workItem from="1775464391736" duration="6562000" />
+      <workItem from="1775471369977" duration="6000" />
+      <workItem from="1775502123992" duration="4396000" />
+      <workItem from="1775506744277" duration="181000" />
+      <workItem from="1775652347198" duration="4032000" />
+      <workItem from="1775848671647" duration="234000" />
+      <workItem from="1775848957300" duration="662000" />
+      <workItem from="1775850111417" duration="729000" />
+      <workItem from="1775853964923" duration="3695000" />
+      <workItem from="1775915483038" duration="3404000" />
+      <workItem from="1775931085587" duration="8222000" />
+      <workItem from="1775982821489" duration="11836000" />
+      <workItem from="1776019362020" duration="6070000" />
+      <workItem from="1776068857417" duration="90000" />
+      <workItem from="1776071394334" duration="444000" />
+      <workItem from="1776074783282" duration="185000" />
+      <workItem from="1776085225907" duration="53000" />
+      <workItem from="1776110719639" duration="1609000" />
+      <workItem from="1776171934175" duration="6436000" />
+      <workItem from="1776183893316" duration="3377000" />
+      <workItem from="1776190981122" duration="1098000" />
+      <workItem from="1776261048919" duration="10656000" />
+      <workItem from="1776276500004" duration="703000" />
+      <workItem from="1776330522338" duration="1071000" />
+      <workItem from="1776353831860" duration="92000" />
+      <workItem from="1776871355695" duration="10361000" />
+      <workItem from="1776931812428" duration="1428000" />
+      <workItem from="1776934225287" duration="569000" />
+      <workItem from="1776963588614" duration="5568000" />
+      <workItem from="1777023562784" duration="171000" />
+      <workItem from="1777023802826" duration="391000" />
+      <workItem from="1777027763199" duration="3873000" />
+      <workItem from="1777055535008" duration="5249000" />
+      <workItem from="1777105901414" duration="3164000" />
+      <workItem from="1777469070685" duration="5254000" />
+      <workItem from="1777475778060" duration="3913000" />
+      <workItem from="1777480390021" duration="1975000" />
+      <workItem from="1777486290808" duration="10520000" />
+      <workItem from="1777496952752" duration="30000" />
+      <workItem from="1777536889114" duration="828000" />
+      <workItem from="1777541296665" duration="1467000" />
+      <workItem from="1777741359131" duration="3466000" />
+      <workItem from="1777752962143" duration="1259000" />
+      <workItem from="1777754619061" duration="6263000" />
+      <workItem from="1777760916738" duration="10816000" />
+      <workItem from="1777771778547" duration="377000" />
+      <workItem from="1777772361305" duration="21000" />
+      <workItem from="1777799201573" duration="5484000" />
+      <workItem from="1777834837667" duration="4202000" />
+      <workItem from="1777839072173" duration="272000" />
+      <workItem from="1777839370360" duration="1286000" />
+      <workItem from="1777923775882" duration="2657000" />
+      <workItem from="1777927068284" duration="25000" />
+      <workItem from="1777973727551" duration="4547000" />
+      <workItem from="1778006068119" duration="1006000" />
+      <workItem from="1778009486099" duration="1477000" />
+      <workItem from="1778062787697" duration="5489000" />
+      <workItem from="1778071467915" duration="2840000" />
+      <workItem from="1778074426280" duration="3000" />
+      <workItem from="1778075072693" duration="2540000" />
+      <workItem from="1778080321619" duration="3635000" />
+      <workItem from="1778085261645" duration="195000" />
+      <workItem from="1778085481566" duration="82000" />
+      <workItem from="1778085692875" duration="49000" />
+      <workItem from="1778090973268" duration="3999000" />
+      <workItem from="1778102708158" duration="2648000" />
+      <workItem from="1778105523483" duration="1000" />
+      <workItem from="1778107815732" duration="203000" />
     </task>
+    <task id="LOCAL-00001" summary="tests de ParcoursDeSante">
+      <option name="closed" value="true" />
+      <created>1776174662868</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776174662868</updated>
+    </task>
+    <task id="LOCAL-00002" summary="PublicationParcours_CRUD">
+      <option name="closed" value="true" />
+      <created>1776187400175</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776187400175</updated>
+    </task>
+    <task id="LOCAL-00003" summary="PublicationParcours_interface">
+      <option name="closed" value="true" />
+      <created>1776264318140</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776264318140</updated>
+    </task>
+    <task id="LOCAL-00004" summary="PublicationParcours_interface">
+      <option name="closed" value="true" />
+      <created>1776264385082</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776264385082</updated>
+    </task>
+    <task id="LOCAL-00005" summary="PublicationParcours_tests">
+      <option name="closed" value="true" />
+      <created>1776265394820</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776265394820</updated>
+    </task>
+    <task id="LOCAL-00006" summary="PublicationParcours_tri_filtre">
+      <option name="closed" value="true" />
+      <created>1776273162222</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776273162222</updated>
+    </task>
+    <task id="LOCAL-00007" summary="CommentairePublication">
+      <option name="closed" value="true" />
+      <created>1776874715029</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776874715029</updated>
+    </task>
+    <task id="LOCAL-00008" summary="ParcoursDeSante_Map">
+      <option name="closed" value="true" />
+      <created>1776885045942</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1776885045942</updated>
+    </task>
+    <task id="LOCAL-00009" summary="ParcoursDeSante_details">
+      <option name="closed" value="true" />
+      <created>1776975384620</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776975384620</updated>
+    </task>
+    <task id="LOCAL-00010" summary="ParcoursDeSante_weather">
+      <option name="closed" value="true" />
+      <created>1777031603660</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1777031603660</updated>
+    </task>
+    <task id="LOCAL-00011" summary="ParcoursDeSante_filterBadWords">
+      <option name="closed" value="true" />
+      <created>1777056551947</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1777056551947</updated>
+    </task>
+    <task id="LOCAL-00012" summary="PublicationParcours_hashtag_popular">
+      <option name="closed" value="true" />
+      <created>1777059405840</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1777059405840</updated>
+    </task>
+    <task id="LOCAL-00013" summary="PublicationParcours_community">
+      <option name="closed" value="true" />
+      <created>1777108894186</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1777108894186</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ParcoursDeSante_AiRecommendation">
+      <option name="closed" value="true" />
+      <created>1777475027398</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1777475027398</updated>
+    </task>
+    <task id="LOCAL-00015" summary="amelioration_interface">
+      <option name="closed" value="true" />
+      <created>1777492285396</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1777492285396</updated>
+    </task>
+    <task id="LOCAL-00016" summary="amelioration_interface2">
+      <option name="closed" value="true" />
+      <created>1777496859350</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1777496859350</updated>
+    </task>
+    <task id="LOCAL-00017" summary="structure">
+      <option name="closed" value="true" />
+      <created>1777743679637</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1777743679637</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/Main.java</url>
-          <line>13</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorSearchController.java</url>
-          <line>308</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorPendingController.java</url>
-          <line>186</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorAnalytics.java</url>
-          <line>384</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="tests de ParcoursDeSante" />
+    <MESSAGE value="PublicationParcours_CRUD" />
+    <MESSAGE value="PublicationParcours_interface" />
+    <MESSAGE value="PublicationParcours_tests" />
+    <MESSAGE value="PublicationParcours_tri_filtre" />
+    <MESSAGE value="CommentairePublication" />
+    <MESSAGE value="ParcoursDeSante_Map" />
+    <MESSAGE value="ParcoursDeSante_details" />
+    <MESSAGE value="ParcoursDeSante_weather" />
+    <MESSAGE value="ParcoursDeSante_filterBadWords" />
+    <MESSAGE value="PublicationParcours_hashtag_popular" />
+    <MESSAGE value="PublicationParcours_community" />
+    <MESSAGE value="ParcoursDeSante_AiRecommendation" />
+    <MESSAGE value="amelioration_interface" />
+    <MESSAGE value="amelioration_interface2" />
+    <MESSAGE value="structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="structure" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
-  </component>
-  <component name="github-copilot-workspace">
-    <instructionFileLocations>
-      <option value=".github/instructions" />
-    </instructionFileLocations>
-    <promptFileLocations>
-      <option value=".github/prompts" />
-    </promptFileLocations>
   </component>
 </project>

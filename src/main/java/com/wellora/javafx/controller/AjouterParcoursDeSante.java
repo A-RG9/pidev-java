@@ -181,6 +181,10 @@ public class AjouterParcoursDeSante {
                         datePicker.getValue().toString(),
                         selectedImagePath
                 );
+                com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+                if(currentUser != null) {
+                    p.setOwner_patient_uuid(currentUser.getUuid());
+                }
 
                 ps.ajouter(p);
                 showInformation("Succès", "Le parcours a été ajouté !");

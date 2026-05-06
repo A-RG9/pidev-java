@@ -68,6 +68,10 @@ public class ParcoursCardController {
         }
 
         if (btnDelete != null) {
+            com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+            boolean isOwner = currentUser != null && currentUser.getUuid().equals(p.getOwner_patient_uuid());
+            btnDelete.setVisible(isOwner);
+            btnDelete.setManaged(isOwner);
             btnDelete.setOnAction(event -> {
                 try {
                     ps.supprimer(p.getId());
@@ -79,6 +83,10 @@ public class ParcoursCardController {
         }
 
         if (btnEdit != null) {
+            com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+            boolean isOwner = currentUser != null && currentUser.getUuid().equals(p.getOwner_patient_uuid());
+            btnEdit.setVisible(isOwner);
+            btnEdit.setManaged(isOwner);
             btnEdit.setOnAction(event -> {
                 if (mainController != null) {
                     mainController.loadViewWithData("/fxml/ModifierParcoursDeSante.fxml", p);
