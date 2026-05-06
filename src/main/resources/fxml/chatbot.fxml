@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.javafx.controller.ChatBotController"
+      fx:controller="com.wellcare.javafx.controller.ChatBotController"
       fx:id="rootPane"
       style="-fx-background-color: #f9fafb;">
 
@@ -21,10 +21,10 @@
         <VBox spacing="8">
             <Label text="Assistant Pre-Consultation WellCare"
                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
-            <Label text="Analyse des symptômes, classement de gravité, et conseils simples en attendant."
+            <Label text="Analyse des symptÃ´mes, classement de gravitÃ©, et conseils simples en attendant."
                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #6b7280;"/>
         </VBox>
-        <Button text="Réinitialiser"
+        <Button text="RÃ©initialiser"
                 onAction="#handleReset"
                 style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-size: 13px; -fx-padding: 8 16; -fx-background-radius: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px;"/>
     </HBox>
@@ -39,19 +39,19 @@
 
         <!-- Quick Suggestions -->
         <VBox spacing="8" style="-fx-padding: 16 0 0 0;">
-            <Label text="Questions fréquentes :"
+            <Label text="Questions frÃ©quentes :"
                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
             <HBox spacing="8">
-                <Button text="J'ai mal à la poitrine"
+                <Button text="J'ai mal Ã  la poitrine"
                         onAction="#handleSuggestionClick"
                         style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-size: 12px; -fx-padding: 8 16; -fx-background-radius: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px;"/>
                 <Button text="Je tousse depuis une semaine"
                         onAction="#handleSuggestionClick"
                         style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-size: 12px; -fx-padding: 8 16; -fx-background-radius: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px;"/>
-                <Button text="J'ai de la fièvre"
+                <Button text="J'ai de la fiÃ¨vre"
                         onAction="#handleSuggestionClick"
                         style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-size: 12px; -fx-padding: 8 16; -fx-background-radius: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px;"/>
-                <Button text="Je suis très fatigué"
+                <Button text="Je suis trÃ¨s fatiguÃ©"
                         onAction="#handleSuggestionClick"
                         style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-size: 12px; -fx-padding: 8 16; -fx-background-radius: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px;"/>
             </HBox>
@@ -59,7 +59,7 @@
 
         <!-- Input Area -->
         <HBox spacing="12" style="-fx-padding: 16 0 0 0; -fx-alignment: CENTER_LEFT;">
-            <TextField fx:id="userInput" promptText="Décrivez vos symptômes..."
+            <TextField fx:id="userInput" promptText="DÃ©crivez vos symptÃ´mes..."
                        onKeyPressed="#handleKeyPress"
                        style="-fx-font-size: 14px; -fx-padding: 12 16; -fx-background-radius: 24px; -fx-border-color: #e5e7eb; -fx-border-width: 1px;"
                        HBox.hgrow="ALWAYS"/>
@@ -69,8 +69,9 @@
         </HBox>
 
         <!-- Warning Notice -->
-        <Label text="⚠️ Information importante : Cet assistant aide à l'orientation, pas au diagnostic. En cas d'urgence vitale, appelez le 15 (SAMU)."
+        <Label text="âš ï¸ Information importante : Cet assistant aide Ã  l'orientation, pas au diagnostic. En cas d'urgence vitale, appelez le 15 (SAMU)."
                style="-fx-font-size: 12px; -fx-text-fill: #dc2626; -fx-padding: 12 0 0 0; -fx-wrap-text: true;"
                maxWidth="600"/>
     </VBox>
 </HBox>
+

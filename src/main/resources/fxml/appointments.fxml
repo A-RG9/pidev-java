@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="com.wellora.javafx.controller.AppointmentsController"
+      fx:controller="com.wellcare.javafx.controller.AppointmentsController"
       fx:id="rootPane"
       stylesheets="@../css/styles.css"
       style="-fx-background-color: #f9fafb;">

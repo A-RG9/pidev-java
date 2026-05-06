@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -9,7 +9,7 @@
       style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 1 0 0;"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.javafx.controller.SidebarController">
+      fx:controller="com.wellcare.javafx.controller.SidebarController">
 
     <!-- Logo Section -->
     <HBox spacing="12" style="-fx-padding: 20 20 20 20;">
@@ -43,9 +43,9 @@
         </HBox>
     </VBox>
 
-    <!-- Médecin Section -->
+    <!-- MÃ©decin Section -->
     <VBox spacing="1" style="-fx-padding: 0 8 16 8;">
-        <Label text="MÉDECIN" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
+        <Label text="MÃ‰DECIN" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
         <VBox spacing="1" style="-fx-padding: 0 0 0 24;">
             <Button text="Agenda" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
         </VBox>
@@ -68,17 +68,17 @@
             <VBox fx:id="submenuContainer" spacing="1" visible="true" managed="true">
                 <padding><Insets left="24" top="4"/></padding>
                 <Button text="Mes Rendez-vous" onAction="#handleMenuClick" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
-                <Button text="Trouver un Médecin" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
-                <Button text="Profil Médecin" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                <Button text="Trouver un MÃ©decin" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                <Button text="Profil MÃ©decin" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
                 <Button text="Prendre RDV" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
             </VBox>
         </VBox>
 
-        <!-- Santé Section -->
+        <!-- SantÃ© Section -->
         <VBox spacing="1">
-            <Label text="Santé" style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12;"/>
+            <Label text="SantÃ©" style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 12 10 12;"/>
             <VBox spacing="1" style="-fx-padding: 0 0 0 24;">
-                <Button text="Résultats de Laboratoire" onAction="#handleMenuClick" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
+                <Button text="RÃ©sultats de Laboratoire" onAction="#handleMenuClick" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
                 <Button text="Mes Ordonnances" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
                 <Button text="Notes Cliniques" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
                 <Button text="Assistant IA" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-padding: 8 12 8 12; -fx-background-radius: 6;"/>
@@ -94,9 +94,9 @@
         <Button text="Mon Profil" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
 
         <!-- Settings -->
-        <Button text="Paramètres" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+        <Button text="ParamÃ¨tres" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
 
         <!-- Logout -->
-        <Button text="Déconnexion" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #dc2626; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
+        <Button text="DÃ©connexion" onAction="#handleMenuClick" style="-fx-background-color: transparent; -fx-text-fill: #dc2626; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-padding: 10 12 10 12; -fx-background-radius: 6;"/>
     </VBox>
 </VBox>

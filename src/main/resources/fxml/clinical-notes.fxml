@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.javafx.controller.ClinicalNotesController"
+      fx:controller="com.wellcare.javafx.controller.ClinicalNotesController"
       stylesheets="@../css/styles.css"
       style="-fx-background-color: #f9fafb;">
 
@@ -23,7 +23,7 @@
             <VBox spacing="8" style="-fx-padding: 0 0 20 0; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
                 <Text fx:id="editorTitle" text="Nouvelle Note SOAP"
                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #111827;"/>
-                <Label fx:id="editorMeta" text="15/04/2026 • Dr. Name"
+                <Label fx:id="editorMeta" text="15/04/2026 â€¢ Dr. Name"
                        style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
             </VBox>
 
@@ -37,7 +37,7 @@
                     <Label text="Subjectif"
                            style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                 </HBox>
-                <TextArea fx:id="subjective" promptText="Symptômes rapportés..."
+                <TextArea fx:id="subjective" promptText="SymptÃ´mes rapportÃ©s..."
                           style="-fx-padding: 14 16 14 16; -fx-background-radius: 12; -fx-border-color: #d1d5db; -fx-control-inner-background: #f3f4f6;" wrapText="true"/>
             </VBox>
 
@@ -82,7 +82,7 @@
 
                     <!-- Temperature -->
                     <VBox spacing="6" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                        <Label text="Température (°C)" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                        <Label text="TempÃ©rature (Â°C)" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
                         <TextField fx:id="temperature" text="37"
                                    style="-fx-padding: 10 12 10 12; -fx-background-radius: 8; -fx-border-color: #d1d5db;"/>
                     </VBox>
@@ -106,7 +106,7 @@
                                style="-fx-background-color: #f59e0b; -fx-background-radius: 50%; -fx-alignment: CENTER;">
                         <Label text="A" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;"/>
                     </StackPane>
-                    <Label text="Évaluation"
+                    <Label text="Ã‰valuation"
                            style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                 </HBox>
 
@@ -120,7 +120,7 @@
                             style="-fx-background-color: #f59e0b; -fx-text-fill: white; -fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-font-weight: bold;"/>
                 </HBox>
 
-                <TextArea fx:id="assessment" promptText="Interprétation..."
+                <TextArea fx:id="assessment" promptText="InterprÃ©tation..."
                           style="-fx-padding: 14 16 14 16; -fx-background-radius: 12; -fx-border-color: #d1d5db; -fx-control-inner-background: #f3f4f6;" wrapText="true"/>
             </VBox>
 
@@ -136,21 +136,21 @@
                 </HBox>
 
                 <!-- Medications Section -->
-                <Label text="Ordonnance Médicamenteuse"
+                <Label text="Ordonnance MÃ©dicamenteuse"
                        style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12 0 12 0;"/>
-                <Button text="+ Ajouter un médicament" onAction="#addMedicationCard"
+                <Button text="+ Ajouter un mÃ©dicament" onAction="#addMedicationCard"
                         style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-padding: 10 16 10 16; -fx-background-radius: 8; -fx-font-weight: bold;"/>
                 <VBox fx:id="medicationsContainer" spacing="12"/>
 
                 <!-- Exams Section -->
-                <Label text="Examens Complémentaires"
+                <Label text="Examens ComplÃ©mentaires"
                        style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 24 0 12 0;"/>
                 <Button text="+ Ajouter un examen" onAction="#addExamCard"
                         style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-padding: 10 16 10 16; -fx-background-radius: 8; -fx-font-weight: bold;"/>
                 <VBox fx:id="examsContainer" spacing="12"/>
 
                 <!-- Plan de traitement -->
-                <Label text="Plan de traitement général"
+                <Label text="Plan de traitement gÃ©nÃ©ral"
                        style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 12 0 8 0;"/>
                 <TextArea fx:id="plan" promptText="Recommandations..."
                           style="-fx-padding: 14 16 14 16; -fx-background-radius: 12; -fx-border-color: #d1d5db; -fx-control-inner-background: #f3f4f6;" wrapText="true"/>
@@ -176,7 +176,7 @@
                                       style="-fx-padding: 8 12 8 12; -fx-background-radius: 8; -fx-border-color: #d1d5db;"/>
                         </VBox>
                         <VBox spacing="6" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                            <Label text="Priorité" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                            <Label text="PrioritÃ©" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
                             <ComboBox fx:id="followUpPriority"
                                       style="-fx-padding: 8 12 8 12; -fx-background-radius: 8; -fx-border-color: #d1d5db;"/>
                         </VBox>
@@ -188,9 +188,9 @@
             <HBox spacing="12" style="-fx-padding: 32 0 0 0; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
                 <Button text="Enregistrer" fx:id="saveBtnText" onAction="#saveNoteToServer"
                         style="-fx-background-color: #1e40af; -fx-text-fill: white; -fx-padding: 12 28 12 28; -fx-background-radius: 8; -fx-font-weight: bold;"/>
-                <Button text="Générer Rapport IA" onAction="#generateAIReport"
+                <Button text="GÃ©nÃ©rer Rapport IA" onAction="#generateAIReport"
                         style="-fx-background-color: #8b5cf6; -fx-text-fill: white; -fx-padding: 12 28 12 28; -fx-background-radius: 8; -fx-font-weight: bold;"/>
-                <Button text="Réinitialiser" onAction="#resetForm"
+                <Button text="RÃ©initialiser" onAction="#resetForm"
                         style="-fx-background-color: #e5e7eb; -fx-text-fill: #374151; -fx-padding: 12 28 12 28; -fx-background-radius: 8; -fx-font-weight: bold;"/>
             </HBox>
 

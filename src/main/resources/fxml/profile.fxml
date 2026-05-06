@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -14,7 +14,7 @@
                 <Insets left="30.0" right="30.0" />
             </padding>
             <children>
-                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #00A790;" text="🏥 WellCare" />
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #00A790;" text="ðŸ¥ WellCare" />
                 <Region HBox.hgrow="ALWAYS" />
                 <Button fx:id="backButton" styleClass="btn-outline" text="Back to Dashboard" />
             </children>
@@ -33,7 +33,7 @@
                     <children>
                         <StackPane>
                             <Circle fill="linear-gradient(to bottom right, #00A790, #00DBB6)" radius="60.0" />
-                            <Label style="-fx-font-size: 40px; -fx-text-fill: white;" text="👤" />
+                            <Label style="-fx-font-size: 40px; -fx-text-fill: white;" text="ðŸ‘¤" />
                         </StackPane>
                         
                         <VBox alignment="CENTER" spacing="5.0">
@@ -48,13 +48,13 @@
                         <VBox spacing="15.0">
                             <children>
                                 <Label fx:id="memberSinceLabel" style="-fx-text-fill: #6c757d; -fx-font-size: 13px;" text="Member since: 2024-04-15" />
-                                <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13px;" text="Status: Active Account ✅" />
+                                <Label style="-fx-text-fill: #6c757d; -fx-font-size: 13px;" text="Status: Active Account âœ…" />
                             </children>
                         </VBox>
                         
                         <Region VBox.vgrow="ALWAYS" />
                         
-                        <Button fx:id="manage2FAButton" styleClass="btn-outline" text="🔒 Manage 2FA" maxWidth="Infinity" />
+                        <Button fx:id="manage2FAButton" styleClass="btn-outline" text="ðŸ”’ Manage 2FA" maxWidth="Infinity" />
                         <Button styleClass="btn-outline" text="Change Password" maxWidth="Infinity" />
                     </children>
                 </VBox>
@@ -177,3 +177,4 @@
         </HBox>
     </children>
 </VBox>
+

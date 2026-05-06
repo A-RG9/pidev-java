@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.javafx.controller.LabResultsController"
+      fx:controller="com.wellcare.javafx.controller.LabResultsController"
       fx:id="rootPane"
       stylesheets="@../css/styles.css"
       style="-fx-background-color: #f9fafb;">
@@ -27,9 +27,9 @@
                            style="-fx-font-size: 20px; -fx-text-fill: #00A790;"/>
                 </StackPane>
                 <VBox spacing="4">
-                    <Text text="Résultats de Laboratoire" 
+                    <Text text="RÃ©sultats de Laboratoire" 
                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #111827;"/>
-                    <Text text="Vos analyses et résultats d'examens" 
+                    <Text text="Vos analyses et rÃ©sultats d'examens" 
                           style="-fx-font-size: 14px; -fx-fill: #6b7280;"/>
                 </VBox>
             </HBox>
@@ -40,3 +40,4 @@
         </VBox>
     </ScrollPane>
 </HBox>
+

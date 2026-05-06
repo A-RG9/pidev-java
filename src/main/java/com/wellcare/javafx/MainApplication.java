@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -86,6 +88,80 @@ public class MainApplication extends Application {
     }
 
     /**
+     * Creates the user_sessions table with engine/charset matching the existing users table.
+     * This ensures foreign key compatibility without modifying the existing users table.
+     */
+    private void createUserSessionsTableWithCompatibleSettings(Statement stmt) throws SQLException {
+        // Try to detect the users table's storage engine and charset
+        String usersEngine = "InnoDB"; // default fallback
+        String usersCharset = "utf8mb4"; // default fallback
+        String uuidCharset = null;
+        String uuidCollation = null;
+        
+        try {
+            // Query the users table status for engine and table-level charset
+            String sql = "SHOW TABLE STATUS WHERE Name = 'users'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                if (rs.next()) {
+                    String engine = rs.getString("Engine");
+                    String collation = rs.getString("Collation");
+                    
+                    if (engine != null) {
+                        usersEngine = engine;
+                    }
+                    if (collation != null && collation.contains("_")) {
+                        usersCharset = collation.split("_")[0];
+                    }
+                    
+                    System.out.println("Detected users table: Engine=" + usersEngine + ", Charset=" + usersCharset);
+                }
+            }
+            
+            // Query the uuid column's specific character set and collation
+            String colSql = """
+                SELECT CHARACTER_SET_NAME, COLLATION_NAME
+                FROM information_schema.COLUMNS
+                WHERE TABLE_SCHEMA = DATABASE()
+                  AND TABLE_NAME = 'users'
+                  AND COLUMN_NAME = 'uuid'
+                """;
+            try (ResultSet rs = stmt.executeQuery(colSql)) {
+                if (rs.next()) {
+                    uuidCharset = rs.getString("CHARACTER_SET_NAME");
+                    uuidCollation = rs.getString("COLLATION_NAME");
+                    System.out.println("Detected users.uuid: Charset=" + uuidCharset + ", Collation=" + uuidCollation);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Could not detect users table settings, using defaults: " + e.getMessage());
+        }
+        
+        // Build CREATE TABLE with detected settings
+        // Explicitly set user_uuid column charset/collation to match users.uuid exactly
+        String columnDef = "user_uuid VARCHAR(36)";
+        if (uuidCharset != null) {
+            columnDef += " CHARACTER SET " + uuidCharset;
+        }
+        if (uuidCollation != null) {
+            columnDef += " COLLATE " + uuidCollation;
+        }
+        columnDef += " NOT NULL";
+        
+        String createSql = String.format("""
+            CREATE TABLE IF NOT EXISTS user_sessions (
+                id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                %s,
+                token VARCHAR(255) UNIQUE NOT NULL,
+                expires_at TIMESTAMP NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE CASCADE
+            ) ENGINE=%s DEFAULT CHARSET=%s
+            """, columnDef, usersEngine, usersCharset);
+        
+        stmt.execute(createSql);
+    }
+
+    /**
      * Creates the database tables if they don't exist.
      */
     private void initializeDatabaseSchema(Connection conn) throws Exception {
@@ -138,17 +214,9 @@ public class MainApplication extends Application {
                 )
                 """);
 
-            // Create user_sessions table (wrapped separately - FK may fail on Symfony-generated schemas)
+            // Create user_sessions table with compatible settings (wrapped separately - FK may fail on Symfony-generated schemas)
             try {
-                stmt.execute("""
-                    CREATE TABLE IF NOT EXISTS user_sessions (
-                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        user_uuid VARCHAR(36) NOT NULL,
-                        token VARCHAR(255) UNIQUE NOT NULL,
-                        expires_at TIMESTAMP NOT NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-                    """);
+                createUserSessionsTableWithCompatibleSettings(stmt);
             } catch (Exception e) {
                 System.out.println("Note: user_sessions table already exists or could not be created (non-fatal): " + e.getMessage());
             }

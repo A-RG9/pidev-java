@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.wellora.javafx.controller.BookingController"
+      fx:controller="com.wellcare.javafx.controller.BookingController"
       fx:id="rootPane"
       style="-fx-background-color: #f9fafb;">
 
@@ -97,12 +97,12 @@
                           style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-padding: 16;">
                         <StackPane minWidth="64" minHeight="64"
                                    style="-fx-background-color: #d1fae5; -fx-background-radius: 12;">
-                            <Label text="👨‍⚕️" style="-fx-font-size: 28px;"/>
+                            <Label text="ðŸ‘¨â€âš•ï¸" style="-fx-font-size: 28px;"/>
                         </StackPane>
                         <VBox spacing="4">
                             <Label text="Dr. Mariem Fakhfakh"
                                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
-                            <Label text="General Medicine · Tunis"
+                            <Label text="General Medicine Â· Tunis"
                                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                         </VBox>
                     </HBox>
@@ -117,21 +117,21 @@
                             <VBox fx:id="firstVisitBtn" spacing="8" alignment="TOP_LEFT" HBox.hgrow="ALWAYS"
                                   style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-border-color: #00A790; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;"
                                   onMouseClicked="#selectFirstVisit">
-                                <Label text="👤" style="-fx-font-size: 24px;"/>
+                                <Label text="ðŸ‘¤" style="-fx-font-size: 24px;"/>
                                 <Label text="First Visit" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                                 <Label text="Initial consultation" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
                             </VBox>
                             <VBox fx:id="followUpBtn" spacing="8" alignment="TOP_LEFT" HBox.hgrow="ALWAYS"
                                   style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;"
                                   onMouseClicked="#selectFollowUp">
-                                <Label text="🔄" style="-fx-font-size: 24px;"/>
+                                <Label text="ðŸ”„" style="-fx-font-size: 24px;"/>
                                 <Label text="Follow-up" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                                 <Label text="Continuing care" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
                             </VBox>
                             <VBox fx:id="emergencyBtn" spacing="8" alignment="TOP_LEFT" HBox.hgrow="ALWAYS"
                                   style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;"
                                   onMouseClicked="#selectEmergency">
-                                <Label text="🚑" style="-fx-font-size: 24px;"/>
+                                <Label text="ðŸš‘" style="-fx-font-size: 24px;"/>
                                 <Label text="Emergency" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                                 <Label text="Urgent care needed" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
                             </VBox>
@@ -149,23 +149,23 @@
                                   style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-border-color: #00A790; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;"
                                   onMouseClicked="#selectInPerson">
                                 <HBox spacing="8" alignment="CENTER_LEFT">
-                                    <Label text="🏥" style="-fx-font-size: 22px;"/>
+                                    <Label text="ðŸ¥" style="-fx-font-size: 22px;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Label text="120 TND" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
                                 </HBox>
                                 <Label text="In-Person" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
-                                <Label text="At clinic • 45 min" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                                <Label text="At clinic â€¢ 45 min" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
                             </VBox>
                             <VBox fx:id="phoneBtn" spacing="6" alignment="TOP_LEFT" HBox.hgrow="ALWAYS"
                                   style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;"
                                   onMouseClicked="#selectPhone">
                                 <HBox spacing="8" alignment="CENTER_LEFT">
-                                    <Label text="📞" style="-fx-font-size: 22px;"/>
+                                    <Label text="ðŸ“ž" style="-fx-font-size: 22px;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Label text="70 TND" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
                                 </HBox>
                                 <Label text="Phone Call" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
-                                <Label text="Call • 20 min" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                                <Label text="Call â€¢ 20 min" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
                             </VBox>
                         </HBox>
                     </VBox>
@@ -208,10 +208,10 @@
                         </HBox>
                         <VBox spacing="12" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 1; -fx-padding: 16;">
                             <HBox alignment="CENTER_LEFT" spacing="12">
-                                <Button text="‹" onAction="#previousMonth"
+                                <Button text="â€¹" onAction="#previousMonth"
                                         style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-size: 18px; -fx-background-radius: 8; -fx-border-width: 0; -fx-min-width: 34; -fx-min-height: 34; -fx-cursor: hand;"/>
                                 <Label fx:id="monthYearText" text="June 2026" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #111827;" HBox.hgrow="ALWAYS"/>
-                                <Button text="›" onAction="#nextMonth"
+                                <Button text="â€º" onAction="#nextMonth"
                                         style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-size: 18px; -fx-background-radius: 8; -fx-border-width: 0; -fx-min-width: 34; -fx-min-height: 34; -fx-cursor: hand;"/>
                             </HBox>
                             <GridPane fx:id="calendarGrid" hgap="4" vgap="4"/>
@@ -239,7 +239,7 @@
                         </HBox>
                     </VBox>
                     <HBox spacing="12" alignment="TOP_LEFT" style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-padding: 16;">
-                        <Label text="🌐" style="-fx-font-size: 16px;"/>
+                        <Label text="ðŸŒ" style="-fx-font-size: 16px;"/>
                         <VBox spacing="2">
                             <Label text="Timezone" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                             <Label text="All times are shown in your timezone. The doctor is in Africa/Tunis (UTC+1)." wrapText="true"
@@ -262,7 +262,7 @@
                 <VBox fx:id="step3Pane" visible="false" managed="false" spacing="24">
                     <Label text="Patient Information" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                     <HBox spacing="12" alignment="TOP_LEFT" style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-border-color: #a7f3d0; -fx-border-radius: 12; -fx-border-width: 1; -fx-padding: 16;">
-                        <Label text="ℹ" style="-fx-font-size: 18px; -fx-text-fill: #00A790;"/>
+                        <Label text="â„¹" style="-fx-font-size: 18px; -fx-text-fill: #00A790;"/>
                         <VBox spacing="2">
                             <Label text="Information from your profile" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #006B5C;"/>
                             <Label text="We've pre-filled your details. Please review and update if needed." wrapText="true"
@@ -350,7 +350,7 @@
                             <Label text="Mode" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                             <Label fx:id="summaryMode" text="In-Person" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                             <Label text="Date &amp; Time" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
-                            <Label fx:id="summaryDateTime" text="—" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                            <Label fx:id="summaryDateTime" text="â€”" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                             <Label text="Duration" GridPane.columnIndex="0" GridPane.rowIndex="5" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                             <Label fx:id="summaryDuration" text="30 minutes" GridPane.columnIndex="1" GridPane.rowIndex="5" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                             <Label text="Patient" GridPane.columnIndex="0" GridPane.rowIndex="6" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
@@ -368,7 +368,7 @@
                         </GridPane>
                     </VBox>
                     <HBox spacing="12" alignment="TOP_LEFT" style="-fx-background-color: #fffbeb; -fx-background-radius: 12; -fx-border-color: #fde68a; -fx-border-radius: 12; -fx-border-width: 1; -fx-padding: 16;">
-                        <Label text="⚠" style="-fx-font-size: 18px; -fx-text-fill: #d97706;"/>
+                        <Label text="âš " style="-fx-font-size: 18px; -fx-text-fill: #d97706;"/>
                         <VBox spacing="4">
                             <Label text="Cancellation Policy" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #92400e;"/>
                             <Label text="Free cancellation up to 24 hours before the appointment. Cancellations within 24 hours may incur a 50% fee. Medical emergencies are exempt with proper documentation." wrapText="true"
@@ -380,17 +380,17 @@
                         <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-border-color: #00A790; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;">
                             <RadioButton fx:id="cardPayment" toggleGroup="$paymentGroup" selected="true"/>
                             <VBox spacing="2" HBox.hgrow="ALWAYS"><Label text="Credit/Debit Card" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/><Label text="Pay securely with your card" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/></VBox>
-                            <Label text="💳" style="-fx-font-size: 24px;"/>
+                            <Label text="ðŸ’³" style="-fx-font-size: 24px;"/>
                         </HBox>
                         <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;">
                             <RadioButton fx:id="insurancePayment" toggleGroup="$paymentGroup"/>
                             <VBox spacing="2" HBox.hgrow="ALWAYS"><Label text="Insurance" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/><Label text="Direct billing to your insurance" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/></VBox>
-                            <Label text="📄" style="-fx-font-size: 24px;"/>
+                            <Label text="ðŸ“„" style="-fx-font-size: 24px;"/>
                         </HBox>
                         <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-border-width: 2; -fx-padding: 16; -fx-cursor: hand;">
                             <RadioButton fx:id="cashPayment" toggleGroup="$paymentGroup"/>
                             <VBox spacing="2" HBox.hgrow="ALWAYS"><Label text="Pay at Clinic" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #111827;"/><Label text="Pay during your visit" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/></VBox>
-                            <Label text="💵" style="-fx-font-size: 24px;"/>
+                            <Label text="ðŸ’µ" style="-fx-font-size: 24px;"/>
                         </HBox>
                     </VBox>
                     <HBox spacing="10" alignment="TOP_LEFT">
@@ -401,9 +401,9 @@
                     <VBox spacing="10">
                         <Label text="Add to Calendar" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
                         <HBox spacing="10">
-                            <Button text="🔵  Google" onAction="#addToGoogleCalendar" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 36; -fx-cursor: hand;"/>
-                            <Button text="🍎  Apple" onAction="#addToAppleCalendar" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 36; -fx-cursor: hand;"/>
-                            <Button text="🪟  Outlook" onAction="#addToOutlookCalendar" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 36; -fx-cursor: hand;"/>
+                            <Button text="ðŸ”µ  Google" onAction="#addToGoogleCalendar" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 36; -fx-cursor: hand;"/>
+                            <Button text="ðŸŽ  Apple" onAction="#addToAppleCalendar" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 36; -fx-cursor: hand;"/>
+                            <Button text="ðŸªŸ  Outlook" onAction="#addToOutlookCalendar" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 36; -fx-cursor: hand;"/>
                         </HBox>
                     </VBox>
 
@@ -420,9 +420,9 @@
                 <!-- Navigation Buttons (Back / Continue) -->
                 <Separator style="-fx-background-color: #e5e7eb; -fx-padding: 16 0 0 0;"/>
                 <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 0 0;">
-                    <Button fx:id="backBtn" text="← Back" onAction="#previousStep" visible="false" managed="false"
+                    <Button fx:id="backBtn" text="â† Back" onAction="#previousStep" visible="false" managed="false"
                             style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-border-width: 1; -fx-pref-height: 42; -fx-padding: 0 20; -fx-cursor: hand;"/>
-                    <Button fx:id="nextBtn" text="Continue →" onAction="#nextStep"
+                    <Button fx:id="nextBtn" text="Continue â†’" onAction="#nextStep"
                             style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 42; -fx-padding: 0 24; -fx-cursor: hand;"/>
                     <!-- The submit button in the navigation bar is hidden; we use the one inside step4Pane -->
                     <Button fx:id="submitBtn" visible="false" managed="false"/>
