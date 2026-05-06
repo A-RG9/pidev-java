@@ -8,7 +8,7 @@ import java.util.List;
 
 // DATA ACCESS OBJECT: Handles database operations
 public class FoodLogDAO {
-    private static final String URL = "jdbc:mariadb://localhost:3306/wellora";
+    private static final String URL = "jdbc:mysql://localhost:3306/wellora";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 

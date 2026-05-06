@@ -53,14 +53,6 @@ public class ToutesPublicationsController extends BaseController {
             btnBackToTrails.setOnAction(e -> goBack());
         }
 
-        if (btnWritePublication != null) btnWritePublication.setVisible(false);
-        if (btnAddPublication != null) btnAddPublication.setVisible(false);
-
-
-        if (btnBackToTrails != null) {
-            btnBackToTrails.setOnMouseClicked(e -> goBack());
-        }
-
 
         if (comboExperience != null) {
             comboExperience.getItems().clear();
@@ -239,20 +231,6 @@ public class ToutesPublicationsController extends BaseController {
 
     @Override
     public Parent getRoot() {
-        return publicationsContainer != null ? publicationsContainer.getScene() != null ? publicationsContainer.getScene().getRoot() : null : null;
-    }
-
-    @Override
-    public void goBack() {
-        try {
-            FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-            Parent shellRoot = shellLoader.load();
-            HealthShellController shellCtrl = shellLoader.getController();
-            shellCtrl.setContentWithProxy("/fxml/AfficherParcours.fxml");
-            Stage stage = (Stage) ((Node) btnBackToTrails).getScene().getWindow();
-            stage.getScene().setRoot(shellRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return publicationsContainer;
     }
 }

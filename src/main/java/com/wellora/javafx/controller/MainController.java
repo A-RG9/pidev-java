@@ -1,19 +1,25 @@
 package com.wellora.javafx.controller;
 
 import com.wellora.javafx.WelloraApp;
+import com.wellora.controllers.HealthNavigationProxy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
+import com.wellcare.javafx.util.SceneManager;
+import com.wellcare.javafx.model.User;
 
 /**
  * MainController - Handles application navigation
  * Uses dynamic content switching (no new windows)
  */
-public class MainController {
+public class MainController implements SceneManager.UserAware {
+
+    private User currentUser;
 
     // Navigation Buttons - Health
     @FXML private Button btnHome;
@@ -39,14 +45,42 @@ public class MainController {
     @FXML private Button btnAjouterParcours;
     @FXML private Button btnToutesPublications;
 
+    // User Profile Labels
+    @FXML private Label lblUserInitials;
+    @FXML private Label lblUserName;
+    @FXML private Label lblUserEmail;
+
     // Content Area - where views are loaded
     @FXML private VBox contentArea;
 
     // Current active button for styling
     private Button activeButton;
+
+    // Proxy for health sub-module navigation from homepage quick-links
+    private HealthNavigationProxy healthProxy;
     
     // Theme tracking - shared across all views
     private static boolean isDarkTheme = false;
+
+    @Override
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+        if (user != null) {
+            String firstName = user.getFirstName() != null ? user.getFirstName() : "";
+            String lastName = user.getLastName() != null ? user.getLastName() : "";
+            String fullName = firstName + " " + lastName;
+            
+            lblUserName.setText(fullName.trim().isEmpty() ? "Utilisateur" : fullName);
+            lblUserEmail.setText(user.getEmail() != null ? user.getEmail() : "");
+            
+            String initials = "";
+            if (!firstName.isEmpty()) initials += firstName.substring(0, 1).toUpperCase();
+            if (!lastName.isEmpty()) initials += lastName.substring(0, 1).toUpperCase();
+            if (initials.isEmpty()) initials = "U";
+            
+            lblUserInitials.setText(initials);
+        }
+    }
 
     /**
      * Initialize - called automatically after FXML load
@@ -66,8 +100,6 @@ public class MainController {
             }
         });
         
-        // Set home as active by default
-        setActiveButton(btnHome);
         showHomepage();
     }
 
@@ -209,6 +241,12 @@ public class MainController {
             contentArea.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             javafx.scene.Parent view = loader.load();
+            
+            // Remove the inner sidebar if the view is a BorderPane
+            if (view instanceof javafx.scene.layout.BorderPane) {
+                ((javafx.scene.layout.BorderPane) view).setLeft(null);
+            }
+            
             contentArea.getChildren().add(view);
             applyCurrentTheme();
         } catch (Exception e) {
@@ -220,6 +258,27 @@ public class MainController {
     /**
      * Logout action
      */
+    @FXML
+    public void showProfile() {
+        // Reset all buttons' active state
+        setActiveButton(null);
+        try {
+            // Load profile view manually to inject UserService
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/fxml/profile.fxml"));
+            javafx.scene.Parent view = loader.load();
+            com.wellcare.javafx.controller.auth.ProfileController profileCtrl = loader.getController();
+            profileCtrl.setUserService(new com.wellcare.javafx.service.UserService());
+            profileCtrl.setMainController(this);
+            
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(view);
+            applyThemeToContentArea();
+        } catch (Exception e) {
+            System.err.println("❌ Error navigating to Profile: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void logout() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -255,28 +314,35 @@ public class MainController {
      * Apply the current theme to the entire scene
      */
     private void applyCurrentTheme() {
-        if (contentArea != null && contentArea.getScene() != null) {
-            Scene scene = contentArea.getScene();
-            var root = scene.getRoot();
-            
-            // Clear existing stylesheets
-            scene.getStylesheets().clear();
-            
-            // Add base CSS file: style.css (includes all dashboard and theme styles)
+        if (contentArea == null) return;
+        
+        Scene scene = contentArea.getScene();
+        if (scene == null) return;
+        
+        Parent root = scene.getRoot();
+        if (root == null) return;
+        
+        // Clear existing stylesheets
+        scene.getStylesheets().clear();
+        
+        // Add base CSS file: style.css (includes all dashboard and theme styles)
+        try {
             scene.getStylesheets().add(WelloraApp.class.getResource("/com/wellora/css/style.css").toExternalForm());
-            
-            // Apply dark-theme or light-theme class to BorderPane root
-            root.getStyleClass().remove("dark-theme");
-            root.getStyleClass().remove("light-theme");
-            if (isDarkTheme) {
-                root.getStyleClass().add("dark-theme");
-            } else {
-                root.getStyleClass().add("light-theme");
-            }
-            
-            // Apply theme to content area children (but not recursively adding theme classes to each child)
-            applyThemeToContentArea();
+        } catch (Exception e) {
+            System.err.println("Could not load style.css: " + e.getMessage());
         }
+        
+        // Apply theme class to root
+        root.getStyleClass().removeAll("dark-theme", "light-theme");
+        root.getStyleClass().add(isDarkTheme ? "dark-theme" : "light-theme");
+        
+        // Update the theme button text if it exists
+        if (btnTheme != null) {
+            btnTheme.setText(isDarkTheme ? "🌙  Dark Mode" : "☀️  Light Mode");
+        }
+        
+        // Apply theme to content area
+        applyThemeToContentArea();
     }
     
     /**
@@ -285,15 +351,13 @@ public class MainController {
      * so the theme class must be on an ancestor, not on the elements themselves.
      */
     private void applyThemeToContentArea() {
-        if (contentArea != null && contentArea.getScene() != null) {
-            Scene scene = contentArea.getScene();
-            var root = scene.getRoot();
-            
+        if (contentArea != null) {
             // Remove theme classes from all children of contentArea
             // We only want the theme class on the root, not on individual content nodes
             contentArea.getChildren().forEach(child -> {
-                child.getStyleClass().remove("dark-theme");
-                child.getStyleClass().remove("light-theme");
+                if (child != null) {
+                    child.getStyleClass().removeAll("dark-theme", "light-theme");
+                }
             });
         }
     }
@@ -313,7 +377,7 @@ public class MainController {
      * Load FXML view into the content area
      * @param fxmlPath path to FXML file
      */
-    private void loadView(String fxmlPath) {
+    public void loadView(String fxmlPath) {
         try {
             // Clear current content
             contentArea.getChildren().clear();
@@ -321,6 +385,11 @@ public class MainController {
             // Load new view - use WelloraApp class for stable classpath reference
             FXMLLoader loader = new FXMLLoader(WelloraApp.class.getResource(fxmlPath));
             Parent view = loader.load();
+
+            // Remove the inner sidebar if the view is a BorderPane
+            if (view instanceof javafx.scene.layout.BorderPane) {
+                ((javafx.scene.layout.BorderPane) view).setLeft(null);
+            }
 
             // Add to content area
             contentArea.getChildren().add(view);
@@ -330,8 +399,13 @@ public class MainController {
 
             // If the loaded controller has a setMainController method, pass reference
             Object controller = loader.getController();
-            if (controller instanceof HomepageController) {
-                ((HomepageController) controller).setMainController(this);
+            if (controller instanceof HomepageController hc) {
+                hc.setMainController(this);
+                // Inject proxy so homepage quick-links can navigate
+                if (healthProxy == null) {
+                    healthProxy = new HealthNavigationProxy(contentArea, null);
+                }
+                hc.setMainControllerProxy(healthProxy);
             } else if (controller instanceof DashboardController) {
                 ((DashboardController) controller).setMainController(this);
             } else if (controller instanceof HealthjournalListController) {
@@ -344,6 +418,8 @@ public class MainController {
                 ((CalendarController) controller).setMainController(this);
             } else if (controller instanceof PredictionController) {
                 ((PredictionController) controller).setMainController(this);
+            } else if (controller instanceof AfficherParcoursController) {
+                ((AfficherParcoursController) controller).setMainController(this);
             }
 
         } catch (Exception e) {

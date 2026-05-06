@@ -2587,3 +2587,77 @@ ScrollPane, VBox, HBox, GridPane, BorderPane, AnchorPane {
     -fx-border-color: #DC2626 !important;
     -fx-text-fill: #DC2626 !important;
 }
+
+/* ========== PROFILE MODULE CLASSES ========== */
+.form-control {
+    -fx-padding: 10;
+    -fx-background-color: #f5f6fa;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2f3640;
+}
+
+.form-control:focused {
+    -fx-border-color: #00A790;
+}
+
+.dark-theme .form-control {
+    -fx-background-color: #2D333B;
+    -fx-border-color: #444C56;
+    -fx-text-fill: #e1e4e8;
+}
+
+.btn-primary {
+    -fx-background-color: #00A790;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #008B7A;
+}
+
+.btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #00A790;
+    -fx-text-fill: #00A790;
+    -fx-font-weight: bold;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+}
+
+.btn-outline:hover {
+    -fx-background-color: #00A790;
+    -fx-text-fill: white;
+}
+
+.dark-theme .btn-outline {
+    -fx-border-color: #00DBB6;
+    -fx-text-fill: #00DBB6;
+}
+
+.dark-theme .btn-outline:hover {
+    -fx-background-color: #00DBB6;
+    -fx-text-fill: #2D333B;
+}
+
+.role-label {
+    -fx-font-weight: bold;
+    -fx-background-color: #E6F7F4;
+    -fx-text-fill: #00A790;
+    -fx-padding: 4 12;
+    -fx-background-radius: 12;
+}
+
+.dark-theme .role-label {
+    -fx-background-color: #1A3A35;
+    -fx-text-fill: #00DBB6;
+}

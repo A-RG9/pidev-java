@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.wellcare.javafx.util.SceneManager;
+
 public class RecettesController extends BaseController {
 
     @FXML private BorderPane rootPane;
@@ -35,11 +37,21 @@ public class RecettesController extends BaseController {
     private final RecipeApiService recipeApi = new RecipeApiService();
     private final MealPlanDAO dao = new MealPlanDAO();
 
-    private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
-    private final int currentUserId = 1;
+    private String currentUserUuid = "";
+    private int currentUserId = 0;
 
     @FXML
     public void initialize() {
+        // Load logged-in user from SceneManager
+        com.wellcare.javafx.model.User loggedUser = SceneManager.getInstance().getCurrentUser();
+        if (loggedUser != null) {
+            currentUserUuid = loggedUser.getUuid();
+            // currentUserId fallback
+            currentUserId = Math.abs(currentUserUuid.hashCode() % 100000);
+        } else {
+            System.err.println("⚠️ RecettesController: No logged-in user found in SceneManager!");
+        }
+
         btnChercher.setOnAction(e -> fetchRecipes());
     }
 

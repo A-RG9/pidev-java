@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.dashboard.AdminDashboardController">
+    <children>
+        <!-- Header -->
+        <HBox styleClass="navbar" VBox.vgrow="NEVER">
+            <children>
+                <Label styleClass="navbar-brand" text="🏥 WellCare Admin" />
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox spacing="15.0" alignment="CENTER_RIGHT">
+                    <children>
+                        <Button styleClass="btn-notification" text="🔔" />
+                        <MenuButton fx:id="userMenu" styleClass="user-menu">
+                            <items>
+                                <MenuItem fx:id="profileMenuItem" text="👤 Profile" />
+                                <MenuItem fx:id="settingsMenuItem" text="⚙️ Settings" />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="logoutMenuItem" text="🚪 Logout" />
+                            </items>
+                        </MenuButton>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+
+        <!-- Main Content -->
+        <HBox VBox.vgrow="ALWAYS">
+            <!-- Sidebar -->
+            <VBox styleClass="sidebar" HBox.hgrow="NEVER">
+                <children>
+                    <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets top="20.0" right="0.0" bottom="20.0" left="0.0" />
+                        </VBox.margin>
+                        <children>
+                            <Label styleClass="sidebar-title" text="Admin Panel" />
+                            <Button fx:id="dashboardBtn" styleClass="sidebar-item, sidebar-item.active" text="📊 Dashboard" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="usersBtn" styleClass="sidebar-item" text="👥 User Management" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="professionalsBtn" styleClass="sidebar-item" text="👨‍⚕️ Professionals" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="verificationBtn" styleClass="sidebar-item" text="✅ Verification Queue" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="reportsBtn" styleClass="sidebar-item" text="📈 Reports" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="systemBtn" styleClass="sidebar-item" text="⚙️ System Settings" maxWidth="1.7976931348623157E308" />
+                        </children>
+                    </VBox>
+                </children>
+            </VBox>
+
+            <!-- Main Dashboard Content -->
+            <VBox fx:id="mainContent" HBox.hgrow="ALWAYS" spacing="20.0">
+                <VBox.margin>
+                    <Insets top="30.0" right="30.0" bottom="30.0" left="30.0" />
+                </VBox.margin>
+                <children>
+                    <!-- Page Title -->
+                    <HBox alignment="CENTER_LEFT">
+                        <children>
+                            <Label fx:id="pageTitleLabel" styleClass="page-title" text="Admin Dashboard" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label fx:id="currentDateLabel" styleClass="current-date" />
+                        </children>
+                    </HBox>
+
+                    <!-- System Overview Cards -->
+                    <GridPane hgap="20.0" vgap="20.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" />
+                            <ColumnConstraints hgrow="ALWAYS" />
+                            <ColumnConstraints hgrow="ALWAYS" />
+                            <ColumnConstraints hgrow="ALWAYS" />
+                        </columnConstraints>
+
+                        <!-- Total Users -->
+                        <VBox styleClass="card, stat-card" GridPane.columnIndex="0" spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label styleClass="stat-icon" text="👥" />
+                                        <VBox spacing="5.0">
+                                            <children>
+                                                <Label fx:id="totalUsersLabel" styleClass="stat-number" text="1,234" />
+                                                <Label styleClass="stat-label" text="Total Users" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                                <ProgressBar fx:id="usersProgress" styleClass="stat-progress" progress="0.75" />
+                                <Label styleClass="stat-change" text="+12% from last month" />
+                            </children>
+                        </VBox>
+
+                        <!-- Active Professionals -->
+                        <VBox styleClass="card, stat-card" GridPane.columnIndex="1" spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label styleClass="stat-icon" text="👨‍⚕️" />
+                                        <VBox spacing="5.0">
+                                            <children>
+                                                <Label fx:id="activeProfessionalsLabel" styleClass="stat-number" text="89" />
+                                                <Label styleClass="stat-label" text="Active Professionals" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                                <ProgressBar fx:id="professionalsProgress" styleClass="stat-progress" progress="0.65" />
+                                <Label styleClass="stat-change" text="+8% from last month" />
+                            </children>
+                        </VBox>
+
+                        <!-- Pending Verifications -->
+                        <VBox styleClass="card, stat-card" GridPane.columnIndex="2" spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label styleClass="stat-icon" text="⏳" />
+                                        <VBox spacing="5.0">
+                                            <children>
+                                                <Label fx:id="pendingVerificationsLabel" styleClass="stat-number" text="12" />
+                                                <Label styleClass="stat-label" text="Pending Verifications" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                                <ProgressBar fx:id="verificationsProgress" styleClass="stat-progress" progress="0.3" />
+                                <Label styleClass="stat-change, stat-change.warning" text="Requires attention" />
+                            </children>
+                        </VBox>
+
+                        <!-- System Health -->
+                        <VBox styleClass="card, stat-card" GridPane.columnIndex="3" spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label styleClass="stat-icon" text="💚" />
+                                        <VBox spacing="5.0">
+                                            <children>
+                                                <Label styleClass="stat-number" text="98%" />
+                                                <Label styleClass="stat-label" text="System Health" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                                <ProgressBar styleClass="stat-progress, stat-progress.success" progress="0.98" />
+                                <Label styleClass="stat-change, stat-change.success" text="All systems operational" />
+                            </children>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- Charts and Recent Activity -->
+                    <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                        <!-- User Registration Chart -->
+                        <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15.0">
+                            <children>
+                                <Label styleClass="card-title" text="User Registration Trends" />
+                                <LineChart fx:id="registrationChart" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <CategoryAxis label="Month" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Registrations" />
+                                    </yAxis>
+                                </LineChart>
+                            </children>
+                        </VBox>
+
+                        <!-- Recent Activity -->
+                        <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15.0">
+                            <children>
+                                <Label styleClass="card-title" text="Recent Activity" />
+                                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <VBox styleClass="activity-item">
+                                            <children>
+                                                <Label styleClass="activity-title" text="New professional registration: Dr. Sarah Johnson" />
+                                                <Label styleClass="activity-time" text="2 hours ago" />
+                                            </children>
+                                        </VBox>
+                                        <VBox styleClass="activity-item">
+                                            <children>
+                                                <Label styleClass="activity-title" text="Professional verification completed: Coach Mike Chen" />
+                                                <Label styleClass="activity-time" text="4 hours ago" />
+                                            </children>
+                                        </VBox>
+                                        <VBox styleClass="activity-item">
+                                            <children>
+                                                <Label styleClass="activity-title" text="System backup completed successfully" />
+                                                <Label styleClass="activity-time" text="1 day ago" />
+                                            </children>
+                                        </VBox>
+                                        <VBox styleClass="activity-item">
+                                            <children>
+                                                <Label styleClass="activity-title" text="User account deactivated: patient@example.com" />
+                                                <Label styleClass="activity-time" text="2 days ago" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                                <Button styleClass="btn, btn-secondary" text="View All Activity" maxWidth="1.7976931348623157E308" />
+                            </children>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Quick Actions -->
+                    <VBox styleClass="card" spacing="15.0">
+                        <children>
+                            <Label styleClass="card-title" text="Quick Actions" />
+                            <HBox spacing="15.0">
+                                <children>
+                                    <Button styleClass="btn, btn-primary" text="👥 Manage Users" />
+                                    <Button styleClass="btn, btn-success" text="✅ Verify Professionals" />
+                                    <Button styleClass="btn, btn-warning" text="📊 Generate Report" />
+                                    <Button styleClass="btn, btn-info" text="⚙️ System Settings" />
+                                </children>
+                            </HBox>
+                        </children>
+                    </VBox>
+                </children>
+            </VBox>
+        </HBox>
+    </children>
+</VBox>

@@ -63,6 +63,11 @@ public class AfficherParcoursController {
     private boolean isAscending = false;
 
     private ParcoursRecommendationService aiService;
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     private double userLat = 37.2744;
     private double userLon = 9.8739;
@@ -92,21 +97,11 @@ public class AfficherParcoursController {
 
         if (btnAdd != null) {
             btnAdd.setOnAction(event -> {
-                try {
-                    FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
-                    Parent shellRoot = shellLoader.load();
-                    HealthShellController shellCtrl = shellLoader.getController();
-
-                    shellCtrl.setContentWithProxy("/fxml/AjouterParcoursDeSante.fxml");
-
-                    String cssPath = getClass().getResource("/com/wellora/css/style.css").toExternalForm();
-                    if (!shellRoot.getStylesheets().contains(cssPath)) {
-                        shellRoot.getStylesheets().add(cssPath);
-                    }
-
-                    Stage stage = (Stage) btnAdd.getScene().getWindow();
-                    stage.getScene().setRoot(shellRoot);
-                } catch (IOException e) { e.printStackTrace(); }
+                if (mainController != null) {
+                    mainController.showAjouterParcours();
+                } else {
+                    System.err.println("MainController is null, cannot navigate to AjouterParcours");
+                }
             });
         }
         if (btnSearch != null) btnSearch.setOnAction(event -> applyFilters());

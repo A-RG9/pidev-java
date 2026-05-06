@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="rootPane" styleClass="root"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.wellcare.ui.LandingController">
+
+    <!-- Top Navigation Bar -->
+    <top>
+        <VBox styleClass="navbar">
+            <HBox alignment="CENTER" prefHeight="90.0" spacing="40.0" maxWidth="1280">
+                <HBox alignment="CENTER_LEFT" spacing="12.0" HBox.hgrow="ALWAYS">
+                    <Label styleClass="navbar-brand" text="WellCare Connect" />
+                </HBox>
+                
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Button fx:id="homeBtn" onAction="#handleHome" styleClass="nav-link" text="Accueil" />
+                    <Button fx:id="loginBtn" onAction="#handleLogin" styleClass="nav-link" text="Connexion" />
+                    <Button fx:id="registerBtn" onAction="#handleRegister" styleClass="nav-link" text="Inscription" />
+                    <Button fx:id="professionalBtn" onAction="#handleProfessional" styleClass="nav-link" text="Professionnel" />
+                </HBox>
+
+                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                    <ToggleButton fx:id="themeToggle" onAction="#toggleTheme" styleClass="btn-outline" text="Clair">
+                        <graphic>
+                            <Label fx:id="themeIcon" text="☀️" style="-fx-font-size: 14;"/>
+                        </graphic>
+                    </ToggleButton>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fx:id="mainScrollPane" fitToWidth="true" styleClass="main-content" vbarPolicy="NEVER">
+            <VBox spacing="100.0" alignment="TOP_CENTER" styleClass="content-container">
+                
+                <!-- HERO SECTION -->
+                <HBox spacing="60.0" alignment="CENTER" maxWidth="1200">
+                    <!-- Left Column: Text -->
+                    <VBox spacing="25.0" HBox.hgrow="ALWAYS" maxWidth="600">
+                        <Label styleClass="hero-badge" text="✨ Plateforme santé &amp; téléconsultation" />
+                        <VBox spacing="10.0">
+                            <Label styleClass="hero-title" text="Votre santé," />
+                            <Label styleClass="hero-title, hero-title-accent" text="connectée." />
+                            <Label styleClass="hero-title" text="Simple." />
+                        </VBox>
+                        <Label styleClass="hero-description" 
+                               text="WellCare Connect centralise le suivi médical, les rendez-vous et la téléconsultation pour les patients et les professionnels de santé." 
+                               wrapText="true" />
+                        
+                        <HBox spacing="15.0" style="-fx-padding: 10 0 0 0;">
+                            <Button fx:id="startPatientBtn" onAction="#handleStartPatient" styleClass="btn-primary" text="Commencer (Patient)" />
+                            <Button fx:id="startProfessionalBtn" onAction="#handleStartProfessional" styleClass="btn-secondary" text="Je suis un professionnel" />
+                        </HBox>
+                        
+                        <Hyperlink fx:id="loginLink" onAction="#handleLoginLink" styleClass="nav-link" text="Déjà inscrit ? Se connecter" 
+                                   style="-fx-font-size: 15; -fx-padding: 5 0;"/>
+                    </VBox>
+
+                    <!-- Right Column: Dashboard Mockup -->
+                    <StackPane styleClass="mockup-container" HBox.hgrow="NEVER" minWidth="480" minHeight="540">
+                        <VBox spacing="20.0" alignment="TOP_CENTER">
+                            <!-- Top Card -->
+                            <VBox styleClass="mockup-card" spacing="15.0">
+                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                    <Label text="❤️" styleClass="stat-icon, stat-icon-green" />
+                                    <VBox>
+                                        <Label text="Tableau de bord" style="-fx-font-weight: 700; -fx-font-size: 16;"/>
+                                        <Label text="Aperçu patient" style="-fx-text-fill: #94A3B8; -fx-font-size: 12;"/>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label text="• Live" style="-fx-text-fill: #10B981; -fx-font-size: 12; -fx-font-weight: 600;"/>
+                                </HBox>
+                                
+                                <Separator />
+                                
+                                <HBox spacing="20.0">
+                                    <VBox HBox.hgrow="ALWAYS" spacing="5.0">
+                                        <Label text="Prochain rendez-vous" style="-fx-text-fill: #64748B; -fx-font-size: 13;"/>
+                                        <Label text="Consultation — Dr. A. Ben Ali" style="-fx-font-weight: 600;"/>
+                                    </VBox>
+                                    <Label text="Jeu 10:30" style="-fx-text-fill: #94A3B8; -fx-font-size: 13;"/>
+                                </HBox>
+                            </VBox>
+
+                            <!-- Stats Row -->
+                            <HBox spacing="20.0">
+                                <VBox styleClass="mockup-card" HBox.hgrow="ALWAYS" spacing="8.0">
+                                    <Label text="🩸 Tension" style="-fx-text-fill: #EF4444; -fx-font-weight: 600;"/>
+                                    <Label fx:id="stat1Label" text="12/8" style="-fx-font-size: 24; -fx-font-weight: 800;"/>
+                                </VBox>
+                                <VBox styleClass="mockup-card" HBox.hgrow="ALWAYS" spacing="8.0">
+                                    <Label text="⚡ Fréquence" style="-fx-text-fill: #10B981; -fx-font-weight: 600;"/>
+                                    <Label fx:id="stat2Label" text="72" style="-fx-font-size: 24; -fx-font-weight: 800;"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- Hidden stats for animation controller -->
+                            <Label fx:id="stat3Label" visible="false" managed="false" text="98" />
+                            <Label fx:id="stat4Label" visible="false" managed="false" text="24" />
+                            <Button fx:id="ctaPatientBtn" visible="false" managed="false" />
+                            <Button fx:id="ctaProBtn" visible="false" managed="false" />
+
+                            <!-- Tip card -->
+                            <VBox styleClass="mockup-card" style="-fx-background-color: #10B981; -fx-padding: 15;" spacing="8.0">
+                                <Label text="💡 Conseil du jour" style="-fx-text-fill: white; -fx-font-weight: 700;"/>
+                                <Label text="Hydratez-vous régulièrement et marchez 20 minutes." style="-fx-text-fill: white; -fx-font-size: 13;" wrapText="true"/>
+                            </VBox>
+                        </VBox>
+                    </StackPane>
+                </HBox>
+
+                <!-- USAGE EXPERIENCE SECTION -->
+                <VBox spacing="50.0" alignment="CENTER" maxWidth="1200">
+                    <VBox spacing="10.0" alignment="CENTER">
+                        <Label styleClass="section-title" text="Une expérience pensée pour l'usage réel" />
+                        <Label text="Des parcours rapides, des interfaces claires, et une base UI cohérente." 
+                               style="-fx-font-size: 18; -fx-text-fill: #64748B;" />
+                    </VBox>
+                    
+                    <HBox spacing="30.0" alignment="CENTER">
+                        <VBox styleClass="feature-card" HBox.hgrow="ALWAYS">
+                            <Label styleClass="icon-box" text="📄" />
+                            <Label styleClass="section-title" text="Dossiers médicaux" style="-fx-font-size: 20;" />
+                            <Label text="Historique complet, documents et informations centralisées." wrapText="true" style="-fx-text-fill: #64748B;" />
+                        </VBox>
+                        <VBox styleClass="feature-card" HBox.hgrow="ALWAYS">
+                            <Label styleClass="icon-box" text="📅" />
+                            <Label styleClass="section-title" text="Rendez-vous" style="-fx-font-size: 20;" />
+                            <Label text="Planification fluide avec rappels automatiques. Plus d'efficacité." wrapText="true" style="-fx-text-fill: #64748B;" />
+                        </VBox>
+                        <VBox styleClass="feature-card" HBox.hgrow="ALWAYS">
+                            <Label styleClass="icon-box" text="📹" />
+                            <Label styleClass="section-title" text="Téléconsultation" style="-fx-font-size: 20;" />
+                            <Label text="Accès rapide aux échanges vidéo et au suivi à distance." wrapText="true" style="-fx-text-fill: #64748B;" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- HOW IT WORKS -->
+                <HBox spacing="80.0" alignment="CENTER" maxWidth="1200" style="-fx-padding: 60 0;">
+                    <VBox spacing="40.0" HBox.hgrow="ALWAYS">
+                        <Label styleClass="section-title" text="Comment ça marche" />
+                        <Label text="Un parcours en 3 étapes, optimisé pour une expérience fluide." style="-fx-font-size: 16; -fx-text-fill: #64748B;"/>
+                        
+                        <VBox spacing="30.0">
+                            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                                <Label text="1" styleClass="step-number" alignment="CENTER" />
+                                <VBox>
+                                    <Label text="Créez votre compte" style="-fx-font-weight: 700; -fx-font-size: 16;"/>
+                                    <Label text="Patient ou professionnel, avec un onboarding guidé." style="-fx-text-fill: #64748B;"/>
+                                </VBox>
+                            </HBox>
+                            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                                <Label text="2" styleClass="step-number" alignment="CENTER" />
+                                <VBox>
+                                    <Label text="Organisez votre suivi" style="-fx-font-weight: 700; -fx-font-size: 16;"/>
+                                    <Label text="Rendez-vous, historique et centralisation des données." style="-fx-text-fill: #64748B;"/>
+                                </VBox>
+                            </HBox>
+                            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                                <Label text="3" styleClass="step-number" alignment="CENTER" />
+                                <VBox>
+                                    <Label text="Consultez &amp; collaborez" style="-fx-font-weight: 700; -fx-font-size: 16;"/>
+                                    <Label text="Échanges sécurisés avec vos praticiens favoris." style="-fx-text-fill: #64748B;"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                    
+                    <VBox spacing="20.0" minWidth="400">
+                         <Label text="Pourquoi c'est plus simple" style="-fx-font-weight: 700; -fx-font-size: 18;"/>
+                         <GridPane hgap="20.0" vgap="20.0">
+                            <VBox styleClass="feature-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label text="⚡ UX" style="-fx-text-fill: #10B981; -fx-font-weight: 800;"/>
+                                <Label text="Moins de friction" style="-fx-font-size: 12;"/>
+                            </VBox>
+                            <VBox styleClass="feature-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label text="🎨 UI" style="-fx-text-fill: #3b82f6; -fx-font-weight: 800;"/>
+                                <Label text="Cohérence visuelle" style="-fx-font-size: 12;"/>
+                            </VBox>
+                            <VBox styleClass="feature-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                <Label text="💻 FRONT" style="-fx-text-fill: #8b5cf6; -fx-font-weight: 800;"/>
+                                <Label text="Réutilisable" style="-fx-font-size: 12;"/>
+                            </VBox>
+                            <VBox styleClass="feature-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <Label text="🌙 THÈME" style="-fx-text-fill: #10b981; -fx-font-weight: 800;"/>
+                                <Label text="Light/Dark" style="-fx-font-size: 12;"/>
+                            </VBox>
+                         </GridPane>
+                    </VBox>
+                </HBox>
+
+                <!-- TESTIMONIALS -->
+                <VBox spacing="50.0" alignment="CENTER" maxWidth="1200" style="-fx-padding: 0 0 100 0;">
+                    <VBox spacing="10.0" alignment="CENTER">
+                        <Label styleClass="section-title" text="Conçu pour patients &amp; professionnels" />
+                        <Label text="Une interface qui réduit la charge mentale, pas l'inverse." 
+                               style="-fx-font-size: 18; -fx-text-fill: #64748B;" />
+                    </VBox>
+                    
+                    <HBox spacing="30.0" alignment="CENTER">
+                        <VBox styleClass="testimonial-card" HBox.hgrow="ALWAYS" spacing="15.0" maxWidth="380">
+                            <Label text="⭐⭐⭐⭐⭐" styleClass="stars" />
+                            <Label text="&quot;Je retrouve rapidement mon historique et mes prochains rendez-vous. L'interface est intuitive et moderne.&quot;" 
+                                   wrapText="true" style="-fx-font-style: italic; -fx-text-fill: #475569;" />
+                            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                                <Label text="KM" style="-fx-background-color: #10B981; -fx-text-fill: white; -fx-padding: 8; -fx-background-radius: 20; -fx-font-weight: 700;"/>
+                                <VBox>
+                                    <Label text="Karim M." style="-fx-font-weight: 700;"/>
+                                    <Label text="Patient" style="-fx-text-fill: #94A3B8; -fx-font-size: 12;"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                        
+                        <VBox styleClass="testimonial-card" HBox.hgrow="ALWAYS" spacing="15.0" maxWidth="380">
+                            <Label text="⭐⭐⭐⭐⭐" styleClass="stars" />
+                            <Label text="&quot;Le parcours d'inscription est clair, étape par étape. En tant que médecin, j'apprécie la simplicité de l'interface.&quot;" 
+                                   wrapText="true" style="-fx-font-style: italic; -fx-text-fill: #475569;" />
+                            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                                <Label text="SB" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-padding: 8; -fx-background-radius: 20; -fx-font-weight: 700;"/>
+                                <VBox>
+                                    <Label text="Dr. Sarah B." style="-fx-font-weight: 700;"/>
+                                    <Label text="Médecin généraliste" style="-fx-text-fill: #94A3B8; -fx-font-size: 12;"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                        
+                        <VBox styleClass="testimonial-card" HBox.hgrow="ALWAYS" spacing="15.0" maxWidth="380">
+                            <Label text="⭐⭐⭐⭐⭐" styleClass="stars" />
+                            <Label text="&quot;Design propre et cohérent. Le mode sombre est parfait pour consulter mes dossiers le soir.&quot;" 
+                                   wrapText="true" style="-fx-font-style: italic; -fx-text-fill: #475569;" />
+                            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                                <Label text="LM" style="-fx-background-color: #8b5cf6; -fx-text-fill: white; -fx-padding: 8; -fx-background-radius: 20; -fx-font-weight: 700;"/>
+                                <VBox>
+                                    <Label text="Leila M." style="-fx-font-weight: 700;"/>
+                                    <Label text="Infirmière" style="-fx-text-fill: #94A3B8; -fx-font-size: 12;"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- FOOTER -->
+                <VBox style="-fx-background-color: white; -fx-padding: 60 100;">
+                    <HBox spacing="100.0" alignment="CENTER" maxWidth="1200">
+                        <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="navbar-brand" text="WellCare Connect" />
+                            <Label text="Plateforme de santé et téléconsultation pour patients et professionnels de santé. Simplifiez votre suivi médical." 
+                                   wrapText="true" style="-fx-text-fill: #64748B; -fx-max-width: 300;"/>
+                        </VBox>
+                        
+                        <HBox spacing="80.0">
+                            <VBox spacing="15.0">
+                                <Label text="NAVIGATION" style="-fx-font-weight: 700; -fx-font-size: 12; -fx-text-fill: #94A3B8;"/>
+                                <Hyperlink text="Accueil" onAction="#handleHome" styleClass="nav-link" style="-fx-padding: 0;"/>
+                                <Hyperlink text="Connexion" onAction="#handleLogin" styleClass="nav-link" style="-fx-padding: 0;"/>
+                                <Hyperlink text="Inscription" onAction="#handleRegister" styleClass="nav-link" style="-fx-padding: 0;"/>
+                                <Hyperlink fx:id="footerProfessionalLink" text="Professionnel" onAction="#handleProfessional" styleClass="nav-link" style="-fx-padding: 0;"/>
+                            </VBox>
+                            <VBox spacing="15.0">
+                                <Label text="LÉGAL" style="-fx-font-weight: 700; -fx-font-size: 12; -fx-text-fill: #94A3B8;"/>
+                                <Hyperlink text="Conditions d'utilisation" styleClass="nav-link" style="-fx-padding: 0;"/>
+                                <Hyperlink text="Politique de confidentialité" styleClass="nav-link" style="-fx-padding: 0;"/>
+                                <Hyperlink text="Contact" styleClass="nav-link" style="-fx-padding: 0;"/>
+                            </VBox>
+                        </HBox>
+                    </HBox>
+                    <Separator style="-fx-padding: 40 0 20 0;"/>
+                    <Label text="© 2026 WellCare Connect. Tous droits réservés. | Thématique Santé &amp; Bien-être (ODD 3)" opacity="0.5" />
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

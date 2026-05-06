@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.wellora.utils.ThemeManager;
+import com.wellcare.javafx.util.SceneManager;
 
 public class JournalController extends BaseController {
 
@@ -41,11 +42,19 @@ public class JournalController extends BaseController {
     @FXML private TableColumn<FoodLog, Double> colProteines, colGlucides, colLipides;
 
     private final FoodLogDAO dao = new FoodLogDAO();
-    private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
+    private String currentUserUuid = "";
     private ObservableList<FoodLog> foodLogsList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Load logged-in user's UUID from SceneManager
+        com.wellcare.javafx.model.User loggedUser = SceneManager.getInstance().getCurrentUser();
+        if (loggedUser != null) {
+            currentUserUuid = loggedUser.getUuid();
+        } else {
+            System.err.println("⚠️ JournalController: No logged-in user found in SceneManager!");
+        }
+
         // --- TEST DE CONNEXION BDD ---
         try {
             java.sql.Connection conn = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/wellora", "root", "");

@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 import com.wellora.utils.ThemeManager;
+import com.wellcare.javafx.util.SceneManager;
 
 public class PlanificateurController extends BaseController {
 
@@ -44,14 +45,25 @@ public class PlanificateurController extends BaseController {
     private final NutritionApiService apiService = new NutritionApiService();
     private final FoodLogDAO foodLogDao = new FoodLogDAO();
 
-    // Identifiants
-    private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
-    private final int currentUserId = 1;
+    // Identifiants - loaded dynamically from logged-in user
+    private String currentUserUuid = "";
+    private int currentUserId = 0;
 
     private ObservableList<MealPlan> planList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Load logged-in user's UUID from SceneManager
+        com.wellcare.javafx.model.User loggedUser = SceneManager.getInstance().getCurrentUser();
+        if (loggedUser != null) {
+            currentUserUuid = loggedUser.getUuid();
+            // currentUserId is used as a fallback; derive from UUID hashcode if needed
+            currentUserId = (currentUserUuid != null && !currentUserUuid.isEmpty())
+                ? Math.abs(currentUserUuid.hashCode() % 100000) : 1;
+        } else {
+            System.err.println("⚠️ PlanificateurController: No logged-in user found in SceneManager!");
+        }
+
         if (ThemeManager.isDarkMode) {
             btnThemeToggle.setSelected(true);
             btnThemeToggle.setText("☀️ Mode Clair");

@@ -47,6 +47,13 @@ public abstract class BaseController {
 
     @FXML public void goBack() {
         try {
+            Parent rootNode = getRoot();
+            if (rootNode == null || rootNode.getScene() == null) {
+                System.err.println("❌ Cannot goBack: Root or Scene is null");
+                return;
+            }
+            Stage stage = (Stage) rootNode.getScene().getWindow();
+
             FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
             Parent shellRoot = shellLoader.load();
             HealthShellController shellCtrl = shellLoader.getController();
@@ -65,7 +72,6 @@ public abstract class BaseController {
                 nextBtn.setText("☀️ Mode Clair");
             }
 
-            Stage stage = (Stage) ((Node)btnThemeToggle).getScene().getWindow();
             stage.getScene().setRoot(shellRoot);
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,6 +80,13 @@ public abstract class BaseController {
 
     @FXML public void goToGlobalFeed() {
         try {
+            Parent rootNode = getRoot();
+            if (rootNode == null || rootNode.getScene() == null) {
+                System.err.println("❌ Cannot goToGlobalFeed: Root or Scene is null");
+                return;
+            }
+            Stage stage = (Stage) rootNode.getScene().getWindow();
+
             FXMLLoader shellLoader = new FXMLLoader(getClass().getResource("/com/wellora/views/HealthShell.fxml"));
             Parent shellRoot = shellLoader.load();
             HealthShellController shellCtrl = shellLoader.getController();
@@ -92,7 +105,6 @@ public abstract class BaseController {
                 nextBtn.setText("☀️ Mode Clair");
             }
 
-            Stage stage = (Stage) ((Node)btnThemeToggle).getScene().getWindow();
             stage.getScene().setRoot(shellRoot);
         } catch (IOException e) {
             e.printStackTrace();

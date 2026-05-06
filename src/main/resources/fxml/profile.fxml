@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="700.0" prefWidth="1000.0" spacing="0" styleClass="root"  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellcare.javafx.controller.auth.ProfileController">
+    <children>
+
+
+        <HBox spacing="30.0" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </padding>
+            <children>
+                <!-- Left Sidebar: Profile Summary -->
+                <VBox prefWidth="300.0" spacing="25.0" styleClass="form-card" alignment="TOP_CENTER">
+                    <padding>
+                        <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+                    </padding>
+                    <children>
+                        <StackPane>
+                            <Circle fill="linear-gradient(to bottom right, #00A790, #00DBB6)" radius="60.0" />
+                            <Label style="-fx-font-size: 40px; -fx-text-fill: white;" text="👤" />
+                        </StackPane>
+                        
+                        <VBox alignment="CENTER" spacing="5.0">
+                            <children>
+                                <Label fx:id="fullNameLabel" style="-fx-font-size: 22px; -fx-font-weight: bold; " text="John Doe" />
+                                <Label fx:id="roleLabel" styleClass="role-label" text="Patient" />
+                            </children>
+                        </VBox>
+
+                        <Separator />
+
+                        <VBox spacing="15.0">
+                            <children>
+                                <Label fx:id="memberSinceLabel" style=" -fx-font-size: 13px;" text="Member since: 2024-04-15" />
+                                <Label style=" -fx-font-size: 13px;" text="Status: Active Account ✅" />
+                            </children>
+                        </VBox>
+                        
+                        <Region VBox.vgrow="ALWAYS" />
+                        
+                        <Button fx:id="manage2FAButton" styleClass="btn-outline" text="🔒 Manage 2FA" maxWidth="Infinity" />
+                        <Button fx:id="changePasswordButton" styleClass="btn-outline" text="Change Password" maxWidth="Infinity" onAction="#handleChangePassword" />
+                    </children>
+                </VBox>
+
+                <!-- Right Side: Edit Form -->
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" HBox.hgrow="ALWAYS">
+                    <content>
+                        <VBox spacing="30.0" styleClass="form-card">
+                            <padding>
+                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                            </padding>
+                            <children>
+                                <Text style="-fx-font-size: 24px; -fx-font-weight: bold; " text="Personal Information" />
+                                
+                                <GridPane hgap="25.0" vgap="20.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <children>
+                                        <VBox spacing="8.0" GridPane.columnIndex="0">
+                                            <children>
+                                                <Label styleClass="form-label" text="First Name" />
+                                                <TextField fx:id="firstNameField" styleClass="form-control" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="8.0" GridPane.columnIndex="1">
+                                            <children>
+                                                <Label styleClass="form-label" text="Last Name" />
+                                                <TextField fx:id="lastNameField" styleClass="form-control" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="8.0" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label styleClass="form-label" text="Email Address" />
+                                                <TextField fx:id="emailField" styleClass="form-control" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label styleClass="form-label" text="Phone Number" />
+                                                <TextField fx:id="phoneField" styleClass="form-control" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="8.0" GridPane.rowIndex="2">
+                                            <children>
+                                                <Label styleClass="form-label" text="Birthdate" />
+                                                <DatePicker fx:id="birthdatePicker" maxWidth="Infinity" styleClass="form-control" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <children>
+                                                <Label styleClass="form-label" text="Home Address" />
+                                                <TextField fx:id="addressField" styleClass="form-control" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </GridPane>
+
+                                <!-- Professional Section -->
+                                <VBox fx:id="professionalSection" spacing="30.0">
+                                    <children>
+                                        <Separator />
+                                        <Text style="-fx-font-size: 24px; -fx-font-weight: bold; " text="Professional Details" />
+                                        
+                                        <GridPane hgap="25.0" vgap="20.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <children>
+                                                <VBox spacing="8.0">
+                                                    <children>
+                                                        <Label styleClass="form-label" text="Specialty" />
+                                                        <TextField fx:id="specialiteField" styleClass="form-control" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="8.0" GridPane.columnIndex="1">
+                                                    <children>
+                                                        <Label styleClass="form-label" text="Experience (Years)" />
+                                                        <TextField fx:id="experienceField" styleClass="form-control" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="8.0" GridPane.rowIndex="1">
+                                                    <children>
+                                                        <Label styleClass="form-label" text="Education" />
+                                                        <TextField fx:id="educationField" styleClass="form-control" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                    <children>
+                                                        <Label styleClass="form-label" text="Consultation Price" />
+                                                        <TextField fx:id="consultationPriceField" styleClass="form-control" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="8.0">
+                                    <children>
+                                        <Label styleClass="form-label" text="About Me / Bio" />
+                                        <TextArea fx:id="aboutArea" prefHeight="100.0" styleClass="form-control" wrapText="true" />
+                                    </children>
+                                </VBox>
+
+                                <HBox alignment="CENTER_RIGHT" spacing="20.0">
+                                    <children>
+                                        <ProgressIndicator fx:id="loadingIndicator" prefHeight="30.0" prefWidth="30.0" visible="false" />
+                                        <Label fx:id="statusLabel" visible="false" />
+                                        <Button fx:id="saveButton" prefHeight="45.0" prefWidth="150.0" styleClass="btn-primary" text="Save Changes" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </HBox>
+    </children>
+</VBox>

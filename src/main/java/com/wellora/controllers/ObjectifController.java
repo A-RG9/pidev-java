@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 import com.wellora.utils.ThemeManager;
+import com.wellcare.javafx.util.SceneManager;
 
 public class ObjectifController extends BaseController {
 
@@ -37,11 +38,19 @@ public class ObjectifController extends BaseController {
     @FXML private Button btnAjouter, btnModifier, btnSupprimer, btnAjoutJournalier;
 
     private final NutritionGoalDAO dao = new NutritionGoalDAO();
-    private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
+    private String currentUserUuid = "";
     private ObservableList<NutritionGoal> objectifsList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Load logged-in user's UUID from SceneManager
+        com.wellcare.javafx.model.User loggedUser = SceneManager.getInstance().getCurrentUser();
+        if (loggedUser != null) {
+            currentUserUuid = loggedUser.getUuid();
+        } else {
+            System.err.println("⚠️ ObjectifController: No logged-in user found in SceneManager!");
+        }
+
         if (ThemeManager.isDarkMode) {
             btnThemeToggle.setSelected(true);
             btnThemeToggle.setText("☀️ Mode Clair");

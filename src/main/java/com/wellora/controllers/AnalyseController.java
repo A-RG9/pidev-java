@@ -12,6 +12,7 @@ import com.wellora.models.DailyPlan;
 import com.wellora.nutrition.services.NutritionPdfExportService;
 import com.wellora.nutrition.services.AiService;
 import com.wellora.utils.ThemeManager;
+import com.wellcare.javafx.util.SceneManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,10 +45,18 @@ public class AnalyseController extends BaseController {
     private final NutritionGoalDAO goalDao = new NutritionGoalDAO();
     private final MealPlanDAO mealPlanDao = new MealPlanDAO();
 
-    private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
+    private String currentUserUuid = "";
 
     @FXML
     public void initialize() {
+        // Load logged-in user's UUID from SceneManager
+        com.wellcare.javafx.model.User loggedUser = SceneManager.getInstance().getCurrentUser();
+        if (loggedUser != null) {
+            currentUserUuid = loggedUser.getUuid();
+        } else {
+            System.err.println("⚠️ AnalyseController: No logged-in user found in SceneManager!");
+        }
+
         if (ThemeManager.isDarkMode) {
             btnThemeToggle.setSelected(true);
             btnThemeToggle.setText("☀️ Mode Clair");

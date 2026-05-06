@@ -19,6 +19,7 @@ import javafx.geometry.Insets;
 import java.time.LocalDate;
 import java.util.List;
 import com.wellora.utils.ThemeManager;
+import com.wellcare.javafx.util.SceneManager;
 
 public class DashboardController extends BaseController {
 
@@ -38,12 +39,20 @@ public class DashboardController extends BaseController {
     private final FoodLogDAO dao = new FoodLogDAO();
     private final NutritionGoalDAO goalDao = new NutritionGoalDAO();
 
-    // The UUID the dashboard uses to fetch data. Ensure this exists in your DB!
-    private final String currentUserUuid = "c513e200-d605-4f61-9efc-d539f0e80914";
+    // The UUID the dashboard uses to fetch data.
+    private String currentUserUuid = "";
     private ObservableList<FoodLog> foodLogsList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Load logged-in user's UUID from SceneManager
+        com.wellcare.javafx.model.User loggedUser = SceneManager.getInstance().getCurrentUser();
+        if (loggedUser != null) {
+            currentUserUuid = loggedUser.getUuid();
+        } else {
+            System.err.println("⚠️ DashboardController: No logged-in user found in SceneManager!");
+        }
+
         if (ThemeManager.isDarkMode) {
             btnThemeToggle.setSelected(true);
             btnThemeToggle.setText("☀️ Mode Clair");

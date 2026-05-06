@@ -2,6 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.kotlin
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -36,3 +37,15 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### WellCare - Security (DO NOT COMMIT THESE) ###
+config.properties
+*.properties
+!config.properties.example
+
+### WellCare - Compiled Output ###
+out/
+uploads/
+
+### WellCare - Sensitive Logs ###
+*.log
