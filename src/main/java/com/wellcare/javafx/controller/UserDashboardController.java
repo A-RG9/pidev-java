@@ -209,22 +209,33 @@ public class UserDashboardController {
     // ==================== CHARGEMENT DES DONNÉES ====================
 
     private void loadPatientInfo() {
-        try (Connection conn = Database.getConnection()) {
-            String sql = "SELECT uuid, first_name, last_name, email FROM users WHERE role = 'ROLE_PATIENT' LIMIT 1";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                currentPatientUuid = rs.getString("uuid");
-                currentPatientName = rs.getString("first_name") + " " + rs.getString("last_name");
-                if (patientName != null) patientName.setText(currentPatientName);
-                if (patientEmail != null) patientEmail.setText(rs.getString("email"));
-
-                loadCoachInfo();
-                connectWebSocket();
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            currentPatientUuid = currentUser.getUuid();
+            currentPatientName = currentUser.getFirstName() + " " + currentUser.getLastName();
+            if (patientName != null) patientName.setText(currentPatientName);
+            if (patientEmail != null) patientEmail.setText(currentUser.getEmail());
+            loadCoachInfo();
+            connectWebSocket();
+        } else {
+            // Fallback for development/testing if no user is logged in
+            try (Connection conn = Database.getConnection()) {
+                String sql = "SELECT uuid, first_name, last_name, email FROM users WHERE role = 'ROLE_PATIENT' LIMIT 1";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+    
+                if (rs.next()) {
+                    currentPatientUuid = rs.getString("uuid");
+                    currentPatientName = rs.getString("first_name") + " " + rs.getString("last_name");
+                    if (patientName != null) patientName.setText(currentPatientName);
+                    if (patientEmail != null) patientEmail.setText(rs.getString("email"));
+    
+                    loadCoachInfo();
+                    connectWebSocket();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -498,29 +509,45 @@ public class UserDashboardController {
             return;
         }
 
-        String roomName = "wellora_" + currentPatientUuid + "_" + System.currentTimeMillis();
+        String meetingUrl = jitsiService.createPrivateMeeting(currentCoachUuid, currentPatientUuid);
+        String linkMessage = "🔗 Session vidéo: " + meetingUrl;
 
+        // 1. Ouvrir le lien dans le navigateur
+        openInBrowser(meetingUrl);
 
-
-
+        // 2. Sauvegarder dans la base de données
         try (Connection conn = Database.getConnection()) {
             String sql = "INSERT INTO message (content, sent_at, is_read, conversation_id, sender_uuid) VALUES (?, ?, 0, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-
+            pstmt.setString(1, linkMessage);
             pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
             pstmt.setInt(3, currentConversationId);
             pstmt.setString(4, currentPatientUuid);
             pstmt.executeUpdate();
+
+            String updateSql = "UPDATE conversation SET last_message_at = ? WHERE id = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(updateSql);
+            pstmt2.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt2.setInt(2, currentConversationId);
+            pstmt2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
+        // 3. Envoyer via WebSocket
+        if (webSocketService != null && webSocketService.isConnected()) {
+            webSocketService.sendMessage(
+                    String.valueOf(currentConversationId),
+                    linkMessage,
+                    currentPatientUuid,
+                    currentCoachUuid
+            );
         }
 
-
-
-    @FXML
+        // 4. Afficher dans le chat
+        addMessageToChat(linkMessage, LocalDateTime.now(), false);
+        showSuccessMessage("Session vidéo démarrée !");
+    }    @FXML
     private void joinVideoCall() {
         if (currentCoachUuid == null) {
             showAlert("Aucun coach assigné");

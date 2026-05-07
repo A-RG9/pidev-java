@@ -49,10 +49,9 @@
         </VBox>
 
         <!-- LISTE DES PLANS -->
-        <VBox spacing="15">
+        <VBox spacing="15" VBox.vgrow="ALWAYS">
             <Label text="📋 MES PLANS D'ENTRAÎNEMENT" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
-            <ListView fx:id="plansListView" prefHeight="450"
-                      style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;"/>
+            <VBox fx:id="plansContainer" spacing="15" />
         </VBox>
 
         <!-- SECTION VIDÉO AVEC NAVIGATION -->

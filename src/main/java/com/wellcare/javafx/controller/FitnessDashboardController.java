@@ -78,6 +78,10 @@ public class FitnessDashboardController {
         loadSportQuoteOfTheDay();  // NOUVEAU : Charge une citation sportive
         loadAllData();
         setupGoalSelector();
+        
+        // Auto-load exercises and stats
+        loadRecentExercises();
+        loadCategoryStats();
 
         goalSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -160,8 +164,22 @@ public class FitnessDashboardController {
     // ==================== CHARGEMENT DES DONNÉES ====================
 
     private void loadAllData() {
-        allGoals = goalDao.getAllGoals();
-        allPlans = dailyPlanDAO.getAllPlans();
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                allGoals = goalDao.getGoalsByPatient(currentUser.getUuid());
+            } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                allGoals = goalDao.getGoalsByCoach(currentUser.getUuid());
+            } else {
+                allGoals = goalDao.getAllGoals();
+            }
+        } else {
+            allGoals = goalDao.getAllGoals();
+        }
+
+        List<DailyPlan> allPlansRaw = dailyPlanDAO.getAllPlans();
+        List<Integer> userGoalIds = allGoals.stream().map(Goal::getId).collect(Collectors.toList());
+        allPlans = allPlansRaw.stream().filter(p -> userGoalIds.contains(p.getGoalId())).collect(Collectors.toList());
     }
 
     private void setupGoalSelector() {
@@ -395,7 +413,7 @@ public class FitnessDashboardController {
         loadSportQuoteOfTheDay();  // Rafraîchir aussi la citation
 
         if (currentSelectedGoal != null) {
-            currentSelectedGoal = goalDao.getAllGoals().stream()
+            currentSelectedGoal = allGoals.stream()
                     .filter(g -> g.getId() == currentSelectedGoal.getId())
                     .findFirst()
                     .orElse(currentSelectedGoal);
@@ -442,7 +460,8 @@ public class FitnessDashboardController {
                     goalDao.updateGoal(currentSelectedGoal);
                     updateAllDashboardForGoal();
 
-                    goalSelector.setItems(FXCollections.observableArrayList(goalDao.getAllGoals()));
+                    loadAllData();
+                    goalSelector.setItems(FXCollections.observableArrayList(allGoals));
                     goalSelector.setValue(currentSelectedGoal);
 
                     showSuccessMessage("Progression mise à jour: " + newProgress + "%");

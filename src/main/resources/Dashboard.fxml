@@ -97,8 +97,7 @@
             </HBox>
 
             <HBox spacing="15">
-                <ComboBox fx:id="comboPatient" promptText="Patient assigné" prefWidth="245" style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
-                <ComboBox fx:id="comboCoach" promptText="Coach assigné" prefWidth="245" style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
+                <ComboBox fx:id="comboCoach" promptText="Coach assigné" prefWidth="505" style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
             </HBox>
 
             <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 0 0;">

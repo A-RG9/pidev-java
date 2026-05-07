@@ -117,7 +117,19 @@ public class WorkoutPlannerController {
     }
 
     private void loadGoals() {
-        List<Goal> goalsCache = goalDao.getAllGoals();
+        List<Goal> goalsCache = new ArrayList<>();
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                goalsCache = goalDao.getGoalsByPatient(currentUser.getUuid());
+            } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                goalsCache = goalDao.getGoalsByCoach(currentUser.getUuid());
+            } else {
+                goalsCache = goalDao.getAllGoals();
+            }
+        } else {
+            goalsCache = goalDao.getAllGoals();
+        }
         comboGoals.getItems().clear();
 
         // Ajouter une option "Tous les objectifs"
@@ -196,9 +208,15 @@ public class WorkoutPlannerController {
             System.out.println("Goal sélectionné ID: " + targetGoalId + " (" + selectedGoal.getTitle() + ")");
             System.out.println("Plans filtrés: " + filteredPlans.size() + "/" + allPlans.size());
         } else {
-            filteredPlans = new ArrayList<>(allPlans);
-            System.out.println("\n=== AUCUN FILTRE ===");
-            System.out.println("Tous les plans: " + filteredPlans.size());
+            List<Integer> userGoalIds = comboGoals.getItems().stream()
+                    .filter(g -> g.getId() != -1)
+                    .map(Goal::getId)
+                    .collect(Collectors.toList());
+            filteredPlans = allPlans.stream()
+                    .filter(p -> userGoalIds.contains(p.getGoalId()))
+                    .collect(Collectors.toList());
+            System.out.println("\n=== AUCUN FILTRE (Tous les objectifs de l'utilisateur) ===");
+            System.out.println("Tous les plans de l'utilisateur: " + filteredPlans.size());
         }
 
         // Afficher les plans après filtrage

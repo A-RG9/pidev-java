@@ -199,13 +199,42 @@ public class DailyPlanController {
 
     private void setupGoalFilter() {
         if (filterGoal != null) {
-            List<Goal> goals = goalDAO.getAllGoals();
+            List<Goal> goals = new ArrayList<>();
+            if (goalsCache != null) {
+                goals.addAll(goalsCache);
+            } else {
+                goals = goalDAO.getAllGoals();
+            }
             Goal allGoalsItem = new Goal();
             allGoalsItem.setId(-1);
             allGoalsItem.setTitle("Tous les objectifs");
             goals.add(0, allGoalsItem);
             filterGoal.setItems(FXCollections.observableArrayList(goals));
             filterGoal.setValue(allGoalsItem);
+
+            // Cell factory pour afficher le titre au lieu de l'objet
+            filterGoal.setCellFactory(lv -> new ListCell<Goal>() {
+                @Override
+                protected void updateItem(Goal item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.getId() == -1 ? "Tous les objectifs" : "🎯 " + item.getTitle());
+                    }
+                }
+            });
+            filterGoal.setButtonCell(new ListCell<Goal>() {
+                @Override
+                protected void updateItem(Goal item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText("Tous les objectifs");
+                    } else {
+                        setText(item.getId() == -1 ? "Tous les objectifs" : "🎯 " + item.getTitle());
+                    }
+                }
+            });
 
             filterGoal.valueProperty().addListener((obs, old, val) -> {
                 currentPage = 1;
@@ -274,14 +303,22 @@ public class DailyPlanController {
     }
 
     private void updateStatistics() {
-        List<DailyPlan> plans = dailyPlanDAO.getAllPlans();
+        List<DailyPlan> allPlans = dailyPlanDAO.getAllPlans();
+        List<DailyPlan> userPlans = new ArrayList<>();
+        if (goalsCache != null) {
+            List<Integer> userGoalIds = goalsCache.stream().map(Goal::getId).collect(Collectors.toList());
+            userPlans = allPlans.stream().filter(p -> userGoalIds.contains(p.getGoalId())).collect(Collectors.toList());
+        } else {
+            userPlans = allPlans;
+        }
+
         if (lblTotalPlans != null) {
-            lblTotalPlans.setText(String.valueOf(plans.size()));
+            lblTotalPlans.setText(String.valueOf(userPlans.size()));
         }
 
         int totalExercises = 0;
         int totalCalories = 0;
-        for (DailyPlan plan : plans) {
+        for (DailyPlan plan : userPlans) {
             totalExercises += dailyPlanDAO.getExercisesForPlan(plan.getId()).size();
             totalCalories += plan.getCalories();
         }
@@ -326,7 +363,18 @@ public class DailyPlanController {
 
     private Goal getGoalById(int id) {
         if (goalsCache == null) {
-            goalsCache = goalDAO.getAllGoals();
+            com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                    goalsCache = goalDAO.getGoalsByPatient(currentUser.getUuid());
+                } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                    goalsCache = goalDAO.getGoalsByCoach(currentUser.getUuid());
+                } else {
+                    goalsCache = goalDAO.getAllGoals();
+                }
+            } else {
+                goalsCache = goalDAO.getAllGoals();
+            }
         }
         return goalsCache.stream()
                 .filter(goal -> goal.getId() == id)
@@ -335,7 +383,18 @@ public class DailyPlanController {
     }
 
     private void loadData() {
-        goalsCache = goalDAO.getAllGoals();
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                goalsCache = goalDAO.getGoalsByPatient(currentUser.getUuid());
+            } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                goalsCache = goalDAO.getGoalsByCoach(currentUser.getUuid());
+            } else {
+                goalsCache = goalDAO.getAllGoals();
+            }
+        } else {
+            goalsCache = goalDAO.getAllGoals();
+        }
         if (goalsCache.isEmpty()) {
             showInfo("Information", "Aucun objectif trouvé. Veuillez d'abord créer des objectifs.");
         }
@@ -493,6 +552,10 @@ public class DailyPlanController {
         if (plansContainer == null) return;
 
         List<DailyPlan> allPlans = dailyPlanDAO.getAllPlans();
+        if (goalsCache != null) {
+            List<Integer> userGoalIds = goalsCache.stream().map(Goal::getId).collect(Collectors.toList());
+            allPlans = allPlans.stream().filter(p -> userGoalIds.contains(p.getGoalId())).collect(Collectors.toList());
+        }
 
         // Application des filtres
         String searchText = searchPlan != null ? searchPlan.getText().toLowerCase() : "";
@@ -501,9 +564,9 @@ public class DailyPlanController {
         Goal selectedGoal = filterGoal != null ? filterGoal.getValue() : null;
 
         currentFilteredPlans = allPlans.stream()
-                .filter(p -> searchText.isEmpty() || p.getTitre().toLowerCase().contains(searchText))
-                .filter(p -> statusFilter == null || statusFilter.equals("Tous") || p.getStatus().equals(statusFilter))
-                .filter(p -> dateFilter == null || p.getDate().toLocalDate().equals(dateFilter))
+                .filter(p -> searchText.isEmpty() || (p.getTitre() != null && p.getTitre().toLowerCase().contains(searchText)))
+                .filter(p -> statusFilter == null || statusFilter.equals("Tous") || statusFilter.equals(p.getStatus()))
+                .filter(p -> dateFilter == null || (p.getDate() != null && p.getDate().toLocalDate().equals(dateFilter)))
                 .filter(p -> selectedGoal == null || selectedGoal.getId() == -1 || p.getGoalId() == selectedGoal.getId())
                 .collect(Collectors.toList());
 
@@ -774,9 +837,10 @@ public class DailyPlanController {
         dialogPane.setStyle("-fx-background-color: white;");
 
         alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.YES) {
+            if (response == ButtonType.OK) {
                 if (dailyPlanDAO.deleteDailyPlan(plan.getId())) {
                     loadPlansList();
+                    updateStatistics();
                     showSuccessMessage("Plan supprimé avec succès!");
                 }
             }

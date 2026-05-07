@@ -97,6 +97,11 @@ public class ExerciseLibraryController {
     private FadeTransition formFadeIn;
     private FadeTransition formFadeOut;
 
+    // Pagination
+    private int currentPage = 0;
+    private static final int PAGE_SIZE = 20;
+    private List<Exercise> currentSortedList = new java.util.ArrayList<>();
+
     @FXML
     public void initialize() {
         setupUIComponents();
@@ -368,12 +373,26 @@ public class ExerciseLibraryController {
     }
 
     private void renderCards(List<Exercise> exercises) {
+        currentSortedList = new java.util.ArrayList<>(exercises);
+        currentPage = 0;
+        renderCurrentPage();
+        updateResultCount();
+    }
+
+    private void renderCurrentPage() {
         cardsContainer.getChildren().clear();
-        if (exercises.isEmpty()) {
+
+        if (currentSortedList.isEmpty()) {
             showEmptyState();
             return;
         }
-        for (Exercise ex : exercises) {
+
+        int start = currentPage * PAGE_SIZE;
+        int end = Math.min(start + PAGE_SIZE, currentSortedList.size());
+        int totalPages = (int) Math.ceil((double) currentSortedList.size() / PAGE_SIZE);
+
+        for (int i = start; i < end; i++) {
+            Exercise ex = currentSortedList.get(i);
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExerciseCard.fxml"));
                 Node card = loader.load();
@@ -384,6 +403,27 @@ public class ExerciseLibraryController {
                 e.printStackTrace();
             }
         }
+
+        // Ajouter les controles de pagination
+        javafx.scene.layout.HBox paginationBox = new javafx.scene.layout.HBox(10);
+        paginationBox.setAlignment(Pos.CENTER);
+        paginationBox.setPadding(new Insets(15, 0, 5, 0));
+
+        Button btnPrev = new Button("◀ Précédent");
+        btnPrev.setStyle("-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 8; -fx-padding: 8 16; -fx-cursor: hand;");
+        btnPrev.setDisable(currentPage == 0);
+        btnPrev.setOnAction(e -> { currentPage--; renderCurrentPage(); if (cardsScrollPane != null) cardsScrollPane.setVvalue(0); });
+
+        Label pageLabel = new Label("Page " + (currentPage + 1) + " / " + totalPages + "  (" + currentSortedList.size() + " exercices)");
+        pageLabel.setStyle("-fx-text-fill: #64748B; -fx-font-size: 13px;");
+
+        Button btnNext = new Button("Suivant ▶");
+        btnNext.setStyle("-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 8; -fx-padding: 8 16; -fx-cursor: hand;");
+        btnNext.setDisable(currentPage >= totalPages - 1);
+        btnNext.setOnAction(e -> { currentPage++; renderCurrentPage(); if (cardsScrollPane != null) cardsScrollPane.setVvalue(0); });
+
+        paginationBox.getChildren().addAll(btnPrev, pageLabel, btnNext);
+        cardsContainer.getChildren().add(paginationBox);
     }
 
     private void updateResultCount() {

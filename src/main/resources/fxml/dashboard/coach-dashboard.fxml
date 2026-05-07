@@ -31,38 +31,39 @@
         <!-- Main Content -->
         <HBox VBox.vgrow="ALWAYS">
             <!-- Sidebar -->
-            <!-- Sidebar -->
-            <VBox styleClass="sidebar" HBox.hgrow="NEVER">
-                <children>
-                    <VBox spacing="5.0" VBox.vgrow="ALWAYS">
-                        <VBox.margin>
-                            <Insets top="20.0" right="0.0" bottom="20.0" left="0.0" />
-                        </VBox.margin>
-                        <children>
-                            <Label styleClass="sidebar-title" text="Coach Portal" />
-                            <Button fx:id="dashboardBtn" styleClass="sidebar-item, sidebar-item.active" text="📊 Dashboard" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="clientsBtn" styleClass="sidebar-item" text="👥 My Clients" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="sessionsBtn" styleClass="sidebar-item" text="🏃 Sessions" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="programsBtn" styleClass="sidebar-item" text="📋 Programs" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="progressBtn" styleClass="sidebar-item" text="📈 Progress" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="messagesBtn" styleClass="sidebar-item" text="💬 Messages" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="scheduleBtn" styleClass="sidebar-item" text="🕒 Schedule" maxWidth="1.7976931348623157E308" />
+            <ScrollPane fitToWidth="true"
+                        fitToHeight="false"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;"
+                        prefWidth="240.0"
+                        maxWidth="240.0"
+                        HBox.hgrow="NEVER">
 
-                            <!-- NOUVEAUX BOUTONS FITNESS PLANS -->
-                            <Label text="FITNESS PLANS" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-padding: 20 0 2 5; -fx-font-weight: bold;"/>
+                <VBox spacing="12" style="-fx-padding: 15 12 15 12; -fx-background-color: #FFFFFF; -fx-border-color: #E2E8F0; -fx-border-width: 0 1 0 0;">
 
-                            <Button text="📋 All Plans" onAction="#loadDailyPlanEditor" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                    <Label text="♡ WellCare" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1E293B; -fx-padding: 0 0 5 0;"/>
 
-                            <Button text="📚 Exercise Library" onAction="#loadExerciseLibrary" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                    <Separator style="-fx-background-color: #E2E8F0; -fx-pref-height: 1;"/>
 
-                            <Button text="👥 Mes Clients" onAction="#loadClientsList" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
-                        </children>
-                    </VBox>
-                </children>
-            </VBox>
+                    <Label text="COACH PORTAL" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-padding: 5 0 2 5; -fx-font-weight: bold;"/>
+                    <Button fx:id="dashboardBtn" text="📊 Dashboard" onAction="#handleDashboard" style="-fx-background-color: #F1F5F9; -fx-text-fill: #14b8a6; -fx-font-weight: bold; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
 
-            <!-- Main Dashboard Content -->
-            <VBox HBox.hgrow="ALWAYS" spacing="20.0">
+                    <Label text="FITNESS PLANS" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-padding: 10 0 2 5; -fx-font-weight: bold;"/>
+                    <Button text="📋 All Plans" onAction="#loadDailyPlanEditor" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                    <Button text="📚 Exercise Library" onAction="#loadExerciseLibrary" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+                    <Button text="👥 Mes Clients" onAction="#loadClientsList" style="-fx-background-color: transparent; -fx-text-fill: #475569; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                    <Region VBox.vgrow="ALWAYS" />
+
+                    <Button text="🚪 Déconnexion" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-alignment: center-left; -fx-padding: 8 12; -fx-background-radius: 8; -fx-cursor: hand;" maxWidth="Infinity"/>
+
+                </VBox>
+            </ScrollPane>
+
+            <!-- Main Dashboard Content Area -->
+            <StackPane fx:id="contentArea" HBox.hgrow="ALWAYS">
+                <VBox fx:id="dashboardContent" spacing="20.0">
                 <VBox.margin>
                     <Insets top="30.0" right="30.0" bottom="30.0" left="30.0" />
                 </VBox.margin>
@@ -188,6 +189,7 @@
                     </HBox>
                 </children>
             </VBox>
+            </StackPane>
         </HBox>
     </children>
 </VBox>

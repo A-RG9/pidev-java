@@ -435,7 +435,18 @@ public class GoalController {
 
     private void loadGoals() {
         masterData.clear();
-        masterData.addAll(goalDao.getAllGoals());
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                masterData.addAll(goalDao.getGoalsByPatient(currentUser.getUuid()));
+            } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                masterData.addAll(goalDao.getGoalsByCoach(currentUser.getUuid()));
+            } else {
+                masterData.addAll(goalDao.getAllGoals());
+            }
+        } else {
+            masterData.addAll(goalDao.getAllGoals());
+        }
         filteredData = new FilteredList<>(masterData, p -> true);
 
         renderCards();
@@ -644,14 +655,10 @@ public class GoalController {
 
     @FXML
     private void handleSave() {
-        if (txtTitle == null || comboPatient == null || comboCoach == null) return;
+        if (txtTitle == null || comboCoach == null) return;
 
         if (txtTitle.getText().trim().isEmpty()) {
             showFieldError("Le titre est obligatoire");
-            return;
-        }
-        if (comboPatient.getValue() == null) {
-            showFieldError("Veuillez sélectionner un patient");
             return;
         }
         if (comboCoach.getValue() == null) {
@@ -662,7 +669,15 @@ public class GoalController {
         try {
             String title = txtTitle.getText().trim();
             String description = txtDescription != null ? txtDescription.getText() : "";
-            String patientId = comboPatient.getValue().getUuid();
+            
+            String patientId;
+            if (isEditMode && selectedGoal != null) {
+                patientId = selectedGoal.getPatientId();
+            } else {
+                com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+                patientId = currentUser != null ? currentUser.getUuid() : "default-patient";
+            }
+            
             String coachId = comboCoach.getValue().getUuid();
 
             String category = comboCategory != null ? comboCategory.getValue().replaceAll("[🍎🏃🧠📋] ", "") : "Général";
@@ -752,7 +767,7 @@ public class GoalController {
     }
 
     private void updateGlobalStats() {
-        List<Goal> goals = goalDao.getAllGoals();
+        List<Goal> goals = masterData;
         long total = goals.size();
         long completed = goals.stream()
                 .filter(g -> "Terminé".equals(g.getStatus()))

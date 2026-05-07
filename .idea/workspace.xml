@@ -4,31 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9af9db7-2b8d-46b9-827b-8dbc0821e25e" name="Changes" comment="" />
+    <list default="true" id="b0d80b4f-0373-406e-840b-574c7115221c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/CoachDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/CoachDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/ExerciseLibraryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/ExerciseLibraryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/FitnessDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/FitnessDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/GoalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/GoalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/UserDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/UserDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/WorkoutPlannerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/WorkoutPlannerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/dashboard/CoachDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/dashboard/CoachDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/DailyPlanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/DailyPlanDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/GoalDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/GoalDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/IGoalDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/IGoalDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/model/Goal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/model/Goal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/util/WorkoutXService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/util/WorkoutXService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DailyPlanView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DailyPlanView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/dashboard/coach-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/dashboard/coach-dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CopilotPersistence">
-    <persistenceIdMap>
-      <entry key="_C:/Users/marie/IdeaProjects/wellora" value="3C4ZrMfZ0zgW5utSVHnffCcvrfv" />
-    </persistenceIdMap>
-  </component>
-  <component name="CopilotUserSelectedChatMode">
-    <option name="chatModeId" value="Agent" />
-  </component>
-  <component name="CopilotUserSelectedModel">
-    <selectedModels>
-      <entry key="agent-panel" value="Auto" />
-      <entry key="chat-panel" value="Auto" />
-    </selectedModels>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -36,66 +43,50 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="3C4ZrMfZ0zgW5utSVHnffCcvrfv" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectId" id="3DJTvORfRiguCwQkAe6fOqrApxP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.WellCareApp.executor": "Run",
-    "Maven.wellora [org.codehaus.mojo:exec-maven-plugin:3.1.0:java].executor": "Run",
-    "Maven.wellora [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
-    "Maven.wellora [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.wellora-backend [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.wellora-merged [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "integration-test2",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/marie/IdeaProjects/wellora/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.wellora [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;integration-test2&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LENOVO/Desktop/projetjavafinal/finalprojetjava/target/classes/org/example&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/LENOVO/Desktop/projetjavafinal/finalprojetjava/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.wellora.javafx" />
-      <recent name="org.example.service" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\target\classes\org\example" />
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\src\main" />
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\src\main\java\org\example" />
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\src\main\java\org\example\models" />
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\src\main\java\org\example\dao" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="wellora-merged" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="wellora-merged" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\target" />
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava" />
+      <recent name="C:\Users\LENOVO\Desktop\projetjavafinal\finalprojetjava\src\main" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -107,26 +98,15 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b9af9db7-2b8d-46b9-827b-8dbc0821e25e" name="Changes" comment="" />
-      <created>1775647017566</created>
+      <changelist id="b0d80b4f-0373-406e-840b-574c7115221c" name="Changes" comment="" />
+      <created>1777999405002</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1775647017566</updated>
-      <workItem from="1775655279967" duration="470000" />
-      <workItem from="1775756097365" duration="20824000" />
-      <workItem from="1776107949954" duration="6993000" />
-      <workItem from="1776158579169" duration="41588000" />
-      <workItem from="1776246091093" duration="48248000" />
-      <workItem from="1777222467964" duration="1752000" />
-      <workItem from="1777225288117" duration="43248000" />
-      <workItem from="1777486813768" duration="4439000" />
-      <workItem from="1777491309981" duration="30295000" />
-      <workItem from="1777718427602" duration="1416000" />
-      <workItem from="1777997207792" duration="34592000" />
-      <workItem from="1778084454560" duration="510000" />
-      <workItem from="1778084998182" duration="386000" />
-      <workItem from="1778085406016" duration="435000" />
-      <workItem from="1778085960553" duration="3071000" />
+      <updated>1777999405002</updated>
+      <workItem from="1777999405954" duration="3050000" />
+      <workItem from="1778002583344" duration="3221000" />
+      <workItem from="1778005830870" duration="2338000" />
+      <workItem from="1778008198401" duration="21046000" />
     </task>
     <servers />
   </component>
@@ -137,38 +117,11 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/Main.java</url>
-          <line>13</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/wellcare/Main.java</url>
+          <line>99</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorSearchController.java</url>
-          <line>308</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorPendingController.java</url>
-          <line>186</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorAnalytics.java</url>
-          <line>384</line>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
-  <component name="github-copilot-workspace">
-    <instructionFileLocations>
-      <option value=".github/instructions" />
-    </instructionFileLocations>
-    <promptFileLocations>
-      <option value=".github/prompts" />
-    </promptFileLocations>
   </component>
 </project>

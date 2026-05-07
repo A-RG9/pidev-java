@@ -34,13 +34,7 @@ public class DailyPlanDAO {
             pstmt.setInt(2, year);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                DailyPlan p = new DailyPlan();
-                p.setId(rs.getInt("id"));
-                p.setTitre(rs.getString("titre"));
-                p.setDate(rs.getDate("date"));
-                p.setDureeMin(rs.getInt("duree_min"));
-                p.setCalories(rs.getInt("calories"));
-                plans.add(p);
+                plans.add(mapResultSetToDailyPlan(rs));
             }
         } catch (SQLException e) { e.printStackTrace(); }
         return plans;

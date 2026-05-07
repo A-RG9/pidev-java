@@ -177,18 +177,27 @@ public class CoachDashboardController {
     // ==================== CHARGEMENT DES DONNÉES ====================
 
     private void loadCoachInfo() {
-        try (Connection conn = Database.getConnection()) {
-            String sql = "SELECT uuid, first_name, last_name, email FROM users WHERE role = 'ROLE_COACH' LIMIT 1";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                currentCoachUuid = rs.getString("uuid");
-                currentCoachName = rs.getString("first_name") + " " + rs.getString("last_name");
-                if (coachName != null) coachName.setText(currentCoachName);
-                if (coachEmail != null) coachEmail.setText(rs.getString("email"));
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            currentCoachUuid = currentUser.getUuid();
+            currentCoachName = currentUser.getFirstName() + " " + currentUser.getLastName();
+            if (coachName != null) coachName.setText(currentCoachName);
+            if (coachEmail != null) coachEmail.setText(currentUser.getEmail());
+        } else {
+            // Fallback for development/testing if no user is logged in
+            try (Connection conn = Database.getConnection()) {
+                String sql = "SELECT uuid, first_name, last_name, email FROM users WHERE role = 'ROLE_COACH' LIMIT 1";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                if (rs.next()) {
+                    currentCoachUuid = rs.getString("uuid");
+                    currentCoachName = rs.getString("first_name") + " " + rs.getString("last_name");
+                    if (coachName != null) coachName.setText(currentCoachName);
+                    if (coachEmail != null) coachEmail.setText(rs.getString("email"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -316,14 +325,32 @@ public class CoachDashboardController {
         HBox messageRow = new HBox();
         messageRow.setAlignment(isFromCoach ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
         VBox messageBubble = new VBox(3);
-        String bubbleStyle = isFromCoach ? "-fx-background-color: #14b8a6; -fx-background-radius: 15; -fx-padding: 8 12;" : "-fx-background-color: #f1f5f9; -fx-background-radius: 15; -fx-padding: 8 12;";
-        messageBubble.setStyle(bubbleStyle);
-        Label messageLabel = new Label(message);
-        messageLabel.setStyle("-fx-text-fill: " + (isFromCoach ? "white" : "#1e293b") + "; -fx-wrap-text: true;");
-        messageLabel.setMaxWidth(400);
-        Label timeLabel = new Label(time.format(DateTimeFormatter.ofPattern("HH:mm")));
-        timeLabel.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 10px;");
-        messageBubble.getChildren().addAll(messageLabel, timeLabel);
+
+        if (message.contains("meet.jit.si") || message.contains("Session vidéo")) {
+            messageBubble.setStyle("-fx-background-color: #EFF6FF; -fx-background-radius: 12; -fx-padding: 10 12;");
+
+            final String finalUrl = message.contains("🔗 Session vidéo: ") ?
+                    message.replace("🔗 Session vidéo: ", "") : message;
+
+            Hyperlink link = new Hyperlink(message.length() > 50 ? message.substring(0, 47) + "..." : message);
+            link.setStyle("-fx-text-fill: #3b82f6; -fx-underline: true; -fx-cursor: hand; -fx-font-size: 12px;");
+            link.setOnAction(e -> openInBrowser(finalUrl));
+
+            Label timeLabel = new Label(time.format(DateTimeFormatter.ofPattern("HH:mm")));
+            timeLabel.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 9px;");
+
+            messageBubble.getChildren().addAll(link, timeLabel);
+        } else {
+            String bubbleStyle = isFromCoach ? "-fx-background-color: #14b8a6; -fx-background-radius: 15; -fx-padding: 8 12;" : "-fx-background-color: #f1f5f9; -fx-background-radius: 15; -fx-padding: 8 12;";
+            messageBubble.setStyle(bubbleStyle);
+            Label messageLabel = new Label(message);
+            messageLabel.setStyle("-fx-text-fill: " + (isFromCoach ? "white" : "#1e293b") + "; -fx-wrap-text: true;");
+            messageLabel.setMaxWidth(400);
+            Label timeLabel = new Label(time.format(DateTimeFormatter.ofPattern("HH:mm")));
+            timeLabel.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 10px;");
+            messageBubble.getChildren().addAll(messageLabel, timeLabel);
+        }
+
         messageRow.getChildren().add(messageBubble);
         messageRow.setStyle("-fx-padding: 5;");
         messagesContainer.getChildren().add(messageRow);
@@ -339,33 +366,43 @@ public class CoachDashboardController {
             return;
         }
 
-        // Créer un salon unique
         String meetingUrl = jitsiService.createPrivateMeeting(currentCoachUuid, currentPatientUuid);
-
-        // Sauvegarder l'URL dans une variable final pour le lambda
-        final String finalMeetingUrl = meetingUrl;
-        final String finalPatientName = currentPatientName;
-        final int finalConversationId = currentConversationId;
-        final String finalCoachUuid = currentCoachUuid;
-        final String finalPatientUuid = currentPatientUuid;
+        String linkMessage = "🔗 Session vidéo: " + meetingUrl;
 
         // 1. Ouvrir le lien pour le coach
-        openInBrowser(finalMeetingUrl);
+        openInBrowser(meetingUrl);
 
-        // 2. Envoyer le lien dans le chat
-        String linkMessage = "🔗 Session vidéo: " + finalMeetingUrl;
-        addSystemMessageToChat(linkMessage);
+        // 2. Sauvegarder dans la base de données
+        try (Connection conn = Database.getConnection()) {
+            String sql = "INSERT INTO message (content, sent_at, is_read, conversation_id, sender_uuid) VALUES (?, ?, 0, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, linkMessage);
+            pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setInt(3, currentConversationId);
+            pstmt.setString(4, currentCoachUuid);
+            pstmt.executeUpdate();
 
-        // 3. Envoyer via WebSocket au patient
+            String updateSql = "UPDATE conversation SET last_message_at = ? WHERE id = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(updateSql);
+            pstmt2.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt2.setInt(2, currentConversationId);
+            pstmt2.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // 3. Envoyer via WebSocket
         if (webSocketService != null && webSocketService.isConnected()) {
             webSocketService.sendMessage(
-                    String.valueOf(finalConversationId),
+                    String.valueOf(currentConversationId),
                     linkMessage,
-                    finalCoachUuid,
-                    finalPatientUuid
+                    currentCoachUuid,
+                    currentPatientUuid
             );
         }
 
+        // 4. Afficher dans le chat
+        addMessageToChat(linkMessage, LocalDateTime.now(), true);
         showSuccessMessage("Session vidéo démarrée ! Le lien a été envoyé au patient.");
     }
 

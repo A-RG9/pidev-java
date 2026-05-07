@@ -56,4 +56,9 @@ public class Goal {
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
     public LocalDate getEndDate() { return endDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+
+    @Override
+    public String toString() {
+        return title != null ? title : "Objectif #" + id;
+    }
 }
