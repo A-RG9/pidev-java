@@ -21,11 +21,11 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
             throw new SQLException("Database connection is not valid. Please restart the application.");
         }
 
-        // INSERT includes patient_id column
+        // INSERT includes patient_id and medecin_id columns
         String query = "INSERT INTO consultation (consultation_type, reason_for_visit, symptoms_description, " +
                 "date_consultation, time_consultation, duration, location, fee, status, notes, created_at, updated_at, " +
-                "appointment_mode, subjective, objective, assessment, plan, patient_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, ?, ?, ?, ?)";
+                "appointment_mode, subjective, objective, assessment, plan, patient_id, medecin_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, consultation.getConsultationType() != null ? consultation.getConsultationType() : "Clinical Note");
@@ -46,6 +46,7 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
             pstmt.setString(14, consultation.getAssessment() != null ? consultation.getAssessment() : "");
             pstmt.setString(15, consultation.getPlan() != null ? consultation.getPlan() : "");
             pstmt.setString(16, consultation.getPatientId());   // patient_id column, can be null
+            pstmt.setString(17, consultation.getMedecinId());   // medecin_id column, can be null
 
             pstmt.executeUpdate();
 
@@ -62,10 +63,10 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
     @Override
     public List<Consultation> ShowConsultation() throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
-        // Added patient_id to SELECT
+        // Added patient_id and medecin_id to SELECT
         String query = "SELECT id, consultation_type, reason_for_visit, symptoms_description, " +
                 "date_consultation, time_consultation, duration, location, fee, status, " +
-                "notes, created_at, updated_at, appointment_mode, patient_id " +
+                "notes, created_at, updated_at, appointment_mode, patient_id, medecin_id " +
                 "FROM consultation ORDER BY date_consultation DESC, time_consultation DESC";
 
         System.out.println("Executing query: " + query);
@@ -95,7 +96,13 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
                 consultation.setStatus(rs.getString("status"));
                 consultation.setNotes(rs.getString("notes"));
                 consultation.setAppointmentMode(rs.getString("appointment_mode"));
-                consultation.setPatientId(rs.getString("patient_id"));   // <-- ADD THIS LINE
+                consultation.setPatientId(rs.getString("patient_id"));
+                
+                try {
+                    consultation.setMedecinId(rs.getString("medecin_id"));
+                } catch (SQLException e) {
+                    // Ignored in case the column does not exist yet
+                }
 
                 // The rest of your existing code for optional fields remains unchanged
                 try { consultation.setChiefComplaint(rs.getString("chief_complaint")); } catch (SQLException e) {}

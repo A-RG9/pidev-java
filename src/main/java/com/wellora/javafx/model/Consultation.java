@@ -23,6 +23,7 @@ public class Consultation {
     private List<String> diagnoses;
     private String appointmentMode;
     private String patientId;          // foreign key to user table (varchar 36)
+    private String medecinId;          // foreign key to user table (doctor) (varchar 36)
     private String patientEmail;
     private String patientFirstName;
     private String patientLastName;
@@ -120,6 +121,9 @@ public class Consultation {
 
     public String getPatientId() { return patientId; }
     public void setPatientId(String patientId) { this.patientId = patientId; }
+
+    public String getMedecinId() { return medecinId; }
+    public void setMedecinId(String medecinId) { this.medecinId = medecinId; }
 
     public String getPatientEmail() { return patientEmail; }
     public void setPatientEmail(String patientEmail) { this.patientEmail = patientEmail; }

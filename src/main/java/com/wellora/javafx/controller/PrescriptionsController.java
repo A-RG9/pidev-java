@@ -11,9 +11,15 @@ import javafx.fxml.FXMLLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.wellora.javafx.model.Ordonnance;
 import com.wellora.javafx.service.OrdonnanceServices;
+import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.util.SceneManager;
+import com.wellora.javafx.model.Consultation;
+import com.wellora.javafx.service.ConsulationServices;
 
 public class PrescriptionsController {
 
@@ -171,6 +177,21 @@ public class PrescriptionsController {
                 prescriptions = ordonnanceServices.ShowOrdonnance();
             }
             
+            // Filter by logged-in patient
+            User currentUser = SceneManager.getInstance().getCurrentUser();
+            if (currentUser != null && currentUser.getUuid() != null) {
+                ConsulationServices consultationService = new ConsulationServices();
+                List<Consultation> allConsultations = consultationService.ShowConsultation();
+                Set<Integer> patientConsultationIds = allConsultations.stream()
+                        .filter(c -> currentUser.getUuid().equals(c.getPatientId()))
+                        .map(Consultation::getId)
+                        .collect(Collectors.toSet());
+                
+                prescriptions = prescriptions.stream()
+                        .filter(p -> patientConsultationIds.contains(p.getConsultationId()))
+                        .collect(Collectors.toList());
+            }
+
             // Debug: Print each result
             for (Ordonnance o : prescriptions) {
                 System.out.println("  - " + o.getMedicament() + " (" + o.getStatus() + ")");

@@ -190,3 +190,19 @@
 .effectiveness-chart {
     -fx-background-color: transparent;
 }
+/* Fix scrollpane white area */
+.scroll-pane {
+    -fx-background: #f9fafb;
+    -fx-background-color: #f9fafb;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: #f9fafb;
+}
+.scroll-pane > .scroll-bar:vertical .track {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 0;
+}
+.scroll-pane > .scroll-bar:vertical .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 4;
+}

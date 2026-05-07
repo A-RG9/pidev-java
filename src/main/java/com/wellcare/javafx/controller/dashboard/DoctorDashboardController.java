@@ -1,25 +1,23 @@
 package com.wellcare.javafx.controller.dashboard;
 
 import com.wellcare.javafx.model.User;
-import com.wellcare.javafx.service.UserService;
 import com.wellcare.javafx.util.SceneManager;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert;
-
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-/**
- * Controller for the Doctor Dashboard
- * Displays doctor-specific information and practice management tools
- */
 public class DoctorDashboardController implements Initializable {
 
     @FXML private MenuButton userMenu;
@@ -29,12 +27,8 @@ public class DoctorDashboardController implements Initializable {
 
     // Navigation buttons
     @FXML private Button dashboardBtn;
-    @FXML private Button patientsBtn;
-    @FXML private Button appointmentsBtn;
-    @FXML private Button recordsBtn;
-    @FXML private Button prescriptionsBtn;
-    @FXML private Button messagesBtn;
-    @FXML private Button scheduleBtn;
+    @FXML private Button agendaBtn;
+    @FXML private Button clinicalnotesBtn;
 
     // Dashboard content
     @FXML private Label welcomeLabel;
@@ -46,32 +40,53 @@ public class DoctorDashboardController implements Initializable {
     @FXML private ListView<String> todayScheduleList;
     @FXML private ListView<String> recentActivityList;
 
-    private UserService userService;
     private User currentUser;
+    private Button activeButton;
+
+    // Référence au conteneur principal (sera trouvé dynamiquement)
+    private VBox mainContentContainer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            userService = new UserService();
-        } catch (java.sql.SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Connection Failed");
-            alert.setHeaderText("Unable to connect to database");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-            return;
-        }
-
         // Get current user from SceneManager
         currentUser = SceneManager.getInstance().getCurrentUser();
         if (currentUser == null) {
-            // Fallback to mock user for development
             currentUser = createMockDoctor();
         }
 
         setupUI();
         setupEventHandlers();
         loadDashboardData();
+
+        // Trouver le conteneur principal après l'initialisation
+        findMainContentContainer();
+    }
+
+    private void findMainContentContainer() {
+        // Chercher le VBox principal qui contient le contenu du dashboard
+        Scene scene = dashboardBtn.getScene();
+        if (scene != null) {
+            // Le VBox principal est le 2ème enfant du HBox principal
+            Parent root = scene.getRoot();
+            if (root instanceof VBox) {
+                VBox mainVBox = (VBox) root;
+                for (var child : mainVBox.getChildren()) {
+                    if (child instanceof HBox) {
+                        HBox mainHBox = (HBox) child;
+                        // Le contenu principal est le 2ème enfant du HBox (index 1)
+                        if (mainHBox.getChildren().size() > 1) {
+                            var contentChild = mainHBox.getChildren().get(1);
+                            if (contentChild instanceof VBox) {
+                                mainContentContainer = (VBox) contentChild;
+                                System.out.println("✅ Main content container found!");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.err.println("❌ Could not find main content container");
     }
 
     private void setupUI() {
@@ -81,11 +96,10 @@ public class DoctorDashboardController implements Initializable {
         currentDateLabel.setText(today.format(formatter));
 
         // Set welcome message
-        String title = currentUser.getSpecialite() != null ? currentUser.getSpecialite() : "Doctor";
         welcomeLabel.setText("Good morning, Dr. " + currentUser.getLastName() + "!");
 
         // Set user menu text
-        userMenu.setText("👨‍⚕️ Dr. " + currentUser.getFirstName() + " " + currentUser.getLastName());
+        userMenu.setText("⚕️ Dr. " + currentUser.getFirstName() + " " + currentUser.getLastName());
     }
 
     private void setupEventHandlers() {
@@ -96,19 +110,11 @@ public class DoctorDashboardController implements Initializable {
 
         // Navigation actions
         dashboardBtn.setOnAction(e -> handleDashboard());
-        patientsBtn.setOnAction(e -> handlePatients());
-        appointmentsBtn.setOnAction(e -> handleAppointments());
-        recordsBtn.setOnAction(e -> handleRecords());
-        prescriptionsBtn.setOnAction(e -> handlePrescriptions());
-        messagesBtn.setOnAction(e -> handleMessages());
-        scheduleBtn.setOnAction(e -> handleSchedule());
-
-        // Update sidebar active state
-        updateSidebarActiveState(dashboardBtn);
+        agendaBtn.setOnAction(e -> handleAgenda());
+        clinicalnotesBtn.setOnAction(e -> handleClinicalNotes());
     }
 
     private void loadDashboardData() {
-        // Load mock data for demonstration
         loadTodaySchedule();
         loadRecentActivity();
         loadStatistics();
@@ -116,42 +122,38 @@ public class DoctorDashboardController implements Initializable {
 
     private void loadTodaySchedule() {
         ObservableList<String> schedule = FXCollections.observableArrayList(
-            "🕐 09:00 AM - John Smith (Cardiology Consultation)",
-            "🕐 09:30 AM - Sarah Johnson (Follow-up)",
-            "🕐 10:00 AM - Michael Brown (New Patient)",
-            "🕐 10:30 AM - Emily Davis (Blood Pressure Check)",
-            "🕐 11:00 AM - Robert Wilson (Diabetes Review)",
-            "🕐 14:00 PM - Lisa Anderson (Vaccination)",
-            "🕐 14:30 PM - David Miller (Physical Exam)",
-            "🕐 15:00 PM - Maria Garcia (Results Discussion)"
+                "🕐 09:00 AM - Sarah Johnson (Annual Checkup)",
+                "🕐 10:00 AM - Mike Chen (Blood Pressure)",
+                "🕐 11:00 AM - Emma Wilson (Consultation)",
+                "🕐 02:00 PM - David Brown (Follow-up)",
+                "🕐 03:30 PM - Lisa Garcia (Vaccination)",
+                "🕐 04:30 PM - Tom Anderson (Test Results)"
         );
         todayScheduleList.setItems(schedule);
     }
 
     private void loadRecentActivity() {
-        ObservableList<String> activities = FXCollections.observableArrayList(
-            "📋 Completed consultation: John Smith - Normal results",
-            "💊 Prescribed medication: Sarah Johnson - Hypertension treatment",
-            "📅 Scheduled follow-up: Michael Brown - Next month",
-            "💬 Patient message: Emily Davis - Thank you for the care",
-            "📊 Updated records: Robert Wilson - Lab results reviewed",
-            "👥 New patient registered: Lisa Anderson",
-            "📋 Lab results received: David Miller - All normal",
-            "💊 Prescription renewed: Maria Garcia - Diabetes medication"
+        ObservableList<String> activity = FXCollections.observableArrayList(
+                "📋 Completed patient report - Sarah Johnson",
+                "📊 Updated medical records - Mike Chen",
+                "💊 Prescription renewed - Emma Wilson",
+                "📅 Scheduled follow-up - David Brown",
+                "🔬 Lab results reviewed - Lisa Garcia",
+                "📝 Clinical notes added - Tom Anderson",
+                "🩺 New patient registered - Maria Rodriguez"
         );
-        recentActivityList.setItems(activities);
+        recentActivityList.setItems(activity);
     }
 
     private void loadStatistics() {
-        todayAppointmentsCount.setText("8");
+        todayAppointmentsCount.setText("6");
         activePatientsCount.setText("47");
         pendingTasksCount.setText("3");
     }
 
     private void updateSidebarActiveState(Button activeButton) {
         // Reset all buttons
-        Button[] navButtons = {dashboardBtn, patientsBtn, appointmentsBtn, recordsBtn,
-                               prescriptionsBtn, messagesBtn, scheduleBtn};
+        Button[] navButtons = {dashboardBtn, agendaBtn, clinicalnotesBtn};
 
         for (Button btn : navButtons) {
             btn.getStyleClass().remove("sidebar-item.active");
@@ -159,65 +161,92 @@ public class DoctorDashboardController implements Initializable {
 
         // Set active button
         activeButton.getStyleClass().add("sidebar-item.active");
+        this.activeButton = activeButton;
     }
 
-    // Event handlers
+    // ========== NAVIGATION METHODS ==========
+
+    @FXML
+
+    private void handleDashboard() {
+        updateSidebarActiveState(dashboardBtn);
+        loadView("/fxml/DoctorDashboard.fxml");
+    }
+
+    @FXML
+    private void handleAgenda() {
+        updateSidebarActiveState(agendaBtn);
+        loadView("/fxml/doctor-schedule-week.fxml");
+    }
+
+    @FXML
+    private void handleClinicalNotes() {
+        updateSidebarActiveState(clinicalnotesBtn);
+        loadView("/fxml/clinical-notes.fxml");
+    }
+
     @FXML
     private void handleProfile() {
-        SceneManager.getInstance().switchTo(SceneManager.PROFILE);
+        loadView("/fxml/Profile.fxml");
     }
 
     @FXML
     private void handleSettings() {
-        showAlert("Settings", "Account Settings", "Practice settings and account management will be available in the next version.");
+        showAlert("Settings", "Account Settings", "Doctor profile and practice settings will be available soon.");
     }
 
     @FXML
     private void handleLogout() {
-        // Navigate back to login
-        SceneManager.getInstance().logout();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Are you sure you want to logout?");
+        alert.setContentText("Click OK to logout or Cancel to stay.");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response.getButtonData().isDefaultButton()) {
+                SceneManager.getInstance().logout();
+            }
+        });
     }
 
-    @FXML
-    private void handleDashboard() {
-        updateSidebarActiveState(dashboardBtn);
-        // Already on dashboard
-    }
+    // ========== HELPER METHODS ==========
 
-    @FXML
-    private void handlePatients() {
-        updateSidebarActiveState(patientsBtn);
-        showAlert("Patients", "Patient Management", "Comprehensive patient records and management tools are in development.");
-    }
+    private void loadView(String fxmlPath) {
+        try {
+            System.out.println("🔍 Loading: " + fxmlPath);
 
-    @FXML
-    private void handleAppointments() {
-        updateSidebarActiveState(appointmentsBtn);
-        showAlert("Appointments", "Schedule & Appointments", "Appointment scheduling and confirmation tools are coming soon.");
-    }
+            // Vérifier si le fichier existe
+            if (getClass().getResource(fxmlPath) == null) {
+                System.err.println("❌ FXML not found: " + fxmlPath);
+                showAlert("Error", "File not found", "Cannot find: " + fxmlPath);
+                return;
+            }
 
-    @FXML
-    private void handleRecords() {
-        updateSidebarActiveState(recordsBtn);
-        showAlert("Medical Records", "Clinical Records", "Digital clinical records and analysis tools are under development.");
-    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent view = loader.load();
 
-    @FXML
-    private void handlePrescriptions() {
-        updateSidebarActiveState(prescriptionsBtn);
-        showAlert("Prescriptions", "E-Prescriptions", "Electronic prescription issuing and pharmacy coordination are coming soon.");
-    }
+            System.out.println("✅ View loaded successfully");
 
-    @FXML
-    private void handleMessages() {
-        updateSidebarActiveState(messagesBtn);
-        showAlert("Messages", "Message Center", "Secure messaging with your patients and colleagues is being finalized.");
-    }
+            // Trouver le conteneur principal si pas encore trouvé
+            if (mainContentContainer == null) {
+                findMainContentContainer();
+            }
 
-    @FXML
-    private void handleSchedule() {
-        updateSidebarActiveState(scheduleBtn);
-        showAlert("Schedule", "Working Schedule", "Full schedule management and availability settings are coming soon.");
+            // Remplacer le contenu
+            if (mainContentContainer != null) {
+                mainContentContainer.getChildren().clear();
+                mainContentContainer.getChildren().add(view);
+                System.out.println("✅ View added to main container");
+            } else {
+                System.err.println("❌ Main container is null - cannot add view");
+                showAlert("Error", "Navigation Error", "Cannot find content container");
+            }
+
+        } catch (IOException e) {
+            System.err.println("❌ Error loading: " + fxmlPath);
+            e.printStackTrace();
+            showAlert("Error", "Cannot load view", "Failed to load: " + fxmlPath + "\n" + e.getMessage());
+        }
     }
 
     private void showAlert(String title, String header, String content) {
@@ -233,11 +262,10 @@ public class DoctorDashboardController implements Initializable {
         User doctor = new User();
         doctor.setUuid("doctor-uuid-123");
         doctor.setEmail("doctor@wellcare.com");
-        doctor.setFirstName("Ahmed");
-        doctor.setLastName("Ben Salah");
-        doctor.setRole("ROLE_MEDECIN");
-        doctor.setSpecialite("Cardiologie");
-        doctor.setLicenseNumber("DOC-12345");
+        doctor.setFirstName("Karim");
+        doctor.setLastName("Ben Ali");
+        doctor.setRole("ROLE_DOCTOR");
+        doctor.setSpecialite("General Medicine");
         doctor.setActive(true);
         doctor.setVerifiedByAdmin(true);
         return doctor;

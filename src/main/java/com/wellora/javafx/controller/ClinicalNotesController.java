@@ -17,6 +17,10 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -27,7 +31,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wellcare.javafx.model.User;
+
 public class ClinicalNotesController {
+    
+    public static User selectedPatient;
 
     @FXML
     private Label patientInitials;
@@ -111,11 +119,26 @@ public class ClinicalNotesController {
             if (temperature != null) temperature.setText("37");
             if (spo2 != null) spo2.setText("99");
 
-            if (patientInitials != null) patientInitials.setText("JD");
-            if (patientName != null) patientName.setText("Patient Name");
-            if (patientId != null) patientId.setText("ID: --");
+            if (selectedPatient != null) {
+                if (patientInitials != null) {
+                    String initials = "";
+                    if (selectedPatient.getFirstName() != null && !selectedPatient.getFirstName().isEmpty()) initials += selectedPatient.getFirstName().substring(0, 1);
+                    if (selectedPatient.getLastName() != null && !selectedPatient.getLastName().isEmpty()) initials += selectedPatient.getLastName().substring(0, 1);
+                    patientInitials.setText(initials.toUpperCase());
+                }
+                if (patientName != null) patientName.setText(selectedPatient.getFirstName() + " " + selectedPatient.getLastName());
+                if (patientId != null && selectedPatient.getUuid() != null && selectedPatient.getUuid().length() >= 8) {
+                    patientId.setText("ID: " + selectedPatient.getUuid().substring(0, 8));
+                } else if (patientId != null) {
+                    patientId.setText("ID: " + selectedPatient.getUuid());
+                }
+            } else {
+                if (patientInitials != null) patientInitials.setText("JD");
+                if (patientName != null) patientName.setText("Patient Name");
+                if (patientId != null) patientId.setText("ID: --");
+            }
 
-            if (editorMeta != null) editorMeta.setText("Date: " + LocalDate.now() + " • Dr. Name");
+            if (editorMeta != null) editorMeta.setText("Date: " + LocalDate.now());
 
             if (followUpType != null && followUpType.getItems() != null) {
                 if (followUpType.getItems().isEmpty()) {
@@ -140,7 +163,18 @@ public class ClinicalNotesController {
         if (notesHistoryList != null && notesHistoryList.getChildren() != null) {
             notesHistoryList.getChildren().clear();
             try {
-                List<Consultation> consultations = consultationService.ShowConsultation();
+                List<Consultation> allConsultations = consultationService.ShowConsultation();
+                List<Consultation> consultations = new ArrayList<>();
+                for (Consultation c : allConsultations) {
+                    if (selectedPatient != null && selectedPatient.getUuid() != null) {
+                        if (selectedPatient.getUuid().equals(c.getPatientId())) {
+                            consultations.add(c);
+                        }
+                    } else {
+                        consultations.add(c);
+                    }
+                }
+                
                 if (consultations.isEmpty()) {
                     Label emptyLabel = new Label("Aucune note");
                     emptyLabel.setStyle("-fx-text-fill: #9ca3af; -fx-font-size: 12px;");
@@ -393,6 +427,13 @@ public class ClinicalNotesController {
             consultation.setConsultationType("Clinical Note");
             consultation.setDateConsultation(LocalDate.now());
             consultation.setStatus("completed");
+            
+            if (selectedPatient != null) {
+                consultation.setPatientId(selectedPatient.getUuid());
+                consultation.setPatientFirstName(selectedPatient.getFirstName());
+                consultation.setPatientLastName(selectedPatient.getLastName());
+                consultation.setPatientEmail(selectedPatient.getEmail());
+            }
 
             if (currentConsultationId > 0) {
                 consultation.setId(currentConsultationId);
@@ -789,6 +830,21 @@ public class ClinicalNotesController {
     private void toggleSubmenu() {
         if (submenuContainer != null) {
             submenuContainer.setVisible(!submenuContainer.isVisible());
+        }
+    }
+
+    @FXML
+    private void goBackToDashboard(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/DoctorDashboard.fxml"));
+            Parent root = loader.load();
+            Scene scene = ((Node) event.getSource()).getScene();
+            if (scene != null) {
+                scene.setRoot(root);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Erreur", "Impossible de retourner au tableau de bord: " + e.getMessage());
         }
     }
 }

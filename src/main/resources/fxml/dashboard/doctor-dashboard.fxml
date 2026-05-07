@@ -40,12 +40,8 @@
                         <children>
                             <Label styleClass="sidebar-title" text="Doctor Portal" />
                             <Button fx:id="dashboardBtn" styleClass="sidebar-item, sidebar-item.active" text="📊 Dashboard" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="patientsBtn" styleClass="sidebar-item" text="👥 My Patients" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="appointmentsBtn" styleClass="sidebar-item" text="📅 Appointments" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="recordsBtn" styleClass="sidebar-item" text="📋 Medical Records" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="prescriptionsBtn" styleClass="sidebar-item" text="💊 Prescriptions" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="messagesBtn" styleClass="sidebar-item" text="💬 Messages" maxWidth="1.7976931348623157E308" />
-                            <Button fx:id="scheduleBtn" styleClass="sidebar-item" text="🕒 My Schedule" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="agendaBtn" styleClass="sidebar-item" text="📅 Agenda" maxWidth="1.7976931348623157E308" />
+                            <Button fx:id="clinicalnotesBtn" styleClass="sidebar-item" text="📋 clinical-notes" maxWidth="1.7976931348623157E308" />
                         </children>
                     </VBox>
                 </children>

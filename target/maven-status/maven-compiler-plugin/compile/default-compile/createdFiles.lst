@@ -12,6 +12,7 @@ com\wellora\nutrition\services\NutritionApiService.class
 com\wellora\util\CharsetFilter.class
 com\wellcare\javafx\controller\WorkoutPlannerController$1.class
 com\wellcare\javafx\controller\admin\UserManagementController$UserTableItem.class
+com\wellora\javafx\controller\DoctorAnalytics$3.class
 com\wellora\services\ParcoursRecommendationService.class
 com\wellora\models\NutritionGoal.class
 com\wellcare\javafx\controller\CoachDashboardController$ConversationItem.class
@@ -88,6 +89,7 @@ com\wellora\javafx\controller\PublicationCardController.class
 com\wellcare\javafx\controller\DailyPlanViewController$3.class
 com\wellora\javafx\service\DoctorAnalyticsService.class
 com\wellora\controllers\HealthNavigationProxy.class
+com\wellora\javafx\controller\DoctorAnalytics$5.class
 com\wellcare\javafx\util\ValidationUtils.class
 com\wellcare\javafx\util\ZenQuotesService.class
 com\wellora\javafx\controller\BookingController.class
@@ -138,6 +140,7 @@ com\wellcare\javafx\util\MyDataBase.class
 com\wellora\javafx\service\EmailService.class
 com\wellcare\javafx\controller\DailyPlanController$2.class
 com\wellcare\javafx\controller\ExerciseLibraryController$3.class
+com\wellora\javafx\controller\DoctorAnalytics$4.class
 com\wellcare\javafx\controller\auth\LoginController.class
 com\wellcare\javafx\util\CountryChallengeService$ChallengeResponse.class
 com\wellora\javafx\model\Examens.class
@@ -176,6 +179,7 @@ com\wellcare\javafx\dao\GoalDaoImpl.class
 com\wellcare\javafx\service\CaptchaService.class
 com\wellora\nutrition\services\NutritionPdfExportService.class
 com\wellora\model\publication_parcours.class
+test\TestDB.class
 com\wellcare\javafx\TestPasswordHash.class
 com\wellcare\javafx\controller\auth\ResetPasswordController.class
 com\wellcare\javafx\controller\ExerciseCardController.class

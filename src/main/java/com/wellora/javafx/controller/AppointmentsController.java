@@ -23,6 +23,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.util.SceneManager;
 
 public class AppointmentsController {
 
@@ -80,6 +83,15 @@ public class AppointmentsController {
         showLoading(true);
         try {
             allConsultations = consultationService.ShowConsultation();
+            
+            // Filter by logged-in patient
+            User currentUser = SceneManager.getInstance().getCurrentUser();
+            if (currentUser != null && currentUser.getUuid() != null) {
+                allConsultations = allConsultations.stream()
+                        .filter(c -> currentUser.getUuid().equals(c.getPatientId()))
+                        .collect(Collectors.toList());
+            }
+
             System.out.println("Loaded " + allConsultations.size() + " consultations from database");
             for (Consultation c : allConsultations) {
                 System.out.println("  - ID: " + c.getId() + ", Date: " + c.getDateConsultation() + ", Status: " + c.getStatus() + ", Reason: " + c.getReasonForVisit());

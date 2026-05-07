@@ -53,7 +53,7 @@ public class ExamensServices implements CRUDexamens {
     public List<Examens> ShowExamens() throws SQLException {
         List<Examens> examenList = new ArrayList<>();
         String query = "SELECT id, type_examen, date_examen, resultat, status, notes, " +
-                     "nom_examen, date_realisation, result_file, doctor_analysis, doctor_treatment " +
+                     "nom_examen, date_realisation, result_file, doctor_analysis, doctor_treatment, consultation_id " +
                      "FROM examens";
         
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -79,6 +79,12 @@ public class ExamensServices implements CRUDexamens {
                 examens.setResultFile(rs.getString("result_file"));
                 examens.setDoctorAnalysis(rs.getString("doctor_analysis"));
                 examens.setDoctorTreatment(rs.getString("doctor_treatment"));
+                
+                try {
+                    examens.setConsultationId(rs.getInt("consultation_id"));
+                } catch (SQLException e) {
+                    // Column might not exist or be null
+                }
                 
                 examenList.add(examens);
             }

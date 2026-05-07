@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.util.SceneManager;
+
 public class DoctorPendingController {
 
     @FXML private VBox appointmentsContainer;
@@ -47,8 +50,27 @@ public class DoctorPendingController {
         new Thread(() -> {
             try {
                 List<Consultation> all = consultationService.ShowConsultation();
+                User currentDoctor = SceneManager.getInstance().getCurrentUser();
+                
                 pendingAppointments = all.stream()
                         .filter(c -> c.getStatus() != null && c.getStatus().equalsIgnoreCase("pending"))
+                        .filter(c -> {
+                            if (currentDoctor == null || currentDoctor.getUuid() == null) return true; // If not logged in, show all or none? Show all for safety.
+                            
+                            // Check if the medecin_id matches the current doctor
+                            if (c.getMedecinId() != null && c.getMedecinId().equals(currentDoctor.getUuid())) {
+                                return true;
+                            }
+                            
+                            // Fallback: check if the doctor's last name or first name is in the reason or notes
+                            String lastName = currentDoctor.getLastName();
+                            if (lastName != null && !lastName.trim().isEmpty()) {
+                                if (c.getReasonForVisit() != null && c.getReasonForVisit().contains(lastName)) return true;
+                                if (c.getNotes() != null && c.getNotes().contains(lastName)) return true;
+                            }
+                            
+                            return false;
+                        })
                         .collect(Collectors.toList());
                 Platform.runLater(() -> {
                     updateUI();
@@ -130,11 +152,11 @@ public class DoctorPendingController {
 
         HBox buttonsBox = new HBox(12);
         buttonsBox.setAlignment(Pos.CENTER_RIGHT);
-        Button acceptBtn = new Button("✅ Accepter");
-        acceptBtn.setStyle("-fx-background-color: #22c55e; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 8;");
+        Button acceptBtn = new Button("✅");
+        acceptBtn.setStyle("-fx-background-color: #22c55e; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 8;");
         acceptBtn.setOnAction(e -> acceptAppointment(apt, acceptBtn));
-        Button rejectBtn = new Button("❌ Refuser");
-        rejectBtn.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 8;");
+        Button rejectBtn = new Button("❌");
+        rejectBtn.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 8;");
         rejectBtn.setOnAction(e -> rejectAppointment(apt, rejectBtn));
         buttonsBox.getChildren().addAll(acceptBtn, rejectBtn);
 
@@ -167,7 +189,7 @@ public class DoctorPendingController {
         confirm.setContentText("Il sera ajouté à votre planning et le patient sera notifié.");
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
 
-        button.setText("⏳ Acceptation...");
+        button.setText("⏳");
         button.setDisable(true);
 
         new Thread(() -> {
@@ -185,7 +207,7 @@ public class DoctorPendingController {
                 });
             } catch (SQLException e) {
                 Platform.runLater(() -> {
-                    button.setText("✅ Accepter");
+                    button.setText("✅");
                     button.setDisable(false);
                     showError("Erreur lors de l'acceptation : " + e.getMessage());
                 });
@@ -201,7 +223,7 @@ public class DoctorPendingController {
         String reason = reasonDialog.showAndWait().orElse(null);
         if (reason == null) return;
 
-        button.setText("⏳ Refus...");
+        button.setText("⏳");
         button.setDisable(true);
 
         new Thread(() -> {
@@ -215,7 +237,7 @@ public class DoctorPendingController {
                 });
             } catch (SQLException e) {
                 Platform.runLater(() -> {
-                    button.setText("❌ Refuser");
+                    button.setText("❌");
                     button.setDisable(false);
                     showError("Erreur lors du refus : " + e.getMessage());
                 });
@@ -309,23 +331,45 @@ public class DoctorPendingController {
 
     private void sendEmailNotification(Consultation apt) {
         try {
-            // Static email for testing – bypass database lookup
-            String patientEmail = "chahd.maaloul@esprit.tn";
-            String patientName = "Chahd Maaloul";   // static name
+            // Fetch real patient info from database
+            String patientEmail = null;
+            String patientName = "Patient";
+
+            String patientId = apt.getPatientId();
+            if (patientId != null && !patientId.isEmpty()) {
+                com.wellcare.javafx.service.UserService userService =
+                        new com.wellcare.javafx.service.UserService();
+                com.wellcare.javafx.model.User patient = userService.getUserByUuid(patientId);
+                if (patient != null) {
+                    patientEmail = patient.getEmail();
+                    patientName = patient.getFirstName() + " " + patient.getLastName();
+                }
+            }
+
+            if (patientEmail == null || patientEmail.isEmpty()) {
+                System.err.println("No email found for patient id: " + patientId);
+                return;
+            }
+
             String doctorName = "WellCare Doctor";
+            User currentDoctor = SceneManager.getInstance().getCurrentUser();
+            if (currentDoctor != null) {
+                doctorName = "Dr. " + currentDoctor.getFirstName() + " " + currentDoctor.getLastName();
+            }
+
             String appointmentDate = apt.getDateConsultation().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             String appointmentTime = apt.getTimeConsultation() != null
                     ? apt.getTimeConsultation().format(DateTimeFormatter.ofPattern("HH:mm"))
                     : "N/A";
 
-            System.out.println("Sending email to static address: " + patientEmail);
+            System.out.println("Sending email to: " + patientEmail + " (" + patientName + ")");
             EmailService.sendAppointmentAcceptedEmail(
                     patientEmail, patientName, doctorName, appointmentDate, appointmentTime
             );
-            System.out.println("Email sending completed.");
+            System.out.println("Email sent successfully to " + patientEmail);
         } catch (Exception e) {
             System.err.println("Email error: " + e.getMessage());
             e.printStackTrace();
         }
     }
-}
+}

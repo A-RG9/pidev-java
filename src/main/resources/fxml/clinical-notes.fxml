@@ -11,8 +11,7 @@
       stylesheets="@../css/styles.css"
       style="-fx-background-color: #f9fafb;">
 
-    <!-- LEFT SIDEBAR - Included from sidebar.fxml -->
-    <fx:include source="sidebar.fxml" />
+
 
     <!-- RIGHT SIDE - Editor -->
     <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
@@ -21,6 +20,8 @@
 
             <!-- Editor Header -->
             <VBox spacing="8" style="-fx-padding: 0 0 20 0; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+                <Button text="← Retour au Tableau de bord" onAction="#goBackToDashboard"
+                        style="-fx-background-color: transparent; -fx-text-fill: #3b82f6; -fx-font-weight: bold; -fx-padding: 0 0 12 0; -fx-cursor: hand; -fx-font-size: 14px;"/>
                 <Text fx:id="editorTitle" text="Nouvelle Note SOAP"
                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #111827;"/>
                 <Label fx:id="editorMeta" text="15/04/2026 • Dr. Name"
