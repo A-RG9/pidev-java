@@ -7,6 +7,7 @@ import com.wellora.dao.SymptomDAO;
 import com.wellora.model.Healthentry;
 import com.wellora.model.Healthjournal;
 import com.wellora.model.Symptom;
+import com.wellcare.javafx.util.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -107,7 +108,8 @@ public class HealthentryController {
 
     private void loadJournals() {
         try {
-            List<Healthjournal> list = journalDAO.findAll();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            List<Healthjournal> list = journalDAO.findAll(userId);
             journals.clear();
             journals.addAll(list);
             journalCombo.setItems(journals);
@@ -121,7 +123,8 @@ public class HealthentryController {
      */
     private void autoAssignJournal(LocalDate date) {
         try {
-            Optional<Healthjournal> journal = journalDAO.findByDate(date);
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            Optional<Healthjournal> journal = journalDAO.findByDate(date, userId);
             if (journal.isPresent()) {
                 journalCombo.getSelectionModel().select(journal.get());
                 setStatus("Auto-assigned to: " + journal.get().getName());
@@ -136,7 +139,8 @@ public class HealthentryController {
     @FXML
     private void loadTable() {
         try {
-            List<Healthentry> entries = entryDAO.findAll();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            List<Healthentry> entries = entryDAO.findAll(userId);
             data.clear();
             data.addAll(entries);
             setStatus("Loaded " + entries.size() + " entries");
@@ -148,11 +152,12 @@ public class HealthentryController {
     @FXML
     private void search() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             String search = searchField.getText();
             LocalDate filterDate = filterDatePicker.getValue();
             List<Healthentry> entries = entryDAO.search(
                 search.isEmpty() ? null : search, 
-                filterDate, "date", "DESC"
+                filterDate, "date", "DESC", userId
             );
             data.clear();
             data.addAll(entries);
@@ -375,7 +380,8 @@ public class HealthentryController {
             // Try auto-assignment
             LocalDate date = datePicker.getValue();
             try {
-                Optional<Healthjournal> journal = journalDAO.findByDate(date);
+                String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+                Optional<Healthjournal> journal = journalDAO.findByDate(date, userId);
                 if (journal.isEmpty()) {
                     showError("No journal exists for this date. Create a journal first.");
                     return false;

@@ -12,6 +12,31 @@ public class MealPlanDAO {
     private final String USER = "root";
     private final String PASS = "";
 
+    /**
+     * Résout le vrai id entier (PK) d'un utilisateur depuis la table users,
+     * en cherchant par son uuid. Cette valeur est utilisée comme user_id (INT NOT NULL)
+     * lors des insertions dans meal_plans.
+     *
+     * @param uuid  le UUID string de l'utilisateur connecté
+     * @return      l'id entier réel, ou 0 si non trouvé
+     */
+    private int getRealUserIdByUuid(String uuid) {
+        if (uuid == null || uuid.isEmpty()) return 0;
+        String query = "SELECT id FROM users WHERE uuid = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.err.println("[MealPlanDAO] Impossible de résoudre user_id pour uuid=" + uuid);
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public List<MealPlan> getPlansByDate(String userUuid, LocalDate date) {
         List<MealPlan> list = new ArrayList<>();
         String query = "SELECT * FROM meal_plans WHERE user_uuid = ? AND date = ? ORDER BY meal_type";
@@ -50,7 +75,15 @@ public class MealPlanDAO {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
              PreparedStatement ps = conn.prepareStatement(query)) {
 
-            ps.setInt(1, plan.getUserId());
+            // Résolution du vrai user_id entier depuis la table users via uuid (jointure)
+            int realUserId = getRealUserIdByUuid(plan.getUserUuid());
+            if (realUserId == 0) {
+                // Fallback sur la valeur portée par le modèle si uuid inconnu
+                realUserId = plan.getUserId();
+                System.err.println("[MealPlanDAO] ⚠️ user_id réel introuvable pour uuid='" + plan.getUserUuid() + "', fallback=" + realUserId);
+            }
+
+            ps.setInt(1, realUserId);
             ps.setString(2, plan.getUserUuid());
             ps.setDate(3, Date.valueOf(plan.getDate()));
             ps.setString(4, plan.getDayOfWeek());

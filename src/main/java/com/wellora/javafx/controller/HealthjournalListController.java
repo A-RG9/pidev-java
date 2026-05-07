@@ -4,6 +4,7 @@ import com.wellora.controllers.HealthNavigationProxy;
 
 import com.wellora.dao.HealthjournalDAO;
 import com.wellora.javafx.WelloraApp;
+import com.wellcare.javafx.util.SceneManager;
 import com.wellora.model.Healthjournal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,7 +71,8 @@ public class HealthjournalListController {
     @FXML
     private void loadTable() {
         try {
-            List<Healthjournal> journals = journalDAO.findAll();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            List<Healthjournal> journals = journalDAO.findAll(userId);
             data.clear();
             data.addAll(journals);
             setStatus("Affiché " + journals.size() + " journaux");
@@ -85,10 +87,11 @@ public class HealthjournalListController {
     @FXML
     private void search() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             String search = searchField.getText();
             List<Healthjournal> journals = journalDAO.search(
                 search.isEmpty() ? null : search, 
-                null, "datedebut", "DESC"
+                null, "datedebut", "DESC", userId
             );
             data.clear();
             data.addAll(journals);

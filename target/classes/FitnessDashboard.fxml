@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.wellcare.javafx.controller.FitnessDashboardController"
+            fitToWidth="true"
+            fitToHeight="false"
+            style="-fx-background-color: #F8FAFC; -fx-background: transparent; -fx-border-color: transparent;">
+
+    <VBox spacing="20" style="-fx-padding: 20;">
+
+        <!-- Header avec citation du jour - CORRIGÉ -->
+        <VBox spacing="15">
+            <!-- Ligne 1: Titre et sélecteur -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <VBox>
+                    <Label text="🏃‍♀️ Fitness Dashboard" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                    <Label text="Suivez votre progression et restez motivé" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="🎯 Objectif:" style="-fx-text-fill: #64748B; -fx-font-weight: bold;"/>
+                    <ComboBox fx:id="goalSelector" prefWidth="220"
+                              style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 6 12;"/>
+                    <Button text="🔄" onAction="#refreshDashboard"
+                            style="-fx-background-color: #EFF6FF; -fx-text-fill: #3B82F6; -fx-background-radius: 20; -fx-padding: 6 12; -fx-cursor: hand;"/>
+                </HBox>
+            </HBox>
+
+            <!-- Ligne 2: Citation du jour (séparée) -->
+            <VBox style="-fx-background-color: #EFF6FF; -fx-background-radius: 12; -fx-padding: 12 20;">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="💪" style="-fx-font-size: 18px;"/>
+                    <Label text="Citation du jour" style="-fx-text-fill: #3B82F6; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄" onAction="#refreshSportQuote"
+                            style="-fx-background-color: transparent; -fx-text-fill: #3B82F6; -fx-cursor: hand; -fx-font-size: 12px; -fx-padding: 2 8;"/>
+                </HBox>
+                <Label fx:id="lblMotivationQuote" text="Chargement..." style="-fx-text-fill: #1E293B; -fx-font-size: 14px; -fx-wrap-text: true;"/>
+                <Label fx:id="lblQuoteAuthor" text="" style="-fx-text-fill: #64748B; -fx-font-size: 11px; -fx-font-style: italic;"/>
+            </VBox>
+        </VBox>
+
+        <!-- Ligne 1: Cartes de statistiques -->
+        <HBox spacing="20">
+            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="🎯 Objectifs actifs" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                <Label fx:id="lblActiveGoals" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+            </VBox>
+
+            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="📊 Progression moyenne" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                <Label fx:id="lblAvgProgress" text="0%" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #10B981;"/>
+            </VBox>
+
+            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="💪 Exercices" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                <Label fx:id="lblTotalExercises" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #8B5CF6;"/>
+            </VBox>
+
+            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="🔥 Calories totales" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                <Label fx:id="lblTotalCalories" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #EF4444;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Ligne 2: Objectif principal + Progression -->
+        <HBox spacing="20">
+            <!-- Carte Objectif sélectionné -->
+            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="🎯" style="-fx-font-size: 24px;"/>
+                    <VBox>
+                        <Label fx:id="lblMainGoalTitle" text="Sélectionnez un objectif" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1E293B;"/>
+                        <Label fx:id="lblGoalStatus" text="" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Modifier" onAction="#editSelectedGoal" style="-fx-background-color: #EFF6FF; -fx-text-fill: #3B82F6; -fx-background-radius: 20; -fx-padding: 5 15; -fx-cursor: hand; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <Text fx:id="txtGoalDescription" text="" style="-fx-fill: #64748B; -fx-font-size: 13px;" wrappingWidth="350"/>
+
+                <VBox spacing="10">
+                    <Label text="Progression" style="-fx-text-fill: #475569; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                    <ProgressBar fx:id="goalProgressBar" progress="0" prefHeight="10" style="-fx-accent: #10B981; -fx-background-radius: 10;"/>
+                    <HBox>
+                        <Label fx:id="lblCurrentProgress" text="0" style="-fx-text-fill: #10B981; -fx-font-weight: bold;"/>
+                        <Label text="/" style="-fx-text-fill: #64748B;"/>
+                        <Label fx:id="lblTargetProgress" text="100" style="-fx-text-fill: #64748B;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblGoalPercentage" text="0%" style="-fx-text-fill: #10B981; -fx-font-weight: bold;"/>
+                    </HBox>
+                </VBox>
+
+                <HBox spacing="20">
+                    <VBox>
+                        <Label text="Date début" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblStartDate" text="-" style="-fx-font-size: 13px; -fx-text-fill: #1E293B;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Date fin" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblEndDate" text="-" style="-fx-font-size: 13px; -fx-text-fill: #1E293B;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Jours restants" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblDaysLeft" text="-" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #10B981;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Carte Plan du jour -->
+            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="📋 Plan du jour" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #1E293B;"/>
+                <VBox fx:id="todayPlanContainer" spacing="10">
+                    <Label text="Aucun plan pour aujourd'hui" style="-fx-text-fill: #94A3B8; -fx-font-style: italic;"/>
+                </VBox>
+            </VBox>
+        </HBox>
+
+        <!-- Ligne 3: Actions rapides + Exercices récents -->
+        <HBox spacing="20">
+            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="⚡ Actions rapides" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #1E293B;"/>
+                <VBox spacing="10">
+                    <Button text="➕ Nouveau plan" onAction="#createNewPlan" style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10; -fx-cursor: hand;"/>
+                    <Button text="🎯 Modifier objectif" onAction="#editSelectedGoal" style="-fx-background-color: #EFF6FF; -fx-text-fill: #3B82F6; -fx-background-radius: 10; -fx-padding: 10; -fx-cursor: hand;"/>
+                    <Button text="🔄 Mettre à jour progression" onAction="#updateSelectedGoalProgress" style="-fx-background-color: #F3E8FF; -fx-text-fill: #8B5CF6; -fx-background-radius: 10; -fx-padding: 10; -fx-cursor: hand;"/>
+                    <Button text="🔍 Bibliothèque d'exercices" onAction="#searchExercise" style="-fx-background-color: #F1F5F9; -fx-text-fill: #475569; -fx-background-radius: 10; -fx-padding: 10; -fx-cursor: hand;"/>
+                </VBox>
+            </VBox>
+
+            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="📊 Exercices récents" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #1E293B;"/>
+                <ListView fx:id="recentExercisesList" prefHeight="160" style="-fx-background-color: transparent; -fx-background: transparent;"/>
+            </VBox>
+
+            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                <Label text="📂 Catégories" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #1E293B;"/>
+                <VBox spacing="12">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="💪" style="-fx-font-size: 14px;"/>
+                        <Label fx:id="lblStrengthCount" text="Strength (0)" style="-fx-text-fill: #475569; -fx-font-size: 13px;"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="🏃" style="-fx-font-size: 14px;"/>
+                        <Label fx:id="lblCardioCount" text="Cardio (0)" style="-fx-text-fill: #475569; -fx-font-size: 13px;"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="🧘" style="-fx-font-size: 14px;"/>
+                        <Label fx:id="lblMusculationCount" text="Wellness (0)" style="-fx-text-fill: #475569; -fx-font-size: 13px;"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </HBox>
+
+        <!-- Espace en bas pour le scroll -->
+        <Region prefHeight="30"/>
+
+    </VBox>
+</ScrollPane>

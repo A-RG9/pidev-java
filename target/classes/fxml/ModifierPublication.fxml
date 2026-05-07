@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="0" styleClass="parcours-modifier-publication" style="-fx-background-color: #f9fafb;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.ModifierPublicationController">
+    <children>
+        <VBox style="-fx-background-color: linear-gradient(to right, #2563eb, #3b82f6); -fx-padding: 30 40 30 40;" maxWidth="1.7976931348623157E308">
+            <children>
+                <Label style="-fx-text-fill: white; -fx-font-size: 26; -fx-font-weight: bold;" text="📝 Edit Publication" />
+                <Label style="-fx-text-fill: #dbeafe; -fx-font-size: 15;" text="Update the details of your trail experience">
+                    <padding><Insets top="5.0" /></padding>
+                </Label>
+            </children>
+        </VBox>
+
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+            <VBox alignment="CENTER" style="-fx-padding: 40 20;">
+                <children>
+                    <VBox maxWidth="750.0" spacing="25.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 40; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 20, 0, 0, 5);">
+                        <children>
+
+                            <VBox spacing="8.0">
+                                <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Selected trail" />
+                                <TextField fx:id="trailNameField" editable="false" prefHeight="42.0" style="-fx-background-color: #f3f4f6; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #6b7280; -fx-font-size: 14; -fx-padding: 0 12;" />
+                            </VBox>
+
+                            <VBox spacing="8.0">
+                                <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Publication Text" />
+                                <TextArea fx:id="pubTextArea" prefHeight="130.0" promptText="Share your trail experience..." style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 14; -fx-padding: 5;" wrapText="true" />
+                            </VBox>
+
+                            <GridPane hgap="20.0" vgap="20.0">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="50.0" />
+                                    <ColumnConstraints percentWidth="50.0" />
+                                </columnConstraints>
+                                <children>
+                                    <VBox spacing="8.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                        <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Ambiance (1-5)" />
+                                        <TextField fx:id="ambianceField" prefHeight="42.0" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 12;" />
+                                    </VBox>
+                                    <VBox spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                        <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Safety (1-5)" />
+                                        <TextField fx:id="safetyField" prefHeight="42.0" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 12;" />
+                                    </VBox>
+                                    <VBox spacing="8.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                        <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Experience" />
+                                        <ComboBox fx:id="experienceCombo" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="Select an experience" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 5;" />
+                                    </VBox>
+                                    <VBox spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Publication Type" />
+                                        <ComboBox fx:id="typeCombo" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="Select a type" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 5;" />
+                                    </VBox>
+                                </children>
+                            </GridPane>
+
+                            <VBox spacing="8.0">
+                                <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Publication Date" />
+                                <DatePicker fx:id="datePicker" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="dd/mm/yyyy" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 5;" />
+                            </VBox>
+
+                            <VBox spacing="8.0">
+                                <Label style="-fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold;" text="Parcours Image (JPG or PNG)" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="46.0" style="-fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #ffffff;">
+                                    <children>
+                                        <Button fx:id="btnChooseFile" mnemonicParsing="false" prefHeight="46.0" style="-fx-background-color: #f3f4f6; -fx-border-color: #d1d5db; -fx-border-width: 0 1 0 0; -fx-text-fill: #4b5563; -fx-font-weight: bold; -fx-background-radius: 6 0 0 6; -fx-cursor: hand;" text="Choisir un fichier">
+                                            <padding><Insets left="20.0" right="20.0" /></padding>
+                                        </Button>
+                                        <Label fx:id="fileLabel" text=" Aucun fichier n'a été sélectionné" textFill="#9ca3af" style="-fx-font-size: 13;">
+                                            <padding><Insets left="15.0" /></padding>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </VBox>
+
+                            <HBox spacing="15.0">
+                                <children>
+                                    <Button fx:id="btnSave" prefHeight="44.0" prefWidth="120.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 6; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(37,99,235,0.3), 10, 0, 0, 3);" text="Update" />
+                                    <Button fx:id="btnCancel" prefHeight="44.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-text-fill: #4b5563; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Cancel" />
+                                </children>
+                                <padding><Insets top="15.0" /></padding>
+                            </HBox>
+
+                        </children>
+                    </VBox>
+                </children>
+            </VBox>
+        </ScrollPane>
+    </children>
+</VBox>

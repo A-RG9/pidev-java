@@ -135,32 +135,41 @@ public class SymptomDAO {
 
     // ---------------- Analytics ----------------
 
-    public int getCount() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM symptom";
+    public int getCount(String userId) throws SQLException {
+        String sql = "SELECT COUNT(s.id) FROM symptom s " +
+                     "JOIN healthentry e ON s.entry_id = e.id " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            if (rs.next()) return rs.getInt(1);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
         }
         return 0;
     }
 
-    public List<Object[]> getCountByType() throws SQLException {
-        String sql = "SELECT type, COUNT(*) as count FROM symptom GROUP BY type ORDER BY count DESC";
+    public List<Object[]> getCountByType(String userId) throws SQLException {
+        String sql = "SELECT s.type, COUNT(*) as count FROM symptom s " +
+                     "JOIN healthentry e ON s.entry_id = e.id " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? " +
+                     "GROUP BY s.type ORDER BY count DESC";
 
         List<Object[]> result = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                result.add(new Object[]{
-                        rs.getString("type"),
-                        rs.getLong("count")
-                });
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    result.add(new Object[]{
+                            rs.getString("type"),
+                            rs.getLong("count")
+                    });
+                }
             }
         }
         return result;

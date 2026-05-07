@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import com.wellora.model.Healthentry;
 import com.wellora.services.PredictionService;
+import com.wellcare.javafx.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -111,9 +112,10 @@ public class PredictionController implements Initializable {
      */
     private List<Healthentry> loadRecentHealthEntries() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             // Try to load from database using HealthentryDAO
             com.wellora.dao.HealthentryDAO entryDAO = new com.wellora.dao.HealthentryDAO();
-            List<Healthentry> entries = entryDAO.findAll();
+            List<Healthentry> entries = entryDAO.findAll(userId);
 
             if (entries != null && !entries.isEmpty()) {
                 // Return last 5 entries

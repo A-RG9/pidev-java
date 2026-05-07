@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.wellcare.javafx.controller.DailyPlanController" style="-fx-background-color: #F8FAFC;">
+
+    <BorderPane>
+        <top>
+            <VBox spacing="15" style="-fx-padding: 20 30 20 30; -fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+
+                <!-- Header -->
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <VBox>
+                        <Label text="📋 Daily Plans" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                        <Label text="Organisez vos séances d'entraînement quotidiennes" style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="+ Nouveau Plan" onAction="#openAddForm"
+                            style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25; -fx-cursor: hand; -fx-font-size: 14px;"/>
+                </HBox>
+
+                <!-- Statistiques rapides -->
+                <HBox spacing="20" style="-fx-padding: 10 0 0 0;">
+                    <VBox spacing="3" style="-fx-background-color: #F1F5F9; -fx-padding: 10 20; -fx-background-radius: 12;">
+                        <Label text="Total Plans" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblTotalPlans" text="0" style="-fx-text-fill: #1E293B; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox spacing="3" style="-fx-background-color: #EFF6FF; -fx-padding: 10 20; -fx-background-radius: 12;">
+                        <Label text="Exercices Total" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblTotalExercises" text="0" style="-fx-text-fill: #3B82F6; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox spacing="3" style="-fx-background-color: #F0FDF4; -fx-padding: 10 20; -fx-background-radius: 12;">
+                        <Label text="Calories Total" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblTotalCalories" text="0" style="-fx-text-fill: #10B981; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Barre de recherche et filtres -->
+                <VBox spacing="10" style="-fx-padding: 10 0 5 0;">
+
+                    <!-- Ligne 1: Recherche + Filtres -->
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <TextField fx:id="searchPlan" promptText="🔍 Rechercher un plan par titre..." HBox.hgrow="ALWAYS"
+                                   style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 10 15; -fx-font-size: 13px;"/>
+
+                        <!-- NOUVEAU: Filtre par Goal -->
+                        <ComboBox fx:id="filterGoal" promptText="🎯 Filtrer par objectif" prefWidth="200"
+                                  style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8 12;"/>
+
+                        <ComboBox fx:id="filterStatusPlan" promptText="Statut" prefWidth="150"
+                                  style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8 12;"/>
+
+                        <DatePicker fx:id="filterDate" promptText="Date" prefWidth="150"
+                                    style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8 12;"/>
+
+                        <Button fx:id="btnResetFilters" text="Reset Filtres" onAction="#resetFilters"
+                                style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                    </HBox>
+
+                    <!-- Ligne 2: Résultats + Pagination -->
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <Label fx:id="lblResultCount" style="-fx-text-fill: #64748B; -fx-font-size: 12px; -fx-padding: 5 0;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <!-- NOUVEAU: Pagination -->
+                        <HBox spacing="5" alignment="CENTER">
+                            <Button text="◀" onAction="#previousPage"
+                                    style="-fx-background-color: #F1F5F9; -fx-text-fill: #1E293B; -fx-background-radius: 8; -fx-pref-width: 30; -fx-pref-height: 30; -fx-cursor: hand; -fx-font-weight: bold;"/>
+                            <Label fx:id="lblPageInfo" text="Page 1 / 1" style="-fx-text-fill: #64748B; -fx-font-size: 12px; -fx-padding: 0 10;"/>
+                            <Button text="▶" onAction="#nextPage"
+                                    style="-fx-background-color: #F1F5F9; -fx-text-fill: #1E293B; -fx-background-radius: 8; -fx-pref-width: 30; -fx-pref-height: 30; -fx-cursor: hand; -fx-font-weight: bold;"/>
+                        </HBox>
+
+                        <Button text="🔄 Rafraîchir" onAction="#refreshPlansList"
+                                style="-fx-background-color: transparent; -fx-text-fill: #64748B; -fx-cursor: hand; -fx-font-size: 12px;"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </top>
+
+        <center>
+            <ScrollPane fx:id="plansScrollPane" fitToWidth="true"
+                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                <VBox fx:id="plansContainer" spacing="15" style="-fx-padding: 20 30 20 30;" />
+            </ScrollPane>
+        </center>
+    </BorderPane>
+
+    <!-- Formulaire overlay modernisé -->
+    <VBox fx:id="formOverlay" visible="false" alignment="CENTER" style="-fx-background-color: rgba(0,0,0,0.8);">
+        <VBox spacing="18" maxWidth="600" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 5);">
+
+            <Label text="📝 Configuration du Plan Journalier" style="-fx-font-size: 22px; -fx-text-fill: #1E293B; -fx-font-weight: bold;"/>
+            <Label text="Remplissez les informations ci-dessous pour créer votre plan d'entraînement" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+
+            <Separator style="-fx-background-color: #E2E8F0;"/>
+
+            <!-- Titre -->
+            <VBox spacing="5">
+                <Label text="Titre du plan *" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <TextField fx:id="txtTitre" promptText="ex: Séance de renforcement matin"
+                           style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+            </VBox>
+
+            <!-- Objectif et Date -->
+            <HBox spacing="15">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Objectif associé *" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                    <ComboBox fx:id="comboGoals" promptText="Choisir un objectif" maxWidth="Infinity"
+                              style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date prévue *" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                    <DatePicker fx:id="datePicker" prefWidth="180"
+                                style="-fx-background-color: #F8FAFC; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-padding: 8;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Durée et Calories -->
+            <HBox spacing="15">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="⏱️ Durée (minutes)" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                    <TextField fx:id="txtDuree" promptText="0"
+                               style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="🔥 Calories estimées" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                    <TextField fx:id="txtCalories" promptText="0"
+                               style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Notes -->
+            <VBox spacing="5">
+                <Label text="📝 Notes / Instructions" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <TextArea fx:id="txtNotes" promptText="Détails supplémentaires sur la séance..." prefHeight="80" wrapText="true"
+                          style="-fx-background-color: #F8FAFC; -fx-padding: 10; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E2E8F0; -fx-border-width: 1px; -fx-font-size: 13px;"/>
+            </VBox>
+
+            <!-- Exercices -->
+            <VBox spacing="5">
+                <Label text="🏋️ Exercices à inclure *" style="-fx-text-fill: #475569; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <Label text="Sélectionnez les exercices qui composeront votre séance" style="-fx-text-fill: #94A3B8; -fx-font-size: 11px;"/>
+                <ScrollPane prefHeight="160" style="-fx-background-color: #F8FAFC; -fx-background: #F8FAFC; -fx-border-color: #E2E8F0; -fx-border-radius: 10;">
+                    <VBox fx:id="exerciseList" spacing="8" style="-fx-padding: 12;" />
+                </ScrollPane>
+            </VBox>
+
+            <Separator style="-fx-background-color: #E2E8F0;"/>
+
+            <!-- Boutons -->
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Button text="Annuler" onAction="#closeForm"
+                        style="-fx-background-color: transparent; -fx-border-color: #EF4444; -fx-text-fill: #EF4444; -fx-border-radius: 25; -fx-padding: 8 25; -fx-cursor: hand; -fx-font-weight: bold;"/>
+                <Button text="Enregistrer le Plan" onAction="#handleSave"
+                        style="-fx-background-color: #14b8a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 25; -fx-cursor: hand; -fx-font-size: 14px;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</StackPane>

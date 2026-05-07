@@ -44,6 +44,7 @@ public class PublicationCardController {
     @FXML private Label experienceLabel;
     @FXML private Label typeLabel;
     @FXML private Label popularityLabel;
+    @FXML private Label userNameLabel;
 
     @FXML private TextFlow textFlow;
     @FXML private ImageView imageView;
@@ -87,6 +88,9 @@ public class PublicationCardController {
         this.refreshFeedCallback = refreshCallback;
 
         dateLabel.setText(pub.getDate_publication());
+        if (userNameLabel != null) {
+            userNameLabel.setText(getUserName(pub.getOwner_patient_uuid()));
+        }
         ambianceLabel.setText("⭐ " + pub.getAmbiance() + "/5 ambiance");
         safetyLabel.setText("🛡 " + pub.getSecurite() + "/5 safety");
         experienceLabel.setText("◉ " + pub.getExperience());
@@ -148,6 +152,11 @@ public class PublicationCardController {
             imageView.setManaged(false);
         }
 
+        com.wellcare.javafx.model.User currentPubUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        boolean isPubOwner = currentPubUser != null && currentPubUser.getUuid().equals(pub.getOwner_patient_uuid());
+        
+        btnDeletePub.setVisible(isPubOwner);
+        btnDeletePub.setManaged(isPubOwner);
         btnDeletePub.setOnAction(e -> {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cette publication ?");
             if (confirm.showAndWait().get() == ButtonType.OK) {
@@ -160,6 +169,8 @@ public class PublicationCardController {
             }
         });
 
+        btnEditPub.setVisible(isPubOwner);
+        btnEditPub.setManaged(isPubOwner);
         btnEditPub.setOnAction(e -> {
             if (mainController != null) {
                 mainController.loadViewWithTwoData("/fxml/ModifierPublication.fxml", parentParcours, currentPublication);
@@ -237,6 +248,11 @@ public class PublicationCardController {
             newComment.setCommentaire(text);
             newComment.setPublication_parcours_id(currentPublication.getId());
             newComment.setDate_commentaire(java.time.LocalDate.now().toString());
+            
+            com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+            if(currentUser != null) {
+                newComment.setOwner_patient_uuid(currentUser.getUuid());
+            }
 
             commentService.ajouter(newComment);
             commentInputField.clear();
@@ -248,6 +264,20 @@ public class PublicationCardController {
         }
     }
 
+    private String getUserName(String uuid) {
+        if (uuid == null || uuid.isEmpty()) return "Unknown User";
+        try {
+            com.wellcare.javafx.dao.UserDAO userDAO = new com.wellcare.javafx.dao.UserDAO();
+            com.wellcare.javafx.model.User user = userDAO.getUserByUuid(uuid);
+            if (user != null) {
+                return user.getFirstName() + " " + user.getLastName();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Unknown User";
+    }
+
     private VBox createCommentUI(commentaire_publication comment) {
         VBox box = new VBox(5);
         box.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 8; -fx-border-color: #dfe6e9; -fx-border-radius: 8;");
@@ -255,7 +285,7 @@ public class PublicationCardController {
         HBox header = new HBox();
         header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
-        Label userLabel = new Label("User • ");
+        Label userLabel = new Label(getUserName(comment.getOwner_patient_uuid()) + " • ");
         userLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2d3436; -fx-font-size: 12;");
 
         Label dateLabel = new Label(comment.getDate_commentaire());
@@ -269,6 +299,13 @@ public class PublicationCardController {
 
         Button btnDelete = new Button("✖");
         btnDelete.setStyle("-fx-background-color: transparent; -fx-text-fill: #ff7675; -fx-cursor: hand; -fx-padding: 0 5 0 5;");
+
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        boolean isCommentOwner = currentUser != null && currentUser.getUuid().equals(comment.getOwner_patient_uuid());
+        btnEdit.setVisible(isCommentOwner);
+        btnEdit.setManaged(isCommentOwner);
+        btnDelete.setVisible(isCommentOwner);
+        btnDelete.setManaged(isCommentOwner);
 
         header.getChildren().addAll(userLabel, dateLabel, spacer, btnEdit, btnDelete);
 

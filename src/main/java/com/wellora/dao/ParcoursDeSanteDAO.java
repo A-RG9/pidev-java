@@ -17,8 +17,8 @@ public class ParcoursDeSanteDAO implements ICrud<parcours_de_sante> {
 
     @Override
     public void ajouter(parcours_de_sante p) throws SQLException {
-        String sql = "INSERT INTO `parcours_de_sante`(`nom_parcours`, `localisation_parcours`, `latitude_parcours`, `longitude_parcours`, `distance_parcours`, `date_creation`, `image_parcours`) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `parcours_de_sante`(`nom_parcours`, `localisation_parcours`, `latitude_parcours`, `longitude_parcours`, `distance_parcours`, `date_creation`, `image_parcours`, `owner_patient_uuid`) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -29,6 +29,7 @@ public class ParcoursDeSanteDAO implements ICrud<parcours_de_sante> {
             pstmt.setDouble(5, p.getDistance_parcours());
             pstmt.setString(6, p.getDate_creation().toString());
             pstmt.setString(7, p.getImage_parcours());
+            pstmt.setString(8, p.getOwner_patient_uuid());
             pstmt.executeUpdate();
             System.out.println("Parcours ajouté avec succès !");
         }
@@ -47,7 +48,7 @@ public class ParcoursDeSanteDAO implements ICrud<parcours_de_sante> {
     public void modifier(parcours_de_sante p) throws SQLException {
         String sql = "UPDATE `parcours_de_sante` SET `nom_parcours` = ?, `localisation_parcours` = ?, " +
                 "`latitude_parcours` = ?, `longitude_parcours` = ?, `distance_parcours` = ?, " +
-                "`date_creation` = ?, `image_parcours` = ? WHERE `id` = ?";
+                "`date_creation` = ?, `image_parcours` = ?, `owner_patient_uuid` = ? WHERE `id` = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, p.getNom_parcours());
@@ -57,7 +58,8 @@ public class ParcoursDeSanteDAO implements ICrud<parcours_de_sante> {
             ps.setDouble(5, p.getDistance_parcours());
             ps.setString(6, p.getDate_creation());
             ps.setString(7, p.getImage_parcours());
-            ps.setInt(8, p.getId());
+            ps.setString(8, p.getOwner_patient_uuid());
+            ps.setInt(9, p.getId());
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -83,6 +85,7 @@ public class ParcoursDeSanteDAO implements ICrud<parcours_de_sante> {
             p.setDistance_parcours(rs.getDouble("distance_parcours"));
             p.setDate_creation(rs.getString("date_creation"));
             p.setImage_parcours(rs.getString("image_parcours"));
+            p.setOwner_patient_uuid(rs.getString("owner_patient_uuid"));
 
             String sqlPub = "SELECT id FROM publication_parcours WHERE parcours_de_sante_id=?";
 

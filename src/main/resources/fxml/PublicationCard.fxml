@@ -17,7 +17,7 @@
                 <Circle fill="#00a693" radius="20.0" />
                 <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #2d3436;" text="Utilisateur" />
+                        <Label fx:id="userNameLabel" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #2d3436;" text="Utilisateur" />
                         <Label fx:id="dateLabel" style="-fx-text-fill: #b2bec3; -fx-font-size: 12;" text="aujourd'hui" />
                     </children>
                 </VBox>

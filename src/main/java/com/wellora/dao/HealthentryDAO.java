@@ -28,15 +28,19 @@ public class HealthentryDAO {
     // ----------------------------------------------------------------
     // findAll
     // ----------------------------------------------------------------
-    public List<Healthentry> findAll() throws SQLException {
-        String sql = "SELECT * FROM healthentry ORDER BY date DESC";
+    public List<Healthentry> findAll(String userId) throws SQLException {
+        String sql = "SELECT e.* FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? " +
+                     "ORDER BY e.date DESC";
         List<Healthentry> list = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) list.add(mapRow(rs));
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(mapRow(rs));
+            }
         }
         return list;
     }
@@ -82,12 +86,16 @@ public class HealthentryDAO {
     // ----------------------------------------------------------------
     // getTotalCount — total number of entries
     // ----------------------------------------------------------------
-    public int getTotalCount() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM healthentry";
+    public int getTotalCount(String userId) throws SQLException {
+        String sql = "SELECT COUNT(e.id) FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getInt(1);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
         }
         return 0;
     }
@@ -95,12 +103,16 @@ public class HealthentryDAO {
     // ----------------------------------------------------------------
     // getOverallAverageWeight — average poids across all entries
     // ----------------------------------------------------------------
-    public double getOverallAverageWeight() throws SQLException {
-        String sql = "SELECT AVG(poids) FROM healthentry";
+    public double getOverallAverageWeight(String userId) throws SQLException {
+        String sql = "SELECT AVG(e.poids) FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.poids > 0";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getDouble(1);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
         }
         return 0.0;
     }
@@ -108,12 +120,16 @@ public class HealthentryDAO {
     // ----------------------------------------------------------------
     // getOverallAverageSleep — average sommeil across all entries
     // ----------------------------------------------------------------
-    public double getOverallAverageSleep() throws SQLException {
-        String sql = "SELECT AVG(sommeil) FROM healthentry";
+    public double getOverallAverageSleep(String userId) throws SQLException {
+        String sql = "SELECT AVG(e.sommeil) FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.sommeil > 0";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getDouble(1);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble(1);
+            }
         }
         return 0.0;
     }
@@ -150,8 +166,11 @@ public class HealthentryDAO {
     // ----------------------------------------------------------------
     // findByMonth — Symfony: findByMonth(int $year, int $month)
     // ----------------------------------------------------------------
-    public List<Healthentry> findByMonth(int year, int month) throws SQLException {
-        String sql = "SELECT * FROM healthentry WHERE YEAR(date)=? AND MONTH(date)=? ORDER BY date ASC";
+    public List<Healthentry> findByMonth(int year, int month, String userId) throws SQLException {
+        String sql = "SELECT e.* FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE YEAR(e.date)=? AND MONTH(e.date)=? AND j.user_id = ? " +
+                     "ORDER BY e.date ASC";
         List<Healthentry> list = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
@@ -159,6 +178,7 @@ public class HealthentryDAO {
 
             ps.setInt(1, year);
             ps.setInt(2, month);
+            ps.setString(3, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) list.add(mapRow(rs));
             }
@@ -189,10 +209,13 @@ public class HealthentryDAO {
     // search — Symfony: QueryBuilder with LIKE + date filter + sort
     // ----------------------------------------------------------------
     public List<Healthentry> search(String search, LocalDate filterDate,
-                                    String sortBy, String sortOrder) throws SQLException {
+                                    String sortBy, String sortOrder, String userId) throws SQLException {
 
-        StringBuilder sql = new StringBuilder("SELECT * FROM healthentry WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT e.* FROM healthentry e " +
+                                            "JOIN healthjournal j ON e.journal_id = j.id " +
+                                            "WHERE j.user_id = ?");
         List<Object> params = new ArrayList<>();
+        params.add(userId);
 
         if (search != null && !search.isEmpty()) {
             sql.append(" AND CAST(poids AS CHAR) LIKE ?");
@@ -334,30 +357,36 @@ public class HealthentryDAO {
     }
 
     /** Get average sleep hours */
-    public double getAverageSleep() throws SQLException {
-        String sql = "SELECT AVG(sommeil) FROM healthentry WHERE sommeil > 0";
+    public double getAverageSleep(String userId) throws SQLException {
+        String sql = "SELECT AVG(e.sommeil) FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.sommeil > 0";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                double avg = rs.getDouble(1);
-                return rs.wasNull() ? 0.0 : avg;
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    double avg = rs.getDouble(1);
+                    return rs.wasNull() ? 0.0 : avg;
+                }
             }
         }
         return 0.0;
     }
 
     /** Get entries count by month for the last N months */
-    public List<long[]> getEntriesByMonth(int months) throws SQLException {
-        String sql = "SELECT YEAR(date) as year, MONTH(date) as month, COUNT(*) as count " +
-                "FROM healthentry " +
-                "WHERE date >= DATE_SUB(CURDATE(), INTERVAL ? MONTH) " +
-                "GROUP BY YEAR(date), MONTH(date) " +
+    public List<long[]> getEntriesByMonth(int months, String userId) throws SQLException {
+        String sql = "SELECT YEAR(e.date) as year, MONTH(e.date) as month, COUNT(*) as count " +
+                "FROM healthentry e " +
+                "JOIN healthjournal j ON e.journal_id = j.id " +
+                "WHERE e.date >= DATE_SUB(CURDATE(), INTERVAL ? MONTH) AND j.user_id = ? " +
+                "GROUP BY YEAR(e.date), MONTH(e.date) " +
                 "ORDER BY year, month";
         List<long[]> result = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, months);
+            ps.setString(2, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     result.add(new long[]{rs.getInt(1), rs.getInt(2), rs.getLong(3)});
@@ -368,12 +397,15 @@ public class HealthentryDAO {
     }
 
     /** Get weight trend data (last N entries) */
-    public List<double[]> getWeightTrend(int limit) throws SQLException {
-        String sql = "SELECT date, poids FROM healthentry WHERE poids > 0 ORDER BY date DESC LIMIT ?";
+    public List<double[]> getWeightTrend(int limit, String userId) throws SQLException {
+        String sql = "SELECT e.date, e.poids FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.poids > 0 ORDER BY e.date DESC LIMIT ?";
         List<double[]> result = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, limit);
+            ps.setString(1, userId);
+            ps.setInt(2, limit);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     result.add(new double[]{
@@ -387,12 +419,15 @@ public class HealthentryDAO {
     }
 
     /** Get glycemia trend data (last N entries) */
-    public List<double[]> getGlycemiaTrend(int limit) throws SQLException {
-        String sql = "SELECT date, glycemie FROM healthentry WHERE glycemie > 0 ORDER BY date DESC LIMIT ?";
+    public List<double[]> getGlycemiaTrend(int limit, String userId) throws SQLException {
+        String sql = "SELECT e.date, e.glycemie FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.glycemie > 0 ORDER BY e.date DESC LIMIT ?";
         List<double[]> result = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, limit);
+            ps.setString(1, userId);
+            ps.setInt(2, limit);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     result.add(new double[]{
@@ -445,15 +480,18 @@ public class HealthentryDAO {
     }
 
     /** Get average glycemia */
-    public double getAverageGlycemia() throws SQLException {
-        String sql = "SELECT AVG(glycemie) FROM healthentry WHERE glycemie > 0";
+    public double getAverageGlycemia(String userId) throws SQLException {
+        String sql = "SELECT AVG(e.glycemie) FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.glycemie > 0";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return rs.getDouble(1);
             }
         }
-        return 0;
+        return 0.0;
     }
 
     /** Get average glycemia for a specific journal */
@@ -470,15 +508,18 @@ public class HealthentryDAO {
     }
 
     /** Get average tension */
-    public double getAverageTension() throws SQLException {
-        String sql = "SELECT AVG(tension) FROM healthentry WHERE tension > 0";
+    public double getAverageTension(String userId) throws SQLException {
+        String sql = "SELECT AVG(e.tension) FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.tension > 0";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return rs.getDouble(1);
             }
         }
-        return 0;
+        return 0.0;
     }
 
     /** Get average tension for a specific journal */
@@ -556,12 +597,15 @@ public class HealthentryDAO {
     }
 
     /** Get sleep trend data (last N entries) */
-    public List<double[]> getSleepTrend(int limit) throws SQLException {
-        String sql = "SELECT date, sommeil FROM healthentry WHERE sommeil > 0 ORDER BY date DESC LIMIT ?";
+    public List<double[]> getSleepTrend(int limit, String userId) throws SQLException {
+        String sql = "SELECT e.date, e.sommeil FROM healthentry e " +
+                     "JOIN healthjournal j ON e.journal_id = j.id " +
+                     "WHERE j.user_id = ? AND e.sommeil > 0 ORDER BY e.date DESC LIMIT ?";
         List<double[]> result = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, limit);
+            ps.setString(1, userId);
+            ps.setInt(2, limit);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     result.add(new double[]{

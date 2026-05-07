@@ -14,6 +14,7 @@ public class publication_parcours {
     private String experience;
     private String type_publication;
     private int parcours_de_sante_id;
+    private String owner_patient_uuid;
     private List<commentaire_publication> commentaires = new ArrayList<>();
 
     public publication_parcours(){}
@@ -94,6 +95,12 @@ public class publication_parcours {
         this.parcours_de_sante_id = parcours_de_sante_id;
     }
 
+    public String getOwner_patient_uuid() { return owner_patient_uuid; }
+
+    public void setOwner_patient_uuid(String owner_patient_uuid) {
+        this.owner_patient_uuid = owner_patient_uuid;
+    }
+
     public List<commentaire_publication> getCommentaires() {
         return commentaires;
     }
@@ -103,7 +110,7 @@ public class publication_parcours {
 
     @Override
     public String toString() {
-        return "publication_parcours{" + "id=" + id + ", image_publication=" + image_publication + ", ambiance=" + ambiance + "securite=" + securite + "date_publication=" + date_publication + "text_publication=" + text_publication + "experience=" + experience + ", type_publication=" + type_publication + ", parcours_id=" + parcours_de_sante_id + ", comments_count=" + commentaires.size() + '}';
+        return "publication_parcours{" + "id=" + id + ", image_publication=" + image_publication + ", ambiance=" + ambiance + "securite=" + securite + "date_publication=" + date_publication + "text_publication=" + text_publication + "experience=" + experience + ", type_publication=" + type_publication + ", parcours_id=" + parcours_de_sante_id + ", owner_patient_uuid=" + owner_patient_uuid + ", comments_count=" + commentaires.size() + '}';
 
     }
 }
