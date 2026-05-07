@@ -61,6 +61,8 @@ public class BookingController {
     @FXML private Label summaryDoctor, summarySpecialty, summaryType, summaryMode;
     @FXML private Label summaryDateTime, summaryDuration, summaryPatient;
     @FXML private Label summaryFee, summaryTotal;
+    @FXML private Label doctorNameLabel, doctorSpecialtyLabel;
+    @FXML private Label inPersonPriceLabel, phonePriceLabel;
 
     // Payment & terms
     @FXML private ToggleGroup paymentGroup;
@@ -674,6 +676,7 @@ public class BookingController {
         }
     }
     
+    @FXML
     private void navigateToDoctorSearch() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));

@@ -8,26 +8,35 @@
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.wellora.javafx.controller.BookingController"
       fx:id="rootPane"
-      style="-fx-background-color: #f9fafb;">
+      style="-fx-background-color: #f9fafb;"
+      VBox.vgrow="ALWAYS">
 
-    <!-- ToggleGroup Definition for Payment RadioButtons -->
     <fx:define>
         <ToggleGroup fx:id="paymentGroup"/>
     </fx:define>
 
-
-
-    <!-- RIGHT SIDE - Existing Booking Form -->
-    <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
+    <ScrollPane fitToWidth="true" 
+                fitToHeight="true" 
+                vbarPolicy="AS_NEEDED" 
+                hbarPolicy="NEVER"
+                HBox.hgrow="ALWAYS" 
                 style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
-        <VBox spacing="0" style="-fx-padding: 32 48 48 48;">
+        
+        <VBox spacing="0" style="-fx-padding: 32 48 100 48; -fx-min-height: 900;" VBox.vgrow="ALWAYS">
 
             <!-- Header -->
-            <VBox spacing="8" alignment="CENTER" style="-fx-padding: 0 0 32 0;">
-                <Label text="Book Your Appointment"
-                       style="-fx-font-family: 'Segoe UI'; -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
-                <Label text="Complete the steps below to schedule your consultation"
-                       style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #6b7280;"/>
+            <VBox spacing="20" style="-fx-padding: 0 0 32 0;">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Button text="← Back to Search" onAction="#navigateToDoctorSearch"
+                            style="-fx-background-color: transparent; -fx-text-fill: #00A790; -fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 0;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <VBox spacing="8" alignment="CENTER">
+                    <Label text="Book Your Appointment"
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                    <Label text="Complete the steps below to schedule your consultation"
+                           style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #6b7280;"/>
+                </VBox>
             </VBox>
 
             <!-- Progress Steps -->
@@ -84,13 +93,13 @@
             <VBox style="-fx-background-color: white; -fx-background-radius: 16;
                          -fx-border-color: #e5e7eb; -fx-border-radius: 16; -fx-border-width: 1;
                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
-                         -fx-padding: 32;">
-                <VBox.margin><Insets left="24" right="24"/></VBox.margin>
+                         -fx-padding: 32;" VBox.vgrow="ALWAYS">
 
                 <!-- ========== STEP 1 : SERVICE ========== -->
                 <VBox fx:id="step1Pane" spacing="24">
                     <Label text="Select Service"
                            style="-fx-font-family: 'Segoe UI'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                    
                     <!-- Doctor banner -->
                     <HBox spacing="16" alignment="CENTER_LEFT"
                           style="-fx-background-color: #ecfdf5; -fx-background-radius: 12; -fx-padding: 16;">
@@ -99,9 +108,9 @@
                             <Label text="👨‍⚕️" style="-fx-font-size: 28px;"/>
                         </StackPane>
                         <VBox spacing="4">
-                            <Label text="Dr. Mariem Fakhfakh"
+                            <Label fx:id="doctorNameLabel" text="Dr. Mariem Fakhfakh"
                                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
-                            <Label text="General Medicine · Tunis"
+                            <Label fx:id="doctorSpecialtyLabel" text="General Medicine · Tunis"
                                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                         </VBox>
                     </HBox>
@@ -150,7 +159,7 @@
                                 <HBox spacing="8" alignment="CENTER_LEFT">
                                     <Label text="🏥" style="-fx-font-size: 22px;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
-                                    <Label text="120 TND" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
+                                    <Label fx:id="inPersonPriceLabel" text="120 TND" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
                                 </HBox>
                                 <Label text="In-Person" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                                 <Label text="At clinic • 45 min" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
@@ -161,7 +170,7 @@
                                 <HBox spacing="8" alignment="CENTER_LEFT">
                                     <Label text="📞" style="-fx-font-size: 22px;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
-                                    <Label text="70 TND" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
+                                    <Label fx:id="phonePriceLabel" text="70 TND" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #00A790;"/>
                                 </HBox>
                                 <Label text="Phone Call" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
                                 <Label text="Call • 20 min" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
@@ -406,8 +415,8 @@
                         </HBox>
                     </VBox>
 
-                    <!-- ===== CONFIRM BUTTON (visible inside step 4) ===== -->
-                    <HBox alignment="CENTER_RIGHT" spacing="12" style="-fx-padding: 20 0 0 0;">
+                    <!-- CONFIRM BUTTON (visible inside step 4) -->
+                    <HBox alignment="CENTER_RIGHT" spacing="12" style="-fx-padding: 20 0 20 0;">
                         <Button text="Confirm Booking" onAction="#submitBooking"
                                 style="-fx-background-color: #00A790; -fx-text-fill: white;
                                        -fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold;
@@ -418,12 +427,11 @@
 
                 <!-- Navigation Buttons (Back / Continue) -->
                 <Separator style="-fx-background-color: #e5e7eb; -fx-padding: 16 0 0 0;"/>
-                <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 0 0;">
+                <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 20 0;">
                     <Button fx:id="backBtn" text="← Back" onAction="#previousStep" visible="false" managed="false"
                             style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-border-width: 1; -fx-pref-height: 42; -fx-padding: 0 20; -fx-cursor: hand;"/>
                     <Button fx:id="nextBtn" text="Continue →" onAction="#nextStep"
                             style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-width: 0; -fx-pref-height: 42; -fx-padding: 0 24; -fx-cursor: hand;"/>
-                    <!-- The submit button in the navigation bar is hidden; we use the one inside step4Pane -->
                     <Button fx:id="submitBtn" visible="false" managed="false"/>
                 </HBox>
             </VBox>

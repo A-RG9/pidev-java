@@ -80,13 +80,10 @@ public class DashboardController extends BaseController {
         refreshDashboardData();
     }
 
-
-
     @FXML
     private void exportPdf() {
         if (selectedJournal != null) {
             try {
-                // Create file chooser for PDF export
                 javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
                 fileChooser.setTitle("Export Health Report");
                 fileChooser.getExtensionFilters().add(
@@ -95,7 +92,6 @@ public class DashboardController extends BaseController {
                 fileChooser.setInitialFileName("health_report_" +
                         selectedJournal.getName().replaceAll("\\s+", "_") + ".pdf");
 
-                // Show save dialog
                 javafx.stage.Stage stage = (javafx.stage.Stage) alertContainer.getScene().getWindow();
                 java.io.File file = fileChooser.showSaveDialog(stage);
 
@@ -179,20 +175,11 @@ public class DashboardController extends BaseController {
     private void loadSleepChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Sleep Hours");
-<<<<<<< HEAD
 
         List<Healthentry> entries = (journalId != null)
                 ? entryDAO.findByJournalId(journalId)
-                : entryDAO.findAll();
+                : entryDAO.findAll(userId);
 
-=======
-        
-        List<Healthentry> entries = (journalId != null) 
-            ? entryDAO.findByJournalId(journalId) 
-            : entryDAO.findAll(userId);
-        
->>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
-        // Sort by date and take last 30 entries
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
 
@@ -209,19 +196,11 @@ public class DashboardController extends BaseController {
     private void loadWeightChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Weight (kg)");
-<<<<<<< HEAD
 
         List<Healthentry> entries = (journalId != null)
                 ? entryDAO.findByJournalId(journalId)
-                : entryDAO.findAll();
+                : entryDAO.findAll(userId);
 
-=======
-        
-        List<Healthentry> entries = (journalId != null) 
-            ? entryDAO.findByJournalId(journalId) 
-            : entryDAO.findAll(userId);
-        
->>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
 
@@ -238,19 +217,11 @@ public class DashboardController extends BaseController {
     private void loadGlycemiaChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Glycemia (g/L)");
-<<<<<<< HEAD
 
         List<Healthentry> entries = (journalId != null)
                 ? entryDAO.findByJournalId(journalId)
-                : entryDAO.findAll();
+                : entryDAO.findAll(userId);
 
-=======
-        
-        List<Healthentry> entries = (journalId != null) 
-            ? entryDAO.findByJournalId(journalId) 
-            : entryDAO.findAll(userId);
-        
->>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
 
@@ -268,15 +239,9 @@ public class DashboardController extends BaseController {
         symptomPieChart.getData().clear();
 
         List<Object[]> counts = (journalId != null)
-<<<<<<< HEAD
                 ? symptomDAO.getCountByTypeByJournal(journalId)
-                : symptomDAO.getCountByType();
+                : symptomDAO.getCountByType(userId);
 
-=======
-            ? symptomDAO.getCountByTypeByJournal(journalId)
-            : symptomDAO.getCountByType(userId);
-        
->>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         for (Object[] item : counts) {
             String type = (String) item[0];
             Long count = (Long) item[1];
@@ -320,7 +285,6 @@ public class DashboardController extends BaseController {
                 alertContainer.setVisible(false);
             }
 
-            // Recommendations
             recommendationsContainer.setVisible(true);
             recommendationsList.getChildren().clear();
 
@@ -361,11 +325,9 @@ public class DashboardController extends BaseController {
 
     private void loadApiData() {
         try {
-            // Calculate health score for the selected journal or overall
             int healthScore = calculateHealthScore();
             healthScoreLabel.setText(String.valueOf(healthScore));
 
-            // Get motivational quote from API
             String quote = apiService.getQuote();
             if (quote != null && !quote.isEmpty()) {
                 quoteLabel.setText(quote);
@@ -373,7 +335,6 @@ public class DashboardController extends BaseController {
                 quoteLabel.setText("Stay healthy and keep tracking your wellness journey!");
             }
 
-            // Get risk assessment based on calculated score
             String risk = apiService.getRiskAssessment(healthScore);
             if (risk != null && !risk.isEmpty()) {
                 riskLabel.setText(risk);
@@ -400,14 +361,12 @@ public class DashboardController extends BaseController {
                 return 0;
             }
 
-            // Calculate average score across all entries
             double totalScore = 0;
             int count = 0;
 
             for (Healthentry entry : entries) {
                 int score = 100;
 
-                // Weight penalty (same as CalendarController)
                 if (entry.getPoids() > 0) {
                     if (entry.getPoids() < 40 || entry.getPoids() > 120) {
                         score -= 20;
@@ -416,7 +375,6 @@ public class DashboardController extends BaseController {
                     }
                 }
 
-                // Sleep penalty
                 if (entry.getSommeil() > 0) {
                     if (entry.getSommeil() < 5 || entry.getSommeil() > 10) {
                         score -= 15;
@@ -425,7 +383,6 @@ public class DashboardController extends BaseController {
                     }
                 }
 
-                // Glycemia penalty
                 if (entry.getGlycemie() > 0) {
                     if (entry.getGlycemie() > 1.4) {
                         score -= 15;

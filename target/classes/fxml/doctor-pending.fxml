@@ -25,7 +25,6 @@
                     </Label>
                     <Button onAction="#goBackToSchedule" style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-padding: 8 16; -fx-background-radius: 8;">
                         <graphic><Text text="← "/></graphic>
-                        <Text text="Retour au planning"/>
                     </Button>
                 </HBox>
             </HBox>
@@ -46,7 +45,6 @@
                 <Text text="Tous les rendez-vous sont traités." style="-fx-fill: #6b7280;"/>
                 <Button onAction="#goBackToSchedule" style="-fx-background-color: #00A790; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 8;">
                     <graphic><Text text="📆 "/></graphic>
-                    <Text text="Voir mon planning"/>
                 </Button>
             </VBox>
         </StackPane>
