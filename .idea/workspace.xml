@@ -5,28 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0d80b4f-0373-406e-840b-574c7115221c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/CoachDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/CoachDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/DailyPlanViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/ExerciseLibraryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/ExerciseLibraryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/FitnessDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/FitnessDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/GoalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/GoalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/UserDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/UserDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/WorkoutPlannerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/WorkoutPlannerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/dashboard/CoachDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/dashboard/CoachDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/DailyPlanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/DailyPlanDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/GoalDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/GoalDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/IGoalDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/dao/IGoalDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/model/Goal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/model/Goal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/util/WorkoutXService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/util/WorkoutXService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/DailyPlanView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DailyPlanView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/dashboard/coach-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/dashboard/coach-dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +85,7 @@
       <workItem from="1777999405954" duration="3050000" />
       <workItem from="1778002583344" duration="3221000" />
       <workItem from="1778005830870" duration="2338000" />
-      <workItem from="1778008198401" duration="21046000" />
+      <workItem from="1778008198401" duration="21562000" />
     </task>
     <servers />
   </component>
