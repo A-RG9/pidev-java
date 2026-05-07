@@ -9,6 +9,7 @@ import com.wellora.javafx.WelloraApp;
 import com.wellora.model.Healthentry;
 import com.wellora.model.Healthjournal;
 import com.wellora.model.Symptom;
+import com.wellcare.javafx.util.SceneManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -94,7 +95,8 @@ public class HealthentryListController {
     @FXML
     private void loadTable() {
         try {
-            List<Healthentry> entries = entryDAO.findAll();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            List<Healthentry> entries = entryDAO.findAll(userId);
             data.clear();
             data.addAll(entries);
             setStatus("Affiché " + entries.size() + " entrées");
@@ -106,9 +108,10 @@ public class HealthentryListController {
     @FXML
     private void search() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             String search = searchField.getText();
             List<Healthentry> entries = entryDAO.search(
-                search.isEmpty() ? null : search, null, "date", "DESC"
+                search.isEmpty() ? null : search, null, "date", "DESC", userId
             );
             data.clear();
             data.addAll(entries);

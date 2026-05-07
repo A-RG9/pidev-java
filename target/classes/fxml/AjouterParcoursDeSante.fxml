@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.sothawo.mapjfx.MapView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wellora.javafx.controller.AjouterParcoursDeSante"
+      styleClass="main-content parcours-ajouter" spacing="25" prefWidth="1200" style="-fx-background-color: #ffffff;">
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="30.0" />
+    </padding>
+    <children>
+        <VBox spacing="8">
+            <Label style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #192a56;" text="Create New Health Trail" />
+            <Label style="-fx-text-fill: #7f8fa6; -fx-font-size: 14;" text="Fill in the details below to publish a new trail for the community." />
+            <Separator opacity="0.2">
+                <VBox.margin><Insets top="15" bottom="5" /></VBox.margin>
+            </Separator>
+        </VBox>
+
+        <VBox spacing="8">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #2f3640; -fx-font-size: 13;" text="Trail Name" />
+            <TextField fx:id="nomField" prefHeight="45.0" promptText="Enter a descriptive name..."
+                       style="-fx-background-color: #f5f6fa; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 15; -fx-font-size: 14; -fx-text-fill: #2f3640;" />
+        </VBox>
+
+        <VBox spacing="8">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #2f3640; -fx-font-size: 13;" text="Pick Location On Map" />
+            <VBox style="-fx-border-color: #dcdde1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-background-color: #f5f6fa; -fx-padding: 6;">
+                <children>
+                    <MapView fx:id="mapView" prefHeight="300.0" style="-fx-background-radius: 6;" />
+                </children>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="8">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #2f3640; -fx-font-size: 13;" text="Address details" />
+            <TextField fx:id="locationField" editable="false" prefHeight="45.0" promptText="Click on the map to automatically get the address"
+                       style="-fx-background-color: #e8ecef; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 15; -fx-font-size: 14; -fx-text-fill: #718093;" />
+        </VBox>
+
+        <HBox spacing="20.0">
+            <children>
+                <VBox HBox.hgrow="ALWAYS" spacing="8">
+                    <children>
+                        <Label style="-fx-text-fill: #7f8fa6; -fx-font-size: 12; -fx-font-weight: bold;" text="LATITUDE" />
+                        <TextField fx:id="latField" editable="false" prefHeight="40.0"
+                                   style="-fx-background-color: #e8ecef; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 15; -fx-text-fill: #718093;" />
+                    </children>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="8">
+                    <children>
+                        <Label style="-fx-text-fill: #7f8fa6; -fx-font-size: 12; -fx-font-weight: bold;" text="LONGITUDE" />
+                        <TextField fx:id="longField" editable="false" prefHeight="40.0"
+                                   style="-fx-background-color: #e8ecef; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 15; -fx-text-fill: #718093;" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <HBox spacing="20.0">
+            <children>
+                <VBox HBox.hgrow="ALWAYS" spacing="8">
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #2f3640; -fx-font-size: 13;" text="Distance (km)" />
+                    <TextField fx:id="distanceField" prefHeight="45.0" promptText="e.g. 5.5"
+                               style="-fx-background-color: #f5f6fa; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 0 15; -fx-font-size: 14; -fx-text-fill: #2f3640;" />
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="8">
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #2f3640; -fx-font-size: 13;" text="Creation Date" />
+                    <DatePicker fx:id="datePicker" maxWidth="Infinity" prefHeight="45.0"
+                                style="-fx-background-color: #f5f6fa; -fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 14;" />
+                </VBox>
+            </children>
+        </HBox>
+
+        <VBox spacing="8">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #2f3640; -fx-font-size: 13;" text="Trail Image" />
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" style="-fx-border-color: #dcdde1; -fx-border-radius: 6; -fx-background-color: #f5f6fa; -fx-background-radius: 6;">
+                <children>
+                    <Button fx:id="btnChooseFile" mnemonicParsing="false" prefHeight="45.0"
+                            style="-fx-background-color: #718093; -fx-text-fill: white; -fx-background-radius: 5 0 0 5; -fx-cursor: hand; -fx-padding: 0 20; -fx-font-weight: bold;" text="Browse..." />
+                    <Label fx:id="fileLabel" text="No file selected" textFill="#7f8fa6">
+                        <padding><Insets left="15.0" /></padding>
+                    </Label>
+                </children>
+            </HBox>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <children>
+                <Button fx:id="btnCancel" prefHeight="45.0" prefWidth="120.0"
+                        style="-fx-background-color: transparent; -fx-border-color: #e84118; -fx-border-radius: 6; -fx-text-fill: #e84118; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14;" text="Cancel" />
+                <Button fx:id="btnSave" prefHeight="45.0" prefWidth="150.0"
+                        style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand; -fx-font-size: 14; -fx-effect: dropshadow(three-pass-box, rgba(0, 184, 148, 0.3), 10, 0, 0, 4);" text="Publish Trail" />
+            </children>
+            <padding><Insets top="15.0" /></padding>
+        </HBox>
+    </children>
+</VBox>

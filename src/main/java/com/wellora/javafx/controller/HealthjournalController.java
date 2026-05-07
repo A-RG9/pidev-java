@@ -5,6 +5,7 @@ import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.HealthjournalDAO;
 import com.wellora.model.Healthentry;
 import com.wellora.model.Healthjournal;
+import com.wellcare.javafx.util.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -86,7 +87,8 @@ public class HealthjournalController {
     @FXML
     private void loadTable() {
         try {
-            List<Healthjournal> journals = journalDAO.findAll();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            List<Healthjournal> journals = journalDAO.findAll(userId);
             data.clear();
             data.addAll(journals);
             setStatus("Loaded " + journals.size() + " journals");
@@ -98,10 +100,11 @@ public class HealthjournalController {
     @FXML
     private void search() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             String search = searchField.getText();
             List<Healthjournal> journals = journalDAO.search(
                 search.isEmpty() ? null : search, 
-                null, "datedebut", "DESC"
+                null, "datedebut", "DESC", userId
             );
             data.clear();
             data.addAll(journals);
@@ -232,12 +235,15 @@ public class HealthjournalController {
     }
 
     private Healthjournal createFromForm() {
-        return new Healthjournal(
+        String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+        Healthjournal journal = new Healthjournal(
             0,
             nameField.getText().trim(),
             datedebutPicker.getValue(),
             datefinPicker.getValue()
         );
+        journal.setUserId(userId);
+        return journal;
     }
 
     private boolean validate() {

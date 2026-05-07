@@ -20,6 +20,7 @@ import com.wellora.dao.SymptomDAO;
 import com.wellora.model.Symptom;
 import com.wellora.services.ApiService;
 import com.wellora.controllers.BaseController;
+import com.wellcare.javafx.util.SceneManager;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -128,6 +129,7 @@ public class DashboardController extends BaseController {
 
     private void loadStatistics() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             int entryCount;
             int symptomCount;
             double avgWeight;
@@ -139,10 +141,10 @@ public class DashboardController extends BaseController {
                 avgWeight = entryDAO.getAverageWeightByJournal(selectedJournal.getId());
                 avgSleep = entryDAO.getAverageSleepByJournal(selectedJournal.getId());
             } else {
-                entryCount = entryDAO.getTotalCount();
-                symptomCount = symptomDAO.getCount();
-                avgWeight = entryDAO.getOverallAverageWeight();
-                avgSleep = entryDAO.getOverallAverageSleep();
+                entryCount = entryDAO.getTotalCount(userId);
+                symptomCount = symptomDAO.getCount(userId);
+                avgWeight = entryDAO.getOverallAverageWeight(userId);
+                avgSleep = entryDAO.getOverallAverageSleep(userId);
             }
 
             entryCountLabel.setText(String.valueOf(entryCount));
@@ -157,30 +159,39 @@ public class DashboardController extends BaseController {
 
     private void loadCharts() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             if (selectedJournal != null) {
-                loadSleepChart(selectedJournal.getId());
-                loadWeightChart(selectedJournal.getId());
-                loadGlycemiaChart(selectedJournal.getId());
-                loadSymptomChart(selectedJournal.getId());
+                loadSleepChart(selectedJournal.getId(), userId);
+                loadWeightChart(selectedJournal.getId(), userId);
+                loadGlycemiaChart(selectedJournal.getId(), userId);
+                loadSymptomChart(selectedJournal.getId(), userId);
             } else {
-                loadSleepChart(null);
-                loadWeightChart(null);
-                loadGlycemiaChart(null);
-                loadSymptomChart(null);
+                loadSleepChart(null, userId);
+                loadWeightChart(null, userId);
+                loadGlycemiaChart(null, userId);
+                loadSymptomChart(null, userId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void loadSleepChart(Integer journalId) throws SQLException {
+    private void loadSleepChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Sleep Hours");
+<<<<<<< HEAD
 
         List<Healthentry> entries = (journalId != null)
                 ? entryDAO.findByJournalId(journalId)
                 : entryDAO.findAll();
 
+=======
+        
+        List<Healthentry> entries = (journalId != null) 
+            ? entryDAO.findByJournalId(journalId) 
+            : entryDAO.findAll(userId);
+        
+>>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         // Sort by date and take last 30 entries
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
@@ -195,14 +206,22 @@ public class DashboardController extends BaseController {
         sleepLineChart.getData().add(series);
     }
 
-    private void loadWeightChart(Integer journalId) throws SQLException {
+    private void loadWeightChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Weight (kg)");
+<<<<<<< HEAD
 
         List<Healthentry> entries = (journalId != null)
                 ? entryDAO.findByJournalId(journalId)
                 : entryDAO.findAll();
 
+=======
+        
+        List<Healthentry> entries = (journalId != null) 
+            ? entryDAO.findByJournalId(journalId) 
+            : entryDAO.findAll(userId);
+        
+>>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
 
@@ -216,14 +235,22 @@ public class DashboardController extends BaseController {
         weightLineChart.getData().add(series);
     }
 
-    private void loadGlycemiaChart(Integer journalId) throws SQLException {
+    private void loadGlycemiaChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Glycemia (g/L)");
+<<<<<<< HEAD
 
         List<Healthentry> entries = (journalId != null)
                 ? entryDAO.findByJournalId(journalId)
                 : entryDAO.findAll();
 
+=======
+        
+        List<Healthentry> entries = (journalId != null) 
+            ? entryDAO.findByJournalId(journalId) 
+            : entryDAO.findAll(userId);
+        
+>>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
 
@@ -237,13 +264,19 @@ public class DashboardController extends BaseController {
         glycemiaLineChart.getData().add(series);
     }
 
-    private void loadSymptomChart(Integer journalId) throws SQLException {
+    private void loadSymptomChart(Integer journalId, String userId) throws SQLException {
         symptomPieChart.getData().clear();
 
         List<Object[]> counts = (journalId != null)
+<<<<<<< HEAD
                 ? symptomDAO.getCountByTypeByJournal(journalId)
                 : symptomDAO.getCountByType();
 
+=======
+            ? symptomDAO.getCountByTypeByJournal(journalId)
+            : symptomDAO.getCountByType(userId);
+        
+>>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
         for (Object[] item : counts) {
             String type = (String) item[0];
             Long count = (Long) item[1];
@@ -254,7 +287,8 @@ public class DashboardController extends BaseController {
 
     private void loadAlertsAndRecommendations() {
         try {
-            List<Healthentry> recentEntries = entryDAO.findAll();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            List<Healthentry> recentEntries = entryDAO.findAll(userId);
             recentEntries.sort((a, b) -> b.getDate().compareTo(a.getDate()));
 
             boolean hasAlerts = false;
@@ -354,11 +388,12 @@ public class DashboardController extends BaseController {
 
     private int calculateHealthScore() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             List<Healthentry> entries;
             if (selectedJournal != null) {
                 entries = entryDAO.findByJournalId(selectedJournal.getId());
             } else {
-                entries = entryDAO.findAll();
+                entries = entryDAO.findAll(userId);
             }
 
             if (entries == null || entries.isEmpty()) {
@@ -412,7 +447,8 @@ public class DashboardController extends BaseController {
 
     private void loadJournalSelector() {
         try {
-            ObservableList<Healthjournal> journals = FXCollections.observableArrayList(journalDAO.findAll());
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            ObservableList<Healthjournal> journals = FXCollections.observableArrayList(journalDAO.findAll(userId));
             journalComboBox.setItems(journals);
             journalComboBox.setConverter(new StringConverter<Healthjournal>() {
                 @Override

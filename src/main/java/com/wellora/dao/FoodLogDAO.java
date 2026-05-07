@@ -16,12 +16,45 @@ public class FoodLogDAO {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    /**
+     * Résout le vrai id entier (PK) d'un utilisateur depuis la table users,
+     * en cherchant par son uuid. Cette valeur est utilisée comme user_id (INT NOT NULL)
+     * lors des insertions dans food_logs.
+     *
+     * @param uuid  le UUID string de l'utilisateur connecté
+     * @return      l'id entier réel, ou 0 si non trouvé
+     */
+    private int getRealUserIdByUuid(String uuid) {
+        if (uuid == null || uuid.isEmpty()) return 0;
+        String query = "SELECT id FROM users WHERE uuid = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.err.println("[FoodLogDAO] Impossible de résoudre user_id pour uuid=" + uuid);
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public boolean addFoodLog(FoodLog log) {
         String query = "INSERT INTO food_logs (user_id, user_uuid, date, meal_type, total_calories, total_protein, total_carbs, total_fats) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setInt(1, log.getUserId());
+            // Résolution du vrai user_id entier depuis la table users via uuid (jointure)
+            int realUserId = getRealUserIdByUuid(log.getUserUuid());
+            if (realUserId == 0) {
+                // Fallback sur la valeur portée par le modèle (hashcode) si uuid inconnu
+                realUserId = log.getUserId();
+                System.err.println("[FoodLogDAO] ⚠️ user_id réel introuvable pour uuid='" + log.getUserUuid() + "', fallback=" + realUserId);
+            }
+
+            pstmt.setInt(1, realUserId);
             pstmt.setString(2, log.getUserUuid());
             pstmt.setDate(3, Date.valueOf(log.getDate()));
             pstmt.setString(4, log.getMealType());

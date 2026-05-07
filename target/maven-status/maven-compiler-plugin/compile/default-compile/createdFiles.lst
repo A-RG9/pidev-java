@@ -86,7 +86,6 @@ com\wellora\javafx\service\DoctorAnalyticsService$3.class
 com\wellcare\javafx\controller\UserDashboardController$ConversationItem.class
 com\wellora\controllers\ObjectifController.class
 com\wellora\javafx\controller\PublicationCardController.class
-com\wellcare\javafx\controller\DailyPlanViewController$3.class
 com\wellora\javafx\service\DoctorAnalyticsService.class
 com\wellora\controllers\HealthNavigationProxy.class
 com\wellora\javafx\controller\DoctorAnalytics$5.class
@@ -119,6 +118,7 @@ com\wellora\javafx\controller\HealthentryListController.class
 com\wellora\javafx\controller\AjouterPublicationController.class
 com\wellora\services\ParcoursRecommendationService$RecommendationResult.class
 com\wellora\TestDB.class
+com\wellcare\javafx\controller\DailyPlanController$3.class
 com\wellora\javafx\controller\SymptomController.class
 com\wellora\services\PredictionService.class
 com\wellcare\javafx\controller\admin\ProfessionalManagementController$ProfessionalTableItem.class
@@ -166,6 +166,7 @@ com\wellora\javafx\controller\Home.class
 com\wellora\javafx\service\DoctorAnalyticsService$4.class
 com\wellora\javafx\controller\AfficherPublicationsController.class
 com\wellora\javafx\controller\DoctorProfileController.class
+com\wellcare\javafx\controller\DailyPlanController$4.class
 com\wellora\javafx\controller\ChatBotController.class
 com\wellora\dao\HealthentryDAO.class
 com\wellora\javafx\util\DatabaseConnection.class

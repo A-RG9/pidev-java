@@ -16,8 +16,8 @@ public class PublicationDAO implements ICrud<publication_parcours> {
 
     @Override
     public void ajouter(publication_parcours p) throws SQLException {
-        String sql = "INSERT INTO `publication_parcours`(`image_publication`, `ambiance`, `securite`, `date_publication`, `text_publication`, `experience`, `type_publication`, `parcours_de_sante_id`) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `publication_parcours`(`image_publication`, `ambiance`, `securite`, `date_publication`, `text_publication`, `experience`, `type_publication`, `parcours_de_sante_id`, `owner_patient_uuid`) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -29,6 +29,7 @@ public class PublicationDAO implements ICrud<publication_parcours> {
             pstmt.setString(6, p.getExperience());
             pstmt.setString(7, p.getType_publication());
             pstmt.setInt(8, p.getParcours_de_sante_id());
+            pstmt.setString(9, p.getOwner_patient_uuid());
             pstmt.executeUpdate();
             System.out.println("Publication ajoutée avec succès !");
         }
@@ -48,7 +49,7 @@ public class PublicationDAO implements ICrud<publication_parcours> {
     public void modifier(publication_parcours p) throws SQLException {
         String sql = "UPDATE `publication_parcours` SET `image_publication` = ?, `ambiance` = ?, " +
                 "`securite` = ?, `date_publication` = ?, `text_publication` = ?, " +
-                "`experience` = ?, `type_publication` = ?, `parcours_de_sante_id` = ? " +
+                "`experience` = ?, `type_publication` = ?, `parcours_de_sante_id` = ?, `owner_patient_uuid` = ? " +
                 "WHERE `id` = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -60,7 +61,8 @@ public class PublicationDAO implements ICrud<publication_parcours> {
             ps.setString(6, p.getExperience());
             ps.setString(7, p.getType_publication());
             ps.setInt(8, p.getParcours_de_sante_id());
-            ps.setInt(9, p.getId());
+            ps.setString(9, p.getOwner_patient_uuid());
+            ps.setInt(10, p.getId());
 
             ps.executeUpdate();
             System.out.println("Publication " + p.getId() + " modifiée.");
@@ -85,6 +87,7 @@ public class PublicationDAO implements ICrud<publication_parcours> {
             p.setExperience(rs.getString("experience"));
             p.setType_publication(rs.getString("type_publication"));
             p.setParcours_de_sante_id(rs.getInt("parcours_de_sante_id"));
+            p.setOwner_patient_uuid(rs.getString("owner_patient_uuid"));
             publicationList.add(p);
         }
         return publicationList;
@@ -109,6 +112,7 @@ public class PublicationDAO implements ICrud<publication_parcours> {
             pub.setExperience(rs.getString("experience"));
             pub.setType_publication(rs.getString("type_publication"));
             pub.setParcours_de_sante_id(rs.getInt("parcours_de_sante_id"));
+            pub.setOwner_patient_uuid(rs.getString("owner_patient_uuid"));
             list.add(pub);
         }
         return list;

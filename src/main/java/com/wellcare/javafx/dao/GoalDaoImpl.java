@@ -87,6 +87,18 @@ public class GoalDaoImpl implements IGoalDao {
         return goals;
     }
 
+    @Override
+    public List<Goal> getGoalsByCoach(String coachId) {
+        List<Goal> goals = new ArrayList<>();
+        String query = "SELECT * FROM goal WHERE coach_id = ?";
+        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, coachId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) { goals.add(extractGoalFromResultSet(rs)); }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return goals;
+    }
+
     private Goal extractGoalFromResultSet(ResultSet rs) throws SQLException {
         return new Goal(
                 rs.getInt("id"), rs.getString("title"), rs.getString("description"),

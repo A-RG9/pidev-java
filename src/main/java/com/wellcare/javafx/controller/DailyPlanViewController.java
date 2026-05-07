@@ -30,7 +30,7 @@ public class DailyPlanViewController {
     @FXML private Label lblCompletedCount;
     @FXML private Label lblProgressPercent;
     @FXML private ProgressBar progressBar;
-    @FXML private ListView<DailyPlan> plansListView;
+    @FXML private VBox plansContainer;
     @FXML private VBox videoSection;
     @FXML private WebView videoPlayer;
     @FXML private WebView gifPlayer;
@@ -51,7 +51,6 @@ public class DailyPlanViewController {
     @FXML
     public void initialize() {
         loadGoals();
-        setupModernPlanList();
         setupProgressBar();
         setupVideoControls();
 
@@ -90,7 +89,19 @@ public class DailyPlanViewController {
     }
 
     private void loadGoals() {
-        List<Goal> goals = goalDao.getAllGoals();
+        List<Goal> goals = new ArrayList<>();
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                goals = goalDao.getGoalsByPatient(currentUser.getUuid());
+            } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                goals = goalDao.getGoalsByCoach(currentUser.getUuid());
+            } else {
+                goals = goalDao.getAllGoals();
+            }
+        } else {
+            goals = goalDao.getAllGoals();
+        }
 
         goalSelector.setCellFactory(lv -> new ListCell<Goal>() {
             @Override
@@ -141,39 +152,7 @@ public class DailyPlanViewController {
         });
     }
 
-    private void setupModernPlanList() {
-        plansListView.setFixedCellSize(150);
-        plansListView.setStyle("-fx-padding: 5;");
-
-        plansListView.setCellFactory(param -> new ListCell<DailyPlan>() {
-            @Override
-            protected void updateItem(DailyPlan plan, boolean empty) {
-                super.updateItem(plan, empty);
-
-                if (empty || plan == null) {
-                    setGraphic(null);
-                    setStyle("");
-                } else {
-                    VBox card = createPlanCard(plan);
-                    setGraphic(card);
-                    setStyle("-fx-background-color: transparent; -fx-padding: 6 0 6 0;");
-                }
-            }
-        });
-
-        plansListView.setOnMouseClicked(event -> {
-            DailyPlan selectedPlan = plansListView.getSelectionModel().getSelectedItem();
-            if (selectedPlan != null && !completedPlanIds.contains(selectedPlan.getId())) {
-                currentSelectedPlan = selectedPlan;
-                currentExercises = dailyPlanDAO.getExercisesForPlan(selectedPlan.getId());
-                currentVideoIndex = 0;
-                showVideoForPlan(selectedPlan);
-                plansListView.getSelectionModel().clearSelection();
-            } else if (selectedPlan != null && completedPlanIds.contains(selectedPlan.getId())) {
-                showAlert("✅ Ce plan a déjà été complété !");
-            }
-        });
-    }
+    // Removed setupModernPlanList as we now use VBox directly
 
     private VBox createPlanCard(DailyPlan plan) {
         boolean isCompleted = completedPlanIds.contains(plan.getId());
@@ -327,6 +306,17 @@ public class DailyPlanViewController {
             }
         });
 
+        card.setOnMouseClicked(e -> {
+            if (!isCompleted) {
+                currentSelectedPlan = plan;
+                currentExercises = dailyPlanDAO.getExercisesForPlan(plan.getId());
+                currentVideoIndex = 0;
+                showVideoForPlan(plan);
+            } else {
+                showAlert("✅ Ce plan a déjà été complété !");
+            }
+        });
+
         return card;
     }
 
@@ -342,8 +332,10 @@ public class DailyPlanViewController {
                 .map(DailyPlan::getId)
                 .collect(Collectors.toList());
 
-        plansListView.setItems(FXCollections.observableArrayList(allGoalPlans));
-        plansListView.refresh();
+        plansContainer.getChildren().clear();
+        for (DailyPlan plan : allGoalPlans) {
+            plansContainer.getChildren().add(createPlanCard(plan));
+        }
 
         updateGoalSelectorDisplay();
         updateStatistics();
@@ -353,7 +345,19 @@ public class DailyPlanViewController {
         isRefreshing = true;
 
         Goal selectedGoal = currentGoal;
-        List<Goal> updatedGoals = goalDao.getAllGoals();
+        List<Goal> updatedGoals = new ArrayList<>();
+        com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if ("ROLE_PATIENT".equals(currentUser.getRole())) {
+                updatedGoals = goalDao.getGoalsByPatient(currentUser.getUuid());
+            } else if ("ROLE_COACH".equals(currentUser.getRole())) {
+                updatedGoals = goalDao.getGoalsByCoach(currentUser.getUuid());
+            } else {
+                updatedGoals = goalDao.getAllGoals();
+            }
+        } else {
+            updatedGoals = goalDao.getAllGoals();
+        }
         goalSelector.setItems(FXCollections.observableArrayList(updatedGoals));
 
         if (selectedGoal != null) {
@@ -475,9 +479,12 @@ public class DailyPlanViewController {
 
     private void displayGif(String gifUrl) {
         String html = "<!DOCTYPE html><html><head><style>" +
-                "body{margin:0;padding:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:450px;}" +
+                "body{margin:0;padding:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:450px;font-family:Arial;color:white;}" +
                 "img{max-width:100%;max-height:450px;object-fit:contain;}" +
-                "</style></head><body><img src='" + gifUrl + "'/></body></html>";
+                ".error{text-align:center;}" +
+                "</style></head><body>" +
+                "<img src='" + gifUrl + "' onerror=\"this.style.display='none';document.body.innerHTML='<div class=error><p style=font-size:48px>🏋️</p><p>Démonstration non disponible</p></div>';\"/>" +
+                "</body></html>";
         Platform.runLater(() -> videoPlayer.getEngine().loadContent(html));
     }
 
@@ -547,8 +554,25 @@ public class DailyPlanViewController {
 
             if (updated) {
                 if (currentGoal != null) {
+                    // Recharger les plans pour avoir la liste à jour
                     loadPlansForGoal(currentGoal);
+                    
+                    // Calculer le nouveau pourcentage de progression
+                    int total = allGoalPlans.size();
+                    int completed = completedPlanIds.size();
+                    int progressPercent = total > 0 ? (completed * 100 / total) : 0;
+                    
+                    // Mettre à jour l'objectif et l'enregistrer dans la base
+                    currentGoal.setProgress(progressPercent);
+                    
+                    // Gérer le statut "Terminé" automatiquement si 100%
+                    if (progressPercent >= 100) {
+                        currentGoal.setStatus("Terminé");
+                    }
+                    
+                    goalDao.updateGoal(currentGoal);
                 }
+                
                 updateStatistics();
                 closeVideo();
                 showRewardGif();

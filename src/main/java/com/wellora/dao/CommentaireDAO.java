@@ -15,8 +15,8 @@ public class CommentaireDAO implements ICrud<commentaire_publication> {
 
     @Override
     public void ajouter(commentaire_publication c) throws SQLException {
-        String sql = "INSERT INTO `commentaire_publication`(`commentaire`, `date_commentaire`, `publication_parcours_id`) " +
-                "VALUES (?, ?, ?)";
+        String sql = "INSERT INTO `commentaire_publication`(`commentaire`, `date_commentaire`, `publication_parcours_id`, `owner_patient_uuid`) " +
+                "VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, c.getCommentaire());
@@ -24,6 +24,8 @@ public class CommentaireDAO implements ICrud<commentaire_publication> {
             pstmt.setString(2, c.getDate_commentaire().toString());
 
             pstmt.setInt(3, c.getPublication_parcours_id());
+            
+            pstmt.setString(4, c.getOwner_patient_uuid());
 
             pstmt.executeUpdate();
             System.out.println("Commentaire ajouté avec succès!");
@@ -32,14 +34,15 @@ public class CommentaireDAO implements ICrud<commentaire_publication> {
 
     @Override
     public void modifier(commentaire_publication c) throws SQLException {
-        String sql = "UPDATE `commentaire_publication` SET `commentaire` = ?, `date_commentaire` = ?, `publication_parcours_id` = ? WHERE `id` = ?";
+        String sql = "UPDATE `commentaire_publication` SET `commentaire` = ?, `date_commentaire` = ?, `publication_parcours_id` = ?, `owner_patient_uuid` = ? WHERE `id` = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, c.getCommentaire());
             ps.setString(2, c.getDate_commentaire());
             ps.setInt(3, c.getPublication_parcours_id());
-            ps.setInt(4, c.getId());
+            ps.setString(4, c.getOwner_patient_uuid());
+            ps.setInt(5, c.getId());
 
             int rowsAffected = ps.executeUpdate();
 
@@ -77,6 +80,7 @@ public class CommentaireDAO implements ICrud<commentaire_publication> {
             c.setCommentaire(rs.getString("commentaire"));
             c.setDate_commentaire(rs.getString("date_commentaire"));
             c.setPublication_parcours_id(rs.getInt("publication_parcours_id"));
+            c.setOwner_patient_uuid(rs.getString("owner_patient_uuid"));
             list.add(c);
         }
         return list;
@@ -94,6 +98,7 @@ public class CommentaireDAO implements ICrud<commentaire_publication> {
                     c.setCommentaire(rs.getString("commentaire"));
                     c.setDate_commentaire(rs.getString("date_commentaire"));
                     c.setPublication_parcours_id(rs.getInt("publication_parcours_id"));
+                    c.setOwner_patient_uuid(rs.getString("owner_patient_uuid"));
                     list.add(c);
                 }
             }

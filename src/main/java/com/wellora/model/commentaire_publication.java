@@ -5,6 +5,7 @@ public class commentaire_publication {
     private String commentaire;
     private String date_commentaire;
     private int publication_parcours_id;
+    private String owner_patient_uuid;
 
     public commentaire_publication() {}
 
@@ -45,8 +46,14 @@ public class commentaire_publication {
         this.publication_parcours_id = publication_parcours_id;
     }
 
+    public String getOwner_patient_uuid() { return owner_patient_uuid; }
+
+    public void setOwner_patient_uuid(String owner_patient_uuid) {
+        this.owner_patient_uuid = owner_patient_uuid;
+    }
+
     @Override
     public String toString() {
-        return "commentaire_parcours{"  + "id=" + id + ", date_commentaire=" + date_commentaire + ", publication_id=" + publication_parcours_id + '}';
+        return "commentaire_parcours{"  + "id=" + id + ", date_commentaire=" + date_commentaire + ", publication_id=" + publication_parcours_id + ", owner_patient_uuid=" + owner_patient_uuid + '}';
     }
 }

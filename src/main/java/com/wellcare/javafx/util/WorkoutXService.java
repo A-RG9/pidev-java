@@ -46,7 +46,20 @@ public class WorkoutXService {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.statusCode() == 200;
+            if (response.statusCode() == 429) {
+                System.err.println("⚠️ API WorkoutX: Quota mensuel dépassé (429)");
+                return false;
+            }
+            if (response.statusCode() == 200) {
+                // Vérifier aussi le body pour "Monthly Quota Exceeded"
+                String body = response.body();
+                if (body != null && body.contains("Quota Exceeded")) {
+                    System.err.println("⚠️ API WorkoutX: Quota mensuel dépassé (dans le body)");
+                    return false;
+                }
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }
@@ -63,14 +76,21 @@ public class WorkoutXService {
             return cachedExercises;
         }
 
+        List<Exercise> exercises = new ArrayList<>();
         // 2. Vérifier si l'API est disponible
         if (!isAPIAvailable()) {
-            System.err.println("⚠️ API indisponible, utilisation des exercices déjà importés");
-            return exerciseDAO.getAllExercises();
+            System.err.println("⚠️ API indisponible (Quota atteint probable), utilisation des exercices de secours");
+            exercises = getMockExercises();
+        } else {
+            // 3. Importer depuis l'API
+            exercises = fetchAllExercisesWithSmartRetry();
         }
-
-        // 3. Importer depuis l'API
-        List<Exercise> exercises = fetchAllExercisesWithSmartRetry();
+        
+        // Si l'API retourne 0 à cause d'une limite de quota, utiliser le mock
+        if (exercises == null || exercises.isEmpty()) {
+             System.err.println("⚠️ Aucun exercice récupéré, utilisation des exercices de secours");
+             exercises = getMockExercises();
+        }
 
         // 4. Sauvegarder dans le cache
         if (exercises != null && !exercises.isEmpty()) {
@@ -78,6 +98,82 @@ public class WorkoutXService {
         }
 
         return exercises != null ? exercises : new ArrayList<>();
+    }
+
+    private List<Exercise> getMockExercises() {
+        List<Exercise> mocks = new ArrayList<>();
+        
+        Exercise ex1 = new Exercise();
+        ex1.setName("Pompes classiques");
+        ex1.setDescription("• Placez vos mains à la largeur des épaules\n• Descendez jusqu'à frôler le sol\n• Poussez pour remonter");
+        ex1.setCategory("Musculation");
+        ex1.setDifficultyLevel("Intermediate");
+        ex1.setDefaultUnit("minutes");
+        ex1.setVideoUrl("");
+        ex1.setDuration(10);
+        ex1.setSets(3);
+        ex1.setReps(15);
+        ex1.setActive(true);
+        ex1.setCreatedAt(LocalDateTime.now());
+        mocks.add(ex1);
+
+        Exercise ex2 = new Exercise();
+        ex2.setName("Squats au poids du corps");
+        ex2.setDescription("• Pieds écartés largeur des épaules\n• Descendez en gardant le dos droit\n• Remontez en contractant les fessiers");
+        ex2.setCategory("Musculation");
+        ex2.setDifficultyLevel("Beginner");
+        ex2.setDefaultUnit("minutes");
+        ex2.setVideoUrl("");
+        ex2.setDuration(15);
+        ex2.setSets(4);
+        ex2.setReps(20);
+        ex2.setActive(true);
+        ex2.setCreatedAt(LocalDateTime.now());
+        mocks.add(ex2);
+
+        Exercise ex3 = new Exercise();
+        ex3.setName("Burpees");
+        ex3.setDescription("• Sautez en l'air\n• Posez les mains au sol et faites une pompe\n• Ramenez les pieds et sautez de nouveau");
+        ex3.setCategory("Cardio");
+        ex3.setDifficultyLevel("Advanced");
+        ex3.setDefaultUnit("minutes");
+        ex3.setVideoUrl("");
+        ex3.setDuration(12);
+        ex3.setSets(3);
+        ex3.setReps(10);
+        ex3.setActive(true);
+        ex3.setCreatedAt(LocalDateTime.now());
+        mocks.add(ex3);
+        
+        Exercise ex4 = new Exercise();
+        ex4.setName("Fentes avant");
+        ex4.setDescription("• Faites un grand pas en avant\n• Descendez jusqu'à ce que les deux genoux soient à 90 degrés\n• Poussez pour revenir à la position initiale");
+        ex4.setCategory("Musculation");
+        ex4.setDifficultyLevel("Intermediate");
+        ex4.setDefaultUnit("minutes");
+        ex4.setVideoUrl("");
+        ex4.setDuration(10);
+        ex4.setSets(3);
+        ex4.setReps(12);
+        ex4.setActive(true);
+        ex4.setCreatedAt(LocalDateTime.now());
+        mocks.add(ex4);
+        
+        Exercise ex5 = new Exercise();
+        ex5.setName("Planche abdominale");
+        ex5.setDescription("• Placez-vous sur les avant-bras et les pointes de pieds\n• Gardez le corps bien aligné\n• Contractez les abdominaux");
+        ex5.setCategory("Musculation");
+        ex5.setDifficultyLevel("Intermediate");
+        ex5.setDefaultUnit("minutes");
+        ex5.setVideoUrl("");
+        ex5.setDuration(5);
+        ex5.setSets(3);
+        ex5.setReps(1);
+        ex5.setActive(true);
+        ex5.setCreatedAt(LocalDateTime.now());
+        mocks.add(ex5);
+
+        return mocks;
     }
 
     /**
@@ -144,7 +240,14 @@ public class WorkoutXService {
                     offset += 10;
 
                 } else if (response.statusCode() == 429) {
-                    // Rate limit - backoff exponentiel
+                    // Vérifier si c'est un quota mensuel dépassé
+                    String body = response.body();
+                    if (body != null && body.contains("Monthly Quota Exceeded")) {
+                        System.err.println("   ❌ Quota mensuel dépassé, arrêt immédiat");
+                        break;
+                    }
+
+                    // Rate limit temporaire - backoff exponentiel
                     retryCount++;
                     waitTimeSeconds = Math.min(waitTimeSeconds * 2, 60);
 

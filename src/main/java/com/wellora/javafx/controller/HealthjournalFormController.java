@@ -3,6 +3,7 @@ package com.wellora.javafx.controller;
 import javafx.application.Platform;
 
 import com.wellora.controllers.HealthNavigationProxy;
+import com.wellcare.javafx.util.SceneManager;
 
 import com.wellora.dao.HealthjournalDAO;
 import com.wellora.model.Healthjournal;
@@ -123,8 +124,9 @@ public class HealthjournalFormController {
         String name = nameField.getText().trim();
         LocalDate datedebut = datedebutPicker.getValue();
         LocalDate datefin = datefinPicker.getValue();
+        String userId = SceneManager.getInstance().getCurrentUser().getUuid();
         
-        return new Healthjournal(0, name, datedebut, datefin);
+        return new Healthjournal(0, name, datedebut, datefin, userId);
     }
 
     /**

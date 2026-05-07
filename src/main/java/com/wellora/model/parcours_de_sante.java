@@ -13,6 +13,7 @@ public class parcours_de_sante {
     private double distance_parcours;
     private String date_creation;
     private String image_parcours;
+    private String owner_patient_uuid;
     private List<publication_parcours> publications = new ArrayList<>();
     public parcours_de_sante() {}
 
@@ -75,6 +76,12 @@ public class parcours_de_sante {
     public void setImage_parcours(String image_parcours) {
         this.image_parcours = image_parcours;}
 
+    public String getOwner_patient_uuid() { return owner_patient_uuid; }
+
+    public void setOwner_patient_uuid(String owner_patient_uuid) {
+        this.owner_patient_uuid = owner_patient_uuid;
+    }
+
     public List<publication_parcours> getPublications() { return publications; }
 
     public void setPublications(List<publication_parcours> publications) {
@@ -82,7 +89,7 @@ public class parcours_de_sante {
     }
     @Override
     public String toString() {
-        return "parcours_de_sante{" + "id=" + id + ", nom_parcours=" + nom_parcours + ", localisation_parcours=" + localisation_parcours + ", latitude_parcours=" + latitude_parcours + ", longitude_parcours=" + longitude_parcours + ", distance_parcours=" + distance_parcours + ", image_parcours=" + image_parcours + ", date_creation=" + date_creation +", publications_count=" + publications.size() + '}';
+        return "parcours_de_sante{" + "id=" + id + ", nom_parcours=" + nom_parcours + ", localisation_parcours=" + localisation_parcours + ", latitude_parcours=" + latitude_parcours + ", longitude_parcours=" + longitude_parcours + ", distance_parcours=" + distance_parcours + ", image_parcours=" + image_parcours + ", date_creation=" + date_creation +", owner_patient_uuid=" + owner_patient_uuid +", publications_count=" + publications.size() + '}';
     }
 
 }

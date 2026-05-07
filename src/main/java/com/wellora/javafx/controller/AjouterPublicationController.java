@@ -116,6 +116,11 @@ public class AjouterPublicationController extends BaseController {
             pub.setType_publication(typeCombo.getValue());
             pub.setDate_publication(datePicker.getValue().toString());
             pub.setImage_publication(selectedImagePath);
+            
+            com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+            if(currentUser != null) {
+                pub.setOwner_patient_uuid(currentUser.getUuid());
+            }
 
             pubService.ajouter(pub);
 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox spacing="0" prefHeight="750.0" prefWidth="1200.0" style="-fx-background-color: #F8FAFC;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.wellcare.javafx.controller.WorkoutPlannerController">
+
+    <VBox spacing="20" HBox.hgrow="ALWAYS" style="-fx-padding: 30;">
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <VBox>
+                <Label text="📅 Workout Planner" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+                <Label text="Organize your daily fitness plans" style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+
+            <ComboBox fx:id="comboGoals" promptText="All Goals" prefWidth="220"
+                      style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-padding: 8;"/>
+
+            <Button text="Reset Filter" onAction="#resetGoalFilter"
+                    style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8 16; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+
+            <HBox spacing="5" alignment="CENTER">
+                <Button text="◀" onAction="#prevMonth"
+                        style="-fx-background-color: #F1F5F9; -fx-text-fill: #1E293B; -fx-background-radius: 8; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-weight: bold;"/>
+                <Label fx:id="lblMonthYear" text="April 2026" style="-fx-font-weight: bold; -fx-padding: 0 15; -fx-font-size: 16px; -fx-text-fill: #1E293B;"/>
+                <Button text="▶" onAction="#nextMonth"
+                        style="-fx-background-color: #F1F5F9; -fx-text-fill: #1E293B; -fx-background-radius: 8; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-weight: bold;"/>
+            </HBox>
+        </HBox>
+
+        <!-- Calendar Grid -->
+        <GridPane fx:id="calendarGrid" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #E2E8F0; -fx-border-radius: 20; -fx-padding: 15; -fx-hgap: 8; -fx-vgap: 8;">
+        </GridPane>
+    </VBox>
+
+    <VBox spacing="25" prefWidth="380" style="-fx-background-color: white; -fx-padding: 30; -fx-border-color: #E2E8F0; -fx-border-width: 0 0 0 1;">
+        <Label fx:id="lblSelectedDate" text="Select a date" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+
+        <VBox spacing="15" fx:id="detailsContainer">
+            <HBox spacing="15">
+                <VBox style="-fx-background-color: #F0FDF4; -fx-padding: 15; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                    <Label text="⏱️ Duration" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                    <Label fx:id="lblDuration" text="0 min" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #10B981;"/>
+                </VBox>
+                <VBox style="-fx-background-color: #FEF3C7; -fx-padding: 15; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                    <Label text="🔥 Calories" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                    <Label fx:id="lblCalories" text="0 kcal" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #F59E0B;"/>
+                </VBox>
+            </HBox>
+
+            <VBox style="-fx-background-color: #EFF6FF; -fx-padding: 15; -fx-background-radius: 12;">
+                <Label text="📋 Plan Details" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+                <Label fx:id="lblPlanTitle" text="No plan selected" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #1E293B;"/>
+                <Label fx:id="lblExercisesCount" text="" style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+            </VBox>
+        </VBox>
+
+        <Separator style="-fx-background-color: #E2E8F0;"/>
+
+        <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS" spacing="15">
+            <Label text="Ready for a new session?" style="-fx-text-fill: #94A3B8; -fx-font-size: 13px;"/>
+            <Button text="+ Add Daily Plan" onAction="#loadDailyPlanEditor"
+                    style="-fx-background-color: #0D9488; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-padding: 12 30; -fx-cursor: hand; -fx-font-size: 14px;"/>
+            <Button text="📊 View All Plans" onAction="#viewAllPlans"
+                    style="-fx-background-color: transparent; -fx-text-fill: #0D9488; -fx-cursor: hand; -fx-font-size: 12px;"/>
+        </VBox>
+    </VBox>
+</HBox>

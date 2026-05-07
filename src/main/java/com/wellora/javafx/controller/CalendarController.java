@@ -20,6 +20,7 @@ import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.SymptomDAO;
 import com.wellora.services.ApiService;
 import com.wellora.model.Healthentry;
+import com.wellcare.javafx.util.SceneManager;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -141,15 +142,16 @@ public class CalendarController {
         cell.setCursor(Cursor.HAND);
 
         // Style based on date
+        String userId = SceneManager.getInstance().getCurrentUser().getUuid();
         boolean isToday = date.equals(LocalDate.now());
-        boolean hasData = hasHealthData(date);
+        boolean hasData = hasHealthData(date, userId);
 
         // Add CSS class
         String styleClass = "calendar-cell";
         if (isToday) {
             styleClass += " today-cell";
         } else if (hasData) {
-            int score = getHealthScoreForDate(date);
+            int score = getHealthScoreForDate(date, userId);
             if (score >= 70) {
                 styleClass += " good-cell";
             } else if (score >= 40) {
@@ -166,7 +168,7 @@ public class CalendarController {
 
         // Add score indicator circle if data exists
         if (hasData) {
-            int score = getHealthScoreForDate(date);
+            int score = getHealthScoreForDate(date, userId);
 
             // Add colored circle based on score
             Circle scoreCircle = new Circle(12);
@@ -184,7 +186,7 @@ public class CalendarController {
             // Set tooltip using Tooltip.install (VBox doesn't have setTooltip)
             Tooltip tooltip = new Tooltip(
                     "Score: " + score + "\n" +
-                            "Symptômes: " + getSymptomCountForDate(date)
+                            "Symptômes: " + getSymptomCountForDate(date, userId)
             );
             Tooltip.install(cell, tooltip);
         } else {
@@ -232,9 +234,10 @@ public class CalendarController {
      */
     private void loadHealthData(LocalDate date) {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             // Get entry for date
             List<Healthentry> entries = entryDAO.findByMonth(
-                    date.getYear(), date.getMonthValue());
+                    date.getYear(), date.getMonthValue(), userId);
 
             Healthentry entry = entries.stream()
                     .filter(e -> e.getDate().equals(date))
@@ -260,7 +263,7 @@ public class CalendarController {
             }
 
             // Get symptoms count
-            int symptomCount = getSymptomCountForDate(date);
+            int symptomCount = getSymptomCountForDate(date, userId);
             symptomsLabel.setText(String.valueOf(symptomCount));
 
         } catch (Exception e) {
@@ -320,8 +323,9 @@ public class CalendarController {
      */
     private void updateSummaryCards() {
         try {
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             List<Healthentry> entries = entryDAO.findByMonth(
-                    currentYearMonth.getYear(), currentYearMonth.getMonthValue());
+                    currentYearMonth.getYear(), currentYearMonth.getMonthValue(), userId);
 
             // Total entries
             totalEntriesLabel.setText(String.valueOf(entries.size()));
@@ -360,9 +364,9 @@ public class CalendarController {
     /**
      * Check if date has health data
      */
-    private boolean hasHealthData(LocalDate date) {
+    private boolean hasHealthData(LocalDate date, String userId) {
         try {
-            List<Healthentry> entries = entryDAO.findByMonth(date.getYear(), date.getMonthValue());
+            List<Healthentry> entries = entryDAO.findByMonth(date.getYear(), date.getMonthValue(), userId);
             return entries.stream().anyMatch(e -> e.getDate().equals(date));
         } catch (Exception e) {
             return false;
@@ -372,9 +376,9 @@ public class CalendarController {
     /**
      * Get health score for date
      */
-    private int getHealthScoreForDate(LocalDate date) {
+    private int getHealthScoreForDate(LocalDate date, String userId) {
         try {
-            List<Healthentry> entries = entryDAO.findByMonth(date.getYear(), date.getMonthValue());
+            List<Healthentry> entries = entryDAO.findByMonth(date.getYear(), date.getMonthValue(), userId);
             return entries.stream()
                     .filter(e -> e.getDate().equals(date))
                     .findFirst()
@@ -389,9 +393,9 @@ public class CalendarController {
     /**
      * Get symptom count for date
      */
-    private int getSymptomCountForDate(LocalDate date) {
+    private int getSymptomCountForDate(LocalDate date, String userId) {
         try {
-            List<Healthentry> entries = entryDAO.findByMonth(date.getYear(), date.getMonthValue());
+            List<Healthentry> entries = entryDAO.findByMonth(date.getYear(), date.getMonthValue(), userId);
             return entries.stream()
                     .filter(e -> e.getDate().equals(date))
                     .findFirst()

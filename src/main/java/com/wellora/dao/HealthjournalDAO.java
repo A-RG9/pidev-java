@@ -30,16 +30,18 @@ public class HealthjournalDAO {
     // ----------------------------------------------------------------
     // findAll — Symfony: findAll()
     // ----------------------------------------------------------------
-    public List<Healthjournal> findAll() throws SQLException {
-        String sql = "SELECT * FROM healthjournal ORDER BY datedebut ASC";
+    public List<Healthjournal> findAll(String userId) throws SQLException {
+        String sql = "SELECT * FROM healthjournal WHERE user_id = ? ORDER BY datedebut ASC";
         List<Healthjournal> list = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                list.add(mapRow(rs));
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
             }
         }
         return list;
@@ -88,10 +90,11 @@ public class HealthjournalDAO {
     //   ->orderBy('h.' . $sortBy, $sortOrder)
     // ----------------------------------------------------------------
     public List<Healthjournal> search(String name, LocalDate filterDate,
-                                      String sortBy, String sortOrder) throws SQLException {
+                                      String sortBy, String sortOrder, String userId) throws SQLException {
 
-        StringBuilder sql = new StringBuilder("SELECT * FROM healthjournal WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT * FROM healthjournal WHERE user_id = ?");
         List<Object> params = new ArrayList<>();
+        params.add(userId);
 
         if (name != null && !name.isEmpty()) {
             sql.append(" AND name LIKE ?");
@@ -134,7 +137,7 @@ public class HealthjournalDAO {
     }
 
     private void insert(Healthjournal journal) throws SQLException {
-        String sql = "INSERT INTO healthjournal (name, datedebut, datefin) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO healthjournal (name, datedebut, datefin, user_id) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -142,6 +145,7 @@ public class HealthjournalDAO {
             ps.setString(1, journal.getName());
             ps.setDate(2, Date.valueOf(journal.getDatedebut()));
             ps.setDate(3, Date.valueOf(journal.getDatefin()));
+            ps.setString(4, journal.getUserId());
             ps.executeUpdate();
 
             try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -151,7 +155,7 @@ public class HealthjournalDAO {
     }
 
     private void update(Healthjournal journal) throws SQLException {
-        String sql = "UPDATE healthjournal SET name=?, datedebut=?, datefin=? WHERE id=?";
+        String sql = "UPDATE healthjournal SET name=?, datedebut=?, datefin=?, user_id=? WHERE id=?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -159,7 +163,8 @@ public class HealthjournalDAO {
             ps.setString(1, journal.getName());
             ps.setDate(2, Date.valueOf(journal.getDatedebut()));
             ps.setDate(3, Date.valueOf(journal.getDatefin()));
-            ps.setInt(4, journal.getId());
+            ps.setString(4, journal.getUserId());
+            ps.setInt(5, journal.getId());
             ps.executeUpdate();
         }
     }
@@ -195,7 +200,8 @@ public class HealthjournalDAO {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getDate("datedebut").toLocalDate(),
-                rs.getDate("datefin").toLocalDate()
+                rs.getDate("datefin").toLocalDate(),
+                rs.getString("user_id")
         );
     }
 
@@ -203,14 +209,15 @@ public class HealthjournalDAO {
     // findByDate — finds a journal that contains the given date
     // Used for auto-assigning journal when creating entries
     // ----------------------------------------------------------------
-    public Optional<Healthjournal> findByDate(LocalDate date) throws SQLException {
-        String sql = "SELECT * FROM healthjournal WHERE datedebut <= ? AND datefin >= ?";
+    public Optional<Healthjournal> findByDate(LocalDate date, String userId) throws SQLException {
+        String sql = "SELECT * FROM healthjournal WHERE datedebut <= ? AND datefin >= ? AND user_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setDate(1, Date.valueOf(date));
             ps.setDate(2, Date.valueOf(date));
+            ps.setString(3, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return Optional.of(mapRow(rs));
             }
@@ -222,13 +229,14 @@ public class HealthjournalDAO {
     // Analytics methods for Dashboard
     // ----------------------------------------------------------------
 
-    /** Get total count of health journals */
-    public int getCount() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM healthjournal";
+    public int getCount(String userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM healthjournal WHERE user_id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getInt(1);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
         }
         return 0;
     }

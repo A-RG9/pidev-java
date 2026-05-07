@@ -3,6 +3,7 @@ package com.wellora.javafx.controller;
 import com.wellora.controllers.HealthNavigationProxy;
 import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.HealthjournalDAO;
+import com.wellcare.javafx.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -27,7 +28,8 @@ public class HomepageController {
 
     private void loadStats() {
         try {
-            int journals = journalDAO.getCount();
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            int journals = journalDAO.getCount(userId);
             int entries = entryDAO.getCount();
 
             statJournals.setText(String.valueOf(journals));

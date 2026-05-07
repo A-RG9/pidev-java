@@ -3,6 +3,7 @@ package com.wellora.javafx.controller;
 import javafx.application.Platform;
 
 import com.wellora.controllers.HealthNavigationProxy;
+import com.wellcare.javafx.util.SceneManager;
 
 import com.wellora.dao.HealthentryDAO;
 import com.wellora.dao.HealthjournalDAO;
@@ -160,7 +161,8 @@ public class HealthentryFormController {
     // Auto-assign journal based on date range
     private Healthjournal findJournalByDate(LocalDate date) {
         try {
-            Optional<Healthjournal> journal = journalDAO.findByDate(date);
+            String userId = SceneManager.getInstance().getCurrentUser().getUuid();
+            Optional<Healthjournal> journal = journalDAO.findByDate(date, userId);
             return journal.orElse(null);
         } catch (Exception e) {
             showError("Erreur recherche journal: " + e.getMessage());

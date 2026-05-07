@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -34,12 +35,6 @@ public class CoachDashboardController implements Initializable {
 
     // Navigation buttons
     @FXML private Button dashboardBtn;
-    @FXML private Button clientsBtn;
-    @FXML private Button sessionsBtn;
-    @FXML private Button programsBtn;
-    @FXML private Button progressBtn;
-    @FXML private Button messagesBtn;
-    @FXML private Button scheduleBtn;
 
     // Dashboard content
     @FXML private Label welcomeLabel;
@@ -52,7 +47,8 @@ public class CoachDashboardController implements Initializable {
     @FXML private ListView<String> recentProgressList;
 
     // Content area for dynamic loading
-    @FXML private VBox contentArea;
+    @FXML private StackPane contentArea;
+    @FXML private VBox dashboardContent;
 
     private UserService userService;
     private User currentUser;
@@ -80,6 +76,31 @@ public class CoachDashboardController implements Initializable {
         setupUI();
         setupEventHandlers();
         loadDashboardData();
+
+        // Import des exercices une seule fois en arrière-plan au démarrage coach
+        importExercisesOnce();
+    }
+
+    /**
+     * Importe les exercices depuis l'API WorkoutX (ou fallback mock) une seule fois.
+     * S'exécute en arrière-plan pour ne pas bloquer l'UI.
+     */
+    private void importExercisesOnce() {
+        new Thread(() -> {
+            try {
+                com.wellcare.javafx.util.WorkoutXService workoutXService = new com.wellcare.javafx.util.WorkoutXService();
+                int localCount = workoutXService.getLocalExerciseCount();
+                if (localCount == 0) {
+                    System.out.println("📥 Première connexion coach: import des exercices...");
+                    int imported = workoutXService.importNewExercises();
+                    System.out.println("✅ " + imported + " exercices importés au démarrage");
+                } else {
+                    System.out.println("✅ " + localCount + " exercices déjà en base, pas d'import nécessaire");
+                }
+            } catch (Exception e) {
+                System.err.println("⚠️ Erreur import exercices au démarrage: " + e.getMessage());
+            }
+        }).start();
     }
 
     private void setupUI() {
@@ -103,12 +124,6 @@ public class CoachDashboardController implements Initializable {
 
         // Navigation actions
         dashboardBtn.setOnAction(e -> handleDashboard());
-        clientsBtn.setOnAction(e -> handleClients());
-        sessionsBtn.setOnAction(e -> handleSessions());
-        programsBtn.setOnAction(e -> handlePrograms());
-        progressBtn.setOnAction(e -> handleProgress());
-        messagesBtn.setOnAction(e -> handleMessages());
-        scheduleBtn.setOnAction(e -> handleSchedule());
     }
 
     // ========== NOUVELLES MÉTHODES POUR LES BOUTONS FITNESS ==========
@@ -171,7 +186,7 @@ public class CoachDashboardController implements Initializable {
     @FXML
     private void loadClientsList() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CoachDashboard.fxml"));
             Parent view = loader.load();
 
             // Injecter le contrôleur si nécessaire
@@ -198,77 +213,133 @@ public class CoachDashboardController implements Initializable {
      * Remplace le contenu principal du dashboard
      */
     private void replaceMainContent(Parent newContent) {
-        // Chercher le VBox principal dans la scène actuelle
-        if (contentArea == null) {
-            // Essayer de trouver le contentArea dans la vue parente
-            Parent root = dashboardBtn.getScene().getRoot();
-            if (root instanceof BorderPane) {
-                VBox center = (VBox) ((BorderPane) root).getCenter();
-                if (center != null && center.getId() != null && center.getId().equals("contentArea")) {
-                    contentArea = center;
-                }
-            }
-        }
-
         if (contentArea != null) {
             contentArea.getChildren().clear();
             contentArea.getChildren().add(newContent);
-        } else {
-            // Fallback: remplacer toute la scène
-            dashboardBtn.getScene().setRoot(newContent);
         }
     }
 
     private void loadDashboardData() {
-        // Load mock data for demonstration
-        loadTodaySessions();
-        loadRecentProgress();
-        loadStatistics();
+        if (currentUser == null || currentUser.getUuid() == null) return;
+        String coachId = currentUser.getUuid();
+
+        loadTodaySessions(coachId);
+        loadRecentProgress(coachId);
+        loadStatistics(coachId);
     }
 
-    private void loadTodaySessions() {
-        ObservableList<String> sessions = FXCollections.observableArrayList(
-                "🕐 08:00 AM - Sarah Johnson (HIIT Training)",
-                "🕐 09:00 AM - Mike Chen (Strength Training)",
-                "🕐 10:30 AM - Emma Wilson (Yoga Session)",
-                "🕐 14:00 PM - David Brown (Cardio Workout)",
-                "🕐 15:30 PM - Lisa Garcia (Personal Training)",
-                "🕐 17:00 PM - Tom Anderson (Group Class)"
-        );
+    private void loadTodaySessions(String coachId) {
+        ObservableList<String> sessions = FXCollections.observableArrayList();
+        String sql = "SELECT p.titre, p.duree_min, u.first_name, u.last_name " +
+                     "FROM daily_plan p " +
+                     "JOIN goal g ON p.goal_id = g.id " +
+                     "JOIN users u ON g.patient_id = u.uuid " +
+                     "WHERE g.coach_id = ? AND p.date = CURRENT_DATE()";
+
+        try (java.sql.Connection conn = com.wellcare.javafx.util.Database.getConnection();
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, coachId);
+            java.sql.ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                String titre = rs.getString("titre");
+                int duree = rs.getInt("duree_min");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                sessions.add(String.format("🕐 %d min - %s %s (%s)", duree, firstName, lastName, titre));
+            }
+            
+            if (sessions.isEmpty()) {
+                sessions.add("Aucune session prévue aujourd'hui");
+            }
+            
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            sessions.add("Erreur lors du chargement des sessions");
+        }
+        
         todaySessionsList.setItems(sessions);
     }
 
-    private void loadRecentProgress() {
-        ObservableList<String> progress = FXCollections.observableArrayList(
-                "📈 Sarah Johnson: Lost 2kg this month - Goal achieved!",
-                "💪 Mike Chen: Increased bench press by 15kg",
-                "🧘 Emma Wilson: Improved flexibility - 30% increase",
-                "❤️ David Brown: Improved cardio endurance",
-                "🏆 Lisa Garcia: Completed 10-week program",
-                "🎯 Tom Anderson: Met all fitness goals",
-                "📊 Group Class: 85% attendance rate this month",
-                "⭐ New client: Maria Rodriguez joined program"
-        );
+    private void loadRecentProgress(String coachId) {
+        ObservableList<String> progress = FXCollections.observableArrayList();
+        String sql = "SELECT g.title, g.progress, u.first_name, u.last_name " +
+                     "FROM goal g " +
+                     "JOIN users u ON g.patient_id = u.uuid " +
+                     "WHERE g.coach_id = ? AND g.progress > 0 " +
+                     "ORDER BY g.progress DESC LIMIT 10";
+
+        try (java.sql.Connection conn = com.wellcare.javafx.util.Database.getConnection();
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, coachId);
+            java.sql.ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                String title = rs.getString("title");
+                int prog = rs.getInt("progress");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                progress.add(String.format("📈 %s %s: %s - %d%% terminé", firstName, lastName, title, prog));
+            }
+            
+            if (progress.isEmpty()) {
+                progress.add("Aucune progression récente enregistrée");
+            }
+            
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            progress.add("Erreur lors du chargement des progressions");
+        }
+        
         recentProgressList.setItems(progress);
     }
 
-    private void loadStatistics() {
-        todaySessionsCount.setText("6");
-        activeClientsCount.setText("23");
-        pendingReviewsCount.setText("4");
+    private void loadStatistics(String coachId) {
+        int todaySessions = 0;
+        int activeClients = 0;
+        int pendingReviews = 0;
+
+        try (java.sql.Connection conn = com.wellcare.javafx.util.Database.getConnection()) {
+            
+            // Sessions d'aujourd'hui
+            String sqlSessions = "SELECT COUNT(*) as count FROM daily_plan p " +
+                                 "JOIN goal g ON p.goal_id = g.id " +
+                                 "WHERE g.coach_id = ? AND p.date = CURRENT_DATE()";
+            try (java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlSessions)) {
+                pstmt.setString(1, coachId);
+                java.sql.ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) todaySessions = rs.getInt("count");
+            }
+
+            // Clients actifs (nombre de patients uniques gérés)
+            String sqlClients = "SELECT COUNT(DISTINCT patient_id) as count FROM goal WHERE coach_id = ?";
+            try (java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlClients)) {
+                pstmt.setString(1, coachId);
+                java.sql.ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) activeClients = rs.getInt("count");
+            }
+
+            // Objectifs en cours (progress < 100)
+            String sqlPending = "SELECT COUNT(*) as count FROM goal WHERE coach_id = ? AND progress < 100 AND progress > 0";
+            try (java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlPending)) {
+                pstmt.setString(1, coachId);
+                java.sql.ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) pendingReviews = rs.getInt("count");
+            }
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+
+        todaySessionsCount.setText(String.valueOf(todaySessions));
+        activeClientsCount.setText(String.valueOf(activeClients));
+        pendingReviewsCount.setText(String.valueOf(pendingReviews));
     }
 
     private void updateSidebarActiveState(Button activeButton) {
-        // Reset all buttons
-        Button[] navButtons = {dashboardBtn, clientsBtn, sessionsBtn, programsBtn,
-                progressBtn, messagesBtn, scheduleBtn};
-
-        for (Button btn : navButtons) {
-            btn.getStyleClass().remove("sidebar-item.active");
-        }
-
-        // Set active button
-        activeButton.getStyleClass().add("sidebar-item.active");
+        // Optionnel: Gérer l'état actif des boutons ici
     }
 
     // Event handlers
@@ -291,50 +362,11 @@ public class CoachDashboardController implements Initializable {
     @FXML
     private void handleDashboard() {
         updateSidebarActiveState(dashboardBtn);
-        // Recharger le dashboard
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CoachDashboard.fxml"));
-            Parent view = loader.load();
-            replaceMainContent(view);
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Remettre le contenu original du dashboard
+        if (contentArea != null && dashboardContent != null) {
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(dashboardContent);
         }
-    }
-
-    @FXML
-    private void handleClients() {
-        updateSidebarActiveState(clientsBtn);
-        loadClientsList();
-    }
-
-    @FXML
-    private void handleSessions() {
-        updateSidebarActiveState(sessionsBtn);
-        showAlert("Sessions", "Training Sessions", "Session planning and logging tools are coming soon.");
-    }
-
-    @FXML
-    private void handlePrograms() {
-        updateSidebarActiveState(programsBtn);
-        loadDailyPlanEditor();
-    }
-
-    @FXML
-    private void handleProgress() {
-        updateSidebarActiveState(progressBtn);
-        showAlert("Progress", "Progress Tracking", "Client measurement and performance tracking are coming soon.");
-    }
-
-    @FXML
-    private void handleMessages() {
-        updateSidebarActiveState(messagesBtn);
-        showAlert("Messages", "Message Center", "Secure messaging with your clients is currently being implemented.");
-    }
-
-    @FXML
-    private void handleSchedule() {
-        updateSidebarActiveState(scheduleBtn);
-        showAlert("Schedule", "Working Schedule", "Full availability management and calendar sync are coming soon.");
     }
 
     private void showAlert(String title, String header, String content) {
