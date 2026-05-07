@@ -3,6 +3,11 @@ package com.wellora.javafx.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -16,6 +21,17 @@ import javafx.util.Callback;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import javafx.concurrent.Task;
+
+import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.service.UserService;
+import com.wellcare.javafx.util.SceneManager;
+import com.wellora.javafx.model.Consultation;
+import com.wellora.javafx.service.ConsulationServices;
 
 public class DoctorAnalytics {
 
@@ -43,8 +59,8 @@ public class DoctorAnalytics {
     @FXML private LineChart<String, Number> treatmentEffectivenessChart;
 
     @FXML private VBox profitPredictionsContainer;
-    @FXML private ListView<String> planningSuggestionsList;
-    @FXML private ListView<String> recommendationsList;
+    @FXML private VBox planningSuggestionsContainer;
+    @FXML private VBox recommendationsContainer;
     @FXML private ListView<String> recentAlertsList;
     @FXML private Label recentAlertsCount;
 
@@ -63,7 +79,12 @@ public class DoctorAnalytics {
         setupComboBoxes();
         setupListeners();
         setupChart();
+        setupListCellFactories();
         loadMockData();
+    }
+
+    private void setupListCellFactories() {
+        // no-op: using VBox with Labels now
     }
 
     private void setupTableColumns() {
@@ -121,13 +142,19 @@ public class DoctorAnalytics {
 
     private Callback<TableColumn<Patient, Void>, TableCell<Patient, Void>> createActionButtons() {
         return param -> new TableCell<>() {
-            private final Button viewBtn = new Button("👁️");
-            private final Button reportBtn = new Button("📄");
-            private final Button messageBtn = new Button("✉️");
-            private final HBox buttons = new HBox(6, viewBtn, reportBtn, messageBtn);
+            private final Button viewBtn = new Button("👁️ Voir Notes");
+            private final Button reportBtn = new Button("🤖 IA Rapport");
+            private final Button messageBtn = new Button("✉️ Message");
+            private final HBox buttons = new HBox(8, viewBtn, reportBtn, messageBtn);
 
             {
-                viewBtn.setOnAction(e -> viewPatientDetails(getTableView().getItems().get(getIndex())));
+                viewBtn.setStyle("-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 6 12;");
+                reportBtn.setStyle("-fx-background-color: #00A790; -fx-text-fill: white; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 6 12; -fx-font-weight: bold;");
+                messageBtn.setStyle("-fx-background-color: white; -fx-text-fill: #3b82f6; -fx-border-color: #bfdbfe; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 6 12;");
+                viewBtn.setOnAction(e -> {
+                    Patient p = getTableView().getItems().get(getIndex());
+                    openClinicalNotes(p);
+                });
                 reportBtn.setOnAction(e -> generateQuickReport(getTableView().getItems().get(getIndex())));
                 messageBtn.setOnAction(e -> sendMessageToPatient(getTableView().getItems().get(getIndex())));
             }
@@ -138,6 +165,25 @@ public class DoctorAnalytics {
                 setGraphic(empty ? null : buttons);
             }
         };
+    }
+    
+    private void openClinicalNotes(Patient patient) {
+        try {
+            // Retrieve the actual User object from the DB using patient ID
+            UserService userService = new UserService();
+            User realUser = userService.getUserByUuid(patient.getId());
+            ClinicalNotesController.selectedPatient = realUser;
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/clinical-notes.fxml"));
+            Parent root = loader.load();
+            Scene scene = patientsTable.getScene();
+            if (scene != null) {
+                scene.setRoot(root);
+            }
+        } catch (Exception ex) {
+            showAlert("Erreur", "Impossible d'ouvrir les notes cliniques: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     private void filterPatients() {
@@ -162,31 +208,78 @@ public class DoctorAnalytics {
     }
 
     private void loadMockData() {
-        totalPatientsValue.setText("1");
+        // Load Real Patients
+        List<Patient> realPatients = new ArrayList<>();
+        int consultationsCount = 0;
+        try {
+            User currentDoctor = SceneManager.getInstance().getCurrentUser();
+            if (currentDoctor != null) {
+                ConsulationServices consultationService = new ConsulationServices();
+                UserService userService = new UserService();
+                
+                List<Consultation> allCons = consultationService.ShowConsultation();
+                Set<String> patientIds = new HashSet<>();
+                
+                for (Consultation c : allCons) {
+                    boolean matchesDoctor = false;
+                    if (c.getMedecinId() != null && c.getMedecinId().equals(currentDoctor.getUuid())) {
+                        matchesDoctor = true;
+                    } else if (c.getReasonForVisit() != null && c.getReasonForVisit().contains(currentDoctor.getLastName())) {
+                        matchesDoctor = true;
+                    } else if (c.getNotes() != null && c.getNotes().contains(currentDoctor.getLastName())) {
+                        matchesDoctor = true;
+                    }
+                    
+                    if (matchesDoctor && c.getPatientId() != null) {
+                        patientIds.add(c.getPatientId());
+                        if (c.getDateConsultation() != null && c.getDateConsultation().equals(LocalDate.now())) {
+                            consultationsCount++;
+                        }
+                    }
+                }
+                
+                for (String pid : patientIds) {
+                    User u = userService.getUserByUuid(pid);
+                    if (u != null) {
+                        Patient p = new Patient();
+                        p.setId(u.getUuid());
+                        p.setName(u.getFirstName() + " " + u.getLastName());
+                        p.setHealthScore(80); // Default placeholder
+                        p.setTrendLabel("Stable");
+                        p.setLastEntryDateFormatted(LocalDate.now().toString());
+                        p.setAge(30); // Placeholder
+                        p.setAlerts(new ArrayList<>());
+                        realPatients.add(p);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading real data: " + e.getMessage());
+        }
+
+        totalPatientsValue.setText(String.valueOf(realPatients.size()));
         criticalAlertsValue.setText("0");
-        todayAppointmentsValue.setText("0");
+        todayAppointmentsValue.setText(String.valueOf(consultationsCount));
         reportsGeneratedValue.setText("0");
 
         displayPredictions(generateMockPredictions());
 
-        allPatients = FXCollections.observableArrayList(generateSinglePatient());
+        allPatients = FXCollections.observableArrayList(realPatients);
         filterPatients();
         populateReportPatients(allPatients);
 
-        displayProfitPredictions(generateMockProfit());
+        displayProfitPredictions(generateRealProfit());
 
-        planningSuggestionsList.setItems(FXCollections.observableArrayList(
-                "Réduire les creux\nVous avez des créneaux vides importants. Regroupez les consultations ou ouvrez des créneaux ciblés.",
-                "Répartir la charge\nCertaines journées sont surchargées. Répartissez les rendez-vous sur la semaine.",
-                "Ajouter des marges\nLes consultations sont très rapprochées. Ajoutez des marges pour éviter les retards."
-        ));
+        // Show loading placeholder in VBoxes
+        Label loadingLabel = new Label("⏳ Génération des suggestions IA en cours...");
+        loadingLabel.setStyle("-fx-text-fill: #9ca3af; -fx-font-size: 13px; -fx-font-style: italic;");
+        planningSuggestionsContainer.getChildren().setAll(loadingLabel);
 
-        recommendationsList.setItems(FXCollections.observableArrayList(
-                "Activez les rappels automatiques pour réduire les absences",
-                "Augmentez le nombre de suivis pour améliorer l'observance",
-                "Utilisez l'IA pour prioriser les patients à risque",
-                "Proposez des forfaits de suivi pour fidéliser"
-        ));
+        Label loadingLabel2 = new Label("⏳ Analyse des données...");
+        loadingLabel2.setStyle("-fx-text-fill: #9ca3af; -fx-font-size: 13px; -fx-font-style: italic;");
+        recommendationsContainer.getChildren().setAll(loadingLabel2);
+
+        generateAISuggestions();
 
         recentAlertsList.setItems(FXCollections.observableArrayList());
         recentAlertsCount.setText("0");
@@ -223,20 +316,131 @@ public class DoctorAnalytics {
         return predictions;
     }
 
-    private Map<String, Object> generateMockProfit() {
+    private void generateAISuggestions() {
+        Task<String[]> task = new Task<>() {
+            @Override
+            protected String[] call() throws Exception {
+                String prompt = "Tu es une IA conseillère médicale. Fournis exactement 2 suggestions courtes (moins de 10 mots chacune) d'amélioration de planning pour un médecin, séparées par un tiret (-). Par exemple: Regroupez vos rendez-vous - Ajoutez des pauses.";
+                String apiKey = "h4S2z91IjWqucgaphMxdMeFXdEXBYpgb";
+                String json = "{\n" +
+                        "    \"model\": \"mistral-small-latest\",\n" +
+                        "    \"messages\": [\n" +
+                        "        {\"role\": \"user\", \"content\": \"" + prompt + "\"}\n" +
+                        "    ],\n" +
+                        "    \"temperature\": 0.6,\n" +
+                        "    \"max_tokens\": 200\n" +
+                        "}";
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("https://api.mistral.ai/v1/chat/completions"))
+                        .header("Content-Type", "application/json")
+                        .header("Authorization", "Bearer " + apiKey)
+                        .POST(HttpRequest.BodyPublishers.ofString(json))
+                        .build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                System.out.println("[AI Suggestions] Status: " + response.statusCode());
+                System.out.println("[AI Suggestions] Body: " + response.body().substring(0, Math.min(300, response.body().length())));
+                if (response.statusCode() == 200) {
+                    String body = response.body();
+                    String target = "\"content\":\"";
+                    int start = body.indexOf(target);
+                    if (start == -1) return new String[]{"Erreur d'analyse API"};
+                    start += target.length();
+                    int end = start;
+                    while (end < body.length()) {
+                        if (body.charAt(end) == '"' && body.charAt(end - 1) != '\\') break;
+                        end++;
+                    }
+                    String content = body.substring(start, end).replace("\\n", "\n").replace("\\\"", "\"").trim();
+                    System.out.println("[AI Suggestions] Content: " + content);
+                    List<String> res = new ArrayList<>();
+                    // Try splitting by newline first, then by " - "
+                    String[] lines = content.split("\n");
+                    if (lines.length > 1) {
+                        for (String l : lines) {
+                            String clean = l.replaceAll("^[-*0-9.]+\\s*", "").trim();
+                            if (!clean.isEmpty()) res.add(clean);
+                        }
+                    } else {
+                        // Single line - split by " - " or ". "
+                        String[] parts = content.split(" - | \\. ");
+                        for (String p : parts) {
+                            String clean = p.replaceAll("^[-*0-9.]+\\s*", "").trim();
+                            if (!clean.isEmpty()) res.add(clean);
+                        }
+                    }
+                    if (res.isEmpty()) res.add(content);
+                    return res.toArray(new String[0]);
+                }
+                return new String[]{"Erreur API " + response.statusCode()};
+            }
+        };
+        task.setOnSucceeded(e -> {
+            String[] res = task.getValue();
+            planningSuggestionsContainer.getChildren().clear();
+            for (String s : res) {
+                if (!s.trim().isEmpty()) {
+                    Label lbl = new Label("✅ " + s.trim());
+                    lbl.setStyle("-fx-text-fill: #374151; -fx-font-size: 13px; -fx-wrap-text: true;");
+                    lbl.setMaxWidth(Double.MAX_VALUE);
+                    planningSuggestionsContainer.getChildren().add(lbl);
+                }
+            }
+            recommendationsContainer.getChildren().clear();
+            for (String rec : new String[]{"Utilisez l'IA pour prioriser les patients à risque", "Activez les rappels automatiques pour réduire les absences"}) {
+                Label lbl = new Label("💡 " + rec);
+                lbl.setStyle("-fx-text-fill: #374151; -fx-font-size: 13px; -fx-wrap-text: true;");
+                lbl.setMaxWidth(Double.MAX_VALUE);
+                recommendationsContainer.getChildren().add(lbl);
+            }
+        });
+        task.setOnFailed(e -> {
+            System.err.println("[AI Suggestions] Failed: " + task.getException().getMessage());
+            Label fallback = new Label("⚠️ Suggestions indisponibles");
+            fallback.setStyle("-fx-text-fill: #9ca3af; -fx-font-size: 13px;");
+            planningSuggestionsContainer.getChildren().setAll(fallback);
+        });
+        new Thread(task).start();
+    }
+
+    private Map<String, Object> generateRealProfit() {
         Map<String, Object> profit = new HashMap<>();
-        profit.put("last_30", 4200.0);
-        profit.put("next_30", 4400.0);
-        profit.put("avg_fee", 70.0);
-        profit.put("trend", 8.0);
-        profit.put("specialty_avg", 4100.0);
+        double last30 = 0.0;
+        int countLast30 = 0;
+        try {
+            ConsulationServices cs = new ConsulationServices();
+            List<Consultation> all = cs.ShowConsultation();
+            LocalDate today = LocalDate.now();
+            LocalDate thirtyDaysAgo = today.minusDays(30);
+            for(Consultation c : all) {
+                if (c.getDateConsultation() != null && !c.getDateConsultation().isBefore(thirtyDaysAgo) && !c.getDateConsultation().isAfter(today)) {
+                    if (c.getFee() != null) {
+                        last30 += c.getFee();
+                    } else {
+                        last30 += 50.0;
+                    }
+                    countLast30++;
+                }
+            }
+        } catch(Exception e) { e.printStackTrace(); }
+        
+        double avgFee = countLast30 > 0 ? last30 / countLast30 : 50.0;
+        double next30 = last30 * 1.05;
+        double trend = countLast30 > 0 ? 5.0 : 0.0;
+        
+        profit.put("last_30", last30);
+        profit.put("next_30", next30);
+        profit.put("avg_fee", avgFee);
+        profit.put("trend", trend);
+        profit.put("specialty_avg", last30 > 0 ? last30 * 0.9 : 4000.0);
         profit.put("vs_specialty", 2.5);
         List<Map<String, Object>> monthly = new ArrayList<>();
-        monthly.add(Map.of("month", "2026-05", "revenue", 4600.0));
-        monthly.add(Map.of("month", "2026-06", "revenue", 4750.0));
-        monthly.add(Map.of("month", "2026-07", "revenue", 4900.0));
+        LocalDate nextMonth = LocalDate.now().plusMonths(1);
+        monthly.add(Map.of("month", nextMonth.toString().substring(0,7), "revenue", next30));
+        monthly.add(Map.of("month", nextMonth.plusMonths(1).toString().substring(0,7), "revenue", next30 * 1.02));
+        monthly.add(Map.of("month", nextMonth.plusMonths(2).toString().substring(0,7), "revenue", next30 * 1.05));
         profit.put("monthly_forecast", monthly);
-        profit.put("alert_message", "BAISSE DE REVENUS PRÉVUE\nLes revenus prévus sont inférieurs à 80% des 30 derniers jours.");
+        profit.put("alert_message", trend <= 0 ? "STAGNATION DE REVENUS\nVos revenus sont stables ou en légère baisse." : "CROISSANCE STABLE\nVos revenus sont en hausse.");
         return profit;
     }
 
@@ -360,10 +564,230 @@ public class DoctorAnalytics {
         reportPatientCombo.getSelectionModel().select(0);
     }
 
-    @FXML private void refreshAIPredictions() { displayPredictions(generateMockPredictions()); }
+    @FXML private void refreshAIPredictions() {
+        Task<List<Map<String, Object>>> task = new Task<>() {
+            @Override
+            protected List<Map<String, Object>> call() throws Exception {
+                ConsulationServices cs = new ConsulationServices();
+                List<Consultation> all = cs.ShowConsultation();
+                int last7Days = 0;
+                LocalDate aWeekAgo = LocalDate.now().minusDays(7);
+                for(Consultation c : all) {
+                    if (c.getDateConsultation() != null && c.getDateConsultation().isAfter(aWeekAgo)) {
+                        last7Days++;
+                    }
+                }
+                
+                String prompt = "Tu es une IA de prévision médicale. Le médecin a eu " + last7Days + " consultations ces 7 derniers jours. " +
+                                "Génère de façon réaliste le nombre de consultations prévues pour les 7 prochains jours. " +
+                                "Renvoie UNIQUEMENT une liste de 7 nombres entiers séparés par des virgules. Aucun texte supplémentaire.";
+                                
+                String apiKey = "h4S2z91IjWqucgaphMxdMeFXdEXBYpgb";
+                String json = "{\n" +
+                        "    \"model\": \"mistral-small-latest\",\n" +
+                        "    \"messages\": [\n" +
+                        "        {\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n" +
+                        "        {\"role\": \"user\", \"content\": \"" + prompt + "\"}\n" +
+                        "    ],\n" +
+                        "    \"temperature\": 0.6,\n" +
+                        "    \"max_tokens\": 20\n" +
+                        "}";
+
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("https://api.mistral.ai/v1/chat/completions"))
+                        .header("Content-Type", "application/json")
+                        .header("Authorization", "Bearer " + apiKey)
+                        .POST(HttpRequest.BodyPublishers.ofString(json))
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                
+                if (response.statusCode() == 200) {
+                    String body = response.body();
+                    String target = "\"content\":\"";
+                    int start = body.indexOf(target);
+                    if (start == -1) throw new Exception("Erreur d'analyse API");
+                    start += target.length();
+                    int end = start;
+                    while (end < body.length()) {
+                        char c = body.charAt(end);
+                        if (c == '"' && (end == 0 || body.charAt(end - 1) != '\\')) break;
+                        end++;
+                    }
+                    String content = body.substring(start, end).replace("\\n", "").trim();
+                    String[] parts = content.split(",");
+                    List<Map<String, Object>> predictions = new ArrayList<>();
+                    LocalDate today = LocalDate.now();
+                    
+                    int[] values = {10, 10, 10, 10, 10, 10, 10};
+                    for(int i = 0; i < 7 && i < parts.length; i++) {
+                        try {
+                            values[i] = Integer.parseInt(parts[i].trim());
+                        } catch(Exception ignored) {}
+                    }
+                    
+                    for (int i = 0; i < 7; i++) {
+                        Map<String, Object> p = new HashMap<>();
+                        p.put("day_name", today.plusDays(i).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRENCH));
+                        p.put("day", today.plusDays(i));
+                        p.put("predicted_consultations", values[i]);
+                        predictions.add(p);
+                    }
+                    return predictions;
+                } else {
+                    throw new RuntimeException("API error " + response.statusCode());
+                }
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            displayPredictions(task.getValue());
+            if (lastPredictionUpdateLabel != null) {
+                lastPredictionUpdateLabel.setText("Dernière mise à jour: à l'instant");
+            }
+        });
+        
+        task.setOnFailed(e -> {
+            System.err.println("AI Prediction failed: " + task.getException().getMessage());
+            displayPredictions(generateMockPredictions());
+        });
+
+        new Thread(task).start();
+    }
     @FXML private void refreshPatientData() { loadMockData(); }
-    @FXML private void generateQuickReport() { showAlert("Rapport", "Fonctionnalité à implémenter"); }
-    private void generateQuickReport(Patient patient) { showAlert("Rapport", "Génération du rapport pour " + patient.getName()); }
+    @FXML private void generateQuickReport() {
+        String selectedPatientName = reportPatientCombo.getValue();
+        if (selectedPatientName == null || selectedPatientName.isEmpty() || selectedPatientName.equals("Tous les patients")) {
+            showAlert("Erreur", "Veuillez sélectionner un patient valide.");
+            return;
+        }
+        Patient selectedPatient = null;
+        for(Patient p : allPatients) {
+            if(p.getName().equals(selectedPatientName)) {
+                selectedPatient = p;
+                break;
+            }
+        }
+        if (selectedPatient != null) {
+            generateQuickReport(selectedPatient);
+        } else {
+            showAlert("Erreur", "Patient introuvable.");
+        }
+    }
+    private void generateQuickReport(Patient patient) {
+        try {
+            ConsulationServices consultationService = new ConsulationServices();
+            List<Consultation> all = consultationService.ShowConsultation();
+            Consultation latestNote = null;
+            for (Consultation c : all) {
+                if (patient.getId().equals(c.getPatientId())) {
+                    if (latestNote == null || c.getDateConsultation().isAfter(latestNote.getDateConsultation())) {
+                        latestNote = c;
+                    }
+                }
+            }
+            if (latestNote == null) {
+                showAlert("Erreur", "Aucune note clinique trouvée pour ce patient.");
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("SUBJECTIVE:\n").append(latestNote.getSubjective() != null ? latestNote.getSubjective() : "").append("\n\n");
+            sb.append("OBJECTIVE:\n").append(latestNote.getObjective() != null ? latestNote.getObjective() : "").append("\n\n");
+            sb.append("ASSESSMENT:\n").append(latestNote.getAssessment() != null ? latestNote.getAssessment() : "").append("\n\n");
+            sb.append("PLAN:\n").append(latestNote.getPlan() != null ? latestNote.getPlan() : "").append("\n");
+            
+            String rawNote = sb.toString();
+            String prompt = """
+            # Objective
+            You are an expert medical report writer. Transform the following raw clinical SOAP notes into a professional, well‑structured medical report in French.
+
+            # Instructions
+            - Write in past tense, third person.
+            - Do not add information that is not present in the notes.
+            - Organise the final report under these headings:
+                **Histoire de la maladie**
+                **Examen Physique**
+                **Évaluation**
+                **Plan de traitement**
+            - Use clear medical language. Omit any extra comments.
+
+            # Raw Notes
+            %s
+            """.formatted(rawNote);
+
+            Task<String> aiTask = new Task<>() {
+                @Override
+                protected String call() throws Exception {
+                    String apiKey = "h4S2z91IjWqucgaphMxdMeFXdEXBYpgb";
+                    String escapedPrompt = prompt.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+                    String json = "{\n" +
+                            "    \"model\": \"mistral-small-latest\",\n" +
+                            "    \"messages\": [\n" +
+                            "        {\"role\": \"system\", \"content\": \"You are a professional medical report writer.\"},\n" +
+                            "        {\"role\": \"user\", \"content\": \"" + escapedPrompt + "\"}\n" +
+                            "    ],\n" +
+                            "    \"temperature\": 0.3,\n" +
+                            "    \"max_tokens\": 1500\n" +
+                            "}";
+
+                    HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://api.mistral.ai/v1/chat/completions"))
+                            .header("Content-Type", "application/json")
+                            .header("Authorization", "Bearer " + apiKey)
+                            .POST(HttpRequest.BodyPublishers.ofString(json))
+                            .build();
+
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                    if (response.statusCode() == 200) {
+                        String body = response.body();
+                        String target = "\"content\":\"";
+                        int start = body.indexOf(target);
+                        if (start == -1) return "Erreur d'analyse API";
+                        start += target.length();
+                        int end = start;
+                        while (end < body.length()) {
+                            char c = body.charAt(end);
+                            if (c == '"' && (end == 0 || body.charAt(end - 1) != '\\')) break;
+                            end++;
+                        }
+                        if (end > start) {
+                            String content = body.substring(start, end);
+                            return content.replace("\\\"", "\"").replace("\\\\", "\\").replace("\\n", "\n");
+                        }
+                        return "Erreur d'analyse de la réponse";
+                    } else {
+                        throw new RuntimeException("API error " + response.statusCode());
+                    }
+                }
+            };
+
+            aiTask.setOnSucceeded(event -> {
+                Dialog<Void> dialog = new Dialog<>();
+                dialog.setTitle("Rapport IA pour " + patient.getName());
+                TextArea textArea = new TextArea(aiTask.getValue());
+                textArea.setEditable(true);
+                textArea.setWrapText(true);
+                textArea.setPrefHeight(400);
+                textArea.setPrefWidth(500);
+                dialog.getDialogPane().setContent(textArea);
+                dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
+                dialog.showAndWait();
+            });
+
+            aiTask.setOnFailed(event -> {
+                showAlert("Erreur IA", "Échec : " + aiTask.getException().getMessage());
+            });
+
+            new Thread(aiTask).start();
+
+        } catch (Exception e) {
+            showAlert("Erreur", "Génération du rapport échouée : " + e.getMessage());
+        }
+    }
     private void viewPatientDetails(Patient patient) { showAlert("Détails", "Patient: " + patient.getName() + "\nÂge: " + patient.getAge() + "\nScore santé: " + patient.getHealthScore()); }
     @FXML private void closePatientModal() { patientModal.setVisible(false); }
     private void sendMessageToPatient(Patient patient) { showAlert("Message", "Envoi d'un message à " + patient.getName()); }

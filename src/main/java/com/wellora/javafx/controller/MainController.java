@@ -33,7 +33,14 @@ public class MainController implements SceneManager.UserAware {
     @FXML private Button btnPrediction;
     @FXML private Button btnTheme;
     @FXML private Button btnLogout;
-
+    // Consultation Navigation Buttons
+    @FXML private Button btnMyBookings;
+    @FXML private Button btnBookConsultation;
+    @FXML private Button btnFindDoctor;
+    @FXML private Button btnDoctorProfile;
+    @FXML private Button btnAIAssistant;
+    @FXML private Button btnMyPrescriptions;
+    @FXML private Button btnLabResults;
     // Navigation Buttons - Nutrition
     @FXML private Button btnNutritionDashboard;
     @FXML private Button btnNutritionJournal;
@@ -111,7 +118,49 @@ public class MainController implements SceneManager.UserAware {
     public boolean isDarkTheme() {
         return isDarkTheme;
     }
+// ========== CONSULTATION NAVIGATION METHODS ==========
 
+    @FXML
+    public void showMyBookings() {
+        setActiveButton(btnMyBookings);
+        loadView("/fxml/appointments.fxml");
+    }
+
+    @FXML
+    public void showBookConsultation() {
+        setActiveButton(btnBookConsultation);
+        loadView("/fxml/booking.fxml");
+    }
+
+    @FXML
+    public void showFindDoctor() {
+        setActiveButton(btnFindDoctor);
+        loadView("/fxml/doctor-search.fxml");
+    }
+
+    @FXML
+    public void showDoctorProfile() {
+        setActiveButton(btnDoctorProfile);
+        loadView("/fxml/doctor-profile.fxml");
+    }
+
+    @FXML
+    public void showAIAssistant() {
+        setActiveButton(btnAIAssistant);
+        loadView("/fxml/chatbot.fxml");
+    }
+
+    @FXML
+    public void showMyPrescriptions() {
+        setActiveButton(btnMyPrescriptions);
+        loadView("/fxml/prescriptions.fxml");
+    }
+
+    @FXML
+    public void showLabResults() {
+        setActiveButton(btnLabResults);
+        loadView("/fxml/lab-results.fxml");
+    }
     // ========== NAVIGATION METHODS ==========
 
     /**

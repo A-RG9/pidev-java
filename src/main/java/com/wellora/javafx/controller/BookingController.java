@@ -483,6 +483,17 @@ public class BookingController {
             consultation.setPatientLastName(lastNameField.getText());
             consultation.setPatientPhone(phoneField.getText());
             
+            // Assign doctor if available
+            if (DoctorProfileController.selectedDoctor != null) {
+                // If you store doctor UUID in selectedDoctor.id (if it was string)
+                // Since it's an int hash or something in DoctorSearchController, we just append the name
+                consultation.setNotes("Mode: " + appointmentMode + ", Patient: " + firstNameField.getText() + " " + lastNameField.getText() + ", Doctor: " + DoctorProfileController.selectedDoctor.name);
+                // Also append the doctor's name to reasonForVisit as a fallback for old matching mechanism
+                if (consultation.getReasonForVisit() != null && !consultation.getReasonForVisit().contains(DoctorProfileController.selectedDoctor.name)) {
+                    consultation.setReasonForVisit(consultation.getReasonForVisit() + " - " + DoctorProfileController.selectedDoctor.name);
+                }
+            }
+            
             // Check if this is a reschedule or new booking
             if (isRescheduleMode && rescheduleConsultationId > 0) {
                 // Update existing consultation

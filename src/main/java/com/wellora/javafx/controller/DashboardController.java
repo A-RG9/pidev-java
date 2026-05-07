@@ -80,25 +80,21 @@ public class DashboardController extends BaseController {
         refreshDashboardData();
     }
 
-
-
     @FXML
     private void exportPdf() {
         if (selectedJournal != null) {
             try {
-                // Create file chooser for PDF export
                 javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
                 fileChooser.setTitle("Export Health Report");
                 fileChooser.getExtensionFilters().add(
-                    new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+                        new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
                 );
                 fileChooser.setInitialFileName("health_report_" +
-                    selectedJournal.getName().replaceAll("\\s+", "_") + ".pdf");
-                
-                // Show save dialog
+                        selectedJournal.getName().replaceAll("\\s+", "_") + ".pdf");
+
                 javafx.stage.Stage stage = (javafx.stage.Stage) alertContainer.getScene().getWindow();
                 java.io.File file = fileChooser.showSaveDialog(stage);
-                
+
                 if (file != null) {
                     com.wellora.services.PdfExportService exportService = new com.wellora.services.PdfExportService();
                     exportService.exportHealthReport(selectedJournal, file.getAbsolutePath());
@@ -179,21 +175,20 @@ public class DashboardController extends BaseController {
     private void loadSleepChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Sleep Hours");
-        
-        List<Healthentry> entries = (journalId != null) 
-            ? entryDAO.findByJournalId(journalId) 
-            : entryDAO.findAll(userId);
-        
-        // Sort by date and take last 30 entries
+
+        List<Healthentry> entries = (journalId != null)
+                ? entryDAO.findByJournalId(journalId)
+                : entryDAO.findAll(userId);
+
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
-        
+
         for (int i = start; i < entries.size(); i++) {
             Healthentry entry = entries.get(i);
             String dateStr = entry.getDate().format(DateTimeFormatter.ofPattern("MM-dd"));
             series.getData().add(new XYChart.Data<>(dateStr, entry.getSommeil()));
         }
-        
+
         sleepLineChart.getData().clear();
         sleepLineChart.getData().add(series);
     }
@@ -201,20 +196,20 @@ public class DashboardController extends BaseController {
     private void loadWeightChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Weight (kg)");
-        
-        List<Healthentry> entries = (journalId != null) 
-            ? entryDAO.findByJournalId(journalId) 
-            : entryDAO.findAll(userId);
-        
+
+        List<Healthentry> entries = (journalId != null)
+                ? entryDAO.findByJournalId(journalId)
+                : entryDAO.findAll(userId);
+
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
-        
+
         for (int i = start; i < entries.size(); i++) {
             Healthentry entry = entries.get(i);
             String dateStr = entry.getDate().format(DateTimeFormatter.ofPattern("MM-dd"));
             series.getData().add(new XYChart.Data<>(dateStr, entry.getPoids()));
         }
-        
+
         weightLineChart.getData().clear();
         weightLineChart.getData().add(series);
     }
@@ -222,31 +217,31 @@ public class DashboardController extends BaseController {
     private void loadGlycemiaChart(Integer journalId, String userId) throws SQLException {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Glycemia (g/L)");
-        
-        List<Healthentry> entries = (journalId != null) 
-            ? entryDAO.findByJournalId(journalId) 
-            : entryDAO.findAll(userId);
-        
+
+        List<Healthentry> entries = (journalId != null)
+                ? entryDAO.findByJournalId(journalId)
+                : entryDAO.findAll(userId);
+
         entries.sort((a, b) -> a.getDate().compareTo(b.getDate()));
         int start = Math.max(0, entries.size() - 30);
-        
+
         for (int i = start; i < entries.size(); i++) {
             Healthentry entry = entries.get(i);
             String dateStr = entry.getDate().format(DateTimeFormatter.ofPattern("MM-dd"));
             series.getData().add(new XYChart.Data<>(dateStr, entry.getGlycemie()));
         }
-        
+
         glycemiaLineChart.getData().clear();
         glycemiaLineChart.getData().add(series);
     }
 
     private void loadSymptomChart(Integer journalId, String userId) throws SQLException {
         symptomPieChart.getData().clear();
-        
+
         List<Object[]> counts = (journalId != null)
-            ? symptomDAO.getCountByTypeByJournal(journalId)
-            : symptomDAO.getCountByType(userId);
-        
+                ? symptomDAO.getCountByTypeByJournal(journalId)
+                : symptomDAO.getCountByType(userId);
+
         for (Object[] item : counts) {
             String type = (String) item[0];
             Long count = (Long) item[1];
@@ -260,13 +255,13 @@ public class DashboardController extends BaseController {
             String userId = SceneManager.getInstance().getCurrentUser().getUuid();
             List<Healthentry> recentEntries = entryDAO.findAll(userId);
             recentEntries.sort((a, b) -> b.getDate().compareTo(a.getDate()));
-            
+
             boolean hasAlerts = false;
             StringBuilder alerts = new StringBuilder();
-            
+
             for (int i = 0; i < Math.min(5, recentEntries.size()); i++) {
                 Healthentry entry = recentEntries.get(i);
-                
+
                 if (entry.getGlycemie() > 1.2) {
                     hasAlerts = true;
                     alerts.append("High blood sugar: ").append(String.format("%.2f", entry.getGlycemie())).append(" g/L on ").append(entry.getDate()).append("\n");
@@ -280,7 +275,7 @@ public class DashboardController extends BaseController {
                     alerts.append("Low sleep: ").append(entry.getSommeil()).append("h on ").append(entry.getDate()).append("\n");
                 }
             }
-            
+
             if (hasAlerts) {
                 alertContainer.setVisible(true);
                 alertTitle.setText("Health Alerts");
@@ -289,14 +284,13 @@ public class DashboardController extends BaseController {
             } else {
                 alertContainer.setVisible(false);
             }
-            
-            // Recommendations
+
             recommendationsContainer.setVisible(true);
             recommendationsList.getChildren().clear();
-            
+
             if (recentEntries.size() > 0) {
                 Healthentry latest = recentEntries.get(0);
-                
+
                 if (latest.getSommeil() < 7) {
                     addRecommendation("Try to get at least 7-8 hours of sleep for better health.");
                 }
@@ -306,17 +300,17 @@ public class DashboardController extends BaseController {
                 if (latest.getGlycemie() > 1.0) {
                     addRecommendation("Monitor your blood sugar levels and reduce sugar intake.");
                 }
-                
+
                 List<Symptom> recentSymptoms = symptomDAO.findByEntryId(latest.getId());
                 if (!recentSymptoms.isEmpty()) {
                     addRecommendation("You have reported symptoms recently. Consider consulting a healthcare provider if they persist.");
                 }
             }
-            
+
             if (recommendationsList.getChildren().isEmpty()) {
                 addRecommendation("Keep up the good work! Your health metrics look good.");
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -331,19 +325,16 @@ public class DashboardController extends BaseController {
 
     private void loadApiData() {
         try {
-            // Calculate health score for the selected journal or overall
             int healthScore = calculateHealthScore();
             healthScoreLabel.setText(String.valueOf(healthScore));
-            
-            // Get motivational quote from API
+
             String quote = apiService.getQuote();
             if (quote != null && !quote.isEmpty()) {
                 quoteLabel.setText(quote);
             } else {
                 quoteLabel.setText("Stay healthy and keep tracking your wellness journey!");
             }
-            
-            // Get risk assessment based on calculated score
+
             String risk = apiService.getRiskAssessment(healthScore);
             if (risk != null && !risk.isEmpty()) {
                 riskLabel.setText(risk);
@@ -365,19 +356,17 @@ public class DashboardController extends BaseController {
             } else {
                 entries = entryDAO.findAll(userId);
             }
-            
+
             if (entries == null || entries.isEmpty()) {
                 return 0;
             }
-            
-            // Calculate average score across all entries
+
             double totalScore = 0;
             int count = 0;
-            
+
             for (Healthentry entry : entries) {
                 int score = 100;
-                
-                // Weight penalty (same as CalendarController)
+
                 if (entry.getPoids() > 0) {
                     if (entry.getPoids() < 40 || entry.getPoids() > 120) {
                         score -= 20;
@@ -385,8 +374,7 @@ public class DashboardController extends BaseController {
                         score -= 10;
                     }
                 }
-                
-                // Sleep penalty
+
                 if (entry.getSommeil() > 0) {
                     if (entry.getSommeil() < 5 || entry.getSommeil() > 10) {
                         score -= 15;
@@ -394,8 +382,7 @@ public class DashboardController extends BaseController {
                         score -= 10;
                     }
                 }
-                
-                // Glycemia penalty
+
                 if (entry.getGlycemie() > 0) {
                     if (entry.getGlycemie() > 1.4) {
                         score -= 15;
@@ -403,11 +390,11 @@ public class DashboardController extends BaseController {
                         score -= 10;
                     }
                 }
-                
+
                 totalScore += Math.max(0, Math.min(100, score));
                 count++;
             }
-            
+
             return (int) Math.round(totalScore / count);
         } catch (SQLException e) {
             e.printStackTrace();

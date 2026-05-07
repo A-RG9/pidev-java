@@ -8,10 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"             fx:controller="com.wellora.javafx.controller.DoctorScheduleController"
               stylesheets="@../css/styles.css">
-  <!-- ========== LEFT SIDEBAR ========== -->
-  <left>
-    <fx:include source="sidebar.fxml" />
-  </left>
+
   <!-- ========== HEADER ========== -->
   <top>
         <VBox styleClass="header" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
@@ -39,7 +36,7 @@
                     </Button>
                     <Button onAction="#goToCurrentWeek" styleClass="today-button"
                             style="-fx-background-color: transparent; -fx-border-color: #00A790; -fx-border-radius: 8; -fx-text-fill: #00A790; -fx-padding: 6 16;">
-                        <Text text="Aujourd'hui"/>
+                        <graphic><Text text="🎯"/></graphic>
                     </Button>
                 </HBox>
 
@@ -47,11 +44,10 @@
 
                 <!-- Pending Requests Button -->
                 <Button onAction="#openPendingRequests" styleClass="pending-button"
-                        style="-fx-background-color: #fffbeb; -fx-border-color: #fde68a; -fx-border-radius: 8; -fx-text-fill: #b45309;">
+                        style="-fx-background-color: #fffbeb; -fx-border-color: #fde68a; -fx-border-radius: 8; -fx-text-fill: #b45309; -fx-padding: 6 12;">
                     <graphic>
                         <HBox spacing="8" alignment="CENTER">
                             <Text text="⏱️"/>
-                            <Text text="Demandes en attente"/>
                             <StackPane fx:id="pendingBadgeContainer" styleClass="badge-container" visible="false">
                                 <Label fx:id="pendingBadge" styleClass="badge-label"
                                        style="-fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold;"/>
@@ -128,9 +124,8 @@
                 <VBox spacing="12">
                     <Text text="Actions" styleClass="sidebar-title" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-fill: #6b7280;"/>
                     <Button onAction="#openLeaveRequest" styleClass="action-button"
-                            style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-alignment: center-left; -fx-padding: 8 12;">
+                            style="-fx-background-color: transparent; -fx-text-fill: #374151; -fx-alignment: center; -fx-padding: 8 12;">
                         <graphic><Text text="📅+ "/></graphic>
-                        <Text text="Demander un congé"/>
                     </Button>
                 </VBox>
             </VBox>
@@ -153,7 +148,7 @@
                   style="-fx-padding: 12 20; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
                 <Button onAction="#closeAppointmentModal" styleClass="secondary-button"
                         style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-padding: 6 16;">
-                    <Text text="Fermer"/>
+                    <graphic><Text text="✕"/></graphic>
                 </Button>
             </HBox>
         </VBox>

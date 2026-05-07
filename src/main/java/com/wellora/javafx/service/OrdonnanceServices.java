@@ -56,6 +56,7 @@ public class OrdonnanceServices implements CRUDordonnance {
                 ordonnance.setInstructions(rs.getString("instructions"));
                 ordonnance.setFrequency(rs.getString("frequency"));
                 ordonnance.setDiagnosisCode(rs.getString("diagnosis_code"));
+                ordonnance.setConsultationId(rs.getInt("consultation_id"));
                 
                 // Try to get status, but handle if column doesn't exist
                 try {

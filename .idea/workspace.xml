@@ -5,6 +5,42 @@
   </component>
   <component name="ChangeListManager">
 <<<<<<< HEAD
+    <list default="true" id="b9af9db7-2b8d-46b9-827b-8dbc0821e25e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/dashboard/DoctorDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellcare/javafx/controller/dashboard/DoctorDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/AppointmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/AppointmentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/ClinicalNotesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/ClinicalNotesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorAnalytics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorAnalytics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorPendingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorPendingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/LabResultsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/LabResultsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/PrescriptionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/PrescriptionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/model/Consultation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/model/Consultation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/service/ConsulationServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/service/ConsulationServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/service/ExamensServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/service/ExamensServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/service/OrdonnanceServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wellora/javafx/service/OrdonnanceServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/Dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/Dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/DoctorDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/DoctorDashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/appointments.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/appointments.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/booking.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/booking.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/chatbot.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/chatbot.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/clinical-notes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/clinical-notes.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/dashboard/doctor-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/dashboard/doctor-dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/doctor-pending.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/doctor-pending.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/doctor-profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/doctor-profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/doctor-schedule-week.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/doctor-schedule-week.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/doctor-search.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/doctor-search.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/lab-results.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/lab-results.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/prescriptions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/prescriptions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wellora/javafx/controller/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+=======
+<<<<<<< HEAD
     <list default="true" id="b0d80b4f-0373-406e-840b-574c7115221c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 =======
@@ -83,6 +119,7 @@
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
 >>>>>>> bc8e10505899eeb0d03502f848159e195263dbac
+>>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -516,6 +553,24 @@
           <line>99</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+<<<<<<< HEAD
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorSearchController.java</url>
+          <line>308</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorPendingController.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wellora/javafx/controller/DoctorAnalytics.java</url>
+          <line>808</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+=======
+>>>>>>> 78fac0a658438e392d585bee49e03e389e2a6451
       </breakpoints>
     </breakpoint-manager>
   </component>

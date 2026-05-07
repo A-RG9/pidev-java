@@ -14,12 +14,10 @@
       stylesheets="/css/Dashboard.css"
       style="-fx-background-color: #f9fafb;">
 
-    <!-- LEFT SIDEBAR - Replace with your actual sidebar.fxml -->
-    <fx:include source="sidebar.fxml" />
 
     <!-- MAIN CONTENT -->
-    <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
-                style="-fx-background-color: #f9fafb; -fx-border-width: 0;">
+    <ScrollPane fitToWidth="true" fitToHeight="true" HBox.hgrow="ALWAYS"
+                style="-fx-background: #f9fafb; -fx-background-color: #f9fafb; -fx-border-width: 0; -fx-padding: 0;">
         <VBox spacing="0" style="-fx-padding: 0;">
 
             <!-- Header -->
@@ -39,7 +37,7 @@
                 </HBox>
             </VBox>
 
-            <VBox spacing="24" style="-fx-padding: 32 48 48 48;">
+            <VBox spacing="24" style="-fx-padding: 32 48 48 48;" VBox.vgrow="ALWAYS">
 
                 <!-- Statistics Cards (1x4) -->
                 <GridPane hgap="16" vgap="16">
@@ -124,9 +122,7 @@
                             <Text text="Activité prévue pour les 7 prochains jours" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
                         </VBox>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Button onAction="#refreshAIPredictions" styleClass="refresh-button">
-                            <Text text="⟳ Actualiser" style="-fx-font-size: 13px;"/>
-                        </Button>
+                        <Button onAction="#refreshAIPredictions" styleClass="refresh-button" text="⟳" style="-fx-font-size: 18px;"/>
                     </HBox>
                     <HBox fx:id="predictionsContainer" spacing="8" alignment="CENTER"/>
                     <HBox alignment="CENTER_RIGHT" spacing="8">
@@ -136,10 +132,10 @@
                 </VBox>
 
                 <!-- Two columns layout -->
-                <HBox spacing="24">
+                <HBox spacing="24" VBox.vgrow="ALWAYS">
                     <!-- Left column: Patient Table + Treatment Chart -->
-                    <VBox spacing="20" HBox.hgrow="ALWAYS" styleClass="left-column">
-                        <VBox spacing="12" styleClass="analytics-panel">
+                    <VBox spacing="20" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" styleClass="left-column">
+                        <VBox spacing="12" styleClass="analytics-panel" VBox.vgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="12">
                                 <StackPane styleClass="panel-icon">
                                     <Text text="👨‍⚕️" style="-fx-font-size: 18px;"/>
@@ -147,18 +143,19 @@
                                 <Text text="Surveillance des Patients" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
                                 <Text text="Vue d'ensemble et alertes" style="-fx-font-size: 12px; -fx-fill: #6b7280;"/>
                                 <Region HBox.hgrow="ALWAYS"/>
-                                <Button onAction="#refreshPatientData" styleClass="outline-button">
-                                    <Text text="⟳" style="-fx-font-size: 14px;"/>
-                                </Button>
+                                <Button onAction="#refreshPatientData" styleClass="outline-button" text="⟳" style="-fx-font-size: 18px;"/>
                             </HBox>
-                            <TableView fx:id="patientsTable" styleClass="patient-table">
+                            <TableView fx:id="patientsTable" styleClass="patient-table" VBox.vgrow="ALWAYS">
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                </columnResizePolicy>
                                 <columns>
-                                    <TableColumn text="PATIENT" fx:id="patientNameColumn" prefWidth="200"/>
+                                    <TableColumn text="PATIENT" fx:id="patientNameColumn" prefWidth="250"/>
                                     <TableColumn text="SCORE SANTÉ" fx:id="healthScoreColumn" prefWidth="120"/>
                                     <TableColumn text="TENDANCE" fx:id="trendColumn" prefWidth="100"/>
-                                    <TableColumn text="ALERTES" fx:id="alertsColumn" prefWidth="80"/>
-                                    <TableColumn text="DERNIÈRE ENTRÉE" fx:id="lastEntryColumn" prefWidth="130"/>
-                                    <TableColumn text="ACTIONS" fx:id="actionsColumn" prefWidth="100"/>
+                                    <TableColumn text="ALERTES" fx:id="alertsColumn" prefWidth="100"/>
+                                    <TableColumn text="DERNIÈRE ENTRÉE" fx:id="lastEntryColumn" prefWidth="150"/>
+                                    <TableColumn text="ACTIONS" fx:id="actionsColumn" prefWidth="350"/>
                                 </columns>
                                 <placeholder>
                                     <Label text="Aucun patient trouvé" style="-fx-text-fill: #9ca3af; -fx-padding: 20;"/>
@@ -209,7 +206,8 @@
                                 </StackPane>
                                 <Text text="Suggestions d'amélioration du planning" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
                             </HBox>
-                            <ListView fx:id="planningSuggestionsList" styleClass="suggestions-list"/>
+                            <VBox fx:id="planningSuggestionsContainer" spacing="8"
+                                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 6; -fx-padding: 8;"/>
                         </VBox>
 
                         <!-- AI Recommendations -->
@@ -220,7 +218,8 @@
                                 </StackPane>
                                 <Text text="Recommandations IA" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #1f2937;"/>
                             </HBox>
-                            <ListView fx:id="recommendationsList" styleClass="recommendations-list"/>
+                            <VBox fx:id="recommendationsContainer" spacing="8"
+                                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 6; -fx-padding: 8;"/>
                         </VBox>
 
                         <!-- Recent Alerts -->
@@ -248,9 +247,7 @@
                                 <ComboBox fx:id="reportPatientCombo" promptText="Sélectionner un patient..." styleClass="full-combo"/>
                                 <ComboBox fx:id="reportTypeCombo" styleClass="full-combo"/>
                                 <ComboBox fx:id="reportPeriodCombo" styleClass="full-combo"/>
-                                <Button onAction="#generateQuickReport" styleClass="primary-button">
-                                    <Text text="📄 Générer le rapport" style="-fx-font-size: 14px;"/>
-                                </Button>
+                                <Button onAction="#generateQuickReport" styleClass="primary-button" text="📄 Générer le rapport IA" maxWidth="Infinity"/>
                             </VBox>
                         </VBox>
                     </VBox>

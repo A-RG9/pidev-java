@@ -108,6 +108,62 @@
                     
                     <Separator styleClass="menu-separator-thin"/>
 
+                    <!-- Consultation Section -->
+                    <VBox spacing="0">
+                        <Label text="CONSULTATION" styleClass="nav-category"/>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="📅  My Bookings"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showMyBookings"
+                                    fx:id="btnMyBookings"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="📖  Book a Consultation"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showBookConsultation"
+                                    fx:id="btnBookConsultation"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="👨‍⚕️  Find a Doctor"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showFindDoctor"
+                                    fx:id="btnFindDoctor"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="👤  Doctor Profile"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showDoctorProfile"
+                                    fx:id="btnDoctorProfile"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🤖  AI Assistant"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showAIAssistant"
+                                    fx:id="btnAIAssistant"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="📋  My Prescriptions"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showMyPrescriptions"
+                                    fx:id="btnMyPrescriptions"/>
+                        </VBox>
+
+                        <VBox styleClass="sub-menu">
+                            <Button text="🔬  Lab Results"
+                                    styleClass="sub-nav-button"
+                                    onAction="#showLabResults"
+                                    fx:id="btnLabResults"/>
+                        </VBox>
+                    </VBox>
+
+                    <Separator styleClass="menu-separator-thin"/>
+
                     <!-- NUTRITION Section -->
                     <VBox spacing="0">
                         <Label text="NUTRITION" styleClass="nav-category"/>
