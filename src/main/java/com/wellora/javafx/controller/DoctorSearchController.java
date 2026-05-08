@@ -19,9 +19,15 @@ import java.util.stream.Collectors;
 
 public class DoctorSearchController {
 
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     // Root and sidebar
     @FXML
-    private HBox rootPane;
+    private StackPane rootPane;
     @FXML
     private VBox sidebar;
     @FXML
@@ -67,7 +73,7 @@ public class DoctorSearchController {
     @FXML
     private Label resultsCount;
     @FXML
-    private HBox loadingPane;
+    private StackPane loadingPane;
     @FXML
     private VBox noResultsPane;
     @FXML
@@ -104,9 +110,10 @@ public class DoctorSearchController {
         public List<String> languages;
         public List<String> hospitals;
         public List<String> availableSlots;
+        public String uuid;
         
         public Doctor(int id, String name, String specialty, String location, 
-                  int experience, double rating, int reviewCount, int price) {
+                  int experience, double rating, int reviewCount, int price, String uuid) {
             this.id = id;
             this.name = name;
             this.specialty = specialty;
@@ -115,6 +122,7 @@ public class DoctorSearchController {
             this.rating = rating;
             this.reviewCount = reviewCount;
             this.price = price;
+            this.uuid = uuid;
             this.isVerified = true;
             this.nextAvailable = "Today";
             this.languages = new ArrayList<>();
@@ -174,15 +182,17 @@ public class DoctorSearchController {
             stmt.setString(1, "ROLE_MEDECIN");
             java.sql.ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                String doctorUuid = rs.getString("uuid");
                 allDoctors.add(new Doctor(
-                    rs.getString("uuid").hashCode(),
+                    doctorUuid != null ? doctorUuid.hashCode() : 0,
                     rs.getString("first_name") + " " + rs.getString("last_name"),
                     rs.getString("specialite"),
                     rs.getString("address"),
                     rs.getInt("years_of_experience"),
                     rs.getDouble("rating"),
                     0,  // reviewCount - default
-                    rs.getInt("consultation_price")
+                    rs.getInt("consultation_price"),
+                    doctorUuid
                 ));
             }
             rs.close();
@@ -240,170 +250,137 @@ public class DoctorSearchController {
     }
 
     private VBox createDoctorCard(Doctor doctor) {
-        VBox card = new VBox(12);
-        card.setPadding(new Insets(16));
-        card.setStyle("-fx-background-color: white; -fx-background-radius: 12; "
-                  + "-fx-border-radius: 12;");
+        VBox card = new VBox();
+        card.setPadding(new Insets(24));
+        card.setStyle("-fx-background-color: white; -fx-background-radius: 16; "
+                  + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);");
         
-        // Main content - HBox with photo and info
-        HBox mainContent = new HBox(24);
-        mainContent.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        // Main HBox to hold everything
+        HBox content = new HBox(24);
+        content.setAlignment(javafx.geometry.Pos.TOP_LEFT);
         
-        // Doctor photo section
-        VBox photoSection = new VBox(8);
-        photoSection.setAlignment(javafx.geometry.Pos.CENTER);
+        // Left Column: Photo and Rating
+        VBox leftCol = new VBox(12);
+        leftCol.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+        leftCol.setMinWidth(120);
         
         StackPane photoFrame = new StackPane();
-        photoFrame.setMinWidth(96);
-        photoFrame.setMinHeight(96);
-        photoFrame.setStyle("-fx-background-radius: 12;");
-        
+        photoFrame.setPrefSize(100, 100);
+        photoFrame.setStyle("-fx-background-color: #f3f4f6; -fx-background-radius: 12;");
         Label photoIcon = new Label("👨‍⚕️");
-        photoIcon.setStyle("-fx-font-size: 40;");
+        photoIcon.setStyle("-fx-font-size: 48;");
         photoFrame.getChildren().add(photoIcon);
         
-        // Rating
         VBox ratingBox = new VBox(4);
         ratingBox.setAlignment(javafx.geometry.Pos.CENTER);
-        HBox stars = new HBox(4);
+        HBox stars = new HBox(2);
+        stars.setAlignment(javafx.geometry.Pos.CENTER);
         for (int i = 0; i < 5; i++) {
             Label star = new Label(i < Math.floor(doctor.rating) ? "\u2605" : "\u2606");
-            star.setStyle("-fx-font-size: 14; -fx-text-fill: #f59e0b;");
+            star.setStyle("-fx-font-size: 18; -fx-text-fill: #fbbf24;");
             stars.getChildren().add(star);
         }
-        ratingBox.getChildren().add(stars);
+        Label ratingLabel = new Label("(" + doctor.reviewCount + ")");
+        ratingLabel.setStyle("-fx-font-size: 14; -fx-text-fill: #6b7280;");
+        ratingBox.getChildren().addAll(stars, ratingLabel);
         
-        Text ratingText = new Text("(" + doctor.reviewCount + ")");
-        ratingText.setStyle("-fx-font-size: 12;");
-        ratingBox.getChildren().add(ratingText);
+        leftCol.getChildren().addAll(photoFrame, ratingBox);
         
-        photoSection.getChildren().addAll(photoFrame, ratingBox);
+        // Right Column: Information
+        VBox rightCol = new VBox(16);
+        rightCol.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+        HBox.setHgrow(rightCol, Priority.ALWAYS);
         
-        // Info section
-        VBox infoSection = new VBox(8);
-        infoSection.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        // Top Row of Info: Name and Price
+        HBox topRow = new HBox(12);
+        topRow.setAlignment(javafx.geometry.Pos.TOP_LEFT);
         
-        // Name and verified badge
-        HBox nameBox = new HBox(8);
+        VBox nameSpecialty = new VBox(4);
+        HBox nameLine = new HBox(8);
+        nameLine.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         Text name = new Text("Dr. " + doctor.name);
-        name.setFont(Font.font("System", FontWeight.BOLD, 20));
-        
+        name.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #111827;");
+        nameLine.getChildren().add(name);
         if (doctor.isVerified) {
-            Label verified = new Label("\u2713");
-            verified.setStyle("-fx-font-family: 'Font Awesome 5 Free'; "
-                         + "-fx-font-size: 14;");
-            nameBox.getChildren().addAll(name, verified);
-        } else {
-            nameBox.getChildren().add(name);
+            Label verified = new Label("✓");
+            verified.setStyle("-fx-text-fill: #00A790; -fx-font-weight: bold; -fx-font-size: 16;");
+            nameLine.getChildren().add(verified);
         }
         
-        // Specialty
         Text specialty = new Text(doctor.specialty);
-        specialty.setFont(Font.font(14));
-        specialty.setStyle("-fx-font-weight: 600;");
+        specialty.setStyle("-fx-font-size: 18px; -fx-fill: #4b5563;");
+        nameSpecialty.getChildren().addAll(nameLine, specialty);
         
-        // Details
-        HBox detailsBox = new HBox(16);
-        Text exp = new Text("💼 " + doctor.experience + " years");
-        exp.setStyle("-fx-font-size: 13;");
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
         
-        Text loc = new Text("📍 " + doctor.location);
-        loc.setStyle("-fx-font-size: 13;");
-        
-        detailsBox.getChildren().addAll(exp, loc);
-        
-        // Price and availability
-        VBox priceSection = new VBox(4);
-        priceSection.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
-        
+        VBox priceBox = new VBox(0);
+        priceBox.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         Text price = new Text(doctor.price + " TND");
-        price.setFont(Font.font("System", FontWeight.BOLD, 24));
-        price.setStyle("");
-        
-        Text priceLabel = new Text("per consultation");
-        priceLabel.setStyle("-fx-font-size: 12;");
-        
-        HBox availability = new HBox(8);
-        availability.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
-        
-        StackPane dot = new StackPane();
-        dot.setMinWidth(8);
-        dot.setMaxWidth(8);
-        dot.setMinHeight(8);
-        dot.setMaxHeight(8);
-        dot.setStyle("-fx-background-radius: 4;");
-        
+        price.setStyle("-fx-font-size: 32px; -fx-font-weight: 800; -fx-fill: #111827;");
+        Text perConsult = new Text("per consultation");
+        perConsult.setStyle("-fx-font-size: 14px; -fx-fill: #6b7280;");
         Text nextAvail = new Text("Next: " + doctor.nextAvailable);
-        nextAvail.setStyle("-fx-font-size: 13;");
+        nextAvail.setStyle("-fx-font-size: 14px; -fx-fill: #374151; -fx-font-weight: 500;");
+        priceBox.getChildren().addAll(price, perConsult, nextAvail);
         
-        availability.getChildren().addAll(dot, nextAvail);
+        topRow.getChildren().addAll(nameSpecialty, spacer, priceBox);
         
-        priceSection.getChildren().addAll(price, priceLabel, availability);
+        // Details Row: Exp and Location
+        HBox detailsRow = new HBox(20);
+        Label expLabel = new Label("💼 " + doctor.experience + " years");
+        expLabel.setStyle("-fx-font-size: 15px; -fx-text-fill: #374151;");
+        Label locLabel = new Label("📍 " + (doctor.location != null ? doctor.location : "null"));
+        locLabel.setStyle("-fx-font-size: 15px; -fx-text-fill: #374151;");
+        detailsRow.getChildren().addAll(expLabel, locLabel);
         
-        // Available slots
-        HBox slotsSection = new HBox(8);
+        // Slots Section
+        HBox slotsSection = new HBox(12);
         slotsSection.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        Label slotsTitle = new Label("Available Slots:");
+        slotsTitle.setStyle("-fx-font-size: 15px; -fx-font-weight: 600; -fx-text-fill: #111827;");
         
-        Text slotsLabel = new Text("Available Slots:");
-        slotsLabel.setStyle("-fx-font-size: 13; -fx-font-weight: 500;");
-        
-        FlowPane slots = new FlowPane(8, 8);
-        String[] sampleSlots = {"09:00", "10:30", "14:00", "15:30", "16:00"};
+        FlowPane slotsFlow = new FlowPane(12, 12);
+        String[] sampleSlots = {"09:00 AM", "10:30 AM", "02:00 PM", "03:30 PM", "04:00 PM"};
         for (String slot : sampleSlots) {
-            Button slotBtn = new Button(formatTime(slot));
-            slotBtn.setStyle("-fx-background-color: white; "
-                       + "-fx-border-radius: 8; -fx-font-size: 12;");
+            Button slotBtn = new Button(slot);
+            slotBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #00A790; "
+                          + "-fx-font-size: 14px; -fx-font-weight: 500; -fx-padding: 0;");
+            slotBtn.setCursor(javafx.scene.Cursor.HAND);
             slotBtn.setOnAction(e -> bookSlot(doctor));
-            slots.getChildren().add(slotBtn);
+            slotsFlow.getChildren().add(slotBtn);
         }
+        Button moreLink = new Button("More >");
+        moreLink.setStyle("-fx-background-color: transparent; -fx-text-fill: #6b7280; "
+                        + "-fx-font-size: 14px; -fx-padding: 0;");
+        moreLink.setCursor(javafx.scene.Cursor.HAND);
+        moreLink.setOnAction(e -> showMoreSlots(doctor));
+        slotsFlow.getChildren().add(moreLink);
         
-        Button moreBtn = new Button("More >");
-        moreBtn.setStyle("-fx-background-color: transparent; -fx-font-size: 12;");
-        moreBtn.setOnAction(e -> showMoreSlots(doctor));
-        slots.getChildren().add(moreBtn);
+        slotsSection.getChildren().addAll(slotsTitle, slotsFlow);
         
-        slotsSection.getChildren().addAll(slotsLabel, slots);
-        
-        // Action buttons
-        HBox actionsBox = new HBox(12);
+        // Action Buttons Row
+        HBox actionsRow = new HBox(16);
+        actionsRow.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+        actionsRow.setPadding(new Insets(10, 0, 0, 0));
         
         Button viewProfile = new Button("View Profile");
-        viewProfile.setStyle("-fx-background-color: #00A790; -fx-text-fill: white; "
-                     + "-fx-border-radius: 8; -fx-font-size: 13; -fx-padding: 8 16;");
+        viewProfile.setStyle("-fx-background-color: white; -fx-text-fill: #374151; "
+                           + "-fx-border-color: #d1d5db; -fx-border-radius: 8; "
+                           + "-fx-background-radius: 8; -fx-padding: 10 24; -fx-font-weight: 600;");
         viewProfile.setOnAction(e -> viewDoctorProfile(doctor));
         
-        Button bookAppt = new Button("Book Appointment");
-        bookAppt.setStyle("-fx-background-radius: 8; -fx-font-size: 13; -fx-padding: 8 16;");
-        bookAppt.setOnAction(e -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
-                Parent bookingRoot = loader.load();
-                
-                Scene scene = doctorList.getScene();
-                Stage stage = (Stage) scene.getWindow();
-                
-                Scene newScene = new Scene(bookingRoot, 1200, 800);
-                newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-                
-                stage.setScene(newScene);
-                stage.setTitle("WellCare Connect - Book Appointment");
-                stage.show();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
+        Button bookBtn = new Button("Book Appointment");
+        bookBtn.setStyle("-fx-background-color: #00A790; -fx-text-fill: white; "
+                        + "-fx-background-radius: 8; -fx-padding: 10 32; -fx-font-weight: 600;");
+        bookBtn.setOnAction(e -> bookSlot(doctor));
         
-        Button favorite = new Button("\u2665");
-        favorite.setStyle("-fx-background-color: transparent; "
-                    + "-fx-border-radius: 8; -fx-font-size: 14; -fx-padding: 8;");
-        favorite.setOnAction(e -> toggleFavorite(doctor));
+        actionsRow.getChildren().addAll(viewProfile, bookBtn);
         
-        actionsBox.getChildren().addAll(viewProfile, bookAppt, favorite);
+        rightCol.getChildren().addAll(topRow, detailsRow, slotsSection, actionsRow);
         
-        infoSection.getChildren().addAll(nameBox, specialty, detailsBox, priceSection, slotsSection, actionsBox);
-        
-        mainContent.getChildren().addAll(photoSection, infoSection);
-        card.getChildren().add(mainContent);
+        content.getChildren().addAll(leftCol, rightCol);
+        card.getChildren().add(content);
         
         return card;
     }
@@ -536,24 +513,25 @@ public class DoctorSearchController {
 
     @FXML
     private void viewDoctorProfile(Doctor doctor) {
-        try {
-            // Store the selected doctor for the profile controller
-            DoctorProfileController.selectedDoctor = doctor;
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
-            Parent profileRoot = loader.load();
-            
-            Scene scene = doctorList.getScene();
-            Stage stage = (Stage) scene.getWindow();
-            
-            Scene newScene = new Scene(profileRoot, 1200, 800);
-            newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            
-            stage.setScene(newScene);
-            stage.setTitle("WellCare Connect - Doctor Profile");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Store the selected doctor for the profile controller
+        DoctorProfileController.selectedDoctor = doctor;
+        
+        if (mainController != null) {
+            mainController.loadView("/fxml/doctor-profile.fxml");
+        } else {
+            // Fallback if mainController not injected
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
+                Parent profileRoot = loader.load();
+                Scene scene = doctorList.getScene();
+                Stage stage = (Stage) scene.getWindow();
+                Scene newScene = new Scene(profileRoot, 1200, 800);
+                newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                stage.setScene(newScene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -567,21 +545,23 @@ public class DoctorSearchController {
     private void bookSlot(Doctor doctor) {
         // Open booking screen with selected slot
         System.out.println("Booking slot for doctor: " + doctor.name);
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
-            Parent bookingRoot = loader.load();
-            
-            Scene scene = doctorList.getScene();
-            Stage stage = (Stage) scene.getWindow();
-            
-            Scene newScene = new Scene(bookingRoot, 1200, 800);
-            newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            
-            stage.setScene(newScene);
-            stage.setTitle("WellCare Connect - Book Appointment");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        
+        if (mainController != null) {
+            mainController.loadView("/fxml/booking.fxml");
+        } else {
+            // Fallback
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
+                Parent bookingRoot = loader.load();
+                Scene scene = doctorList.getScene();
+                Stage stage = (Stage) scene.getWindow();
+                Scene newScene = new Scene(bookingRoot, 1200, 800);
+                newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                stage.setScene(newScene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -621,75 +601,94 @@ public class DoctorSearchController {
         }
     }
     
-    private void navigateToDoctorSearch() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(searchField);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to doctor search");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToDashboard() {
+        if (mainController != null) {
+            mainController.goBack();
+        } else {
+            // Fallback
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(searchField);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void navigateToDoctorSearch() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/doctor-search.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(searchField);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
-    private void navigateToDoctorProfile() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(searchField);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to doctor profile");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToDoctorProfile() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/doctor-profile.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(searchField);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     
-    private void navigateToBooking() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(searchField);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to booking");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToBooking() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/booking.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(searchField);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     
-    private void navigateToAppointments() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointments.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(searchField);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to appointments");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToAppointments() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/appointments.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointments.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(searchField);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     

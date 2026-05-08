@@ -17,6 +17,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import com.wellora.javafx.controller.DashboardInjectedController;
 
 public class DoctorDashboardController implements Initializable {
 
@@ -28,23 +29,13 @@ public class DoctorDashboardController implements Initializable {
     // Navigation buttons
     @FXML private Button dashboardBtn;
     @FXML private Button agendaBtn;
+    @FXML private Button pendingBtn;
     @FXML private Button clinicalnotesBtn;
 
-    // Dashboard content
-    @FXML private Label welcomeLabel;
-    @FXML private Label currentDateLabel;
-    @FXML private Label todayAppointmentsCount;
-    @FXML private Label activePatientsCount;
-    @FXML private Label pendingTasksCount;
-
-    @FXML private ListView<String> todayScheduleList;
-    @FXML private ListView<String> recentActivityList;
+    @FXML private VBox mainContentContainer;
 
     private User currentUser;
     private Button activeButton;
-
-    // Référence au conteneur principal (sera trouvé dynamiquement)
-    private VBox mainContentContainer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,48 +47,12 @@ public class DoctorDashboardController implements Initializable {
 
         setupUI();
         setupEventHandlers();
-        loadDashboardData();
-
-        // Trouver le conteneur principal après l'initialisation
-        findMainContentContainer();
-    }
-
-    private void findMainContentContainer() {
-        // Chercher le VBox principal qui contient le contenu du dashboard
-        Scene scene = dashboardBtn.getScene();
-        if (scene != null) {
-            // Le VBox principal est le 2ème enfant du HBox principal
-            Parent root = scene.getRoot();
-            if (root instanceof VBox) {
-                VBox mainVBox = (VBox) root;
-                for (var child : mainVBox.getChildren()) {
-                    if (child instanceof HBox) {
-                        HBox mainHBox = (HBox) child;
-                        // Le contenu principal est le 2ème enfant du HBox (index 1)
-                        if (mainHBox.getChildren().size() > 1) {
-                            var contentChild = mainHBox.getChildren().get(1);
-                            if (contentChild instanceof VBox) {
-                                mainContentContainer = (VBox) contentChild;
-                                System.out.println("✅ Main content container found!");
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        System.err.println("❌ Could not find main content container");
+        
+        // Load the default dashboard view
+        handleDashboard();
     }
 
     private void setupUI() {
-        // Set current date
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy");
-        currentDateLabel.setText(today.format(formatter));
-
-        // Set welcome message
-        welcomeLabel.setText("Good morning, Dr. " + currentUser.getLastName() + "!");
-
         // Set user menu text
         userMenu.setText("⚕️ Dr. " + currentUser.getFirstName() + " " + currentUser.getLastName());
     }
@@ -111,49 +66,14 @@ public class DoctorDashboardController implements Initializable {
         // Navigation actions
         dashboardBtn.setOnAction(e -> handleDashboard());
         agendaBtn.setOnAction(e -> handleAgenda());
+        pendingBtn.setOnAction(e -> handlePending());
         clinicalnotesBtn.setOnAction(e -> handleClinicalNotes());
     }
 
-    private void loadDashboardData() {
-        loadTodaySchedule();
-        loadRecentActivity();
-        loadStatistics();
-    }
-
-    private void loadTodaySchedule() {
-        ObservableList<String> schedule = FXCollections.observableArrayList(
-                "🕐 09:00 AM - Sarah Johnson (Annual Checkup)",
-                "🕐 10:00 AM - Mike Chen (Blood Pressure)",
-                "🕐 11:00 AM - Emma Wilson (Consultation)",
-                "🕐 02:00 PM - David Brown (Follow-up)",
-                "🕐 03:30 PM - Lisa Garcia (Vaccination)",
-                "🕐 04:30 PM - Tom Anderson (Test Results)"
-        );
-        todayScheduleList.setItems(schedule);
-    }
-
-    private void loadRecentActivity() {
-        ObservableList<String> activity = FXCollections.observableArrayList(
-                "📋 Completed patient report - Sarah Johnson",
-                "📊 Updated medical records - Mike Chen",
-                "💊 Prescription renewed - Emma Wilson",
-                "📅 Scheduled follow-up - David Brown",
-                "🔬 Lab results reviewed - Lisa Garcia",
-                "📝 Clinical notes added - Tom Anderson",
-                "🩺 New patient registered - Maria Rodriguez"
-        );
-        recentActivityList.setItems(activity);
-    }
-
-    private void loadStatistics() {
-        todayAppointmentsCount.setText("6");
-        activePatientsCount.setText("47");
-        pendingTasksCount.setText("3");
-    }
 
     private void updateSidebarActiveState(Button activeButton) {
         // Reset all buttons
-        Button[] navButtons = {dashboardBtn, agendaBtn, clinicalnotesBtn};
+        Button[] navButtons = {dashboardBtn, agendaBtn, pendingBtn, clinicalnotesBtn};
 
         for (Button btn : navButtons) {
             btn.getStyleClass().remove("sidebar-item.active");
@@ -174,13 +94,19 @@ public class DoctorDashboardController implements Initializable {
     }
 
     @FXML
-    private void handleAgenda() {
+    public void handleAgenda() {
         updateSidebarActiveState(agendaBtn);
         loadView("/fxml/doctor-schedule-week.fxml");
     }
 
     @FXML
-    private void handleClinicalNotes() {
+    private void handlePending() {
+        updateSidebarActiveState(pendingBtn);
+        loadView("/fxml/doctor-pending.fxml");
+    }
+
+    @FXML
+    public void handleClinicalNotes() {
         updateSidebarActiveState(clinicalnotesBtn);
         loadView("/fxml/clinical-notes.fxml");
     }
@@ -211,7 +137,7 @@ public class DoctorDashboardController implements Initializable {
 
     // ========== HELPER METHODS ==========
 
-    private void loadView(String fxmlPath) {
+    public void loadView(String fxmlPath) {
         try {
             System.out.println("🔍 Loading: " + fxmlPath);
 
@@ -227,16 +153,18 @@ public class DoctorDashboardController implements Initializable {
 
             System.out.println("✅ View loaded successfully");
 
-            // Trouver le conteneur principal si pas encore trouvé
-            if (mainContentContainer == null) {
-                findMainContentContainer();
-            }
-
             // Remplacer le contenu
             if (mainContentContainer != null) {
                 mainContentContainer.getChildren().clear();
                 mainContentContainer.getChildren().add(view);
+                javafx.scene.layout.VBox.setVgrow(view, javafx.scene.layout.Priority.ALWAYS);
                 System.out.println("✅ View added to main container");
+                
+                // Inject dashboard controller into sub-controller if needed
+                Object controller = loader.getController();
+                if (controller instanceof DashboardInjectedController) {
+                    ((DashboardInjectedController) controller).setDashboardController(this);
+                }
             } else {
                 System.err.println("❌ Main container is null - cannot add view");
                 showAlert("Error", "Navigation Error", "Cannot find content container");

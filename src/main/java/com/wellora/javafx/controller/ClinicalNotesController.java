@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.util.SceneManager;
 
 public class ClinicalNotesController {
     
@@ -433,6 +434,12 @@ public class ClinicalNotesController {
                 consultation.setPatientFirstName(selectedPatient.getFirstName());
                 consultation.setPatientLastName(selectedPatient.getLastName());
                 consultation.setPatientEmail(selectedPatient.getEmail());
+            }
+
+            // Set current doctor ID
+            User currentDoctor = SceneManager.getInstance().getCurrentUser();
+            if (currentDoctor != null) {
+                consultation.setMedecinId(currentDoctor.getUuid());
             }
 
             if (currentConsultationId > 0) {

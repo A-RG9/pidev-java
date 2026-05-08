@@ -27,9 +27,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.wellcare.javafx.model.User;
+import com.wellcare.javafx.service.UserService;
 import com.wellcare.javafx.util.SceneManager;
 
-public class DoctorPendingController {
+public class DoctorPendingController implements DashboardInjectedController {
 
     @FXML private VBox appointmentsContainer;
     @FXML private VBox emptyState;
@@ -38,6 +39,12 @@ public class DoctorPendingController {
 
     private ConsulationServices consultationService;
     private List<Consultation> pendingAppointments = new ArrayList<>();
+    private com.wellcare.javafx.controller.dashboard.DoctorDashboardController dashboardController;
+
+    @Override
+    public void setDashboardController(com.wellcare.javafx.controller.dashboard.DoctorDashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @FXML
     public void initialize() {
@@ -110,7 +117,7 @@ public class DoctorPendingController {
         card.setStyle("-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 0 4; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);");
         card.setPadding(new Insets(16));
 
-        String patientName = "Patient #" + apt.getId();
+        String patientName = apt.getPatientFirstName() != null ? (apt.getPatientFirstName() + " " + apt.getPatientLastName()) : ("Patient #" + apt.getId());
         HBox headerBox = new HBox(12);
         headerBox.setAlignment(Pos.CENTER_LEFT);
         Label nameLabel = new Label(patientName);
@@ -320,12 +327,16 @@ public class DoctorPendingController {
 
     @FXML
     private void goBackToSchedule() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/doctor-schedule-week.fxml"));
-            Stage stage = (Stage) appointmentsContainer.getScene().getWindow();
-            stage.getScene().setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (dashboardController != null) {
+            dashboardController.handleAgenda();
+        } else {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/doctor-schedule-week.fxml"));
+                Stage stage = (Stage) appointmentsContainer.getScene().getWindow();
+                stage.getScene().setRoot(root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

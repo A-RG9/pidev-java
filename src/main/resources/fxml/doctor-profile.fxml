@@ -5,13 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<HBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.wellora.javafx.controller.DoctorProfileController"
       fx:id="rootPane"
       stylesheets="@../css/styles.css"
       style="-fx-background-color: #f9fafb;">
-
-
 
     <!-- RIGHT SIDE - Doctor Profile Content -->
     <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS"
@@ -19,18 +17,22 @@
         
         <VBox style="-fx-background-color: #f9fafb;">
 
-        <!-- Doctor Header Banner with Gradient Background -->
-        <VBox style="-fx-background-color: #00A790; -fx-padding: 32;" spacing="0">
-            <HBox spacing="24" alignment="TOP_LEFT">
+        <!-- Doctor Header Banner - Petite Version -->
+        <VBox style="-fx-background-color: #00A790; -fx-padding: 24 32;" spacing="16">
+            <HBox alignment="CENTER_LEFT">
+                <Button text="← Back to Search" onAction="#navigateToDoctorSearch"
+                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-radius: 6; -fx-padding: 6 12;"/>
+            </HBox>
+            <HBox spacing="20" alignment="CENTER_LEFT">
 
                 <!-- Doctor Photo -->
                 <VBox alignment="TOP_CENTER">
-                    <StackPane minWidth="128" minHeight="128" maxWidth="128" maxHeight="128"
-                               style="-fx-background-color: white; -fx-border-width: 4; -fx-border-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);">
-                        <Label text="F" style="-fx-font-family: 'Arial'; -fx-font-size: 64; -fx-text-fill: #00A790;"/>
+                    <StackPane minWidth="96" minHeight="96" maxWidth="96" maxHeight="96"
+                               style="-fx-background-color: white; -fx-border-width: 3; -fx-border-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 2);">
+                        <Label text="👨‍⚕️" style="-fx-font-family: 'Arial'; -fx-font-size: 48; -fx-text-fill: #00A790;"/>
                     </StackPane>
-                    <StackPane style="-fx-background-color: #22c55e; -fx-background-radius: 50; -fx-translate-x: 120; -fx-translate-y: -20;">
-                        <Label text="V" style="-fx-font-family: 'Arial'; -fx-font-size: 12; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <StackPane style="-fx-background-color: #22c55e; -fx-background-radius: 50; -fx-translate-x: 90; -fx-translate-y: -15;">
+                        <Label text="✓" style="-fx-font-family: 'Arial'; -fx-font-size: 10; -fx-text-fill: white; -fx-font-weight: bold;"/>
                     </StackPane>
                 </VBox>
 

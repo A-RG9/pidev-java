@@ -14,6 +14,12 @@ import com.wellora.javafx.controller.DoctorSearchController.Doctor;
 
 public class DoctorProfileController {
 
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     // Static field to pass doctor data between controllers
     public static DoctorSearchController.Doctor selectedDoctor;
 
@@ -289,26 +295,20 @@ public class DoctorProfileController {
         }
 
         // Navigate to booking page
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
-            Parent bookingRoot = loader.load();
-
-            // Get the current stage from any UI element
-            Scene scene = doctorName.getScene();
-            Stage stage = (Stage) scene.getWindow();
-
-            Scene newScene = new Scene(bookingRoot, 1200, 800);
-            newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-
-            stage.setScene(newScene);
-            stage.setTitle("WellCare Connect - Book Appointment");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Navigation Error");
-            alert.setHeaderText("Failed to navigate to booking");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+        if (mainController != null) {
+            mainController.loadView("/fxml/booking.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
+                Parent bookingRoot = loader.load();
+                Scene scene = doctorName.getScene();
+                Stage stage = (Stage) scene.getWindow();
+                Scene newScene = new Scene(bookingRoot, 1200, 800);
+                newScene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+                stage.setScene(newScene);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -342,75 +342,75 @@ public class DoctorProfileController {
         }
     }
     
-    private void navigateToDoctorSearch() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(doctorName);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to doctor search");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToDoctorSearch() {
+        if (mainController != null) {
+            mainController.goBack();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(doctorName);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     
-    private void navigateToDoctorProfile() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(doctorName);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to doctor profile");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToDoctorProfile() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/doctor-profile.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(doctorName);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     
-    private void navigateToBooking() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(doctorName);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to booking");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToBooking() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/booking.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(doctorName);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     
-    private void navigateToAppointments() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointments.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = getSceneFromNode(doctorName);
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to appointments");
-            } else {
-                showError("Cannot navigate - scene not available");
+    @FXML
+    public void navigateToAppointments() {
+        if (mainController != null) {
+            mainController.loadView("/fxml/appointments.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointments.fxml"));
+                Parent root = loader.load();
+                Scene scene = getSceneFromNode(doctorName);
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     

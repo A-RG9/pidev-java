@@ -33,7 +33,7 @@ import com.wellcare.javafx.util.SceneManager;
 import com.wellora.javafx.model.Consultation;
 import com.wellora.javafx.service.ConsulationServices;
 
-public class DoctorAnalytics {
+public class DoctorAnalytics implements DashboardInjectedController {
 
     @FXML private Label aiStatusLabel;
     @FXML private TextField patientSearchField;
@@ -70,6 +70,13 @@ public class DoctorAnalytics {
 
     @FXML private StackPane patientModal;
     @FXML private VBox patientModalContent;
+
+    private com.wellcare.javafx.controller.dashboard.DoctorDashboardController dashboardController;
+
+    @Override
+    public void setDashboardController(com.wellcare.javafx.controller.dashboard.DoctorDashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     private ObservableList<Patient> allPatients;
 
@@ -174,11 +181,15 @@ public class DoctorAnalytics {
             User realUser = userService.getUserByUuid(patient.getId());
             ClinicalNotesController.selectedPatient = realUser;
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/clinical-notes.fxml"));
-            Parent root = loader.load();
-            Scene scene = patientsTable.getScene();
-            if (scene != null) {
-                scene.setRoot(root);
+            if (dashboardController != null) {
+                dashboardController.handleClinicalNotes();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/clinical-notes.fxml"));
+                Parent root = loader.load();
+                Scene scene = patientsTable.getScene();
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
             }
         } catch (Exception ex) {
             showAlert("Erreur", "Impossible d'ouvrir les notes cliniques: " + ex.getMessage());
@@ -220,23 +231,37 @@ public class DoctorAnalytics {
                 List<Consultation> allCons = consultationService.ShowConsultation();
                 Set<String> patientIds = new HashSet<>();
                 
+                System.out.println("🔍 DoctorAnalytics: Found " + allCons.size() + " total consultations in DB");
+                
                 for (Consultation c : allCons) {
                     boolean matchesDoctor = false;
+                    
+                    // Priority 1: Match by medecin_id (UUID)
                     if (c.getMedecinId() != null && c.getMedecinId().equals(currentDoctor.getUuid())) {
                         matchesDoctor = true;
-                    } else if (c.getReasonForVisit() != null && c.getReasonForVisit().contains(currentDoctor.getLastName())) {
-                        matchesDoctor = true;
-                    } else if (c.getNotes() != null && c.getNotes().contains(currentDoctor.getLastName())) {
-                        matchesDoctor = true;
+                    } 
+                    // Priority 2: Fallback to doctor's last name in metadata (legacy or edge case)
+                    else if (currentDoctor.getLastName() != null) {
+                        if (c.getReasonForVisit() != null && c.getReasonForVisit().contains(currentDoctor.getLastName())) {
+                            matchesDoctor = true;
+                        } else if (c.getNotes() != null && c.getNotes().contains(currentDoctor.getLastName())) {
+                            matchesDoctor = true;
+                        }
                     }
                     
-                    if (matchesDoctor && c.getPatientId() != null) {
-                        patientIds.add(c.getPatientId());
-                        if (c.getDateConsultation() != null && c.getDateConsultation().equals(LocalDate.now())) {
-                            consultationsCount++;
+                    if (matchesDoctor) {
+                        if (c.getPatientId() != null && !c.getPatientId().isEmpty()) {
+                            patientIds.add(c.getPatientId());
+                            if (c.getDateConsultation() != null && c.getDateConsultation().equals(LocalDate.now())) {
+                                consultationsCount++;
+                            }
+                        } else {
+                            System.out.println("⚠️ Found matching consultation " + c.getId() + " but patientId is null/empty");
                         }
                     }
                 }
+                
+                System.out.println("🔍 DoctorAnalytics: Found " + patientIds.size() + " unique patients for doctor " + currentDoctor.getLastName());
                 
                 for (String pid : patientIds) {
                     User u = userService.getUserByUuid(pid);
@@ -250,6 +275,8 @@ public class DoctorAnalytics {
                         p.setAge(30); // Placeholder
                         p.setAlerts(new ArrayList<>());
                         realPatients.add(p);
+                    } else {
+                        System.out.println("❌ Could not find User object for patient UUID: " + pid);
                     }
                 }
             }

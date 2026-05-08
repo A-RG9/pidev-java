@@ -1,7 +1,9 @@
 package com.wellora.javafx.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wellora.javafx.service.ConsulationServices;
+import com.wellora.javafx.model.Consultation;
+import com.wellcare.javafx.util.SceneManager;
+import com.wellcare.javafx.model.User;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -16,18 +18,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DoctorScheduleController {
+public class DoctorScheduleController implements DashboardInjectedController {
 
     @FXML private Label weekRangeLabel;
     @FXML private StackPane pendingBadgeContainer;
@@ -42,13 +39,18 @@ public class DoctorScheduleController {
     @FXML private StackPane dayAppointmentsModal;
     @FXML private VBox dayAppointmentsContent;
     @FXML private Label selectedDateDisplay;
+    private com.wellcare.javafx.controller.dashboard.DoctorDashboardController dashboardController;
+
+    @Override
+    public void setDashboardController(com.wellcare.javafx.controller.dashboard.DoctorDashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     private LocalDate currentWeekStart;
     private List<AppointmentDTO> allAppointments = new ArrayList<>();
     private Map<LocalDate, List<AppointmentDTO>> appointmentsByDay = new HashMap<>();
     private int pendingCount = 0;
-    private final HttpClient httpClient = HttpClient.newHttpClient();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ConsulationServices consultationService = new ConsulationServices();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final int START_HOUR = 8;
     private static final int END_HOUR = 18;
@@ -239,32 +241,37 @@ public class DoctorScheduleController {
     private void loadAcceptedAppointments() {
         new Thread(() -> {
             try {
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:8080/appointment/api/doctor/accepted"))
-                        .header("Accept", "application/json")
-                        .GET().build();
-                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                if (response.statusCode() == 200) {
-                    JsonNode root = objectMapper.readTree(response.body());
-                    List<AppointmentDTO> list = new ArrayList<>();
-                    if (root.isArray()) {
-                        for (JsonNode node : root) {
+                User currentDoctor = SceneManager.getInstance().getCurrentUser();
+                if (currentDoctor == null) return;
+
+                List<Consultation> all = consultationService.ShowConsultation();
+                List<AppointmentDTO> list = all.stream()
+                        .filter(c -> c.getStatus() != null && (c.getStatus().equalsIgnoreCase("accepted") || c.getStatus().equalsIgnoreCase("confirmed")))
+                        .filter(c -> {
+                            if (c.getMedecinId() != null && c.getMedecinId().equals(currentDoctor.getUuid())) return true;
+                            // Fallback to name matching if medecinId is missing
+                            if (c.getReasonForVisit() != null && c.getReasonForVisit().contains(currentDoctor.getLastName())) return true;
+                            return c.getNotes() != null && c.getNotes().contains(currentDoctor.getLastName());
+                        })
+                        .map(c -> {
                             AppointmentDTO apt = new AppointmentDTO();
-                            apt.id = node.path("id").asInt();
-                            apt.patientName = node.path("patientName").asText("Patient");
-                            apt.date = LocalDate.parse(node.path("dateConsultation").asText());
-                            String timeStr = node.path("timeConsultation").asText("09:00:00");
+                            apt.id = c.getId();
+                            apt.patientName = c.getPatientFirstName() + " " + c.getPatientLastName();
+                            if (apt.patientName.trim().isEmpty()) apt.patientName = "Patient #" + c.getId();
+                            apt.date = c.getDateConsultation() != null ? c.getDateConsultation() : LocalDate.now();
+                            String timeStr = c.getTimeConsultation() != null ? c.getTimeConsultation().toString() : "09:00";
                             apt.time = timeStr.length() > 5 ? timeStr.substring(0, 5) : timeStr;
-                            apt.duration = node.path("duration").asInt(30);
-                            apt.type = node.path("consultationType").asText("consultation");
-                            apt.reason = node.path("reasonForVisit").asText("Consultation");
-                            list.add(apt);
-                        }
-                    }
-                    allAppointments = list;
-                    appointmentsByDay = allAppointments.stream().collect(Collectors.groupingBy(AppointmentDTO::getDate));
-                    Platform.runLater(this::renderAppointments);
-                }
+                            apt.duration = c.getDuration() != null ? c.getDuration() : 30;
+                            apt.type = c.getConsultationType() != null ? c.getConsultationType().toLowerCase() : "consultation";
+                            apt.reason = c.getReasonForVisit() != null ? c.getReasonForVisit() : "Consultation";
+                            return apt;
+                        })
+                        .sorted(Comparator.comparing(AppointmentDTO::getDate).thenComparing(AppointmentDTO::getTime))
+                        .collect(Collectors.toList());
+
+                allAppointments = list;
+                appointmentsByDay = allAppointments.stream().collect(Collectors.groupingBy(AppointmentDTO::getDate));
+                Platform.runLater(this::renderAppointments);
             } catch (Exception e) { e.printStackTrace(); }
         }).start();
     }
@@ -272,22 +279,27 @@ public class DoctorScheduleController {
     private void loadPendingCount() {
         new Thread(() -> {
             try {
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:8080/appointment/api/doctor/pending"))
-                        .GET().build();
-                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                if (response.statusCode() == 200) {
-                    JsonNode root = objectMapper.readTree(response.body());
-                    pendingCount = root.path("count").asInt(0);
-                    Platform.runLater(() -> {
-                        if (pendingCount > 0) {
-                            pendingBadge.setText(String.valueOf(pendingCount));
-                            pendingBadgeContainer.setVisible(true);
-                        } else {
-                            pendingBadgeContainer.setVisible(false);
-                        }
-                    });
-                }
+                User currentDoctor = SceneManager.getInstance().getCurrentUser();
+                if (currentDoctor == null) return;
+
+                List<Consultation> all = consultationService.ShowConsultation();
+                pendingCount = (int) all.stream()
+                        .filter(c -> c.getStatus() != null && c.getStatus().equalsIgnoreCase("pending"))
+                        .filter(c -> {
+                            if (c.getMedecinId() != null && c.getMedecinId().equals(currentDoctor.getUuid())) return true;
+                            if (c.getReasonForVisit() != null && c.getReasonForVisit().contains(currentDoctor.getLastName())) return true;
+                            return c.getNotes() != null && c.getNotes().contains(currentDoctor.getLastName());
+                        })
+                        .count();
+
+                Platform.runLater(() -> {
+                    if (pendingCount > 0) {
+                        pendingBadge.setText(String.valueOf(pendingCount));
+                        pendingBadgeContainer.setVisible(true);
+                    } else {
+                        pendingBadgeContainer.setVisible(false);
+                    }
+                });
             } catch (Exception e) { e.printStackTrace(); }
         }).start();
     }
@@ -319,12 +331,16 @@ public class DoctorScheduleController {
     }
 
     @FXML private void openPendingRequests() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-pending.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) daysContainer.getScene().getWindow();
-            stage.getScene().setRoot(root);
-        } catch (Exception e) { e.printStackTrace(); }
+        if (dashboardController != null) {
+            dashboardController.loadView("/fxml/doctor-pending.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-pending.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) daysContainer.getScene().getWindow();
+                stage.getScene().setRoot(root);
+            } catch (Exception e) { e.printStackTrace(); }
+        }
     }
 
     @FXML private void openLeaveRequest() { showToast("Demande de congé envoyée", "info"); }

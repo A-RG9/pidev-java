@@ -21,6 +21,12 @@ import java.util.List;
 
 public class BookingController {
 
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     // Step panes
     @FXML private VBox step1Pane, step2Pane, step3Pane, step4Pane;
     @FXML private HBox rootPane;
@@ -61,6 +67,8 @@ public class BookingController {
     @FXML private Label summaryDoctor, summarySpecialty, summaryType, summaryMode;
     @FXML private Label summaryDateTime, summaryDuration, summaryPatient;
     @FXML private Label summaryFee, summaryTotal;
+    @FXML private Label doctorNameLabel, doctorSpecialtyLabel;
+    @FXML private Label inPersonPriceLabel, phonePriceLabel;
 
     // Payment & terms
     @FXML private ToggleGroup paymentGroup;
@@ -477,6 +485,12 @@ public class BookingController {
             consultation.setAppointmentMode(appointmentMode);
             consultation.setNotes("Mode: " + appointmentMode + ", Patient: " + firstNameField.getText() + " " + lastNameField.getText());
             
+            // Set current user as patient
+            com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                consultation.setPatientId(currentUser.getUuid());
+            }
+            
             // Set patient contact information
             consultation.setPatientEmail(emailField.getText());
             consultation.setPatientFirstName(firstNameField.getText());
@@ -485,6 +499,7 @@ public class BookingController {
             
             // Assign doctor if available
             if (DoctorProfileController.selectedDoctor != null) {
+                consultation.setMedecinId(DoctorProfileController.selectedDoctor.uuid);
                 // If you store doctor UUID in selectedDoctor.id (if it was string)
                 // Since it's an int hash or something in DoctorSearchController, we just append the name
                 consultation.setNotes("Mode: " + appointmentMode + ", Patient: " + firstNameField.getText() + " " + lastNameField.getText() + ", Doctor: " + DoctorProfileController.selectedDoctor.name);
@@ -543,20 +558,20 @@ public class BookingController {
     private void showInfo(String msg) { new Alert(Alert.AlertType.INFORMATION, msg).showAndWait(); }
 
     private void navigateToAppointments() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointments.fxml"));
-            Parent appointmentsRoot = loader.load();
-            
-            Scene scene = rootPane != null ? rootPane.getScene() : null;
-            if (scene != null) {
-                scene.setRoot(appointmentsRoot);
-                System.out.println("Navigated to appointments successfully!");
-            } else {
-                showError("Cannot navigate - scene not available");
+        if (mainController != null) {
+            mainController.loadView("/fxml/appointments.fxml");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointments.fxml"));
+                Parent appointmentsRoot = loader.load();
+                Scene scene = rootPane != null ? rootPane.getScene() : null;
+                if (scene != null) {
+                    scene.setRoot(appointmentsRoot);
+                    System.out.println("Navigated to appointments successfully!");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate to appointments: " + e.getMessage());
         }
     }
     
@@ -674,23 +689,26 @@ public class BookingController {
         }
     }
     
+    @FXML
     private void navigateToDoctorSearch() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = rootPane != null ? rootPane.getScene() : null;
-            if (scene != null) {
-                scene.setRoot(root);
-                System.out.println("Navigated to doctor search");
+        if (mainController != null) {
+            mainController.goBack();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
+                Parent root = loader.load();
+                Scene scene = rootPane != null ? rootPane.getScene() : null;
+                if (scene != null) {
+                    scene.setRoot(root);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to navigate: " + e.getMessage());
         }
     }
     
-    private void navigateToDoctorProfile() {
+    @FXML
+    public void navigateToDoctorProfile() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-profile.fxml"));
             Parent root = loader.load();

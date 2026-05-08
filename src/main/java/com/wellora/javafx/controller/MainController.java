@@ -19,9 +19,13 @@ import javafx.scene.Node;
  * MainController - Handles application navigation
  * Uses dynamic content switching (no new windows)
  */
+import java.util.Stack;
+
 public class MainController implements SceneManager.UserAware {
 
     private User currentUser;
+    private Stack<String> navigationHistory = new Stack<>();
+    private String currentView;
 
     // Navigation Buttons - Health
     @FXML private Button btnHome;
@@ -429,7 +433,16 @@ public class MainController implements SceneManager.UserAware {
      * @param fxmlPath path to FXML file
      */
     public void loadView(String fxmlPath) {
+        loadView(fxmlPath, true);
+    }
+
+    public void loadView(String fxmlPath, boolean addToHistory) {
         try {
+            if (addToHistory && currentView != null) {
+                navigationHistory.push(currentView);
+            }
+            currentView = fxmlPath;
+
             // Clear current content
             contentArea.getChildren().clear();
 
@@ -501,10 +514,17 @@ public class MainController implements SceneManager.UserAware {
                 ((ModifierPublicationController) controller).setMainController(this);
             } else if (controller instanceof AjouterParcoursDeSante) {
                 ((AjouterParcoursDeSante) controller).setMainController(this);
+            } else if (controller instanceof DoctorSearchController dsc) {
+                dsc.setMainController(this);
+            } else if (controller instanceof DoctorProfileController dpc) {
+                dpc.setMainController(this);
+            } else if (controller instanceof BookingController bc_booking) {
+                bc_booking.setMainController(this);
+            } else if (controller instanceof AppointmentsController ac) {
+                ac.setMainController(this);
             } else if (controller instanceof BaseController bc) {
                 bc.setMainController(this);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             showError("Failed to load view: " + fxmlPath + "\n" + e.getMessage());
@@ -634,6 +654,16 @@ public class MainController implements SceneManager.UserAware {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    public void goBack() {
+        if (!navigationHistory.isEmpty()) {
+            String previousView = navigationHistory.pop();
+            loadView(previousView, false); // Don't add to history when going back
+        } else {
+            loadView("/fxml/homepage.fxml", false);
+        }
+    }
+
     // Dans MainController.java - Ajoutez ces méthodes avec les autres méthodes de navigation
 
 // ========== FITNESS / SPORT NAVIGATION METHODS ==========
@@ -655,6 +685,8 @@ public class MainController implements SceneManager.UserAware {
         setActiveButton(null);
         loadView("/WorkoutPlanner.fxml");
     }
+
+
 
     @FXML
     public void loadAICoach() {

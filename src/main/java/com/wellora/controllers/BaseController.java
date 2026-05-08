@@ -49,7 +49,7 @@ public abstract class BaseController {
 
     @FXML public void goBack() {
         if (mainController != null) {
-            mainController.loadView("/fxml/AfficherParcours.fxml");
+            mainController.goBack();
         }
     }
 

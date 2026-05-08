@@ -29,6 +29,12 @@ import com.wellcare.javafx.util.SceneManager;
 
 public class AppointmentsController {
 
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     @FXML
     private Text upcomingCount;
 
@@ -371,74 +377,52 @@ public class AppointmentsController {
 
     @FXML
     private void handleBookNewAppointment() {
-        try {
-            // Navigate to doctor-search to find a doctor first
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
-            Parent doctorSearchRoot = loader.load();
-            
-            // Get the stage from the current window
-            Stage stage = null;
-            if (tabPane != null && tabPane.getScene() != null) {
-                stage = (Stage) tabPane.getScene().getWindow();
+        if (mainController != null) {
+            mainController.loadView("/fxml/doctor-search.fxml");
+        } else {
+            try {
+                // Fallback
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-search.fxml"));
+                Parent doctorSearchRoot = loader.load();
+                Stage stage = (Stage) tabPane.getScene().getWindow();
+                Scene newScene = new Scene(doctorSearchRoot, 1200, 800);
+                stage.setScene(newScene);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            
-            if (stage == null) {
-                showError("Cannot navigate - window not available");
-                return;
-            }
-            
-            // Create new scene with doctor-search
-            Scene newScene = new Scene(doctorSearchRoot, 1200, 800);
-            
-            // Apply stylesheet to new scene
-            String css = getClass().getResource("/css/styles.css").toExternalForm();
-            if (css != null) {
-                newScene.getStylesheets().add(css);
-            }
-            
-            stage.setScene(newScene);
-            stage.setTitle("WellCare Connect - Find a Doctor");
-            stage.show();
-        } catch (Exception e) {
-            showError("Failed to navigate to doctor search: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
     @FXML
     private void handleReschedule(Consultation consultation) {
-        try {
-            System.out.println("Rescheduling consultation ID: " + consultation.getId());
-            
-            // Load the booking FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
-            Parent bookingRoot = loader.load();
-            
-            // Get the BookingController and set the reschedule data
-            BookingController bookingController = loader.getController();
-            bookingController.setRescheduleData(consultation);
-            
-            // Navigate to booking page for reschedule
-            Stage stage = null;
-            if (tabPane != null && tabPane.getScene() != null) {
-                stage = (Stage) tabPane.getScene().getWindow();
+        if (mainController != null) {
+            // Use a special method in mainController to load with data if needed, 
+            // or just load and let the controller handle it if it can get data from elsewhere
+            // For now, let's use the old way but load into contentArea if possible
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
+                Parent bookingRoot = loader.load();
+                BookingController bookingController = loader.getController();
+                bookingController.setMainController(mainController);
+                bookingController.setRescheduleData(consultation);
+                
+                mainController.getContentArea().getChildren().clear();
+                mainController.getContentArea().getChildren().add(bookingRoot);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            
-            if (stage != null) {
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/booking.fxml"));
+                Parent bookingRoot = loader.load();
+                BookingController bookingController = loader.getController();
+                bookingController.setRescheduleData(consultation);
+                Stage stage = (Stage) tabPane.getScene().getWindow();
                 Scene newScene = new Scene(bookingRoot, 1200, 800);
-                String css = getClass().getResource("/css/styles.css").toExternalForm();
-                if (css != null) {
-                    newScene.getStylesheets().add(css);
-                }
                 stage.setScene(newScene);
-                stage.setTitle("WellCare Connect - Reschedule Appointment");
-                stage.show();
-            } else {
-                showError("Could not navigate to booking page");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Failed to open reschedule: " + e.getMessage());
         }
     }
 
