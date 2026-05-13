@@ -55,4 +55,5 @@ public class AppConfig {
     public static String getSendGridApiKey()      { return get("sendgrid.api.key"); }
     public static String getSendGridFromEmail()   { return get("sendgrid.from.email"); }
     public static String getOcrApiKey()           { return get("ocr.api.key"); }
+    public static String getSharedUploadDir()     { return get("shared.upload.dir"); }
 }

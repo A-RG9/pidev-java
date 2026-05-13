@@ -17,6 +17,12 @@ import com.wellora.dao.PublicationDAO;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+import com.wellcare.javafx.util.AppConfig;
 import java.time.LocalDate;
 
 public class ModifierPublicationController extends BaseController {
@@ -85,8 +91,13 @@ public class ModifierPublicationController extends BaseController {
 
             selectedImagePath = pub.getImage_publication();
             if (selectedImagePath != null && !selectedImagePath.isEmpty()) {
-                File f = new File(selectedImagePath);
-                fileLabel.setText("✔ " + f.getName());
+                String fileName;
+                if (selectedImagePath.startsWith("/uploads")) {
+                    fileName = selectedImagePath.substring(selectedImagePath.lastIndexOf("/") + 1);
+                } else {
+                    fileName = new File(selectedImagePath).getName();
+                }
+                fileLabel.setText("✔ " + fileName);
             }
         }
     }
@@ -120,7 +131,30 @@ public class ModifierPublicationController extends BaseController {
             currentPublication.setExperience(experienceCombo.getValue());
             currentPublication.setType_publication(typeCombo.getValue());
             currentPublication.setDate_publication(datePicker.getValue().toString());
-            currentPublication.setImage_publication(selectedImagePath);
+            
+            String finalImagePath = selectedImagePath;
+            // Handle image upload if a new local file was selected
+            if (selectedImagePath != null && !selectedImagePath.isEmpty() && !selectedImagePath.startsWith("/uploads")) {
+                try {
+                    String sharedPath = AppConfig.getSharedUploadDir();
+                    if (sharedPath != null && !sharedPath.isEmpty()) {
+                        File sourceFile = new File(selectedImagePath);
+                        if (sourceFile.exists()) {
+                            String fileName = UUID.randomUUID().toString() + "_" + sourceFile.getName();
+                            Path targetDir = Paths.get(sharedPath, "parcours"); // Using same folder as parcours
+                            if (!Files.exists(targetDir)) {
+                                Files.createDirectories(targetDir);
+                            }
+                            Path targetPath = targetDir.resolve(fileName);
+                            Files.copy(sourceFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+                            finalImagePath = "/uploads/parcours/" + fileName;
+                        }
+                    }
+                } catch (IOException e) {
+                    System.err.println("Erreur copie image (Modifier Pub): " + e.getMessage());
+                }
+            }
+            currentPublication.setImage_publication(finalImagePath);
 
             pubService.modifier(currentPublication);
 

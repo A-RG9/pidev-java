@@ -20,6 +20,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import com.wellora.dao.CommentaireDAO;
 import com.wellora.dao.PublicationDAO;
+import com.wellcare.javafx.util.AppConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -140,16 +141,40 @@ public class PublicationCardController {
             experienceLabel.setStyle("-fx-text-fill: #f1c40f; -fx-font-weight: bold; -fx-font-size: 12;");
         }
 
-        if (pub.getImage_publication() != null && !pub.getImage_publication().isEmpty()) {
-            File file = new File(pub.getImage_publication());
-            if (file.exists()) {
-                imageView.setImage(new Image(file.toURI().toString()));
-                imageView.setManaged(true);
-            } else {
+        String imagePath = pub.getImage_publication();
+        if (imagePath != null && !imagePath.trim().isEmpty()) {
+            try {
+                File file;
+                String normalizedPath = imagePath.startsWith("/") ? imagePath : "/" + imagePath;
+                if (normalizedPath.startsWith("/uploads")) {
+                    String sharedDir = AppConfig.getSharedUploadDir();
+                    if (sharedDir != null && !sharedDir.isEmpty()) {
+                        String relativeToUploads = normalizedPath.replace("/uploads/", "");
+                        file = new File(sharedDir, relativeToUploads);
+                    } else {
+                        file = new File(imagePath);
+                    }
+                } else {
+                    file = new File(imagePath);
+                }
+
+                if (file.exists()) {
+                    // Disable caching to ensure updates are visible
+                    imageView.setImage(new Image(file.toURI().toString(), 0, 0, true, true, false));
+                    imageView.setManaged(true);
+                    imageView.setVisible(true);
+                } else {
+                    imageView.setManaged(false);
+                    imageView.setVisible(false);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur image pub: " + e.getMessage());
                 imageView.setManaged(false);
+                imageView.setVisible(false);
             }
         } else {
             imageView.setManaged(false);
+            imageView.setVisible(false);
         }
 
         com.wellcare.javafx.model.User currentPubUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();

@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.wellora.dao.ParcoursDeSanteDAO;
+import com.wellcare.javafx.util.AppConfig;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -58,12 +59,30 @@ public class ParcoursCardController {
         String path = p.getImage_parcours();
         if (path != null && !path.trim().isEmpty()) {
             try {
-                File file = new File(path);
+                File file;
+                String normalizedPath = path.startsWith("/") ? path : "/" + path;
+                if (normalizedPath.startsWith("/uploads")) {
+                    // It's a relative path from Symfony, resolve it using shared directory
+                    String sharedDir = AppConfig.getSharedUploadDir(); // .../public/uploads
+                    if (sharedDir != null && !sharedDir.isEmpty()) {
+                        // normalizedPath is /uploads/parcours/img.jpg
+                        String relativeToUploads = normalizedPath.replace("/uploads/", "");
+                        file = new File(sharedDir, relativeToUploads);
+                    } else {
+                        file = new File(path);
+                    }
+                } else {
+                    file = new File(path);
+                }
+
                 if (file.exists()) {
-                    imageView.setImage(new Image(file.toURI().toString(), true));
+                    // Disable caching to ensure updates are visible
+                    imageView.setImage(new Image(file.toURI().toString(), 0, 0, true, true, false));
+                    imageView.setManaged(true);
+                    imageView.setVisible(true);
                 }
             } catch (Exception e) {
-
+                System.err.println("Erreur chargement image: " + e.getMessage());
             }
         }
 

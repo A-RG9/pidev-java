@@ -17,6 +17,12 @@ import com.wellora.dao.PublicationDAO;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+import com.wellcare.javafx.util.AppConfig;
 import java.time.LocalDate;
 
 public class AjouterPublicationController extends BaseController {
@@ -115,7 +121,29 @@ public class AjouterPublicationController extends BaseController {
             pub.setExperience(experienceCombo.getValue());
             pub.setType_publication(typeCombo.getValue());
             pub.setDate_publication(datePicker.getValue().toString());
-            pub.setImage_publication(selectedImagePath);
+            
+            String finalImagePath = selectedImagePath;
+            if (selectedImagePath != null && !selectedImagePath.isEmpty()) {
+                try {
+                    String sharedPath = AppConfig.getSharedUploadDir();
+                    if (sharedPath != null && !sharedPath.isEmpty()) {
+                        File sourceFile = new File(selectedImagePath);
+                        if (sourceFile.exists()) {
+                            String fileName = UUID.randomUUID().toString() + "_" + sourceFile.getName();
+                            Path targetDir = Paths.get(sharedPath, "parcours"); // Using 'parcours' subfolder as seen in Symfony
+                            if (!Files.exists(targetDir)) {
+                                Files.createDirectories(targetDir);
+                            }
+                            Path targetPath = targetDir.resolve(fileName);
+                            Files.copy(sourceFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+                            finalImagePath = "/uploads/parcours/" + fileName;
+                        }
+                    }
+                } catch (IOException e) {
+                    System.err.println("Erreur copie image (Publication): " + e.getMessage());
+                }
+            }
+            pub.setImage_publication(finalImagePath);
             
             com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
             if(currentUser != null) {

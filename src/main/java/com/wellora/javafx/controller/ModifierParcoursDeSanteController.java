@@ -16,6 +16,12 @@ import org.json.JSONObject;
 import com.wellora.controllers.BaseController;
 import com.wellora.dao.ParcoursDeSanteDAO;
 import com.wellora.controllers.HealthShellController;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+import com.wellcare.javafx.util.AppConfig;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -138,8 +144,13 @@ public class ModifierParcoursDeSanteController extends BaseController {
 
         selectedImagePath = p.getImage_parcours();
         if (selectedImagePath != null && !selectedImagePath.equals("default.png")) {
-            File f = new File(selectedImagePath);
-            fileLabel.setText("✔ " + f.getName());
+            String fileName;
+            if (selectedImagePath.startsWith("/uploads")) {
+                fileName = selectedImagePath.substring(selectedImagePath.lastIndexOf("/") + 1);
+            } else {
+                fileName = new File(selectedImagePath).getName();
+            }
+            fileLabel.setText("✔ " + fileName);
         }
 
 
@@ -186,13 +197,38 @@ public class ModifierParcoursDeSanteController extends BaseController {
     private void handleModifierParcours() {
         if (isInputValid()) {
             try {
+                String finalImagePath = selectedImagePath;
+
+                // Handle image upload if a new local file was selected
+                if (selectedImagePath != null && !selectedImagePath.equals("default.png") && !selectedImagePath.startsWith("/uploads")) {
+                    try {
+                        String sharedPath = AppConfig.getSharedUploadDir();
+                        if (sharedPath != null && !sharedPath.isEmpty()) {
+                            File sourceFile = new File(selectedImagePath);
+                            if (sourceFile.exists()) {
+                                String fileName = UUID.randomUUID().toString() + "_" + sourceFile.getName();
+                                Path targetDir = Paths.get(sharedPath, "parcours");
+                                if (!Files.exists(targetDir)) {
+                                    Files.createDirectories(targetDir);
+                                }
+                                Path targetPath = targetDir.resolve(fileName);
+                                Files.copy(sourceFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+                                
+                                finalImagePath = "/uploads/parcours/" + fileName;
+                            }
+                        }
+                    } catch (IOException e) {
+                        System.err.println("Erreur copie image (Modifier): " + e.getMessage());
+                    }
+                }
+
                 currentParcours.setNom_parcours(nomField.getText().trim());
                 currentParcours.setLocalisation_parcours(locationField.getText().trim());
                 currentParcours.setLatitude_parcours(Double.parseDouble(latField.getText()));
                 currentParcours.setLongitude_parcours(Double.parseDouble(longField.getText()));
                 currentParcours.setDistance_parcours(Double.parseDouble(distanceField.getText()));
                 currentParcours.setDate_creation(datePicker.getValue().toString());
-                currentParcours.setImage_parcours(selectedImagePath);
+                currentParcours.setImage_parcours(finalImagePath);
 
                 ps.modifier(currentParcours);
 

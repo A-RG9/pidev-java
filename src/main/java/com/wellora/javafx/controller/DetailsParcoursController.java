@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import com.wellcare.javafx.util.AppConfig;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -163,14 +164,29 @@ public class DetailsParcoursController extends BaseController {
         }
 
         try {
-            if (p.getImage_parcours() != null && !p.getImage_parcours().isEmpty() && !p.getImage_parcours().equals("default.png")) {
-                File file = new File(p.getImage_parcours());
+            String path = p.getImage_parcours();
+            if (path != null && !path.isEmpty() && !path.equals("default.png")) {
+                File file;
+                String normalizedPath = path.startsWith("/") ? path : "/" + path;
+                if (normalizedPath.startsWith("/uploads")) {
+                    String sharedDir = AppConfig.getSharedUploadDir();
+                    if (sharedDir != null && !sharedDir.isEmpty()) {
+                        String relativeToUploads = normalizedPath.replace("/uploads/", "");
+                        file = new File(sharedDir, relativeToUploads);
+                    } else {
+                        file = new File(path);
+                    }
+                } else {
+                    file = new File(path);
+                }
+
                 if (file.exists()) {
-                    heroImageView.setImage(new Image(file.toURI().toString()));
+                    // Disable caching to ensure updates are visible
+                    heroImageView.setImage(new Image(file.toURI().toString(), 0, 0, true, true, false));
                 }
             }
         } catch (Exception e) {
-            System.err.println("Erreur image: " + e.getMessage());
+            System.err.println("Erreur image (Details): " + e.getMessage());
         }
 
         if (mapView.getInitialized()) {

@@ -25,6 +25,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+import com.wellcare.javafx.util.AppConfig;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
@@ -168,10 +174,36 @@ public class AjouterParcoursDeSante {
             fileLabel.setText("✔ " + selectedFile.getName());
         }
     }
-
     private void handleAjouterParcours() {
         if (isInputValid()) {
             try {
+                String finalImagePath = selectedImagePath;
+
+                // Handle image upload to shared directory
+                if (!selectedImagePath.equals("default.png")) {
+                    try {
+                        String sharedPath = AppConfig.getSharedUploadDir();
+                        if (sharedPath != null && !sharedPath.isEmpty()) {
+                            File sourceFile = new File(selectedImagePath);
+                            if (sourceFile.exists()) {
+                                String fileName = UUID.randomUUID().toString() + "_" + sourceFile.getName();
+                                Path targetDir = Paths.get(sharedPath, "parcours");
+                                if (!Files.exists(targetDir)) {
+                                    Files.createDirectories(targetDir);
+                                }
+                                Path targetPath = targetDir.resolve(fileName);
+                                Files.copy(sourceFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+                                
+                                // Set the path relative to Symfony's public folder
+                                finalImagePath = "/uploads/parcours/" + fileName;
+                            }
+                        }
+                    } catch (IOException e) {
+                        System.err.println("Erreur lors de la copie de l'image : " + e.getMessage());
+                        // Fallback to absolute path or show warning
+                    }
+                }
+
                 parcours_de_sante p = new parcours_de_sante(
                         nomField.getText().trim(),
                         locationField.getText().trim(),
@@ -179,7 +211,7 @@ public class AjouterParcoursDeSante {
                         Double.parseDouble(longField.getText()),
                         Double.parseDouble(distanceField.getText()),
                         datePicker.getValue().toString(),
-                        selectedImagePath
+                        finalImagePath
                 );
                 com.wellcare.javafx.model.User currentUser = com.wellcare.javafx.util.SceneManager.getInstance().getCurrentUser();
                 if(currentUser != null) {
