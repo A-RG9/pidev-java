@@ -546,6 +546,9 @@ public class DoctorSearchController {
         // Open booking screen with selected slot
         System.out.println("Booking slot for doctor: " + doctor.name);
         
+        // Store the selected doctor so the booking controller knows who it is
+        DoctorProfileController.selectedDoctor = doctor;
+        
         if (mainController != null) {
             mainController.loadView("/fxml/booking.fxml");
         } else {

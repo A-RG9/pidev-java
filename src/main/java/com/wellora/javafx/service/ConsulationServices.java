@@ -63,11 +63,11 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
     @Override
     public List<Consultation> ShowConsultation() throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
-        // Added patient_id and medecin_id to SELECT
-        String query = "SELECT id, consultation_type, reason_for_visit, symptoms_description, " +
-                "date_consultation, time_consultation, duration, location, fee, status, " +
-                "notes, created_at, updated_at, appointment_mode, patient_id, medecin_id " +
-                "FROM consultation ORDER BY date_consultation DESC, time_consultation DESC";
+        // Added patient_id and medecin_id to SELECT, and JOIN to get doctor name
+        String query = "SELECT c.*, u.first_name as doc_first, u.last_name as doc_last " +
+                "FROM consultation c " +
+                "LEFT JOIN users u ON c.medecin_id = u.uuid " +
+                "ORDER BY c.date_consultation DESC, c.time_consultation DESC";
 
         System.out.println("Executing query: " + query);
 
@@ -100,6 +100,11 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
                 
                 try {
                     consultation.setMedecinId(rs.getString("medecin_id"));
+                    String docFirst = rs.getString("doc_first");
+                    String docLast = rs.getString("doc_last");
+                    if (docFirst != null || docLast != null) {
+                        consultation.setMedecinName((docFirst != null ? docFirst : "") + " " + (docLast != null ? docLast : ""));
+                    }
                 } catch (SQLException e) {
                     // Ignored in case the column does not exist yet
                 }
@@ -197,7 +202,7 @@ public class ConsulationServices implements CRUDconsultation<Consultation> {
             pstmtOrd.executeUpdate();
         }
 
-        String deleteExamens = "DELETE FROM examen WHERE consultation_id = ?";
+        String deleteExamens = "DELETE FROM examens WHERE consultation_id = ?";
         try (PreparedStatement pstmtExam = conn.prepareStatement(deleteExamens)) {
             pstmtExam.setInt(1, id);
             pstmtExam.executeUpdate();

@@ -500,12 +500,19 @@ public class BookingController {
             // Assign doctor if available
             if (DoctorProfileController.selectedDoctor != null) {
                 consultation.setMedecinId(DoctorProfileController.selectedDoctor.uuid);
-                // If you store doctor UUID in selectedDoctor.id (if it was string)
-                // Since it's an int hash or something in DoctorSearchController, we just append the name
+                consultation.setMedecinName(DoctorProfileController.selectedDoctor.name);
                 consultation.setNotes("Mode: " + appointmentMode + ", Patient: " + firstNameField.getText() + " " + lastNameField.getText() + ", Doctor: " + DoctorProfileController.selectedDoctor.name);
-                // Also append the doctor's name to reasonForVisit as a fallback for old matching mechanism
+                
+                // Also append the doctor's name to reasonForVisit as a fallback
                 if (consultation.getReasonForVisit() != null && !consultation.getReasonForVisit().contains(DoctorProfileController.selectedDoctor.name)) {
                     consultation.setReasonForVisit(consultation.getReasonForVisit() + " - " + DoctorProfileController.selectedDoctor.name);
+                }
+            } else {
+                // Fallback to default doctor if none selected (e.g., from direct sidebar navigation)
+                consultation.setMedecinName("Mariem Fakhfakh");
+                consultation.setNotes("Mode: " + appointmentMode + ", Patient: " + firstNameField.getText() + " " + lastNameField.getText() + ", Doctor: Mariem Fakhfakh (Default)");
+                if (consultation.getReasonForVisit() != null && !consultation.getReasonForVisit().contains("Mariem Fakhfakh")) {
+                    consultation.setReasonForVisit(consultation.getReasonForVisit() + " - Mariem Fakhfakh");
                 }
             }
             
@@ -530,8 +537,13 @@ public class BookingController {
     }
 
     private void updateSummary() {
-        summaryDoctor.setText("Dr. Mariem Fakhfakh");
-        summarySpecialty.setText("General Medicine");
+        if (DoctorProfileController.selectedDoctor != null) {
+            summaryDoctor.setText("Dr. " + DoctorProfileController.selectedDoctor.name);
+            summarySpecialty.setText(DoctorProfileController.selectedDoctor.specialty);
+        } else {
+            summaryDoctor.setText("Dr. Mariem Fakhfakh");
+            summarySpecialty.setText("General Medicine");
+        }
         summaryType.setText(consultationType.equals("first-visit") ? "First Visit" :
                 consultationType.equals("follow-up") ? "Follow-up" : "Emergency");
         summaryMode.setText(appointmentMode.equals("in-person") ? "In-Person" : "Phone Call");

@@ -28,6 +28,7 @@ public class Consultation {
     private String patientFirstName;
     private String patientLastName;
     private String patientPhone;
+    private String medecinName;      // full name of the doctor
 
     // Clinical notes fields (optional)
     private String chiefComplaint;
@@ -136,6 +137,9 @@ public class Consultation {
 
     public String getPatientPhone() { return patientPhone; }
     public void setPatientPhone(String patientPhone) { this.patientPhone = patientPhone; }
+
+    public String getMedecinName() { return medecinName; }
+    public void setMedecinName(String medecinName) { this.medecinName = medecinName; }
 
     // Optional clinical fields
     public String getChiefComplaint() { return chiefComplaint; }

@@ -258,8 +258,24 @@ public class AppointmentsController {
         HBox headerBox = new HBox(8);
         headerBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
-        Text doctorName = new Text("Dr. " + (consultation.getReasonForVisit() != null ? 
-            consultation.getReasonForVisit() : "No Doctor"));
+        String displayName = consultation.getMedecinName();
+        if (displayName == null || displayName.trim().isEmpty()) {
+            String reason = consultation.getReasonForVisit();
+            if (reason != null && reason.contains(" - ")) {
+                String[] parts = reason.split(" - ");
+                displayName = parts[parts.length - 1].trim();
+            } else if (reason != null && (reason.contains(",") || reason.length() > 30)) {
+                // If it looks like symptoms (contains commas or is very long), it's probably not a doctor name
+                displayName = "Unassigned";
+            } else {
+                displayName = reason;
+            }
+        }
+        if (displayName == null || displayName.trim().isEmpty() || displayName.equals("null")) {
+            displayName = "Unassigned";
+        }
+        
+        Text doctorName = new Text("Dr. " + displayName);
         doctorName.setFont(Font.font("System", FontWeight.BOLD, 16));
 
         Label statusBadge = new Label(consultation.getStatus() != null ? 
@@ -363,7 +379,19 @@ public class AppointmentsController {
     private void showAppointmentDetails(Consultation consultation) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Appointment Details");
-        alert.setHeaderText("Dr. " + consultation.getReasonForVisit());
+        String displayName = consultation.getMedecinName();
+        if (displayName == null || displayName.trim().isEmpty()) {
+            String reason = consultation.getReasonForVisit();
+            if (reason != null && reason.contains(" - ")) {
+                String[] parts = reason.split(" - ");
+                displayName = parts[parts.length - 1].trim();
+            } else if (reason != null && (reason.contains(",") || reason.length() > 30)) {
+                displayName = "Unassigned";
+            } else {
+                displayName = reason;
+            }
+        }
+        alert.setHeaderText("Dr. " + displayName);
         
         String content = "Date: " + consultation.getDateConsultation() + "\n" +
                         "Time: " + consultation.getTimeConsultation() + "\n" +
@@ -514,14 +542,19 @@ public class AppointmentsController {
         
         if (buttonText.contains("Tableau de bord")) {
             System.out.println("Navigate to dashboard");
+            // Add dashboard navigation if needed
         } else if (buttonText.contains("Mes Rendez-vous")) {
             System.out.println("Already on appointments");
         } else if (buttonText.contains("Trouver un Médecin")) {
-            System.out.println("Navigate to doctor search");
+            handleBookNewAppointment(); // This already navigates to doctor-search.fxml
         } else if (buttonText.contains("Profil Médecin")) {
-            System.out.println("Navigate to doctor profile");
+            if (mainController != null) {
+                mainController.loadView("/fxml/doctor-profile.fxml");
+            }
         } else if (buttonText.contains("Prendre RDV")) {
-            System.out.println("Navigate to booking");
+            if (mainController != null) {
+                mainController.loadView("/fxml/booking.fxml");
+            }
         } else if (buttonText.contains("Mon Profil")) {
             System.out.println("Navigate to profile");
         } else if (buttonText.contains("Paramètres")) {
